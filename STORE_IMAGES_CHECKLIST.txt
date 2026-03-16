@@ -1,0 +1,145 @@
+STORE IMAGES CHECKLIST
+======================
+
+All store images have been updated to use the naming convention: "[Store Name] store pic.webp"
+
+Place all optimized WebP images (800x600px recommended, 80-85% quality) in the /public directory.
+
+IMAGE FILES NEEDED:
+-------------------
+
+1. The Scoin Shop store pic.webp
+   - Category: Jewellery & Collectibles
+   - Website: https://scoinshop.com
+   - Suggestion: Gold coins display or storefront
+
+2. iStore store pic.webp
+   - Category: Electronics
+   - Website: https://www.istore.co.za/
+   - Suggestion: Apple products display or store interior
+
+3. Al Capone Premium store pic.webp
+   - Category: Fashion & Apparel
+   - Website: https://alcaponepremium.co.za/
+   - Suggestion: Luxury men's fashion boutique
+
+4. Court Order store pic.webp
+   - Category: Fashion & Apparel
+   - Website: https://courtorder.co.za/
+   - Suggestion: Sneaker display or authentication process
+
+5. Hydraulics Stores store pic.webp
+   - Category: Fashion & Apparel
+   - Website: https://www.hydraulicsstores.co.za/
+   - Suggestion: High-end fashion boutique interior
+
+6. Le Creuset store pic.webp
+   - Category: Home & Kitchen
+   - Website: https://www.lecreuset.co.za/
+   - Suggestion: Colorful cookware display
+
+7. Tintswalo Lodges store pic.webp
+   - Category: Hospitality
+   - Website: https://www.tintswalo.com/
+   - Suggestion: Luxury lodge exterior or scenic view
+
+8. Swest Kicks store pic.webp
+   - Category: Fashion & Apparel
+   - Website: https://swestkicks.co.za/
+   - Suggestion: Sneaker store or streetwear display
+
+9. Soul Gallery store pic.webp
+   - Category: Fashion & Apparel
+   - Website: https://soulgallery.co.za/
+   - Suggestion: Flagship store interior with fashion display
+
+10. Subwear store pic.webp
+    - Category: Fashion & Apparel
+    - Website: https://www.subwear.co.za/
+    - Suggestion: Premium streetwear and denim display
+
+11. Cultish store pic.webp
+    - Category: Fashion & Apparel
+    - Website: https://cultish.com/
+    - Suggestion: Bold, gender-neutral fashion boutique
+
+12. Diesel store pic.webp
+    - Category: Fashion & Apparel
+    - Website: https://diesel.co.za/
+    - Suggestion: Premium denim display or store interior
+
+13. Goodman Gallery store pic.webp
+    - Category: Art & Culture
+    - Website: https://goodman-gallery.com/
+    - Suggestion: Contemporary art gallery interior
+
+14. Story store pic.webp
+    - Category: Fashion & Apparel
+    - Website: https://story.capetown
+    - Suggestion: Premium sneaker consignment display
+
+15. Thobela Cars store pic.webp
+    - Category: Automotive
+    - Website: https://www.thobela-cars.co.za/
+    - Suggestion: Luxury car showroom
+
+16. Amiri store pic.webp
+    - Category: Fashion & Apparel
+    - Website: https://amiri.com/en-bg
+    - Suggestion: Luxury streetwear display
+
+17. Yawa Africa store pic.webp
+    - Category: Fashion & Apparel
+    - Website: https://yawa.africa/
+    - Suggestion: Experiential retail space with fashion/art
+
+18. Watch Channel store pic.webp
+    - Category: Jewellery & Collectibles
+    - Website: https://thewatchchannel.co.za/
+    - Suggestion: Luxury timepieces display
+
+19. SuperSpar Royal Ascot store pic.webp
+    - Category: Grocery & Retail
+    - Website: https://www.spar.co.za/home/store-view/superspar-royal-ascot-western-cape
+    - Suggestion: Upscale grocery store interior
+
+20. Luxity store pic.webp
+    - Category: Fashion & Apparel
+    - Website: https://luxity.co.za
+    - Suggestion: Pre-owned luxury goods display
+
+
+IMAGE REQUIREMENTS:
+-------------------
+✓ Format: WebP
+✓ Dimensions: 800x600px (2x for retina displays)
+✓ Quality: 80-85% compression
+✓ Target file size: 20-50KB per image
+✓ Aspect ratio: 4:3
+✓ Clear, well-lit, professional quality
+✓ No watermarks or overlay text
+
+IMAGE SOURCING OPTIONS:
+-----------------------
+1. Direct from store websites (press/media pages)
+2. Contact store marketing teams through your partnership
+3. High-quality stock photos (Unsplash, Pexels)
+4. Commission professional photography
+5. Store's official social media accounts
+
+OPTIMIZATION TOOLS:
+-------------------
+- TinyPNG.com or Squoosh.app for WebP conversion
+- Photopea.com (free online editor)
+- Canva.com for resizing
+- ImageOptim (Mac) or FileOptimizer (Windows)
+
+AFTER SOURCING:
+---------------
+1. Optimize each image to WebP format at 800x600px
+2. Name exactly as shown above (case-sensitive)
+3. Place in /public directory
+4. Test page loading and image quality
+5. Verify responsive behavior on mobile/tablet/desktop
+
+The page will use fallback images until you add the actual store photos.

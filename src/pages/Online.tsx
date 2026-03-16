@@ -1,0 +1,358 @@
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
+import {
+  Plug, Zap, Shield, BarChart3,
+  CheckCircle, ArrowRight, ExternalLink
+} from 'lucide-react'
+import SEO from '../components/SEO'
+
+const Online = () => {
+  const [activeTab, setActiveTab] = useState('shopify')
+
+  const platforms = [
+    {
+      id: 'shopify',
+      name: 'Shopify',
+      logo: '/shopify-icon.png',
+      description: 'One-click installation with full theme integration',
+      features: ['Seamless checkout', 'Real-time rates', 'Mobile optimized', 'Multi-currency'],
+      installTime: '2 minutes'
+    },
+    {
+      id: 'woocommerce',
+      name: 'WooCommerce',
+      logo: '/woocommerce-logo.png',
+      description: 'WordPress plugin with advanced customization options',
+      features: ['Custom checkout', 'Order management', 'Tax integration', 'Analytics'],
+      installTime: '5 minutes'
+    },
+    {
+      id: 'magento',
+      name: 'Magento',
+      logo: '/magento-logo.png',
+      description: 'Enterprise-grade extension for complex stores',
+      features: ['Multi-store support', 'B2B features', 'Advanced reporting', 'API access'],
+      installTime: '10 minutes'
+    }
+  ]
+
+  const features = [
+    {
+      icon: <Plug className="w-6 h-6" />,
+      title: "Zero-Code Integration",
+      description: "Install our plugins in minutes without any technical knowledge required"
+    },
+    {
+      icon: <Zap className="w-6 h-6" />,
+      title: "Real-Time Processing",
+      description: "Instant transaction confirmation with live exchange rates and fees"
+    },
+    {
+      icon: <Shield className="w-6 h-6" />,
+      title: "Secure Checkout",
+      description: "End-to-end encrypted payment flow ensuring maximum transaction security"
+    },
+    {
+      icon: <BarChart3 className="w-6 h-6" />,
+      title: "Advanced Analytics",
+      description: "Detailed insights into crypto payment trends and customer behavior"
+    }
+  ]
+
+  return (
+    <>
+      <SEO
+        title="Online Stablecoin and Crypto Payments for E-Commerce"
+        description="Accept stablecoin and cryptocurrency payments in your online store with Ezeebit. Shopify, WooCommerce, and Magento plugins available. Zero-code integration, instant settlement to ZAR. Support for Bitcoin, Ethereum, USDT, USDC and more."
+        keywords="online stablecoin and crypto payments, e-commerce cryptocurrency, Shopify crypto plugin, WooCommerce bitcoin payments, accept crypto online, cryptocurrency checkout, bitcoin e-commerce, ethereum payments, stablecoin checkout, crypto payment gateway, online crypto merchant"
+        canonicalUrl="/online"
+      />
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "Ezeebit Online Payment Plugin",
+          "applicationCategory": "FinanceApplication",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "ZAR"
+          },
+          "description": "Accept stablecoin and cryptocurrency payments in your online store with zero-code integration",
+          "operatingSystem": "Web",
+          "featureList": "Bitcoin payments, Ethereum payments, Stablecoin payments, Shopify integration, WooCommerce integration, Instant settlement",
+          "provider": {
+            "@type": "Organization",
+            "name": "Ezeebit",
+            "url": "https://ezeebit.co.za"
+          }
+        })}
+      </script>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="overflow-hidden -mt-20"
+      >
+        {/* Hero Section */}
+      <section className="relative min-h-[60vh] flex items-center gradient-bg pt-40">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-secondary-600/10"></div>
+        <div className="container-custom relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="max-w-4xl text-center lg:text-left"
+            >
+              <h1 className="text-5xl lg:text-5xl font-display font-bold text-neutral-900 mb-6">
+                <span itemProp="name">Boost <span className="text-gradient">E-Commerce</span> with Crypto</span>
+              </h1>
+              <p className="text-xl text-neutral-600 mb-8" itemProp="description">
+                Integrate stablecoin and cryptocurrency payments into your online store with zero-code plugins.
+                Start accepting Bitcoin, Ethereum, stablecoins and more, auto-converted to ZAR.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center lg:justify-start">
+                <a
+                  href="https://forms.zohopublic.com/jonnyeze1/form/SignUp/formperma/9fAqEbBhSgAbpaRJPz9aEsfTxy4PdQRx4FEzRCXuxfk"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary flex items-center justify-center"
+                >
+                  Install Plugin Now
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </a>
+                <Link to="/developers" className="btn-secondary flex items-center justify-center">
+                  View Documentation
+                </Link>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="relative hidden lg:block"
+            >
+              <div className="relative flex items-center justify-center">
+                <img
+                  src="/online-customer(latest).png"
+                  alt="Customer paying online"
+                  className="w-[150%] drop-shadow-2xl hidden lg:block"
+                />
+                <div className="absolute top-[80px] left-[-50px] z-10 hidden lg:block">
+                  <img
+                    src="/corrected-ezeebitpay.webp"
+                    alt="Payment amount and currency selector interface"
+                    className="w-[100%] max-w-[238px] rounded-xl shadow-2xl translate-x-4"
+                  />
+                </div>
+                <img
+                  src="/online-checkout.png"
+                  alt="Online checkout"
+                  className="absolute bottom-[-8px] right-[-80px] w-[68%] drop-shadow-lg z-10 hidden lg:block"
+                />
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Platform Integration */}
+      <section className="section-padding bg-white">
+        <div className="container-custom px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-center mb-8 md:mb-16"
+          >
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+              Seamless Platform Integration
+            </h2>
+            <p className="text-lg md:text-xl text-neutral-600 max-w-3xl mx-auto px-4">
+              Install our plugins on your favorite e-commerce platform in minutes. No coding required.
+            </p>
+          </motion.div>
+
+          {/* Platform Tabs */}
+          <div className="flex justify-center mb-6 md:mb-8 px-4">
+            <div className="flex bg-neutral-100 rounded-lg p-1 w-full max-w-md md:max-w-none md:w-auto overflow-x-auto">
+              {platforms.map((platform) => (
+                <button
+                  key={platform.id}
+                  onClick={() => setActiveTab(platform.id)}
+                  className={`px-3 md:px-6 py-2 md:py-3 rounded-md font-medium transition-all text-sm md:text-base whitespace-nowrap flex-shrink-0 ${
+                    activeTab === platform.id
+                      ? 'bg-white text-primary-500 shadow-sm'
+                      : 'text-neutral-600 hover:text-neutral-900'
+                  }`}
+                >
+                  {platform.name}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Platform Details */}
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="card p-4 md:p-8 max-w-4xl mx-auto"
+          >
+            {platforms.map((platform) => (
+              activeTab === platform.id && (
+                <div key={platform.id} className="relative">
+                  {platform.id !== 'shopify' && (
+                    <div className="absolute inset-0 flex items-center justify-center z-10 rounded-lg">
+                      <div className="text-center">
+                        <div className="text-xl md:text-3xl font-bold text-neutral-900 mb-2">Coming Soon</div>
+                        <div className="text-sm md:text-base text-neutral-600">This integration is currently in development</div>
+                      </div>
+                    </div>
+                  )}
+                  <div className={`grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8 items-center ${
+                    platform.id !== 'shopify' ? 'filter blur-sm opacity-50' : ''
+                  }`}>
+                  <div>
+                    <div className="flex items-center mb-4 justify-center lg:justify-start">
+                      <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg flex items-center justify-center mr-4">
+                        <img src={platform.logo} alt={platform.name} className="w-8 h-8 object-contain" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl md:text-2xl font-bold text-neutral-900">{platform.name}</h3>
+                        <p className="text-xs md:text-sm text-neutral-500">Install time: {platform.installTime}</p>
+                      </div>
+                    </div>
+                    <img
+                      src="/online-checkout.png"
+                      alt={`${platform.name} integration`}
+                      className="w-full max-w-sm mx-auto my-4 lg:hidden"
+                    />
+                    <p className="text-sm md:text-base text-neutral-600 mb-4 md:mb-6 text-center lg:text-left">{platform.description}</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-4 mb-4 md:mb-6">
+                      {platform.features.map((feature) => (
+                        <div key={feature} className="flex items-center">
+                          <CheckCircle className="w-4 h-4 text-primary-500 mr-2" />
+                          <span className="text-xs md:text-sm text-neutral-600">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
+                      {platform.id === 'shopify' ? (
+                        <a
+                          href="https://forms.zohopublic.com/jonnyeze1/form/SignUp/formperma/9fAqEbBhSgAbpaRJPz9aEsfTxy4PdQRx4FEzRCXuxfk"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn-primary flex items-center justify-center w-full sm:w-auto"
+                        >
+                          Get Started
+                        </a>
+                      ) : (
+                        <button className="btn-primary flex items-center justify-center opacity-50 cursor-not-allowed w-full sm:w-auto" disabled>
+                          Coming Soon
+                        </button>
+                      )}
+                      {platform.id === 'shopify' ? (
+                        <a
+                          href="https://youtu.be/nsju8wPu5oY?si=QTJfvOeNf8nV4b-l"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn-outline flex items-center justify-center w-full sm:w-auto"
+                        >
+                          <ExternalLink className="w-4 h-4 mr-2" />
+                          View Guide
+                        </a>
+                      ) : (
+                        <button className="btn-outline flex items-center justify-center w-full sm:w-auto opacity-50 cursor-not-allowed" disabled>
+                          <ExternalLink className="w-4 h-4 mr-2" />
+                          View Guide
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                  <img
+                    src="/online-checkout.png"
+                    alt={`${platform.name} integration`}
+                    className="hidden lg:block lg:w-[120%] lg:max-w-none lg:-ml-16"
+                  />
+                  </div>
+                </div>
+              )
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="section-padding bg-neutral-50">
+        <div className="container-custom">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+              Everything You Need for Online Payments
+            </h2>
+            <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+              Our comprehensive solution includes all the tools and features you need to accept stablecoin and crypto payments online.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {features.map((feature, index) => (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="card p-6 text-center hover:scale-105 transition-transform"
+              >
+                <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4 text-primary-500">
+                  {feature.icon}
+                </div>
+                <h3 className="text-xl font-semibold text-neutral-900 mb-3">
+                  {feature.title}
+                </h3>
+                <p className="text-neutral-600">
+                  {feature.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="section-padding bg-gradient-to-r from-primary-600 to-secondary-600 text-white">
+        <div className="container-custom text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+          >
+            <h2 className="text-3xl lg:text-4xl font-display font-bold mb-4">
+              Start Accepting Stablecoin and Crypto Payments Today
+            </h2>
+            <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
+              Install our plugin in minutes and start accepting stablecoin and cryptocurrency payments from customers worldwide.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href="https://forms.zohopublic.com/jonnyeze1/form/SignUp/formperma/9fAqEbBhSgAbpaRJPz9aEsfTxy4PdQRx4FEzRCXuxfk" target="_blank" rel="noopener noreferrer" className="bg-white text-primary-500 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center">
+                Install Plugin Now
+                <ArrowRight className="w-5 h-5 ml-2 inline" />
+              </a>
+              <Link to="/developers" className="border-2 border-white text-white hover:bg-white hover:text-primary-500 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center">
+                View Documentation
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+      </motion.div>
+    </>
+  )
+}
+
+export default Online

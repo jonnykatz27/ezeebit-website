@@ -8,7 +8,9 @@ function safeBuildCopyPlugin() {
   return {
     name: 'safe-build-copy',
     config(_: any, { command }: { command: string }) {
-      if (command === 'build') {
+      // Skip during the SSR build — public assets are already in dist/ from the
+      // client build, and we don't want them copied into dist/server/.
+      if (command === 'build' && !process.env.VITE_SSR_BUILD) {
         isBuild = true
         return { publicDir: false }
       }

@@ -4,6 +4,7 @@ import {
   Calendar, Clock, ArrowLeft, Twitter, Linkedin,
   Mail, Eye, Tag
 } from 'lucide-react'
+import SEO from '../components/SEO'
 
 const blogPostsData: Record<string, {
   title: string
@@ -280,6 +281,7 @@ const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>()
   const post = slug ? blogPostsData[slug] : null
 
+
   if (!post) {
     return (
       <motion.div
@@ -319,11 +321,18 @@ const BlogPost = () => {
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="pt-20"
+    <>
+      <SEO
+        title={post.title}
+        description={post.subtitle}
+        canonicalUrl={`/blog/${slug}`}
+        ogImage={post.image}
+      />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="pt-20"
     >
       <section className="bg-white border-b border-neutral-100">
         <div className="container-custom py-4">
@@ -471,6 +480,7 @@ const BlogPost = () => {
         </div>
       </section>
     </motion.div>
+    </>
   )
 }
 

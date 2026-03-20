@@ -5,6 +5,7 @@ import {
   Book, Search, Download,
   ArrowRight, Clock, UserPlus, FileText
 } from 'lucide-react'
+import SEO from '../components/SEO'
 
 const UserManual = () => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -43,11 +44,17 @@ const UserManual = () => {
   ]
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="overflow-hidden -mt-20"
+    <>
+      <SEO
+        title="User Manual"
+        description="Step-by-step guides and tutorials for Ezeebit merchants. Learn how to set up your ePOS device, accept crypto payments in-store and online, and manage your merchant account."
+        canonicalUrl="/resources/user-manual"
+      />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="overflow-hidden -mt-20"
     >
       {/* Hero Section */}
       <section className="relative min-h-[60vh] flex items-center gradient-bg pt-40">
@@ -205,6 +212,7 @@ const UserManual = () => {
         </div>
       </section>
     </motion.div>
+    </>
   )
 }
 

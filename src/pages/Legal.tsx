@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom'
 import {
   Shield, FileText, Eye, Scale, Award
 } from 'lucide-react'
+import SEO from '../components/SEO'
 
 const Legal = () => {
   const location = useLocation()
@@ -826,11 +827,17 @@ const Legal = () => {
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="overflow-hidden"
+    <>
+      <SEO
+        title="Legal — Terms, Privacy & Compliance"
+        description="Ezeebit's terms of service, privacy policy, and regulatory compliance information. FSCA registered, FIC compliant, and FAIS licensed crypto asset services provider."
+        canonicalUrl="/resources/legal"
+      />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="overflow-hidden"
     >
       {/* Hero Section */}
       <section className="section-padding gradient-bg pt-32 md:pt-28">
@@ -926,6 +933,7 @@ const Legal = () => {
         </div>
       </section>
     </motion.div>
+    </>
   )
 }
 

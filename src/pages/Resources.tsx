@@ -4,6 +4,7 @@ import {
   Book, HelpCircle, FileText, Newspaper, Users,
   ArrowRight, Search, Clock
 } from 'lucide-react'
+import SEO from '../components/SEO'
 
 const Resources = () => {
   const resourceCategories = [
@@ -88,11 +89,17 @@ const Resources = () => {
   ]
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="overflow-hidden -mt-20"
+    <>
+      <SEO
+        title="Resources"
+        description="Everything you need to get the most out of Ezeebit. Access user guides, FAQs, legal documents, the latest blog posts, and our full merchant directory — all in one place."
+        canonicalUrl="/resources"
+      />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="overflow-hidden -mt-20"
     >
       {/* Hero Section */}
       <section className="relative min-h-[60vh] flex items-center gradient-bg pt-40">
@@ -292,6 +299,7 @@ const Resources = () => {
         </div>
       </section>
     </motion.div>
+    </>
   )
 }
 

@@ -6,6 +6,7 @@ import {
 } from 'lucide-react'
 import { stores } from '../lib/stores'
 import { storeDetailsMap } from '../lib/storeDetails'
+import SEO from '../components/SEO'
 
 const StoreDetail = () => {
   const { slug } = useParams<{ slug: string }>()
@@ -37,12 +38,18 @@ const StoreDetail = () => {
   ]
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="pt-20"
-    >
+    <>
+      <SEO
+        title={`${store.name} — Pay with Crypto`}
+        description={`${store.excerpt} Pay with Bitcoin, Ethereum, or stablecoins at ${store.name} using Ezeebit.`}
+        canonicalUrl={`/resources/stores/${store.slug}`}
+      />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="pt-20"
+      >
       {/* Back Navigation */}
       <section className="bg-white border-b border-neutral-100">
         <div className="container-custom py-4">
@@ -265,6 +272,7 @@ const StoreDetail = () => {
         </a>
       </div>
     </motion.div>
+    </>
   )
 }
 

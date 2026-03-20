@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import {
   Calendar, Clock, ArrowRight, Search, Eye
 } from 'lucide-react'
+import SEO from '../components/SEO'
 
 const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState('all')
@@ -56,11 +57,17 @@ const Blog = () => {
   const featuredPost = filteredPosts.find(post => post.featured) || filteredPosts[0]
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="overflow-hidden -mt-20"
+    <>
+      <SEO
+        title="Blog"
+        description="Latest news, insights, and updates from Ezeebit. Read about our funding rounds, product launches, and the future of stablecoin and crypto payments in Africa."
+        canonicalUrl="/resources/blog"
+      />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="overflow-hidden -mt-20"
     >
       {/* Hero Section */}
       <section className="relative min-h-[60vh] flex items-center gradient-bg pt-40">
@@ -281,6 +288,7 @@ const Blog = () => {
       </section>
 
     </motion.div>
+    </>
   )
 }
 

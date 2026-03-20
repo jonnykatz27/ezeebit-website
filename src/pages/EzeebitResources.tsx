@@ -1,14 +1,21 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { BookOpen, UserPlus, MapPin } from 'lucide-react'
+import SEO from '../components/SEO'
 
 const EzeebitResources = () => {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 -mt-20 pt-20"
+    <>
+      <SEO
+        title="Ezeebit Resources"
+        description="Quick access to Ezeebit's user manual, merchant sign-up, and the full directory of South African stores accepting crypto payments."
+        canonicalUrl="/ezeebit-resources"
+      />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 -mt-20 pt-20"
     >
       <div className="h-full flex flex-col items-center justify-center px-4 py-6 md:py-8">
         <motion.div
@@ -109,6 +116,7 @@ const EzeebitResources = () => {
         </motion.div>
       </div>
     </motion.div>
+    </>
   )
 }
 

@@ -85,7 +85,7 @@ const Online = () => {
           "provider": {
             "@type": "Organization",
             "name": "Ezeebit",
-            "url": "https://ezeebit.co.za"
+            "url": "https://ezeebit.com"
           }
         })}
       </script>

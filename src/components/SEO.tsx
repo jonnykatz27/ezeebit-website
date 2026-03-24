@@ -16,7 +16,7 @@ const SEO = ({
   canonicalUrl
 }: SEOProps) => {
   const fullTitle = `${title} | Ezeebit`
-  const siteUrl = 'https://ezeebit.co.za'
+  const siteUrl = 'https://ezeebit.com'
   const fullCanonicalUrl = canonicalUrl ? `${siteUrl}${canonicalUrl}` : siteUrl
 
   return (

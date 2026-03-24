@@ -89,8 +89,8 @@ const Home = () => {
           "@context": "https://schema.org",
           "@type": "Organization",
           "name": "Ezeebit",
-          "url": "https://ezeebit.co.za",
-          "logo": "https://ezeebit.co.za/ezeebit_black.png",
+          "url": "https://ezeebit.com",
+          "logo": "https://ezeebit.com/ezeebit_black.png",
           "description": "Leading crypto payment solutions for African merchants. Accept Bitcoin, Ethereum, and stablecoins with instant ZAR settlement.",
           "foundingDate": "2023",
           "address": {
@@ -115,7 +115,7 @@ const Home = () => {
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
           "name": "Ezeebit",
-          "image": "https://ezeebit.co.za/ezeebit_black.png",
+          "image": "https://ezeebit.com/ezeebit_black.png",
           "telephone": "+27-21-879-5074",
           "email": "support@ezeebit.com",
           "address": {

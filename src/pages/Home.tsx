@@ -342,7 +342,7 @@ const Home = () => {
                 step: "03",
                 title: "Local Currency Settlement",
                 description: "Funds are settled to your bank account in ZAR, KES, or NGN the next business day with full transaction details",
-                image: "/zar-pic-nobg.png"
+                image: "/stablecoin-settlement.png"
               }
             ].map((step, index) => (
               <motion.div

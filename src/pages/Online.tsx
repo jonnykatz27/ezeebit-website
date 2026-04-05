@@ -64,7 +64,7 @@ const Online = () => {
     <>
       <SEO
         title="Online Stablecoin and Crypto Payments for E-Commerce"
-        description="Accept stablecoin and cryptocurrency payments in your online store with Ezeebit. Shopify, WooCommerce, and Magento plugins available. Zero-code integration, instant settlement to ZAR. Support for Bitcoin, Ethereum, USDT, USDC and more."
+        description="Accept stablecoin and cryptocurrency payments in your online store with Ezeebit. Shopify, WooCommerce, and Magento plugins available. Zero-code integration, instant settlement in ZAR, KES, or NGN. Support for Bitcoin, Ethereum, USDT, USDC and more."
         keywords="online stablecoin and crypto payments, e-commerce cryptocurrency, Shopify crypto plugin, WooCommerce bitcoin payments, accept crypto online, cryptocurrency checkout, bitcoin e-commerce, ethereum payments, stablecoin checkout, crypto payment gateway, online crypto merchant"
         canonicalUrl="/online"
       />
@@ -111,7 +111,7 @@ const Online = () => {
               </h1>
               <p className="text-xl text-neutral-600 mb-8" itemProp="description">
                 Integrate stablecoin and cryptocurrency payments into your online store with zero-code plugins.
-                Start accepting Bitcoin, Ethereum, stablecoins and more, auto-converted to ZAR.
+                Start accepting Bitcoin, Ethereum, stablecoins and more, with automatic settlement in ZAR, KES, or NGN.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center lg:justify-start">
                 <a

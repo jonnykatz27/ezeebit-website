@@ -35,7 +35,7 @@ const InStore = () => {
     { label: "Network Support", value: "WiFi, 4G, SIM Card ports" },
     { label: "Payment Methods", value: "QR Scan" },
     { label: "Supported Currencies", value: "7+ Cryptocurrencies" },
-    { label: "Settlement", value: "Instant stablecoin, T+1 ZAR" },
+    { label: "Settlement", value: "Instant stablecoin, T+1 ZAR/KES/NGN" },
     { label: "Receipt", value: "Printed receipts" }
   ]
 
@@ -43,7 +43,7 @@ const InStore = () => {
     <>
       <SEO
         title="In-Store Stablecoin and Crypto Payments with ePOS"
-        description="Accept cryptocurrency at your physical store with our lightning-fast ePOS system. QR code payments, printed receipts, and instant ZAR settlement."
+        description="Accept cryptocurrency at your physical store with our lightning-fast ePOS system. QR code payments, printed receipts, and instant settlement in ZAR, KES, or NGN."
         canonicalUrl="/in-store"
       />
       <motion.div
@@ -68,7 +68,7 @@ const InStore = () => {
               </h1>
               <p className="text-xl text-neutral-600 mb-8">
                 Accept stablecoin and cryptocurrency payments at your physical location with our advanced ePOS devices or our ezeebit Pay static QR Codes. 
-                Lightning-fast transactions, multi-currency support, and rapid ZAR settlement.
+                Lightning-fast transactions, multi-currency support, and rapid settlement in ZAR, KES, or NGN.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center lg:justify-start">
                 <a
@@ -357,8 +357,8 @@ const InStore = () => {
               },
               {
                 step: "4",
-                title: "ZAR Settlement",
-                description: "Funds settled to your ZAR account the next business day",
+                title: "Local Currency Settlement",
+                description: "Funds settled to your bank account in ZAR, KES, or NGN the next business day",
                 icon: <CheckCircle className="w-8 h-8" />
               }
             ].map((step, index) => (

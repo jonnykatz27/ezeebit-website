@@ -31,7 +31,7 @@ const Home = () => {
     {
       icon: <TrendingUp className="w-6 h-6" />,
       title: "Stablecoin Settlement",
-      description: "Automatic conversion to stablecoins and settlement in ZAR to eliminate volatility risk"
+      description: "Automatic conversion to stablecoins and settlement in ZAR, KES, or NGN to eliminate volatility risk"
     }
   ]
 
@@ -81,7 +81,7 @@ const Home = () => {
     <>
       <SEO
         title="Crypto Payment Solutions for African Merchants"
-        description="Accept Bitcoin, Ethereum, and stablecoins at your store. FSCA regulated, instant ZAR settlement, and 40,000+ transactions processed. Join 150+ merchants across South Africa."
+        description="Accept Bitcoin, Ethereum, and stablecoins at your store. FSCA regulated, instant ZAR, KES, and NGN settlement, and 40,000+ transactions processed. Join 150+ merchants across South Africa."
         canonicalUrl="/"
       />
       <script type="application/ld+json">
@@ -91,7 +91,7 @@ const Home = () => {
           "name": "Ezeebit",
           "url": "https://ezeebit.com",
           "logo": "https://ezeebit.com/ezeebit_black.png",
-          "description": "Leading crypto payment solutions for African merchants. Accept Bitcoin, Ethereum, and stablecoins with instant ZAR settlement.",
+          "description": "Leading crypto payment solutions for African merchants. Accept Bitcoin, Ethereum, and stablecoins with instant settlement in ZAR, KES, or NGN.",
           "foundingDate": "2023",
           "address": {
             "@type": "PostalAddress",
@@ -153,7 +153,7 @@ const Home = () => {
                 Accept stablecoin and crypto payments.
               </h1>
               <p className="text-lg lg:text-xl text-neutral-600 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                Leading crypto and stablecoin payment solutions for African businesses. Process transactions seamlessly with automatic settlement in stablecoin or ZAR.
+                Leading crypto and stablecoin payment solutions for African businesses. Process transactions seamlessly with automatic settlement in stablecoin or local currency (ZAR, KES, NGN).
               </p>
               <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center lg:justify-start">
                 <a
@@ -340,8 +340,8 @@ const Home = () => {
               },
               {
                 step: "03",
-                title: "ZAR Settlement",
-                description: "Funds are settled to your ZAR account the next business day with full transaction details",
+                title: "Local Currency Settlement",
+                description: "Funds are settled to your bank account in ZAR, KES, or NGN the next business day with full transaction details",
                 image: "/zar-pic-nobg.png"
               }
             ].map((step, index) => (
@@ -383,7 +383,7 @@ const Home = () => {
           >
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">7+ Cryptos</h2>
             <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
-              Accept payments in all major cryptocurrencies with automatic conversion to ZAR or stablecoins.
+              Accept payments in all major cryptocurrencies with automatic conversion to stablecoins or local currency (ZAR, KES, NGN).
             </p>
           </motion.div>
 

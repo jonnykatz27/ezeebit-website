@@ -40,14 +40,14 @@ const FAQ = () => {
       id: '3',
       category: 'payments',
       question: 'Which cryptocurrencies are supported?',
-      answer: 'Accept Bitcoin (BTC), Ethereum (ETH), USDT, USDC, BNB, DAI, PAXG and more. All transactions auto-convert to ZAR at checkout to shield you from volatility.',
+      answer: 'Accept Bitcoin (BTC), Ethereum (ETH), USDT, USDC, BNB, DAI, PAXG and more. All transactions are instantly hedged to stablecoins at checkout to shield you from volatility, then settled in your local currency (ZAR, KES, or NGN).',
       popular: true
     },
     {
       id: '4',
       category: 'payments',
       question: 'How fast are payments processed?',
-      answer: 'In-store ePOS payments can complete in as quick as 0.5 seconds. BTC transactions can take longer. Online transactions confirm within a minute on most networks, and ZAR settlement lands in your bank by the next business day.',
+      answer: 'In-store ePOS payments can complete in as quick as 0.5 seconds. BTC transactions can take longer. Online transactions confirm within a minute on most networks, and fiat settlement (ZAR, KES, or NGN) lands in your bank by the next business day.',
       popular: true
     },
     {
@@ -158,8 +158,8 @@ const FAQ = () => {
     {
       id: '20',
       category: 'payments',
-      question: 'Can I choose to be paid in stablecoins instead of ZAR?',
-      answer: 'Yes. You decide how you want to be settled: stablecoins (USDT or USDC) for speed and flexibility, or ZAR deposited directly into your bank account.',
+      question: 'Can I choose to be paid in stablecoins instead of local currency?',
+      answer: 'Yes. You decide how you want to be settled: stablecoins (USDT or USDC) for speed and flexibility, or local currency (ZAR, KES, or NGN) deposited directly into your bank account.',
       popular: true
     },
     {

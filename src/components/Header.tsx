@@ -38,6 +38,7 @@ const Header = () => {
         { name: 'Blog', href: '/resources/blog', description: 'Latest news and insights' },
         { name: 'User Manual', href: '/resources/user-manual', description: 'How-to guides and tutorials' },
         { name: 'Where to Spend Crypto', href: '/resources/where-to-spend', description: 'Verified merchants accepting crypto' },
+        { name: 'Careers', href: '/careers', description: 'Open roles at Ezeebit' },
       ]
     },
     { name: 'Contact', href: '/contact' },

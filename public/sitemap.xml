@@ -92,6 +92,14 @@
     <priority>0.5</priority>
   </url>
 
+  <!-- Careers -->
+  <url>
+    <loc>https://ezeebit.com/careers</loc>
+    <lastmod>2026-04-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <!-- Blog posts -->
   <url>
     <loc>https://ezeebit.com/blog/capital-flow-management-regulations</loc>

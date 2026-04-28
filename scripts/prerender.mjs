@@ -40,6 +40,7 @@ const staticRoutes = [
   '/signup',
   '/contact',
   '/ezeebit-resources',
+  '/careers',
 ]
 
 const storeSlugs = [

@@ -24,6 +24,7 @@ import BlogPost from './pages/BlogPost'
 import EzeebitResources from './pages/EzeebitResources'
 import WhereToSpend from './pages/WhereToSpend'
 import StoreDetail from './pages/StoreDetail'
+import Careers from './pages/Careers'
 import NotFound from './pages/NotFound'
 
 export function render(url: string) {
@@ -52,6 +53,7 @@ export function render(url: string) {
             <Route path="/ezeebit-resources" element={<EzeebitResources />} />
             <Route path="/resources/where-to-spend" element={<WhereToSpend />} />
             <Route path="/resources/stores/:slug" element={<StoreDetail />} />
+            <Route path="/careers" element={<Careers />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />

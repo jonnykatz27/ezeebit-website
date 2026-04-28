@@ -23,6 +23,7 @@ const BlogPost = lazy(() => import('./pages/BlogPost'))
 const EzeebitResources = lazy(() => import('./pages/EzeebitResources'))
 const WhereToSpend = lazy(() => import('./pages/WhereToSpend'))
 const StoreDetail = lazy(() => import('./pages/StoreDetail'))
+const Careers = lazy(() => import('./pages/Careers'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 function ScrollToTop() {
@@ -60,6 +61,7 @@ function App() {
             <Route path="/ezeebit-resources" element={<EzeebitResources />} />
             <Route path="/resources/where-to-spend" element={<WhereToSpend />} />
             <Route path="/resources/stores/:slug" element={<StoreDetail />} />
+            <Route path="/careers" element={<Careers />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

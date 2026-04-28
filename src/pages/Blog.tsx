@@ -20,7 +20,7 @@ const Blog = () => {
       readTime: '4 min read',
       category: 'Policy & Regulation',
       categoryId: 'policy',
-      image: '/ezeebit-blog.webp',
+      image: '/cfm-regulation-blog-cover.png',
       views: '0',
       featured: false
     },

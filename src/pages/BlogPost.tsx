@@ -157,7 +157,7 @@ const blogPostsData: Record<string, {
     date: '2026-04-29',
     readTime: '4 min read',
     category: 'Policy & Regulation',
-    image: '/ezeebit-blog.webp',
+    image: '/cfm-regulation-blog-cover.png',
     views: '0',
     content: (
       <>

@@ -94,7 +94,7 @@ const EzeebitResources = () => {
           </Link>
 
           <a
-            href="https://forms.zohopublic.com/jonnyeze1/form/SignUp/formperma/9fAqEbBhSgAbpaRJPz9aEsfTxy4PdQRx4FEzRCXuxfk"
+            href="https://merchant.ezeebit.com/#/signup"
             target="_blank"
             rel="noopener noreferrer"
             className="w-full btn-primary py-3 md:py-4 px-5 md:px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center space-x-3 text-base md:text-lg"

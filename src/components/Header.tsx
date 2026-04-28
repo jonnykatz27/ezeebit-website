@@ -139,7 +139,7 @@ const Header = () => {
               Login
             </a>
             <a
-              href="https://forms.zohopublic.com/jonnyeze1/form/SignUp/formperma/9fAqEbBhSgAbpaRJPz9aEsfTxy4PdQRx4FEzRCXuxfk"
+              href="https://merchant.ezeebit.com/#/signup"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary !py-2.5 !px-5 text-base"
@@ -231,7 +231,7 @@ const Header = () => {
                     Login
                   </a>
                   <a
-                    href="https://forms.zohopublic.com/jonnyeze1/form/SignUp/formperma/9fAqEbBhSgAbpaRJPz9aEsfTxy4PdQRx4FEzRCXuxfk"
+                    href="https://merchant.ezeebit.com/#/signup"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block w-full text-center btn-primary"

@@ -115,7 +115,7 @@ const Online = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center lg:justify-start">
                 <a
-                  href="https://forms.zohopublic.com/jonnyeze1/form/SignUp/formperma/9fAqEbBhSgAbpaRJPz9aEsfTxy4PdQRx4FEzRCXuxfk"
+                  href="https://merchant.ezeebit.com/#/signup"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-primary flex items-center justify-center"
@@ -242,7 +242,7 @@ const Online = () => {
                     <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
                       {platform.id === 'shopify' ? (
                         <a
-                          href="https://forms.zohopublic.com/jonnyeze1/form/SignUp/formperma/9fAqEbBhSgAbpaRJPz9aEsfTxy4PdQRx4FEzRCXuxfk"
+                          href="https://merchant.ezeebit.com/#/signup"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="btn-primary flex items-center justify-center w-full sm:w-auto"
@@ -339,7 +339,7 @@ const Online = () => {
               Install our plugin in minutes and start accepting stablecoin and cryptocurrency payments from customers worldwide.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="https://forms.zohopublic.com/jonnyeze1/form/SignUp/formperma/9fAqEbBhSgAbpaRJPz9aEsfTxy4PdQRx4FEzRCXuxfk" target="_blank" rel="noopener noreferrer" className="bg-white text-primary-500 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center">
+              <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className="bg-white text-primary-500 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center">
                 Install Plugin Now
                 <ArrowRight className="w-5 h-5 ml-2 inline" />
               </a>

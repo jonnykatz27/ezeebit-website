@@ -85,7 +85,7 @@ const Login = () => {
                 </h2>
                 <p className="text-neutral-600">
                   Don't have an account?{' '}
-                  <a href="https://forms.zohopublic.com/jonnyeze1/form/SignUp/formperma/9fAqEbBhSgAbpaRJPz9aEsfTxy4PdQRx4FEzRCXuxfk" target="_blank" rel="noopener noreferrer" className="text-primary-500 hover:text-primary-700 font-medium">
+                  <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className="text-primary-500 hover:text-primary-700 font-medium">
                     Sign up here
                   </a>
                 </p>

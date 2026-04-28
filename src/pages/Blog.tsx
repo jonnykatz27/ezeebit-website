@@ -12,6 +12,19 @@ const Blog = () => {
 
   const blogPosts = [
     {
+      id: 'capital-flow-management-regulations',
+      title: "Ezeebit's position on the draft Capital Flow Management Regulations",
+      excerpt: "South Africa is replacing its Exchange Control framework for the first time in 65 years — and for the first time, crypto assets are explicitly part of that picture. We welcome the direction, and we intend to help shape the outcome.",
+      author: 'Daniel Katz',
+      date: '2026-04-29',
+      readTime: '4 min read',
+      category: 'Policy & Regulation',
+      categoryId: 'policy',
+      image: '/ezeebit-blog.webp',
+      views: '0',
+      featured: false
+    },
+    {
       id: 'ezeebit-raises-r35-million',
       title: 'We Just Raised $2.05M to Build Africa\'s Stablecoin Payment Infrastructure',
       excerpt: 'Growing up in South Africa, my brothers Jonathan, David, and I saw something that didn\'t make sense: merchants trapped in payment systems that were slow, expensive, and built for a different era. That gap became our mission.',
@@ -41,6 +54,7 @@ const Blog = () => {
 
   const categories = [
     { id: 'all', name: 'All Posts', count: blogPosts.length },
+    { id: 'policy', name: 'Policy & Regulation', count: blogPosts.filter(p => p.categoryId === 'policy').length },
     { id: 'company', name: 'Company News', count: blogPosts.filter(p => p.categoryId === 'company').length }
   ]
 

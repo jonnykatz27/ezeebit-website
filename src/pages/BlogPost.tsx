@@ -149,6 +149,60 @@ const blogPostsData: Record<string, {
       </>
     )
   },
+  'capital-flow-management-regulations': {
+    title: "Ezeebit's position on the draft Capital Flow Management Regulations",
+    subtitle: "South Africa is replacing its Exchange Control framework for the first time in 65 years — and for the first time, crypto assets are explicitly part of that picture.",
+    author: 'Daniel Katz',
+    role: 'CEO, Ezeebit',
+    date: '2026-04-29',
+    readTime: '4 min read',
+    category: 'Policy & Regulation',
+    image: '/ezeebit-blog.webp',
+    views: '0',
+    content: (
+      <>
+        <blockquote className="bg-neutral-50 border-l-4 border-primary-500 p-6 my-6">
+          <p className="text-lg italic text-neutral-700">
+            South Africa is replacing its Exchange Control framework for the first time in 65 years — and for the first time, crypto assets are explicitly part of that picture.
+          </p>
+        </blockquote>
+
+        <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-4">A meaningful step in the right direction</h2>
+
+        <p className="text-lg text-neutral-600 mb-8">
+          The draft Capital Flow Management Regulations published by National Treasury and the SARB on 17 April represent a meaningful step toward the kind of regulatory clarity this industry has long needed. The stated approach — positive-bias, reporting-led rather than restriction-led — is the right instinct. Compliant infrastructure, not regulatory grey zones, is what gives platforms, merchants, and consumers the confidence to adopt crypto payment rails at scale. We welcome that direction.
+        </p>
+
+        <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-4">The consultation process matters as much as the draft</h2>
+
+        <p className="text-lg text-neutral-600 mb-8">
+          At the same time, we believe the consultation process matters as much as the draft itself. Some of the proposed provisions are broad in their scope, and we hope that National Treasury and the SARB approach the comment period with genuine openness — treating industry feedback not as noise to be managed, but as material input that shapes a better outcome. The goal should be a framework that closes real gaps, delivers meaningful regulatory clarity, and still fosters a healthy, competitive environment for the estimated seven million South Africans who hold crypto assets and the growing ecosystem of fintech and crypto companies building here.
+        </p>
+
+        <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-4">Domestic payments are not cross-border flows</h2>
+
+        <p className="text-lg text-neutral-600 mb-8">
+          As a CASP operating at the intersection of stablecoin payments and platform infrastructure, we have a particular interest in ensuring that domestic crypto payment use cases are correctly distinguished from cross-border capital flows. Getting that distinction right is not a technicality — it has direct implications for how this industry grows and who can participate in it.
+        </p>
+
+        <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-4">Cross-border flows are rarely one-directional</h2>
+
+        <p className="text-lg text-neutral-600 mb-8">
+          Equally important is how the framework treats legitimate cross-border activity. Stablecoin rails are increasingly the infrastructure behind diaspora remittances, intra-African trade settlement, cross-border services, and foreign investment into South African businesses — flows that bring real economic value into the country. While exchange controls naturally focus on managing outflows, overly restrictive outbound provisions create friction that suppresses legitimate inbound activity too. Cross-border flows are rarely one-directional. A framework that gets the outbound balance wrong risks undermining the very inflows South Africa wants to attract, and the regional financial hub positioning the country has worked to build.
+        </p>
+
+        <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-4">What we're doing next</h2>
+
+        <p className="text-lg text-neutral-600 mb-6">
+          Ezeebit will be submitting detailed comments to National Treasury before the 18 May deadline. We encourage all industry participants to do the same.
+        </p>
+
+        <p className="text-lg font-semibold text-neutral-900">
+          Regulatory clarity is how this industry matures. We intend to help shape it responsibly.
+        </p>
+      </>
+    )
+  },
   'pundi-x-rebrand': {
     title: 'Pundi X South Africa Rebrands To Ezeebit And Makes Key Acquisitions',
     subtitle: 'Pundi X South Africa Rebrands to Ezeebit and Acquires Advanced Cryptocurrency Wallet, Payment, and Exchange Infrastructure, Pioneering a New Era for Crypto Adoption in Africa and Beyond',

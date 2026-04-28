@@ -94,6 +94,12 @@
 
   <!-- Blog posts -->
   <url>
+    <loc>https://ezeebit.com/blog/capital-flow-management-regulations</loc>
+    <lastmod>2026-04-29</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://ezeebit.com/blog/ezeebit-raises-r35-million</loc>
     <lastmod>2025-12-09</lastmod>
     <changefreq>yearly</changefreq>

@@ -3,6 +3,8 @@ import react from '@vitejs/plugin-react'
 import fs from 'fs'
 import path from 'path'
 
+/// <reference types="vitest" />
+
 function safeBuildCopyPlugin() {
   let isBuild = false
   return {
@@ -45,4 +47,10 @@ function safeBuildCopyPlugin() {
 
 export default defineConfig({
   plugins: [react(), safeBuildCopyPlugin()],
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./src/test/setup.ts'],
+    css: false,
+  },
 })

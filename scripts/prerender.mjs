@@ -44,6 +44,7 @@ const staticRoutes = [
 ]
 
 const storeSlugs = [
+  'sunbet',
   'scoin',
   'istore',
   'al-capone-premium',
@@ -68,6 +69,7 @@ const storeSlugs = [
 ]
 
 const blogSlugs = [
+  'capital-flow-management-regulations',
   'ezeebit-raises-r35-million',
   'pundi-x-rebrand',
 ]

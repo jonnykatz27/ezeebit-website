@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import {
   Mail, Phone, Clock,
@@ -6,6 +7,20 @@ import {
 import SEO from '../components/SEO'
 
 const Contact = () => {
+  useEffect(() => {
+    const script = document.createElement('script')
+    script.id = 'ze-snippet'
+    script.src = 'https://static.zdassets.com/ekr/snippet.js?key=a6ca5c3e-5ecf-45c9-82f0-40e61445fead'
+    script.async = true
+    document.body.appendChild(script)
+
+    return () => {
+      document.getElementById('ze-snippet')?.remove()
+      // Remove the Zendesk widget iframe/container on unmount
+      document.getElementById('launcher')?.remove()
+      document.querySelectorAll('[data-product="web_widget"]').forEach(el => el.remove())
+    }
+  }, [])
   const contactMethods = [
     {
       icon: <Phone className="w-6 h-6" />,

@@ -107,10 +107,11 @@ const StoreDetail = () => {
               className="relative"
             >
               <div className="relative">
-                <img 
+                <img
                   src={store.image}
                   alt={`${store.name} store`}
-                  className="w-full h-96 object-cover rounded-xl shadow-lg"
+                  className={`w-full ${store.detailImageHeight ?? 'h-96'} object-cover rounded-xl shadow-lg`}
+                  style={store.imagePosition ? { objectPosition: store.imagePosition } : undefined}
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.src = 'https://images.pexels.com/photos/264636/pexels-photo-264636.jpeg?auto=compress&cs=tinysrgb&w=800';
@@ -138,16 +139,16 @@ const StoreDetail = () => {
                 <p className="mb-6">
                   {store.about}
                 </p>
-                <p className="mb-6">
-                  By partnering with Ezeebit, {store.name} offers customers the convenience and
-                  security of stablecoin and cryptocurrency payments. This forward-thinking approach reflects
-                  their commitment to embracing new technologies that enhance the shopping experience.
+                <p className={store.onlineOnly ? '' : 'mb-6'}>
+                  {store.partnerCopy ?? `By partnering with Ezeebit, ${store.name} offers customers the convenience and security of stablecoin and cryptocurrency payments. This forward-thinking approach reflects their commitment to embracing new technologies that enhance the shopping experience.`}
                 </p>
-                <p>
-                  Whether you're shopping online or visiting in person, you can enjoy seamless
-                  stablecoin and crypto payments with instant confirmations and transparent pricing. Experience
-                  the future of retail with {store.name} and Ezeebit.
-                </p>
+                {!store.onlineOnly && (
+                  <p>
+                    Whether you're shopping online or visiting in person, you can enjoy seamless
+                    stablecoin and crypto payments with instant confirmations and transparent pricing. Experience
+                    the future of retail with {store.name} and Ezeebit.
+                  </p>
+                )}
               </div>
             </motion.div>
           </div>
@@ -197,7 +198,7 @@ const StoreDetail = () => {
       </section>
 
       {/* Location & Hours Section */}
-      <section className="section-padding bg-neutral-50">
+      {!store.onlineOnly && <section className="section-padding bg-neutral-50">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -257,7 +258,7 @@ const StoreDetail = () => {
           )}
 
         </div>
-      </section>
+      </section>}
 
       {/* Sticky CTA */}
       <div className="fixed bottom-6 right-6 z-50">

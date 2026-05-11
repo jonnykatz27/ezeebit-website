@@ -122,6 +122,12 @@
 
   <!-- Where-to-spend store pages -->
   <url>
+    <loc>https://ezeebit.com/resources/stores/sunbet</loc>
+    <lastmod>2026-04-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://ezeebit.com/resources/stores/scoin</loc>
     <lastmod>2026-03-20</lastmod>
     <changefreq>monthly</changefreq>

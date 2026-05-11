@@ -52,15 +52,18 @@ Key differentiators:
 
 - [Ezeebit Homepage](https://www.ezeebit.com/): Overview of Ezeebit's crypto payment solution for African merchants
 - [About Ezeebit](https://www.ezeebit.com/resources/about): Company history, mission, values, and key milestones
-- [Merchant Signup](https://www.ezeebit.com/signup): Register as a merchant to start accepting crypto payments
+- [Merchant Signup](https://merchant.ezeebit.com/#/signup): Register as a merchant to start accepting crypto payments
 - [Contact Ezeebit](https://www.ezeebit.com/contact): Get in touch with the Ezeebit team across multiple channels
 - [Ezeebit Merchant Portal](https://merchant.ezeebit.com/): Merchant login for analytics, sales tracking, settlement views, and payout configuration
+- [Careers at Ezeebit](https://www.ezeebit.com/careers): Open roles at Ezeebit — currently hiring a Senior Software Engineer (Java & Spring)
 
 ## Resources
 
 - [Ezeebit Blog](https://www.ezeebit.com/resources/blog): Company news, product updates, and crypto payments insights
 - [Ezeebit FAQ](https://www.ezeebit.com/resources/faq): Common questions about accepting crypto payments with Ezeebit
 - [Legal & Terms](https://www.ezeebit.com/resources/legal): Terms and conditions for use of the Ezeebit platform
+- [Where to Spend Crypto](https://www.ezeebit.com/resources/where-to-spend): Directory of 20+ verified merchants accepting crypto payments via Ezeebit across South Africa
+- [Sunbet Store Page](https://www.ezeebit.com/resources/stores/sunbet): Sunbet is integrated with Ezeebit as a crypto deposit method for their online sports betting and gaming platform
 
 ## Optional
 

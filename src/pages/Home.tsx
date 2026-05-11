@@ -247,7 +247,8 @@ const Home = () => {
                 { name: 'Hydraulics', logo: '/hydraulics-logo(latest).png', scale: 1.15 },
                 { name: 'Al Capone', logo: '/alcapone-logo(final).png', scale: 1.15 },
                 { name: 'Scoin', logo: '/scoin-logo(latest).png' },
-                { name: 'Soul Gallery', logo: '/soul-gallery-logo(final).png', scale: 0.8, mobileScale: 0.69 }
+                { name: 'Soul Gallery', logo: '/soul-gallery-logo(final).png', scale: 0.8, mobileScale: 0.69 },
+                { name: 'Sunbet', logo: '/sunbet-logo.png' }
               ]}
               direction="left"
               speed={40}

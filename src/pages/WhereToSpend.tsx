@@ -140,6 +140,7 @@ const WhereToSpend = () => {
                       src={store.image}
                       alt={`${store.name} store`}
                       className="w-full h-full object-cover"
+                      style={store.imagePosition ? { objectPosition: store.imagePosition } : undefined}
                       loading="lazy"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;

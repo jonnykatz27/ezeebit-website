@@ -193,7 +193,7 @@ const Home = () => {
                 <img
                   src="/merchant-portal.png"
                   alt="Ezeebit Merchant Portal"
-                  className="rounded-2xl shadow-xl w-full max-w-[39.6rem] lg:max-w-[52.8rem] xl:max-w-[61.6rem] scale-110 origin-center"
+                  className="rounded-2xl shadow-xl w-full max-w-[32rem] lg:max-w-[43rem] xl:max-w-[50rem] scale-110 origin-center"
                 />
               </div>
               <div className="absolute inset-0 bg-gradient-to-br from-primary-200 to-secondary-200 rounded-2xl transform rotate-3 scale-110 -z-10"></div>

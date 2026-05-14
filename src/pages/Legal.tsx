@@ -852,7 +852,7 @@ const Legal = () => {
     <>
       <SEO
         title="Legal — Terms, Privacy & Compliance"
-        description="Ezeebit's terms of service, privacy policy, and regulatory compliance information. FSCA registered, FIC compliant, and FAIS licensed crypto asset services provider."
+        description="Ezeebit's terms of service, privacy policy, and regulatory compliance information. FSCA registered, FIC compliant, and FAIS licensed crypto asset services provider. View our Trust Centre for security and compliance documentation."
         canonicalUrl="/resources/legal"
       />
       <motion.div

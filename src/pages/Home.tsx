@@ -315,7 +315,7 @@ const Home = () => {
 
       {/* ── Payment Flow — vertical scroll narrative ── */}
       <section className="pt-8 pb-16 lg:pt-12 lg:pb-24 bg-neutral-50/60">
-        <div className="max-w-[680px] mx-auto px-5 sm:px-8 text-center">
+        <div className="max-w-[860px] mx-auto px-5 sm:px-8 text-center">
 
           {/* ── Header ── */}
           <motion.div
@@ -359,19 +359,25 @@ const Home = () => {
               {/* Direct on-chain + WalletConnect */}
               <div className="grid grid-cols-2 gap-3 mb-3 text-left">
                 <div className="bg-neutral-50 rounded-2xl p-5">
-                  <div className="flex items-center mb-5">
-                    {['btc', 'eth', 'usdt', 'usdc', 'bnb'].map((t, i) => (
+                  <div className="relative mb-5" style={{ width: 80, height: 58 }}>
+                    {[
+                      { t: 'usdc', left: 0,  top: 0,  z: 1 },
+                      { t: 'bnb',  left: 24, top: 0,  z: 2 },
+                      { t: 'btc',  left: 0,  top: 26, z: 4 },
+                      { t: 'eth',  left: 24, top: 26, z: 5 },
+                      { t: 'usdt', left: 48, top: 26, z: 6 },
+                    ].map(({ t, left, top, z }) => (
                       <div
                         key={t}
-                        className="w-10 h-10 rounded-full overflow-hidden bg-white border-2 border-neutral-50 shadow-sm"
-                        style={{ marginLeft: i > 0 ? '-10px' : 0, zIndex: 5 - i, position: 'relative' }}
+                        className="absolute w-8 h-8 rounded-full overflow-hidden bg-white border-2 border-neutral-100 shadow-sm"
+                        style={{ left, top, zIndex: z }}
                       >
                         <img src={`/${t}-logo.svg`} alt={t} className="w-full h-full object-contain" />
                       </div>
                     ))}
                     <div
-                      className="w-10 h-10 rounded-full bg-neutral-200 flex items-center justify-center text-xs font-bold text-neutral-500 border-2 border-neutral-50"
-                      style={{ marginLeft: '-10px', position: 'relative' }}
+                      className="absolute w-8 h-8 rounded-full bg-neutral-200 flex items-center justify-center text-xs font-bold text-neutral-500 border-2 border-neutral-100"
+                      style={{ left: 48, top: 0, zIndex: 3 }}
                     >
                       +
                     </div>
@@ -383,13 +389,13 @@ const Home = () => {
                 </div>
 
                 <div className="bg-neutral-50 rounded-2xl p-5">
-                  <div className="flex items-center gap-3 mb-5">
-                    <div className="w-12 h-12 rounded-2xl overflow-hidden bg-white flex items-center justify-center p-1.5 shadow-sm shrink-0">
+                  <div className="flex items-center gap-3 mb-5 h-[58px]">
+                    <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-white flex items-center justify-center p-1.5 shadow-sm shrink-0">
                       <img src="/walletconnect-logo.svg" alt="WalletConnect" className="w-full h-full object-contain" />
                     </div>
                     <div>
-                      <div className="text-2xl font-bold text-primary-500 leading-none mb-0.5">700+</div>
-                      <div className="text-xs text-neutral-400">compatible wallets</div>
+                      <div className="text-lg sm:text-2xl font-bold text-primary-500 leading-none mb-0.5">700+</div>
+                      <div className="text-[10px] sm:text-xs text-neutral-400">compatible wallets</div>
                     </div>
                   </div>
                   <h4 className="font-semibold text-neutral-900 text-sm mb-1.5">WalletConnect</h4>
@@ -407,11 +413,11 @@ const Home = () => {
                   { name: 'Binance', logo: '/Binance-Logo (clean).png' },
                 ].map((w) => (
                   <div key={w.name} className="bg-neutral-50 rounded-2xl p-5 flex flex-col items-center gap-3">
-                    <div className="w-14 h-14 rounded-2xl overflow-hidden bg-white flex items-center justify-center p-2 shadow-sm">
+                    <div className="w-16 h-16 rounded-2xl overflow-hidden bg-white flex items-center justify-center p-2 shadow-sm">
                       <img src={w.logo} alt={w.name} className="w-full h-full object-contain" />
                     </div>
                     <span className="font-semibold text-neutral-900 text-sm">{w.name}</span>
-                    <span className="text-[10px] text-neutral-400">Direct integration</span>
+                    <span className="text-xs text-neutral-400">Direct integration</span>
                   </div>
                 ))}
               </div>
@@ -458,8 +464,8 @@ const Home = () => {
               </div>
 
               <div className="flex justify-center mb-6">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center overflow-hidden shadow-sm">
-                  <img src="/ezeebit-icon-blue.png" alt="Ezeebit" className="w-11 h-11 object-contain" />
+                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center overflow-hidden shadow-sm">
+                  <img src="/ezeebit-icon-blue.png" alt="Ezeebit" className="w-14 h-14 object-contain" />
                 </div>
               </div>
 
@@ -538,15 +544,17 @@ const Home = () => {
               </p>
 
               <div className="grid grid-cols-2 gap-3 mb-3 text-left">
-                <div className="bg-neutral-50 rounded-2xl p-5">
-                  <div className="w-10 h-10 bg-primary-100 rounded-xl flex items-center justify-center mb-4">
-                    <Landmark className="w-5 h-5 text-primary-600" />
+                <div className="bg-neutral-50 rounded-2xl p-5 flex flex-col">
+                  <div className="h-10 flex items-center mb-4">
+                    <div className="w-10 h-10 bg-primary-100 rounded-xl flex items-center justify-center">
+                      <Landmark className="w-5 h-5 text-primary-600" />
+                    </div>
                   </div>
                   <h4 className="font-semibold text-neutral-900 text-sm mb-1.5">Fiat settlement</h4>
                   <p className="text-sm text-neutral-500 leading-relaxed mb-4">
                     Next-day funds direct to your bank account. T+1 settlement.
                   </p>
-                  <div className="flex items-center gap-1.5 text-xs font-semibold text-primary-500">
+                  <div className="flex items-center gap-1.5 text-xs font-semibold text-primary-500 mt-auto">
                     <span>ZAR</span>
                     <span className="text-neutral-300">·</span>
                     <span>KES</span>
@@ -555,16 +563,16 @@ const Home = () => {
                   </div>
                 </div>
 
-                <div className="bg-neutral-50 rounded-2xl p-5">
-                  <div className="flex items-center gap-1 mb-4">
-                    <img src="/usdt-logo.svg" alt="USDT" className="w-9 h-9 object-contain" />
-                    <img src="/usdc-logo.svg" alt="USDC" className="w-9 h-9 object-contain -ml-1" />
+                <div className="bg-neutral-50 rounded-2xl p-5 flex flex-col">
+                  <div className="h-10 flex items-center gap-1 mb-4">
+                    <img src="/usdt-logo.svg" alt="USDT" className="w-10 h-10 object-contain" />
+                    <img src="/usdc-logo.svg" alt="USDC" className="w-10 h-10 object-contain -ml-1" />
                   </div>
                   <h4 className="font-semibold text-neutral-900 text-sm mb-1.5">Stablecoin settlement</h4>
                   <p className="text-sm text-neutral-500 leading-relaxed mb-4">
-                    Hold or transfer in your preferred stablecoin. Instant, borderless.
+                    Hold or transfer in stablecoin. Instant, borderless.
                   </p>
-                  <div className="flex items-center gap-1.5 text-xs font-semibold text-primary-500">
+                  <div className="flex items-center gap-1.5 text-xs font-semibold text-primary-500 mt-auto">
                     <span>USDT</span>
                     <span className="text-neutral-300">·</span>
                     <span>USDC</span>
@@ -718,9 +726,9 @@ const Home = () => {
               <div className="max-w-2xl mx-auto">
                 <div className="grid grid-cols-3 gap-6 md:gap-8 mb-6 md:mb-8">
                   {[
-                    { name: 'Terry Angelos', image: '/terry-image-nobg.png', linkedin: 'https://www.linkedin.com/in/tangelos' },
-                    { name: 'Anton Katz', image: '/anton_image-nobg.png', linkedin: 'https://www.linkedin.com/in/katzanton' },
-                    { name: 'David|de Picciotto', image: '/david_image-nobg.png', linkedin: 'https://www.linkedin.com/in/david-de-picciotto' }
+                    { name: 'Terry Angelos', note: 'ex-Visa', image: '/terry-image-nobg.png', linkedin: 'https://www.linkedin.com/in/tangelos' },
+                    { name: 'Anton Katz', note: 'Talos', image: '/anton_image-nobg.png', linkedin: 'https://www.linkedin.com/in/katzanton' },
+                    { name: 'David|de Picciotto', note: 'ex-Revolut', image: '/david_image-nobg.png', linkedin: 'https://www.linkedin.com/in/david-de-picciotto' }
                   ].map((investor, index) => (
                     <motion.div
                       key={investor.name}
@@ -758,13 +766,14 @@ const Home = () => {
                             ))
                         }
                       </p>
+                      <p className="text-[10px] text-neutral-400 mt-0.5">{investor.note}</p>
                     </motion.div>
                   ))}
                 </div>
                 <div className="grid grid-cols-2 gap-6 md:gap-8 max-w-md mx-auto">
                   {[
-                    { name: 'Nadir Khamissa', image: '/nadir_image-nobg.png', linkedin: 'https://www.linkedin.com/in/nadir-khamissa' },
-                    { name: 'Chris Harmse', image: '/chris_image-nobg.png', linkedin: 'https://www.linkedin.com/in/chrisharmse' }
+                    { name: 'Nadir Khamissa', note: 'Hello Group', image: '/nadir_image-nobg.png', linkedin: 'https://www.linkedin.com/in/nadir-khamissa' },
+                    { name: 'Chris Harmse', note: 'BVNK', image: '/chris_image-nobg.png', linkedin: 'https://www.linkedin.com/in/chrisharmse' }
                   ].map((investor, index) => (
                     <motion.div
                       key={investor.name}
@@ -794,6 +803,7 @@ const Home = () => {
                           </span>
                         ))}
                       </p>
+                      <p className="text-[10px] text-neutral-400 mt-0.5">{investor.note}</p>
                     </motion.div>
                   ))}
                 </div>

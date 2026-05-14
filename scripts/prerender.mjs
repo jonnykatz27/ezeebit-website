@@ -69,6 +69,7 @@ const storeSlugs = [
 ]
 
 const blogSlugs = [
+  'most-comprehensive-crypto-payment-gateway-africa',
   'capital-flow-management-regulations',
   'ezeebit-raises-r35-million',
   'pundi-x-rebrand',

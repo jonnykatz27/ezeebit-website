@@ -4,13 +4,14 @@ import { motion } from 'framer-motion'
 import {
   Zap, Shield, Globe, TrendingUp,
   ArrowRight, Star, ChevronLeft, ChevronRight,
-  ThumbsUp, Headphones, Lock
+  ThumbsUp, Headphones, Lock, Landmark
 } from 'lucide-react'
 import PartnerCarousel from '../components/PartnerCarousel'
 import SEO from '../components/SEO'
 
 const Home = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
+
 
   const features = [
     {
@@ -312,184 +313,282 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-10 lg:py-20 bg-white">
-        <div className="container-custom">
+      {/* ── Payment Flow — vertical scroll narrative ── */}
+      <section className="pt-8 pb-16 lg:pt-12 lg:pb-24 bg-neutral-50/60">
+        <div className="max-w-[680px] mx-auto px-5 sm:px-8 text-center">
+
+          {/* ── Header ── */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-10 lg:mb-16"
+            className="mb-14 lg:mb-18"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">How It Works</h2>
-            <p className="text-lg text-neutral-600 max-w-3xl mx-auto leading-relaxed">
-              Simple, secure, and seamless crypto payment processing in three easy steps.
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+              How it works
+            </h2>
+            <p className="text-neutral-500 text-lg leading-relaxed">
+              Three seamless steps. Zero crypto exposure for your business.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8">
-            {[
-              {
-                step: "01",
-                title: "Customer Pays",
-                description: "Customer selects crypto payment and scans the QR code from their preferred wallet",
-                image: "/scan-pic-nobg-min.png"
-              },
-              {
-                step: "02",
-                title: "Instant Conversion",
-                description: "Cryptocurrency is automatically converted to stablecoins to eliminate volatility risk",
-                image: "/download.png"
-              },
-              {
-                step: "03",
-                title: "Local Currency Settlement",
-                description: "Funds are settled to your bank account in ZAR, KES, or NGN the next business day with full transaction details",
-                image: "/stablecoin-settlement.png"
-              }
-            ].map((step, index) => (
-              <motion.div
-                key={step.step}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
-                className="text-center"
-              >
-                <div className="relative mb-6">
-                  <img
-                    src={step.image}
-                    alt={step.title}
-                    className="w-full h-20 md:h-32 object-contain rounded-xl"
-                  />
-                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-primary-500 text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md">
-                    {step.step}
+          {/* ── Step 01 — Customer Pays ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="bg-white border border-neutral-200/80 rounded-3xl shadow-sm"
+          >
+            <div className="p-6 sm:p-10">
+              <div className="flex items-center justify-center gap-3 mb-7">
+                <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary-50 text-xs font-semibold text-primary-600 shrink-0">
+                  01
+                </span>
+                <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-400">
+                  Customer Pays
+                </span>
+              </div>
+
+              <h3 className="text-2xl lg:text-[1.75rem] font-bold text-neutral-900 mb-3">
+                Any wallet.
+              </h3>
+              <p className="text-neutral-500 leading-relaxed mb-8">
+                Your customers pay from whichever wallet they already use — no new app, no extra steps.
+              </p>
+
+              {/* Direct on-chain + WalletConnect */}
+              <div className="grid grid-cols-2 gap-3 mb-3 text-left">
+                <div className="bg-neutral-50 rounded-2xl p-5">
+                  <div className="flex items-center mb-5">
+                    {['btc', 'eth', 'usdt', 'usdc', 'bnb'].map((t, i) => (
+                      <div
+                        key={t}
+                        className="w-10 h-10 rounded-full overflow-hidden bg-white border-2 border-neutral-50 shadow-sm"
+                        style={{ marginLeft: i > 0 ? '-10px' : 0, zIndex: 5 - i, position: 'relative' }}
+                      >
+                        <img src={`/${t}-logo.svg`} alt={t} className="w-full h-full object-contain" />
+                      </div>
+                    ))}
+                    <div
+                      className="w-10 h-10 rounded-full bg-neutral-200 flex items-center justify-center text-xs font-bold text-neutral-500 border-2 border-neutral-50"
+                      style={{ marginLeft: '-10px', position: 'relative' }}
+                    >
+                      +
+                    </div>
                   </div>
+                  <h4 className="font-semibold text-neutral-900 text-sm mb-1.5">Direct on-chain</h4>
+                  <p className="text-sm text-neutral-500 leading-relaxed">
+                    Pay from any wallet compatible with our supported networks — sent directly on-chain
+                  </p>
                 </div>
-                <h3 className="text-lg font-semibold text-neutral-900 mb-3">
-                  {step.title}
-                </h3>
-                <p className="text-neutral-600 text-sm leading-relaxed">
-                  {step.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      <section className="py-10 lg:py-20 bg-neutral-50">
-        <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-8 lg:mb-12"
-          >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">7+ Cryptos</h2>
-            <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
-              Accept payments in all major cryptocurrencies with automatic conversion to stablecoins or local currency (ZAR, KES, NGN).
-            </p>
+                <div className="bg-neutral-50 rounded-2xl p-5">
+                  <div className="flex items-center gap-3 mb-5">
+                    <div className="w-12 h-12 rounded-2xl overflow-hidden bg-white flex items-center justify-center p-1.5 shadow-sm shrink-0">
+                      <img src="/walletconnect-logo.svg" alt="WalletConnect" className="w-full h-full object-contain" />
+                    </div>
+                    <div>
+                      <div className="text-2xl font-bold text-primary-500 leading-none mb-0.5">700+</div>
+                      <div className="text-xs text-neutral-400">compatible wallets</div>
+                    </div>
+                  </div>
+                  <h4 className="font-semibold text-neutral-900 text-sm mb-1.5">WalletConnect</h4>
+                  <p className="text-sm text-neutral-500 leading-relaxed">
+                    Connect any WalletConnect-compatible wallet in seconds with a simple QR scan
+                  </p>
+                </div>
+              </div>
+
+              {/* Luno / VALR / Binance */}
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  { name: 'Luno', logo: '/luno_logo (clean).png' },
+                  { name: 'VALR', logo: '/valr_logo (clean).png' },
+                  { name: 'Binance', logo: '/Binance-Logo (clean).png' },
+                ].map((w) => (
+                  <div key={w.name} className="bg-neutral-50 rounded-2xl p-5 flex flex-col items-center gap-3">
+                    <div className="w-14 h-14 rounded-2xl overflow-hidden bg-white flex items-center justify-center p-2 shadow-sm">
+                      <img src={w.logo} alt={w.name} className="w-full h-full object-contain" />
+                    </div>
+                    <span className="font-semibold text-neutral-900 text-sm">{w.name}</span>
+                    <span className="text-[10px] text-neutral-400">Direct integration</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </motion.div>
 
-          <div className="grid grid-cols-4 sm:grid-cols-4 lg:grid-cols-8 gap-3 lg:gap-4 max-w-5xl mx-auto">
-            {[
-              { symbol: 'BTC', name: 'Bitcoin' },
-              { symbol: 'ETH', name: 'ERC-20' },
-              { symbol: 'USDT', name: 'Multiple' },
-              { symbol: 'USDC', name: 'Multiple' },
-              { symbol: 'BNB', name: 'BSC' },
-              { symbol: 'DAI', name: 'ERC-20' },
-              { symbol: 'PAXG', name: 'ERC-20' }
-            ].map((token, index) => (
+          {/* ── Flow connector ── */}
+          <div className="flex justify-center py-6 sm:py-8">
+            <div className="relative overflow-hidden rounded-full" style={{ width: 3, height: 96 }}>
+              <div className="absolute inset-0 bg-neutral-200/50" />
               <motion.div
-                key={token.symbol}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-                className="card crypto-card aspect-square p-2 lg:p-4 text-center hover:scale-105 transition-transform flex flex-col items-center justify-center"
-              >
-                <div className="w-8 h-8 lg:w-12 lg:h-12 mb-1 lg:mb-2">
-                  <img
-                    src={`/${token.symbol.toLowerCase()}-logo.svg`}
-                    alt={`${token.symbol} logo`}
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <div className="font-semibold text-neutral-900 text-xs lg:text-sm">{token.symbol}</div>
-                <div className="text-[9px] lg:text-xs text-neutral-500 whitespace-nowrap">{token.name}</div>
-              </motion.div>
-            ))}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, delay: 0.35 }}
-              className="card crypto-card aspect-square p-2 lg:p-4 text-center hover:scale-105 transition-transform flex flex-col items-center justify-center w-full h-full"
-            >
-              <div className="font-semibold text-neutral-500 text-xs lg:text-sm leading-tight">More coming soon</div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-10 lg:py-20 bg-white">
-        <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-8 lg:mb-12"
-          >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Compatible With Any Wallet</h2>
-            <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
-              Customers can pay directly using any centralised wallet or any decentralised wallets.
-            </p>
-          </motion.div>
-
-          <div className="max-w-4xl mx-auto">
-            <p className="text-center text-xs font-semibold text-neutral-500 uppercase tracking-widest mb-8">
-              Direct Integrations
-            </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-8 lg:gap-10 max-w-md md:max-w-none mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-                className="bg-white rounded-xl md:rounded-2xl p-6 md:p-8 shadow-sm border border-neutral-100 flex flex-col items-center justify-center hover:shadow-md transition-shadow"
-              >
-                <img src="/luno_logo.png" alt="Luno" className="w-12 h-12 lg:w-14 lg:h-14 rounded-full object-cover mb-3 flex-shrink-0" />
-                <span className="font-semibold text-neutral-900 text-base md:text-lg">Luno</span>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="bg-white rounded-xl md:rounded-2xl p-6 md:p-8 shadow-sm border border-neutral-100 flex flex-col items-center justify-center hover:shadow-md transition-shadow"
-              >
-                <img src="/valr_logo.png" alt="VALR" className="w-12 h-12 lg:w-14 lg:h-14 rounded-full object-cover mb-3 flex-shrink-0" />
-                <span className="font-semibold text-neutral-900 text-base md:text-lg">VALR</span>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="bg-white rounded-xl md:rounded-2xl p-6 md:p-8 shadow-sm border border-neutral-100 flex flex-col items-center justify-center hover:shadow-md transition-shadow"
-              >
-                <img src="/Binance-Logo.svg" alt="Binance" className="w-12 h-12 lg:w-14 lg:h-14 rounded-full object-cover mb-3 flex-shrink-0" />
-                <span className="font-semibold text-neutral-900 text-base md:text-lg">Binance</span>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="bg-white rounded-xl md:rounded-2xl p-6 md:p-8 shadow-sm border border-neutral-100 flex flex-col items-center justify-center hover:shadow-md transition-shadow relative"
-              >
-                <div className="absolute -top-2 -right-2 md:-top-2.5 md:-right-2.5 bg-primary-500 text-white text-[9px] md:text-[10px] font-bold px-2 py-0.5 md:px-2 md:py-1 rounded-full shadow-md whitespace-nowrap">
-                  700+ Wallets
-                </div>
-                <img src="/walletconnect-logo.svg" alt="WalletConnect" className="w-12 h-12 lg:w-14 lg:h-14 rounded-full object-cover mb-3 flex-shrink-0" />
-                <span className="font-semibold text-neutral-900 text-base md:text-lg">WalletConnect</span>
-              </motion.div>
+                className="absolute left-0 right-0"
+                style={{
+                  height: 38,
+                  background: 'linear-gradient(to bottom, transparent 0%, rgba(0,116,227,0.45) 55%, #0074E3 100%)',
+                }}
+                animate={{ y: [-38, 96] }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  repeatDelay: 0.35,
+                  ease: 'linear',
+                }}
+              />
             </div>
           </div>
+
+          {/* ── Step 02 — Ezeebit Converts ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="bg-white border border-neutral-200/80 rounded-3xl shadow-sm"
+          >
+            <div className="p-6 sm:p-10">
+              <div className="flex items-center justify-center gap-3 mb-7">
+                <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary-50 text-xs font-semibold text-primary-600 shrink-0">
+                  02
+                </span>
+                <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-400">
+                  Ezeebit Converts
+                </span>
+              </div>
+
+              <div className="flex justify-center mb-6">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center overflow-hidden shadow-sm">
+                  <img src="/ezeebit-icon-blue.png" alt="Ezeebit" className="w-11 h-11 object-contain" />
+                </div>
+              </div>
+
+              <h3 className="text-2xl lg:text-[1.75rem] font-bold text-neutral-900 mb-3">
+                We handle the conversion.
+              </h3>
+              <p className="text-neutral-500 leading-relaxed mb-8">
+                Your customer's crypto is automatically converted at a locked rate at the moment of payment.
+                You never hold volatile assets — Ezeebit hedges everything instantly.
+              </p>
+
+              <div className="bg-neutral-50 rounded-2xl p-1 divide-y divide-neutral-100 text-left">
+                {[
+                  { icon: <Zap className="w-4 h-4" />, label: 'Rate locked in < 1 second', desc: 'no slippage, no exposure window between payment and settlement' },
+                  { icon: <Shield className="w-4 h-4" />, label: 'Hedged at point of payment', desc: 'you receive the settled value, not the market value of the crypto' },
+                  { icon: <Lock className="w-4 h-4" />, label: 'No overnight crypto positions', desc: 'all conversions are closed before settlement is issued' },
+                ].map((f) => (
+                  <div key={f.label} className="flex items-start gap-4 p-4">
+                    <div className="w-9 h-9 bg-primary-50 rounded-xl flex items-center justify-center text-primary-600 shrink-0">
+                      {f.icon}
+                    </div>
+                    <p className="text-sm text-neutral-600 leading-relaxed pt-1">
+                      <span className="font-semibold text-neutral-900">{f.label}</span>
+                      {' '}—{' '}{f.desc}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+
+          {/* ── Flow connector ── */}
+          <div className="flex justify-center py-6 sm:py-8">
+            <div className="relative overflow-hidden rounded-full" style={{ width: 3, height: 96 }}>
+              <div className="absolute inset-0 bg-neutral-200/50" />
+              <motion.div
+                className="absolute left-0 right-0"
+                style={{
+                  height: 38,
+                  background: 'linear-gradient(to bottom, transparent 0%, rgba(0,116,227,0.45) 55%, #0074E3 100%)',
+                }}
+                animate={{ y: [-38, 96] }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  repeatDelay: 0.35,
+                  ease: 'linear',
+                }}
+              />
+            </div>
+          </div>
+
+          {/* ── Step 03 — Merchant Receives ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="bg-white border border-neutral-200/80 rounded-3xl shadow-sm"
+          >
+            <div className="p-6 sm:p-10">
+              <div className="flex items-center justify-center gap-3 mb-7">
+                <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary-50 text-xs font-semibold text-primary-600 shrink-0">
+                  03
+                </span>
+                <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-400">
+                  Merchant Receives
+                </span>
+              </div>
+
+              <h3 className="text-2xl lg:text-[1.75rem] font-bold text-neutral-900 mb-3">
+                Settled in your currency.
+              </h3>
+              <p className="text-neutral-500 leading-relaxed mb-8">
+                No volatility. No chargebacks. Choose between fiat and stablecoin settlement — or both.
+              </p>
+
+              <div className="grid grid-cols-2 gap-3 mb-3 text-left">
+                <div className="bg-neutral-50 rounded-2xl p-5">
+                  <div className="w-10 h-10 bg-primary-100 rounded-xl flex items-center justify-center mb-4">
+                    <Landmark className="w-5 h-5 text-primary-600" />
+                  </div>
+                  <h4 className="font-semibold text-neutral-900 text-sm mb-1.5">Fiat settlement</h4>
+                  <p className="text-sm text-neutral-500 leading-relaxed mb-4">
+                    Next-day funds direct to your bank account. T+1 settlement.
+                  </p>
+                  <div className="flex items-center gap-1.5 text-xs font-semibold text-primary-500">
+                    <span>ZAR</span>
+                    <span className="text-neutral-300">·</span>
+                    <span>KES</span>
+                    <span className="text-neutral-300">·</span>
+                    <span>NGN</span>
+                  </div>
+                </div>
+
+                <div className="bg-neutral-50 rounded-2xl p-5">
+                  <div className="flex items-center gap-1 mb-4">
+                    <img src="/usdt-logo.svg" alt="USDT" className="w-9 h-9 object-contain" />
+                    <img src="/usdc-logo.svg" alt="USDC" className="w-9 h-9 object-contain -ml-1" />
+                  </div>
+                  <h4 className="font-semibold text-neutral-900 text-sm mb-1.5">Stablecoin settlement</h4>
+                  <p className="text-sm text-neutral-500 leading-relaxed mb-4">
+                    Hold or transfer in your preferred stablecoin. Instant, borderless.
+                  </p>
+                  <div className="flex items-center gap-1.5 text-xs font-semibold text-primary-500">
+                    <span>USDT</span>
+                    <span className="text-neutral-300">·</span>
+                    <span>USDC</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Zero exposure card */}
+              <div className="bg-neutral-50 rounded-2xl p-5 flex items-start gap-4 text-left">
+                <div className="w-9 h-9 bg-primary-50 rounded-xl flex items-center justify-center text-primary-600 shrink-0">
+                  <Shield className="w-4 h-4" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-neutral-900 text-sm mb-1.5">
+                    Zero crypto exposure for your business
+                  </h4>
+                  <p className="text-sm text-neutral-500 leading-relaxed">
+                    Your business never holds or touches crypto. Every payment is hedged the moment it lands — volatility stays with us, settlement arrives with you.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
         </div>
       </section>
 

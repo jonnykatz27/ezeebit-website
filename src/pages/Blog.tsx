@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import {
-  Calendar, Clock, ArrowRight, Search, Eye
+  Calendar, Clock, ArrowRight, Search
 } from 'lucide-react'
 import SEO from '../components/SEO'
 
@@ -12,15 +12,28 @@ const Blog = () => {
 
   const blogPosts = [
     {
+      id: 'most-comprehensive-crypto-payment-gateway-africa',
+      title: "Africa's most comprehensive crypto checkout",
+      excerpt: "A single integration that accepts payments from any wallet, 700+ wallets via WalletConnect, and directly from Luno, VALR, and Binance. Merchants settle in stablecoins (T+0) or local currency (T+1), with zero crypto volatility exposure.",
+      author: 'Jonathan Katz',
+      date: '2026-05-13',
+      readTime: '5 min read',
+      category: 'Product',
+      categoryId: 'product',
+      image: '/checkout-launch-cover@2x.png',
+      views: '0',
+      featured: false
+    },
+    {
       id: 'capital-flow-management-regulations',
       title: "Ezeebit's position on the draft Capital Flow Management Regulations",
       excerpt: "South Africa is replacing its Exchange Control framework for the first time in 65 years — and for the first time, crypto assets are explicitly part of that picture. We welcome the direction, and we intend to help shape the outcome.",
       author: 'Daniel Katz',
       date: '2026-04-29',
-      readTime: '4 min read',
+      readTime: '1 min read',
       category: 'Policy & Regulation',
       categoryId: 'policy',
-      image: '/cfm-regulation-blog-cover.png',
+      image: '/cfm-regulation-blog-cover copy.png',
       views: '0',
       featured: false
     },
@@ -43,7 +56,7 @@ const Blog = () => {
       excerpt: 'Pundi X South Africa Rebrands to Ezeebit and Acquires Advanced Cryptocurrency Wallet, Payment, and Exchange Infrastructure, Pioneering a New Era for Crypto Adoption in Africa and Beyond.',
       author: 'Daniel Katz',
       date: '2025-01-27',
-      readTime: '12 min read',
+      readTime: '5 min read',
       category: 'Company News',
       categoryId: 'company',
       image: '/blog-rebranding.webp',
@@ -54,6 +67,7 @@ const Blog = () => {
 
   const categories = [
     { id: 'all', name: 'All Posts', count: blogPosts.length },
+    { id: 'product', name: 'Product', count: blogPosts.filter(p => p.categoryId === 'product').length },
     { id: 'policy', name: 'Policy & Regulation', count: blogPosts.filter(p => p.categoryId === 'policy').length },
     { id: 'company', name: 'Company News', count: blogPosts.filter(p => p.categoryId === 'company').length }
   ]
@@ -174,10 +188,6 @@ const Blog = () => {
                       <Clock className="w-3 h-3 md:w-4 md:h-4 mr-1" />
                       {featuredPost.readTime}
                     </span>
-                    <span className="flex items-center">
-                      <Eye className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                      {featuredPost.views}
-                    </span>
                   </div>
                   <Link to={`/blog/${featuredPost.id}`}>
                     <h2 className="text-lg md:text-2xl lg:text-3xl font-bold text-neutral-900 mb-3 md:mb-4 hover:text-primary-500 transition-colors cursor-pointer">
@@ -261,10 +271,6 @@ const Blog = () => {
                     <span className="flex items-center">
                       <Clock className="w-3 h-3 mr-1" />
                       {post.readTime}
-                    </span>
-                    <span className="flex items-center">
-                      <Eye className="w-3 h-3 mr-1" />
-                      {post.views}
                     </span>
                   </div>
                   <Link to={`/blog/${post.id}`}>

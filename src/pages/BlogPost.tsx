@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import { Link, useParams } from 'react-router-dom'
 import {
   Calendar, Clock, ArrowLeft, Twitter, Linkedin,
-  Mail, Eye, Tag
+  Mail, Tag
 } from 'lucide-react'
 import SEO from '../components/SEO'
 
@@ -153,11 +153,11 @@ const blogPostsData: Record<string, {
     title: "Ezeebit's position on the draft Capital Flow Management Regulations",
     subtitle: "South Africa is replacing its Exchange Control framework for the first time in 65 years — and for the first time, crypto assets are explicitly part of that picture.",
     author: 'Daniel Katz',
-    role: 'CEO, Ezeebit',
+    role: 'CEO & Co-Founder of Ezeebit',
     date: '2026-04-29',
-    readTime: '4 min read',
+    readTime: '1 min read',
     category: 'Policy & Regulation',
-    image: '/cfm-regulation-blog-cover.png',
+    image: '/cfm-regulation-blog-cover copy.png',
     views: '0',
     content: (
       <>
@@ -203,13 +203,253 @@ const blogPostsData: Record<string, {
       </>
     )
   },
+  'most-comprehensive-crypto-payment-gateway-africa': {
+    title: "Africa's most comprehensive crypto checkout",
+    subtitle: "A single integration that accepts payments from any wallet, 700+ wallets via WalletConnect, and directly from Luno, VALR, and Binance — with settlement in local currency or stablecoin, and zero crypto exposure.",
+    author: 'Jonathan Katz',
+    role: 'COO & Co-Founder of Ezeebit',
+    date: '2026-05-13',
+    readTime: '5 min read',
+    category: 'Product',
+    image: '/checkout-launch-cover@2x.png',
+    views: '0',
+    content: (
+      <>
+        <p className="text-lg font-semibold text-neutral-900 mb-8">
+          Ezeebit has launched Africa's most comprehensive crypto checkout: a single integration that accepts payments from any wallet, 700+ wallets via WalletConnect, and directly from Luno, VALR, and Binance. Merchants choose whether to settle in stablecoins (T+0) or local currency (T+1), with zero exposure to crypto volatility. The product is live across 130+ stores in South Africa, including iStore, Diesel, Le Creuset, and Sunbet.
+        </p>
+
+        <p className="text-lg text-neutral-600 mb-8">
+          Coverage and certainty are the two things that matter at the till. The customer needs a checkout that works with the wallet or exchange they actually use. The merchant needs to know the money lands in their bank account, on time, in their own currency, with no exposure to crypto prices.
+        </p>
+
+        <p className="text-lg text-neutral-600 mb-8">
+          Ezeebit's checkout is built around solving both at once.
+        </p>
+
+        <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-4">Why "comprehensive" matters in a crypto checkout</h2>
+
+        <p className="mb-4">
+          Crypto holders don't all hold the same thing in the same place. One customer keeps USDT on Trust Wallet. Another holds BTC on a Ledger. A third has rands and USDC sitting in Luno. A fourth uses Binance Pay because that's where their salary lands.
+        </p>
+
+        <p className="mb-4">
+          A checkout that only supports one of those flows turns the other three into a walkout. A checkout that supports all four turns crypto into a real payment rail.
+        </p>
+
+        <p>
+          The launch consolidates three previously-separate flows into a single checkout experience. The customer picks their preferred wallet or exchange. The merchant sees one transaction in one portal, settled in one currency of their choice.
+        </p>
+
+        <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-4">Every way your customers actually want to pay</h2>
+
+        <h3 className="text-xl font-semibold text-neutral-900 mt-6 mb-3">On-chain payments from any wallet</h3>
+
+        <p className="mb-4">
+          A QR code at checkout encodes the merchant's payment address. The customer scans with any wallet that holds a supported asset and sends the transaction directly to the blockchain. No app downloads, no account creation, no compatibility lookup.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
+          <div className="bg-neutral-50 p-5 rounded-lg">
+            <h4 className="font-semibold text-neutral-900 mb-2">Supported assets</h4>
+            <p className="text-neutral-700 text-sm">BTC, ETH, USDT, USDC, BNB, DAI, PAXG</p>
+          </div>
+          <div className="bg-neutral-50 p-5 rounded-lg">
+            <h4 className="font-semibold text-neutral-900 mb-2">Supported chains</h4>
+            <p className="text-neutral-700 text-sm">Bitcoin, Ethereum, TRON, BSC, Solana</p>
+          </div>
+          <div className="bg-neutral-50 p-5 rounded-lg">
+            <h4 className="font-semibold text-neutral-900 mb-2">Works with</h4>
+            <p className="text-neutral-700 text-sm">Trust Wallet, MetaMask, Ledger Live, Coinbase Wallet, Phantom, OKX, Tonkeeper, and every other compatible wallet</p>
+          </div>
+        </div>
+
+        <p>
+          For customers who prefer self-custody and don't want their payment touching an exchange, this is the default flow.
+        </p>
+
+        <h3 className="text-xl font-semibold text-neutral-900 mt-8 mb-3">700+ wallets via WalletConnect</h3>
+
+        <p className="mb-4">
+          For mobile-first crypto holders, Ezeebit supports WalletConnect, the open protocol that links to over 700 wallets across every major chain. The customer taps "Pay with crypto", their wallet opens automatically, and the payment signs and broadcasts in seconds.
+        </p>
+
+        <p>
+          WalletConnect is how the rest of the crypto ecosystem treats wallet compatibility — as a solved problem. Most African gateways still ignore it. We made it a first-class option.
+        </p>
+
+        <h3 className="text-xl font-semibold text-neutral-900 mt-8 mb-3">Exchange Pay: direct from Luno, VALR, and Binance</h3>
+
+        <p className="mb-4">
+          A large share of South African crypto holders keep their balances on local exchanges rather than self-custody. Ezeebit integrates natively with the three that matter:
+        </p>
+
+        <ul className="list-disc pl-6 mb-4 space-y-2">
+          <li><strong>Luno Pay:</strong> direct payment from a Luno account</li>
+          <li><strong>VALR Pay:</strong> direct payment from a VALR account</li>
+          <li><strong>Binance Pay:</strong> direct payment from a Binance account</li>
+        </ul>
+
+        <p>
+          The customer pays from inside their exchange app. The transfer is internal to the exchange, instant, and free of on-chain fees. This single integration covers a meaningful chunk of the country's crypto-holding population without asking anyone to learn anything new.
+        </p>
+
+        <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-4">Settlement on your terms, never volatile</h2>
+
+        <p className="mb-4">
+          Comprehensive checkout doesn't matter if merchants are left holding crypto.
+        </p>
+
+        <p className="mb-4">
+          Every Ezeebit transaction is hedged at the point of sale. The moment a customer pays, the fiat value is locked. Merchants receive 100% of the sale value regardless of what happens to crypto prices in the seconds, minutes, or days that follow.
+        </p>
+
+        <h3 className="text-xl font-semibold text-neutral-900 mt-6 mb-3">Local currency (ZAR, KES, NGN), T+1</h3>
+
+        <p className="mb-4">
+          Fiat settlement lands in the merchant's bank account the next business day, in the local currency of the market they operate in: South African rand (ZAR), Kenyan shilling (KES), or Nigerian naira (NGN). No crypto ever touches the balance sheet.
+        </p>
+
+        <p>
+          For most retail merchants this is the default. It's how merchants like iStore and Le Creuset receive their payouts, and it's how a merchant in Cape Town or Nairobi can take a USDT payment and have rand or shillings land in their bank account the next day, at the rate locked at the till. Multi-market operators can settle each store in the currency of the country it sits in, without juggling crypto balances or moving funds across borders.
+        </p>
+
+        <h3 className="text-xl font-semibold text-neutral-900 mt-6 mb-3">Stablecoins (USDT or USDC), T+0</h3>
+
+        <p>
+          Some merchants prefer to receive payouts in stablecoins, particularly those operating across multiple African markets or running treasury in dollar-pegged assets. Settlement is instant. Funds land in the merchant's nominated wallet within minutes of the customer's payment.
+        </p>
+
+        <h3 className="text-xl font-semibold text-neutral-900 mt-6 mb-3">Zero volatility exposure</h3>
+
+        <p>
+          Whichever option a merchant chooses, the price is fixed at the point of sale. For finance teams, this means crypto payments behave operationally like card payments — a known amount, settled on a predictable schedule, with no balance-sheet risk. The only difference is the customer experience and the fee.
+        </p>
+
+        <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-4">Regulated infrastructure, not a workaround</h2>
+
+        <p className="mb-4">
+          Ezeebit (Ezee Solutions Group Pty Ltd) is authorised by the Financial Sector Conduct Authority as a Crypto Asset Service Provider under the FAIS Act, FSP No. 53664. The company is FIC compliant, POPIA compliant, and operates under Travel Rule infrastructure.
+        </p>
+
+        <p>
+          The merchant base reflects what regulated, production-grade infrastructure attracts: iStore (Apple Premium Reseller), Diesel, Amiri, Le Creuset, Goodman Gallery, Tintswalo Lodges, Luxity, The Scoin Shop, and Sunbet. The platform has processed over 40,000 transactions across 130+ live stores to date.
+        </p>
+
+        <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-4">How a payment works, end to end</h2>
+
+        <div className="not-prose space-y-4 my-6">
+          {[
+            { step: '01', text: 'The customer initiates payment by scanning a QR code at the till or selecting "Pay with crypto" at online checkout.' },
+            { step: '02', text: 'The customer chooses how to pay: on-chain from any wallet, via WalletConnect, or directly from Luno, VALR, or Binance.' },
+            { step: '03', text: 'The transaction is broadcast or executed instantly.' },
+            { step: '04', text: 'Ezeebit detects the payment and hedges the crypto at the locked rate.' },
+            { step: '05', text: 'The merchant sees the payment confirmed in real time on the Merchant Portal.' },
+            { step: '06', text: 'Settlement: T+0 in stablecoin, or T+1 in local currency (ZAR, KES, or NGN) to the merchant\'s bank account.' },
+          ].map(({ step, text }) => (
+            <div key={step} className="flex items-start gap-4">
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary-50 text-xs font-semibold text-primary-600 shrink-0 mt-0.5">{step}</span>
+              <p className="text-neutral-700">{text}</p>
+            </div>
+          ))}
+        </div>
+
+        <p>
+          The merchant never touches crypto. The customer never converts to fiat. The transaction is final and irreversible: no chargebacks, no chargeback fraud.
+        </p>
+
+        <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-4">What it costs</h2>
+
+        <p>
+          1% per transaction or lower depending on volume, excluding VAT. The same rate applies across Ezeebit Pay, ePOS, Checkout, and API. That's roughly 68% cheaper than the standard 2–3.5% on card processing. No setup fees, and no chargebacks — blockchain payments are final.
+        </p>
+
+        <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-4">Why this matters now</h2>
+
+        <p className="mb-4">
+          The argument for accepting crypto payments has shifted. Three years ago, the case for any merchant was speculative: customers might want it, but few were asking. That has changed.
+        </p>
+
+        <p className="mb-4">
+          Stablecoins now account for 43–45% of all crypto volume in sub-Saharan Africa. On the Ezeebit platform, USDT alone accounts for around 70% of transactions — a dollar-pegged stablecoin, not a speculative asset.
+        </p>
+
+        <p>
+          A meaningful slice of these payments comes from international tourists and African foreign nationals who hold stablecoins as a primary store of value and prefer to spend them directly rather than off-ramp. The merchants who started asking "will my customers actually use this?" are getting the answer at the till.
+        </p>
+
+        <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-4">Get started</h2>
+
+        <p className="mb-4">Ezeebit onboards merchants in days, not months. The integration options:</p>
+
+        <ul className="list-disc pl-6 mb-6 space-y-2">
+          <li><strong>Ezeebit Pay:</strong> static QR code, deployable on day one, no hardware required</li>
+          <li><strong>ePOS:</strong> Android POS hardware with integrated crypto acceptance</li>
+          <li><strong>Checkout:</strong> native plugins for Shopify (only African crypto Shopify Payments Platform partner), WooCommerce, and more</li>
+          <li><strong>REST API:</strong> for custom integrations with existing systems</li>
+        </ul>
+
+        <p>
+          <Link to="/contact" className="text-primary-600 font-semibold hover:underline">Talk to the team</Link> or <a href="https://merchant.ezeebit.com/#/signup" className="text-primary-600 font-semibold hover:underline" target="_blank" rel="noopener noreferrer">sign up directly</a>.
+        </p>
+
+        <hr className="my-12 border-neutral-200" />
+
+        <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-6">Frequently asked questions</h2>
+
+        <div className="space-y-6">
+          {[
+            {
+              q: 'Which wallets can my customers pay with?',
+              a: 'Any wallet that holds a supported asset (BTC, ETH, USDT, USDC, BNB, DAI, PAXG) on a supported chain (Bitcoin, Ethereum, TRON, BSC, Solana). On-chain payments work with every wallet, including hardware wallets like Ledger and Trezor. WalletConnect adds direct support for 700+ wallets. Customers on Luno, VALR, or Binance can pay from inside their exchange app.'
+            },
+            {
+              q: 'How fast is settlement?',
+              a: 'T+0 in stablecoin (within minutes). T+1 in local currency (ZAR, KES, or NGN) to the merchant\'s bank account, next business day.'
+            },
+            {
+              q: 'What happens if the crypto price moves between payment and settlement?',
+              a: 'Nothing for the merchant. Ezeebit locks the rate at the point of sale and hedges the position instantly. The merchant always receives 100% of the agreed sale value.'
+            },
+            {
+              q: 'Do I need to hold any crypto?',
+              a: 'No. Merchants who choose fiat settlement never hold crypto on their balance sheet. Merchants who choose stablecoin settlement hold USDT or USDC, which are designed to track the US dollar.'
+            },
+            {
+              q: 'Is Ezeebit regulated?',
+              a: 'Yes. Ezeebit (Ezee Solutions Group Pty Ltd) is authorised by the FSCA as a Crypto Asset Service Provider, FSP No. 53664. The company is FIC compliant, POPIA compliant, and operates under Travel Rule infrastructure.'
+            },
+            {
+              q: 'What does it cost?',
+              a: '1% per transaction or lower depending on volume (excluding VAT). The same rate applies across Ezeebit Pay, ePOS, Checkout, and API. Roughly 68% cheaper than card processing. No setup fees. No chargebacks.'
+            },
+            {
+              q: 'How long does integration take?',
+              a: 'Days, not months. Static QR codes can be deployed the same day. ePOS terminals ship pre-configured. Shopify integration is plug-and-play. Custom API integrations vary depending on the merchant\'s systems.'
+            },
+            {
+              q: 'Which countries does Ezeebit operate in?',
+              a: 'South Africa, Kenya, and Nigeria. Merchants can settle in local currency (ZAR, KES, NGN) or in stablecoins.'
+            },
+          ].map(({ q, a }) => (
+            <div key={q} className="border-b border-neutral-100 pb-6">
+              <h3 className="text-base font-semibold text-neutral-900 mb-2">{q}</h3>
+              <p className="text-neutral-600">{a}</p>
+            </div>
+          ))}
+        </div>
+
+        <p className="mt-12 text-neutral-500 italic text-center">Secure. Speedy. Ezee.</p>
+      </>
+    )
+  },
   'pundi-x-rebrand': {
     title: 'Pundi X South Africa Rebrands To Ezeebit And Makes Key Acquisitions',
     subtitle: 'Pundi X South Africa Rebrands to Ezeebit and Acquires Advanced Cryptocurrency Wallet, Payment, and Exchange Infrastructure, Pioneering a New Era for Crypto Adoption in Africa and Beyond',
     author: 'Daniel Katz',
-    role: 'CEO of Ezeebit',
+    role: 'CEO & Co-Founder of Ezeebit',
     date: '2025-01-27',
-    readTime: '12 min read',
+    readTime: '5 min read',
     category: 'Company News',
     image: '/blog-rebranding.webp',
     views: '5.2k',
@@ -435,10 +675,6 @@ const BlogPost = () => {
                 <div className="flex items-center">
                   <Clock className="w-4 h-4 mr-2" />
                   {post.readTime}
-                </div>
-                <div className="flex items-center">
-                  <Eye className="w-4 h-4 mr-2" />
-                  {post.views} views
                 </div>
               </div>
 

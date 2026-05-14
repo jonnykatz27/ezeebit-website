@@ -314,8 +314,8 @@ print('Store created:', store)`,
         <div className="container-custom relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{ duration: 0.4 }}
               className="text-center lg:text-left"
             >
@@ -404,8 +404,8 @@ print('Store created:', store)`,
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.1 }}
               className="relative hidden lg:block"
             >
@@ -433,8 +433,8 @@ print('Store created:', store)`,
       <section className="section-padding bg-white">
         <div className="container-custom">
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.3 }}
             className="text-center mb-16"
@@ -451,8 +451,8 @@ print('Store created:', store)`,
             {quickStartSteps.map((step, index) => (
               <motion.div
                 key={step.title}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
                 className="text-center"
@@ -477,8 +477,8 @@ print('Store created:', store)`,
       <section className="section-padding bg-neutral-50">
         <div className="container-custom">
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.3 }}
             className="text-center mb-16"
@@ -495,8 +495,8 @@ print('Store created:', store)`,
             {features.map((feature, index) => (
               <motion.div
                 key={feature.title}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
                 className="card p-6 text-center hover:scale-105 transition-transform"
@@ -520,8 +520,8 @@ print('Store created:', store)`,
       <section className="py-8 lg:py-24 bg-white">
         <div className="container-custom">
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.3 }}
             className="text-center mb-8 lg:mb-16"
@@ -638,8 +638,8 @@ print('Store created:', store)`,
       <section className="section-padding bg-neutral-50">
         <div className="container-custom">
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.3 }}
             className="text-center mb-12"
@@ -656,8 +656,8 @@ print('Store created:', store)`,
             {supportedAssets.slice(0, 7).map((asset, index) => (
               <motion.div
                 key={`${asset.asset}-${asset.network}`}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ duration: 0.3, delay: index * 0.03 }}
                 className="card p-4 flex flex-col items-center justify-center space-y-1 text-center overflow-hidden"
@@ -678,8 +678,8 @@ print('Store created:', store)`,
             ))}
 
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.3, delay: 0.2 }}
               className="card p-4 flex flex-col items-center justify-center space-y-1 text-center overflow-hidden"
@@ -697,8 +697,8 @@ print('Store created:', store)`,
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.3 }}
             >
@@ -726,8 +726,8 @@ print('Store created:', store)`,
             </motion.div>
             
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.3, delay: 0.1 }}
               className="card p-6"
@@ -752,8 +752,8 @@ print('Store created:', store)`,
       <section className="section-padding bg-neutral-50">
         <div className="container-custom">
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.3 }}
             className="text-center mb-12"
@@ -771,8 +771,8 @@ print('Store created:', store)`,
               {errorCodes.map((error, index) => (
                 <motion.div
                   key={error.code}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
                   viewport={{ once: true, amount: 0.1 }}
                   transition={{ duration: 0.3, delay: index * 0.03 }}
                   className="card p-4"
@@ -800,8 +800,8 @@ print('Store created:', store)`,
       <section className="section-padding bg-gradient-to-r from-primary-600 to-secondary-600 text-white">
         <div className="container-custom text-center">
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.3 }}
           >

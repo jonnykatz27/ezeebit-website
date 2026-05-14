@@ -810,6 +810,28 @@ const Legal = () => {
         ))}
       </div>
 
+      {/* Trust Centre */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        className="mt-8 border border-primary-100 bg-primary-50/50 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+      >
+        <div>
+          <h4 className="text-lg font-semibold text-neutral-900 mb-1">Trust Centre</h4>
+          <p className="text-neutral-600 text-sm leading-relaxed">
+            View Ezeebit's security posture, compliance certifications, and data protection controls — powered by Vanta.
+          </p>
+        </div>
+        <a
+          href="https://trust.ezeebit.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-primary whitespace-nowrap shrink-0"
+        >
+          Visit Trust Centre
+        </a>
+      </motion.div>
+
     </div>
   )
 

@@ -267,7 +267,8 @@ const Home = () => {
                 { name: 'Cultish', logo: '/cultish-logo(latest).png', scale: 1.6, mobileScale: 1.32 },
                 { name: 'Watch Channel', logo: '/watch-channel-logo(final).png', mobileScale: 1.05 },
                 { name: 'Diesel', logo: '/diesel-logo(final).png', scale: 0.806, mobileScale: 0.772 },
-                { name: 'Sumptuous Tours', logo: '/sumptuous-tours-logo.png', scale: 1.5 }
+                { name: 'Sumptuous Tours', logo: '/sumptuous-tours-logo.png', scale: 1.5 },
+                { name: 'BHH', logo: '/bhh-logo.png' }
               ]}
               direction="right"
               speed={40}

@@ -130,6 +130,17 @@ export const stores: Store[] = [
     moreInfoRoute: "/resources/stores/yawa-africa"
   },
   {
+    name: "BHH Boutique",
+    slug: "bhh",
+    category: "Jewellery & Collectibles",
+    excerpt: "Boutique Haute Horlogerie is South Africa's flagship luxury watch and jewellery destination, located in Cape Town's prestigious V&A Waterfront. Home to 11 of the world's most prestigious watch and jewellery houses, including a dedicated Chopard space and an adjacent multi-brand gallery.",
+    about: "Operated by Architects of Time—a high-end watch distributor in South Africa since 1996—BHH Boutique is the group's flagship concept store, opened in 2020 across more than 150 square metres in Cape Town's V&A Waterfront. The boutique houses a dedicated Universe of Chopard space alongside a multi-brand gallery showcasing the world's most exclusive timepieces and jewellery, including Ulysse Nardin, Parmigiani, Zenith, Moser & Cie, Hermès, Dior, Bulgari, and Ebel watches, complemented by Messika diamond jewellery and Pomellato's playful Italian designs. A sumptuous private lounge offers clients the opportunity to view and try on exceptional pieces in an atmosphere of classical elegance and understated luxury.",
+    websiteUrl: "https://bhhboutique.co.za",
+    image: "/BHH store.webp",
+    order: 11,
+    moreInfoRoute: "/resources/stores/bhh"
+  },
+  {
     name: "Tintswalo Lodges",
     slug: "tintswalo-lodge",
     category: "Hospitality",
@@ -137,7 +148,7 @@ export const stores: Store[] = [
     about: "Collection of five distinctive family-owned luxury lodges across South Africa's most stunning locations, from exclusive ocean-view properties near Cape Town to intimate game reserve experiences near Kruger National Park. Each lodge provides personalized upscale hospitality, dedicated concierge services, guided cultural experiences, and immersive connections to South Africa's diverse landscapes and local heritage.",
     websiteUrl: "https://www.tintswalo.com/",
     image: "/tintswalo-store.webp",
-    order: 11,
+    order: 12,
     moreInfoRoute: "/resources/stores/tintswalo-lodge"
   },
   {
@@ -148,7 +159,7 @@ export const stores: Store[] = [
     about: "Established leader in South Africa's exclusive sneaker and streetwear culture with both comprehensive online platform and physical Cape Town concept store. Focuses on authentic limited drops, underground designer collaborations, and cultural programming that bridges street fashion with high-end collectible sneaker investment—celebrating sneaker culture, music, and community.",
     websiteUrl: "https://swestkicks.co.za/",
     image: "/swestkicks-store.webp",
-    order: 12,
+    order: 13,
     moreInfoRoute: "/resources/stores/swest-kicks"
   },
   {
@@ -159,7 +170,7 @@ export const stores: Store[] = [
     about: "Flagship Sandton City luxury destination merging international fashion powerhouses with African artistry and creative expression. Curates luxury designer collections, exclusive sneaker editions, and provides immersive retail experiences in a meticulously designed space. Serves as cultural destination for trend-conscious collectors and luxury enthusiasts seeking unique fashion narratives.",
     websiteUrl: "https://soulgallery.co.za/",
     image: "/soulgallery-store.webp",
-    order: 13,
+    order: 14,
     moreInfoRoute: "/resources/stores/soul-gallery"
   },
   {
@@ -170,7 +181,7 @@ export const stores: Store[] = [
     about: "Premier multi-brand streetwear and denim specialist operating since 1997, serving fashion-forward South Africans with over two decades of expertise. Curates distinguished international labels including Diesel, G-Star RAW, and Replay alongside emerging designers. Known for deep product knowledge, personalized styling advice, and commitment to authentic global trend curation.",
     websiteUrl: "https://www.subwear.co.za/",
     image: "/subwear-store.webp",
-    order: 14,
+    order: 15,
     moreInfoRoute: "/resources/stores/subwear"
   },
   {
@@ -181,7 +192,7 @@ export const stores: Store[] = [
     about: "Distinctly South African fashion brand and boutique (with locations in Cape Town and Johannesburg) celebrating bold, gender-neutral design rooted in street culture and creative rebellion. Each piece emphasizes artistic craftsmanship, striking silhouettes, and personal expression—merging rebellious aesthetics with accessible luxury for individuals who embrace fashion as identity statement.",
     websiteUrl: "https://cultish.com/",
     image: "/cultish-store.webp",
-    order: 15,
+    order: 16,
     moreInfoRoute: "/resources/stores/cultish"
   },
   {
@@ -192,7 +203,7 @@ export const stores: Store[] = [
     about: "Influential contemporary art gallery established 1966 with locations in Johannesburg, Cape Town, and London. Represents visionary artists who challenge societal conventions and advance critical cultural discourse. Fosters meaningful dialogues around contemporary art, supports emerging African voices, and maintains international influence in shaping contemporary art landscape.",
     websiteUrl: "https://goodman-gallery.com/",
     image: "/goodmangallery-store.webp",
-    order: 16,
+    order: 17,
     moreInfoRoute: "/resources/stores/goodman-gallery"
   },
   {
@@ -203,7 +214,7 @@ export const stores: Store[] = [
     about: "Premium consignment retail concept launched Cape Town 2020, specializing in authenticated sneakers, collectible apparel, and designer accessories. Founded by sneaker enthusiasts and collectors, Story provides expertly curated rare limited drops and high-end resale marketplace with rigorous verification standards and community-focused programming around sneaker culture.",
     websiteUrl: "https://story.capetown",
     image: "/story-store.webp",
-    order: 17,
+    order: 18,
     moreInfoRoute: "/resources/stores/story"
   },
   {
@@ -214,7 +225,7 @@ export const stores: Store[] = [
     about: "Luxury automotive dealership located in Sandton's iconic Leonardo building, specializing in premium vehicle sales, bespoke concierge services, and exclusive driving experiences. Caters to high-net-worth clientele seeking top-tier automotive brands with personalized consultations, comprehensive after-sales support, and access to rare collector vehicles.",
     websiteUrl: "https://www.thobela-cars.co.za/",
     image: "/thobelacars-store.webp",
-    order: 18,
+    order: 19,
     moreInfoRoute: "/resources/stores/thobela-cars"
   },
   {
@@ -225,7 +236,7 @@ export const stores: Store[] = [
     about: "Specialized luxury timepiece retailer offering new and pre-owned watches from prestigious manufacturers. Provides expert authentication, professional valuation services, trade-in programs, and personalized collector consultations. Serves discerning watch enthusiasts and collectors seeking trusted expertise, provenance verification, and access to investment-grade timepieces.",
     websiteUrl: "https://thewatchchannel.co.za/",
     image: "/watchchannel-store.webp",
-    order: 19,
+    order: 20,
     moreInfoRoute: "/resources/stores/watch-channel"
   },
   {
@@ -236,7 +247,7 @@ export const stores: Store[] = [
     about: "Upscale full-service retailer in Milnerton featuring premium groceries, fresh produce, artisanal deli selections, fine wines, and specialty household products. Adjacent Topps wine boutique provides extensive wine and spirits selection. Together they form comprehensive lifestyle shopping destination for discerning consumers seeking gourmet provisions and premium retail experience.",
     websiteUrl: "https://www.spar.co.za/home/store-view/superspar-royal-ascot-western-cape",
     image: "/spar-store.webp",
-    order: 20,
+    order: 21,
     moreInfoRoute: "/resources/stores/superspar-royal-ascot"
   },
   {
@@ -247,7 +258,7 @@ export const stores: Store[] = [
     about: "South Africa's leading omnichannel boutique for authenticated pre-owned luxury goods, democratizing access to premium designer fashion. Specializes in buying and selling authenticated pre-owned designer handbags, watches, shoes, and accessories from top fashion houses. Offers quality assurance, competitive pricing, and trusted marketplace for luxury consumers seeking value without compromise.",
     websiteUrl: "https://luxity.co.za",
     image: "/luxity-store copy.webp",
-    order: 21,
+    order: 22,
     moreInfoRoute: "/resources/stores/luxity"
   },
   {
@@ -258,7 +269,7 @@ export const stores: Store[] = [
     about: "Limited-time pop-up concept store introducing British luxury fashion label REPRESENT to South Africa for the first time. Showcases REPRESENT's four core collections—mainline luxury apparel, INITIAL loungewear comfort line, OWNERS' CLUB exclusive pieces, and 247 technical wear—alongside progressive international footwear collaborations and limited-edition drops.",
     websiteUrl: "https://www.instagram.com/ritual_concept_store/?hl=en",
     image: "/ritual-store.webp",
-    order: 22,
+    order: 23,
     moreInfoRoute: "/resources/stores/ritual"
   }
 ];

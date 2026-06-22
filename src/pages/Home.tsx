@@ -16,31 +16,31 @@ const Home = () => {
   const features = [
     {
       icon: <Zap className="w-6 h-6" />,
-      title: "Lightning Fast",
+      title: "Lightning fast",
       description: "Near-instant payment verification with advanced crypto payment technology"
     },
     {
       icon: <Shield className="w-6 h-6" />,
-      title: "Bank-Grade Security",
+      title: "Bank-grade security",
       description: "FSCA regulated and FIC compliant with enterprise-level security protocols"
     },
     {
       icon: <Globe className="w-6 h-6" />,
-      title: "Multi-Currency Support",
+      title: "Multi-currency support",
       description: "Accept Bitcoin, Ethereum, USDT, USDC, BNB and more"
     },
     {
       icon: <TrendingUp className="w-6 h-6" />,
-      title: "Stablecoin Settlement",
+      title: "Stablecoin settlement",
       description: "Automatic conversion to stablecoins and settlement in ZAR, KES, or NGN to eliminate volatility risk"
     }
   ]
 
   const stats = [
-    { number: "40,000+", label: "Transactions Processed" },
-    { number: "$ Millions", label: "Volume Processed (since 2024)" },
+    { number: "100,000+", label: "Transactions processed" },
+    { number: "$ Millions", label: "Volume processed (since 2024)" },
     { number: "99.99%", label: "Uptime" },
-    { number: "24/7", label: "Customer Support" }
+    { number: "24/7", label: "Customer support" }
   ]
 
   const testimonials = [
@@ -82,7 +82,7 @@ const Home = () => {
     <>
       <SEO
         title="Crypto Payment Solutions for African Merchants"
-        description="Accept Bitcoin, Ethereum, and stablecoins at your store. FSCA regulated, instant ZAR, KES, and NGN settlement, and 40,000+ transactions processed. Join 150+ merchants across South Africa."
+        description="Accept Bitcoin, Ethereum, and stablecoins at your store. FSCA regulated, instant ZAR, KES, and NGN settlement, and 100,000+ transactions processed. Join 150+ merchants across South Africa."
         canonicalUrl="/"
       />
       <script type="application/ld+json">
@@ -154,7 +154,7 @@ const Home = () => {
                 Accept stablecoin and crypto payments.
               </h1>
               <p className="text-lg lg:text-xl text-neutral-600 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                Leading crypto and stablecoin payment solutions for African businesses. Process transactions seamlessly with automatic settlement in stablecoin or local currency (ZAR, KES, NGN).
+                Accept crypto and stablecoin payments in-store and online. Ezeebit handles the checkout, hedging, and compliance — you get settled in stablecoin or local currency (ZAR, KES, NGN) the next business day.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center lg:justify-start">
                 <a
@@ -231,7 +231,7 @@ const Home = () => {
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center mb-8 md:mb-12"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Our Partners</h2>
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Our partners</h2>
             <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
               Trusted by leading brands across South Africa and beyond.
             </p>
@@ -284,7 +284,7 @@ const Home = () => {
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center mb-10 lg:mb-16"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Why Choose Ezeebit?</h2>
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Why choose Ezeebit?</h2>
             <p className="text-lg text-neutral-600 max-w-3xl mx-auto leading-relaxed">
               Built for African merchants who want to embrace the future of payments without compromising on security or simplicity.
             </p>
@@ -608,33 +608,55 @@ const Home = () => {
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center mb-8 lg:mb-12"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Enterprise-Grade Security</h2>
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Enterprise-grade security</h2>
             <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
               Built with the highest security standards to protect your business and your customers.
             </p>
           </motion.div>
 
-          <div className="max-w-xs mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="card p-6 text-center relative"
-            >
-              <div className="absolute -top-3 -right-3 bg-primary-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md flex items-center gap-1.5">
-                <Star className="w-3.5 h-3.5 fill-current" />
-                SOC 2 Certified
-              </div>
-              <div className="w-16 h-16 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Lock className="w-8 h-8 text-primary-500" />
-              </div>
-              <h3 className="text-lg font-semibold text-neutral-900 mb-3">
-                MPC Wallet Technology
-              </h3>
-              <p className="text-neutral-600 text-sm leading-relaxed">
-                Multi-party computation (MPC) eliminates single points of failure by distributing key management across multiple parties, ensuring your funds are always secure.
-              </p>
-            </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {[
+              {
+                icon: <Shield className="w-8 h-8 text-primary-500" />,
+                title: "FSCA regulated",
+                description: "FSCA regulated and FIC compliant, with full KYC/KYB, AML/CFT, and POPIA processes handled end to end by Ezeebit."
+              },
+              {
+                icon: <Lock className="w-8 h-8 text-primary-500" />,
+                title: "MPC wallet technology",
+                description: "Multi-party computation (MPC) eliminates single points of failure by distributing key management across multiple parties, keeping funds secure.",
+                badge: "SOC 2 Certified"
+              },
+              {
+                icon: <Zap className="w-8 h-8 text-primary-500" />,
+                title: "No chargebacks",
+                description: "Blockchain payments are final and irreversible — every sale stays settled, with rates locked and hedged at the point of payment."
+              }
+            ].map((item, index) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 + index * 0.05 }}
+                className="card p-6 text-center relative"
+              >
+                {item.badge && (
+                  <div className="absolute -top-3 -right-3 bg-primary-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md flex items-center gap-1.5">
+                    <Star className="w-3.5 h-3.5 fill-current" />
+                    {item.badge}
+                  </div>
+                )}
+                <div className="w-16 h-16 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  {item.icon}
+                </div>
+                <h3 className="text-lg font-semibold text-neutral-900 mb-3">
+                  {item.title}
+                </h3>
+                <p className="text-neutral-600 text-sm leading-relaxed">
+                  {item.description}
+                </p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -646,7 +668,7 @@ const Home = () => {
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center mb-8 lg:mb-12"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Backed by World-Class Investors</h2>
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Backed by world-class investors</h2>
             <p className="text-lg text-neutral-600 max-w-2xl mx-auto leading-relaxed">
               Supported by leading global funds and industry veterans who share our belief in building the future of payments in Africa
             </p>
@@ -835,7 +857,7 @@ const Home = () => {
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center mb-8 lg:mb-12"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Trusted by Merchants Across Africa</h2>
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Trusted by merchants across Africa</h2>
             <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
               Join hundreds of businesses already accepting stablecoin and crypto payments with confidence.
             </p>
@@ -904,14 +926,14 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-10 lg:py-20 bg-gradient-to-r from-primary-600 to-secondary-600 text-white">
+      <section className="py-10 lg:py-20 bg-primary-600 text-white">
         <div className="container-custom text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
           >
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">
-              Ready to Accept Stablecoin and Crypto Payments?
+              Ready to accept stablecoin and crypto payments?
             </h2>
             <p className="text-xl text-white mb-8 max-w-2xl mx-auto opacity-90">
               Join the future of payments today. Get started in minutes with no setup fees and full regulatory compliance.
@@ -921,14 +943,14 @@ const Home = () => {
                 href="https://merchant.ezeebit.com/#/signup"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white text-primary-500 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+                className="bg-white text-primary-600 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
               >
                 Start Free Trial
                 <ArrowRight className="w-5 h-5 ml-2 inline" />
               </a>
               <Link
                 to="/contact"
-                className="border-2 border-white text-white hover:bg-white hover:text-primary-500 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
+                className="border-2 border-white text-white hover:bg-white hover:text-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
               >
                 Talk to Sales
               </Link>

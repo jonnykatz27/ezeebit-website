@@ -86,7 +86,7 @@ const SignUp = () => {
           />
         </div>
         <h2 className="text-2xl font-display font-bold text-neutral-900 mb-2">
-          Personal Information
+          Personal information
         </h2>
         <p className="text-neutral-600">
           Let's start with your basic information
@@ -177,7 +177,7 @@ const SignUp = () => {
     <div className="space-y-6">
       <div className="text-center mb-8">
         <h2 className="text-2xl font-display font-bold text-neutral-900 mb-2">
-          Business Information
+          Business information
         </h2>
         <p className="text-neutral-600">
           Tell us about your business
@@ -259,7 +259,7 @@ const SignUp = () => {
     <div className="space-y-6">
       <div className="text-center mb-8">
         <h2 className="text-2xl font-display font-bold text-neutral-900 mb-2">
-          Account Security
+          Account security
         </h2>
         <p className="text-neutral-600">
           Create a secure password for your account

@@ -94,7 +94,7 @@ const Pricing = () => {
             animate={{ opacity: 1, y: 0 }}
           >
             <h1 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 mb-6">
-              Simple, <span className="text-gradient">Transparent</span> Pricing
+              Simple, <span className="text-gradient">transparent</span> pricing
             </h1>
             <p className="text-xl text-neutral-600 mb-8 max-w-3xl mx-auto">
               Choose the perfect plan for your business. No hidden fees, no surprises. 
@@ -239,14 +239,14 @@ const Pricing = () => {
       {/* FAQ Section */}
 
       {/* CTA Section */}
-      <section className="section-padding bg-gradient-to-r from-primary-600 to-secondary-600 text-white">
+      <section className="section-padding bg-primary-600 text-white">
         <div className="container-custom text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold mb-4">
-              Ready to Get Started?
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">
+              Ready to get started?
             </h2>
             <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
               Join thousands of merchants already accepting stablecoin and crypto payments. Start with our free plan today.
@@ -256,14 +256,14 @@ const Pricing = () => {
                 href="https://merchant.ezeebit.com/#/signup" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="bg-white text-primary-500 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+                className="bg-white text-primary-600 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
               >
                 Start Free Trial
                 <ArrowRight className="w-5 h-5 ml-2 inline" />
               </a>
               <a 
                 href="mailto:sales@ezeebit.com" 
-                className="border-2 border-white text-white hover:bg-white hover:text-primary-500 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
+                className="border-2 border-white text-white hover:bg-white hover:text-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
               >
                 Contact Sales
               </a>

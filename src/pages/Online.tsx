@@ -40,22 +40,22 @@ const Online = () => {
   const features = [
     {
       icon: <Plug className="w-6 h-6" />,
-      title: "Zero-Code Integration",
+      title: "Zero-code integration",
       description: "Install our plugins in minutes without any technical knowledge required"
     },
     {
       icon: <Zap className="w-6 h-6" />,
-      title: "Real-Time Processing",
+      title: "Real-time processing",
       description: "Instant transaction confirmation with live exchange rates and fees"
     },
     {
       icon: <Shield className="w-6 h-6" />,
-      title: "Secure Checkout",
+      title: "Secure checkout",
       description: "End-to-end encrypted payment flow ensuring maximum transaction security"
     },
     {
       icon: <BarChart3 className="w-6 h-6" />,
-      title: "Advanced Analytics",
+      title: "Advanced analytics",
       description: "Detailed insights into crypto payment trends and customer behavior"
     }
   ]
@@ -107,7 +107,7 @@ const Online = () => {
               className="max-w-4xl text-center lg:text-left"
             >
               <h1 className="text-5xl lg:text-5xl font-display font-bold text-neutral-900 mb-6">
-                <span itemProp="name">Boost <span className="text-gradient">E-Commerce</span> with Crypto</span>
+                <span itemProp="name">Boost <span className="text-gradient">e-commerce</span> with crypto</span>
               </h1>
               <p className="text-xl text-neutral-600 mb-8" itemProp="description">
                 Integrate stablecoin and cryptocurrency payments into your online store with zero-code plugins.
@@ -168,7 +168,7 @@ const Online = () => {
             className="text-center mb-8 md:mb-16"
           >
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
-              Seamless Platform Integration
+              Seamless platform integration
             </h2>
             <p className="text-lg md:text-xl text-neutral-600 max-w-3xl mx-auto px-4">
               Install our plugins on your favorite e-commerce platform in minutes. No coding required.
@@ -294,7 +294,7 @@ const Online = () => {
             className="text-center mb-16"
           >
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
-              Everything You Need for Online Payments
+              Everything you need for online payments
             </h2>
             <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
               Our comprehensive solution includes all the tools and features you need to accept stablecoin and crypto payments online.
@@ -326,24 +326,24 @@ const Online = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding bg-gradient-to-r from-primary-600 to-secondary-600 text-white">
+      <section className="section-padding bg-primary-600 text-white">
         <div className="container-custom text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold mb-4">
-              Start Accepting Stablecoin and Crypto Payments Today
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">
+              Start accepting stablecoin and crypto payments today
             </h2>
             <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
               Install our plugin in minutes and start accepting stablecoin and cryptocurrency payments from customers worldwide.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className="bg-white text-primary-500 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center">
+              <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className="bg-white text-primary-600 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center">
                 Install Plugin Now
                 <ArrowRight className="w-5 h-5 ml-2 inline" />
               </a>
-              <Link to="/developers" className="border-2 border-white text-white hover:bg-white hover:text-primary-500 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center">
+              <Link to="/developers" className="border-2 border-white text-white hover:bg-white hover:text-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center">
                 View Documentation
               </Link>
             </div>

@@ -869,7 +869,7 @@ const Legal = () => {
             animate={{ opacity: 1, y: 0 }}
           >
             <h1 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 mb-6">
-              Legal & <span className="text-gradient">Compliance</span>
+              Legal & <span className="text-gradient">compliance</span>
             </h1>
             <p className="text-xl text-neutral-600 mb-8 max-w-3xl mx-auto">
               Transparent legal documentation and regulatory compliance information. 
@@ -930,24 +930,24 @@ const Legal = () => {
       </section>
 
       {/* Contact Section */}
-      <section className="section-padding bg-neutral-50">
+      <section className="section-padding bg-primary-600 text-white">
         <div className="container-custom text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
           >
-            <h2 className="text-3xl font-display font-bold text-neutral-900 mb-4">
-              Questions About Our Legal Terms?
+            <h2 className="text-3xl font-display font-bold text-white mb-4">
+              Questions about our legal terms?
             </h2>
-            <p className="text-xl text-neutral-600 mb-8 max-w-2xl mx-auto">
-              Our legal team is available to answer any questions about our terms, 
+            <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
+              Our legal team is available to answer any questions about our terms,
               privacy policy, or compliance requirements.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/contact" className="btn-primary">
+              <Link to="/contact" className="bg-white text-primary-600 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center">
                 Contact Legal Team
               </Link>
-              <a href="mailto:legal@ezeebit.com" className="btn-secondary">
+              <a href="mailto:legal@ezeebit.com" className="border-2 border-white text-white hover:bg-white hover:text-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center">
                 Email: legal@ezeebit.com
               </a>
             </div>

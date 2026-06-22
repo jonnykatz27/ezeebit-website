@@ -10,7 +10,36 @@ const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [searchTerm, setSearchTerm] = useState('')
 
-  const blogPosts = [
+  type BlogPostItem = {
+    id: string
+    title: string
+    excerpt: string
+    author: string
+    date: string
+    readTime: string
+    category: string
+    categoryId: string
+    image: string
+    views: string
+    featured: boolean
+    hero?: boolean
+    externalUrl?: string
+  }
+
+  const blogPosts: BlogPostItem[] = [
+    {
+      id: 'crypto-deposits-igaming-sunbet',
+      title: "Crypto deposits for iGaming: inside the Sunbet integration",
+      excerpt: "Sunbet — a subsidiary of JSE-listed Sun International — is one of the first online gaming platforms in South Africa to accept crypto deposits. Here's the complexity behind letting any user fund their account from any wallet, how we kept compliance and innovation at the forefront, and why the same deposit rail extends to FX, trading, and any platform that takes deposits.",
+      author: 'Daniel Katz',
+      date: '2026-06-01',
+      readTime: '6 min read',
+      category: 'Product',
+      categoryId: 'product',
+      image: '/sunbet-launch-cover@2x.png',
+      views: '0',
+      featured: false
+    },
     {
       id: 'most-comprehensive-crypto-payment-gateway-africa',
       title: "Africa's most comprehensive crypto checkout",
@@ -22,7 +51,8 @@ const Blog = () => {
       categoryId: 'product',
       image: '/checkout-launch-cover@2x.png',
       views: '0',
-      featured: false
+      featured: false,
+      hero: true
     },
     {
       id: 'capital-flow-management-regulations',
@@ -38,6 +68,20 @@ const Blog = () => {
       featured: false
     },
     {
+      id: 'mybroadband-r35-million-backing',
+      title: 'South African stablecoin and crypto payments startup attracts R35-million backing from top investors',
+      excerpt: 'MyBroadband covers Ezeebit\'s R34.9-million seed round, led by Raba Partnership and joined by David Frankel\'s Founder Collective — early backers of Uber, The Trade Desk, and Flutterwave — alongside strategic angels from Visa, Talos, Revolut, and BVNK.',
+      author: 'MyBroadband',
+      date: '2025-12-09',
+      readTime: '4 min read',
+      category: 'Company News',
+      categoryId: 'company',
+      image: '/David-Frankel-speaking-at-Founder-Collective.jpg',
+      views: '0',
+      featured: true,
+      externalUrl: 'https://mybroadband.co.za/news/cryptocurrency/622384-south-african-stablecoin-and-crypto-payments-startup-attracts-r35-million-backing-from-top-investors.html'
+    },
+    {
       id: 'ezeebit-raises-r35-million',
       title: 'We Just Raised $2.05M to Build Africa\'s Stablecoin Payment Infrastructure',
       excerpt: 'Growing up in South Africa, my brothers Jonathan, David, and I saw something that didn\'t make sense: merchants trapped in payment systems that were slow, expensive, and built for a different era. That gap became our mission.',
@@ -48,7 +92,21 @@ const Blog = () => {
       categoryId: 'company',
       image: '/ezeebit-blog.webp',
       views: '3.8k',
-      featured: true
+      featured: false
+    },
+    {
+      id: 'mybroadband-crypto-payments-mainstream',
+      title: 'Crypto payments becoming mainstream in South Africa',
+      excerpt: 'MyBroadband on how crypto payments are going mainstream in South Africa — with Ezeebit emerging from stealth alongside iStore, Scoin, Diesel, Amiri, and Le Creuset, and COO Jonathan Katz on why utility is replacing hype: faster settlement, lower fees, and easier cross-border payments.',
+      author: 'MyBroadband',
+      date: '2025-10-18',
+      readTime: '4 min read',
+      category: 'Company News',
+      categoryId: 'company',
+      image: '/Bitcoin-crypto-rand.jpg',
+      views: '0',
+      featured: true,
+      externalUrl: 'https://mybroadband.co.za/news/cryptocurrency/614650-crypto-payments-becoming-mainstream-in-south-africa.html'
     },
     {
       id: 'pundi-x-rebrand',
@@ -82,7 +140,7 @@ const Blog = () => {
     })
   }, [selectedCategory, searchTerm])
 
-  const featuredPost = filteredPosts.find(post => post.featured) || filteredPosts[0]
+  const featuredPost = filteredPosts.find(post => post.hero) || filteredPosts.find(post => post.featured) || filteredPosts[0]
 
   return (
     <>
@@ -172,11 +230,13 @@ const Blog = () => {
                     alt={featuredPost.title}
                     className="w-full h-48 md:h-64 lg:h-full object-cover"
                   />
-                  <div className="absolute top-3 left-3 md:top-4 md:left-4">
-                    <span className="bg-primary-500 text-white px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-medium">
-                      Featured
-                    </span>
-                  </div>
+                  {featuredPost.featured && (
+                    <div className="absolute top-3 left-3 md:top-4 md:left-4">
+                      <span className="bg-primary-500 text-white px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-medium">
+                        Featured
+                      </span>
+                    </div>
+                  )}
                 </div>
                 <div className="p-4 md:p-8 flex flex-col justify-center">
                   <div className="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm text-neutral-500 mb-3 md:mb-4">
@@ -189,11 +249,19 @@ const Blog = () => {
                       {featuredPost.readTime}
                     </span>
                   </div>
-                  <Link to={`/blog/${featuredPost.id}`}>
-                    <h2 className="text-lg md:text-2xl lg:text-3xl font-bold text-neutral-900 mb-3 md:mb-4 hover:text-primary-500 transition-colors cursor-pointer">
-                      {featuredPost.title}
-                    </h2>
-                  </Link>
+                  {featuredPost.externalUrl ? (
+                    <a href={featuredPost.externalUrl} target="_blank" rel="noopener noreferrer">
+                      <h2 className="text-lg md:text-2xl lg:text-3xl font-bold text-neutral-900 mb-3 md:mb-4 hover:text-primary-500 transition-colors cursor-pointer">
+                        {featuredPost.title}
+                      </h2>
+                    </a>
+                  ) : (
+                    <Link to={`/blog/${featuredPost.id}`}>
+                      <h2 className="text-lg md:text-2xl lg:text-3xl font-bold text-neutral-900 mb-3 md:mb-4 hover:text-primary-500 transition-colors cursor-pointer">
+                        {featuredPost.title}
+                      </h2>
+                    </Link>
+                  )}
                   <p className="text-sm md:text-base text-neutral-600 mb-4 md:mb-6">
                     {featuredPost.excerpt}
                   </p>
@@ -207,14 +275,27 @@ const Blog = () => {
                         <div className="text-xs md:text-sm text-neutral-500">{featuredPost.category}</div>
                       </div>
                     </div>
-                    <Link
-                      to={`/blog/${featuredPost.id}`}
-                      className="btn-primary flex items-center justify-center space-x-2 text-sm md:text-base px-4 md:px-6 py-2 md:py-3 w-full sm:w-auto transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-                      aria-label={`Read the full article about ${featuredPost.title}`}
-                    >
-                      <span>Read Full Article</span>
-                      <ArrowRight className="w-4 h-4 flex-shrink-0" />
-                    </Link>
+                    {featuredPost.externalUrl ? (
+                      <a
+                        href={featuredPost.externalUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-primary flex items-center justify-center space-x-2 text-sm md:text-base px-4 md:px-6 py-2 md:py-3 w-full sm:w-auto transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                        aria-label={`Read the full article about ${featuredPost.title}`}
+                      >
+                        <span>Read Full Article</span>
+                        <ArrowRight className="w-4 h-4 flex-shrink-0" />
+                      </a>
+                    ) : (
+                      <Link
+                        to={`/blog/${featuredPost.id}`}
+                        className="btn-primary flex items-center justify-center space-x-2 text-sm md:text-base px-4 md:px-6 py-2 md:py-3 w-full sm:w-auto transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                        aria-label={`Read the full article about ${featuredPost.title}`}
+                      >
+                        <span>Read Full Article</span>
+                        <ArrowRight className="w-4 h-4 flex-shrink-0" />
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>
@@ -273,11 +354,19 @@ const Blog = () => {
                       {post.readTime}
                     </span>
                   </div>
-                  <Link to={`/blog/${post.id}`}>
-                    <h3 className="text-lg font-bold text-neutral-900 mb-2 line-clamp-2 group-hover:text-primary-500 transition-colors cursor-pointer">
-                      {post.title}
-                    </h3>
-                  </Link>
+                  {post.externalUrl ? (
+                    <a href={post.externalUrl} target="_blank" rel="noopener noreferrer">
+                      <h3 className="text-lg font-bold text-neutral-900 mb-2 line-clamp-2 group-hover:text-primary-500 transition-colors cursor-pointer">
+                        {post.title}
+                      </h3>
+                    </a>
+                  ) : (
+                    <Link to={`/blog/${post.id}`}>
+                      <h3 className="text-lg font-bold text-neutral-900 mb-2 line-clamp-2 group-hover:text-primary-500 transition-colors cursor-pointer">
+                        {post.title}
+                      </h3>
+                    </Link>
+                  )}
                   <p className="text-sm text-neutral-600 mb-4 line-clamp-3">
                     {post.excerpt}
                   </p>
@@ -292,18 +381,60 @@ const Blog = () => {
                       </div>
                     </div>
                   </div>
-                  <Link
-                    to={`/blog/${post.id}`}
-                    className="mt-4 inline-flex items-center text-primary-500 hover:text-primary-700 font-medium text-sm group"
-                  >
-                    Read More
-                    <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                  </Link>
+                  {post.externalUrl ? (
+                    <a
+                      href={post.externalUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-4 inline-flex items-center text-primary-500 hover:text-primary-700 font-medium text-sm group"
+                    >
+                      Read More
+                      <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                    </a>
+                  ) : (
+                    <Link
+                      to={`/blog/${post.id}`}
+                      className="mt-4 inline-flex items-center text-primary-500 hover:text-primary-700 font-medium text-sm group"
+                    >
+                      Read More
+                      <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  )}
                 </div>
               </motion.article>
             ))}
           </div>
           )}
+        </div>
+      </section>
+
+      <section className="section-padding bg-primary-600 text-white">
+        <div className="container-custom text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+          >
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">
+              Ready to accept stablecoin and crypto payments?
+            </h2>
+            <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
+              Join the merchants featured in our stories. Get started in minutes with no setup fees.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href="https://merchant.ezeebit.com/#/signup"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white text-primary-600 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+              >
+                Get Started
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </a>
+              <Link to="/contact" className="border-2 border-white text-white hover:bg-white hover:text-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center">
+                Talk to Sales
+              </Link>
+            </div>
+          </motion.div>
         </div>
       </section>
 

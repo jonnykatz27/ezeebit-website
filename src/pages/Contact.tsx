@@ -24,21 +24,21 @@ const Contact = () => {
   const contactMethods = [
     {
       icon: <Phone className="w-6 h-6" />,
-      title: "Phone Support",
+      title: "Phone support",
       description: "Speak directly with our support team",
       contact: "+27 21 879 5074",
       availability: "Mon-Fri, 8AM-6PM SAST"
     },
     {
       icon: <Mail className="w-6 h-6" />,
-      title: "Email Support",
+      title: "Email support",
       description: "Get detailed help via email",
       contact: "support@ezeebit.com",
       availability: "24/7 response within 2 hours"
     },
     {
       icon: <Headphones className="w-6 h-6" />,
-      title: "WhatsApp Support",
+      title: "WhatsApp support",
       description: "Quick support via WhatsApp",
       contact: "+27 79 443 9375",
       availability: "Mon-Fri, 8AM-6PM SAST"
@@ -74,7 +74,7 @@ const Contact = () => {
               />
             </div>
             <h1 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 mb-6">
-              Get in <span className="text-gradient">Touch</span>
+              Get in <span className="text-gradient">touch</span>
             </h1>
             <p className="text-xl text-neutral-600 mb-8 max-w-3xl mx-auto">
               Have questions about our crypto payment solutions? Our team is here to help you 
@@ -107,7 +107,7 @@ const Contact = () => {
             className="text-center mb-16"
           >
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
-              Multiple Ways to Reach Us
+              Multiple ways to reach us
             </h2>
             <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
               Choose the contact method that works best for you. We're available across multiple channels.
@@ -174,14 +174,14 @@ const Contact = () => {
 
 
       {/* CTA Section */}
-      <section className="section-padding bg-gradient-to-r from-primary-600 to-secondary-600 text-white">
+      <section className="section-padding bg-primary-600 text-white">
         <div className="container-custom text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold mb-4">
-              Ready to Get Started?
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">
+              Ready to get started?
             </h2>
             <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
               Don't wait to transform your payment system. Join hundreds of merchants already accepting stablecoin and crypto payments.
@@ -191,14 +191,14 @@ const Contact = () => {
                 href="https://merchant.ezeebit.com/#/signup"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white text-primary-500 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+                className="bg-white text-primary-600 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
               >
                 Start Free Trial
                 <ArrowRight className="w-5 h-5 ml-2 inline" />
               </a>
               <a
                 href="mailto:support@ezeebit.com?subject=Schedule%20Demo"
-                className="border-2 border-white text-white hover:bg-white hover:text-primary-500 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
+                className="border-2 border-white text-white hover:bg-white hover:text-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
               >
                 Schedule Demo
               </a>

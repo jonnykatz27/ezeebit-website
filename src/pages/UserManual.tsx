@@ -358,7 +358,7 @@ const UserManual = () => {
           <div className="container-custom relative z-10 text-center">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
               <h1 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 mb-6">
-                User <span className="text-gradient">Manual</span>
+                User <span className="text-gradient">manual</span>
               </h1>
               <p className="text-xl text-neutral-600 mb-8 max-w-3xl mx-auto">
                 Everything you need to set up Ezeebit and accept crypto payments with confidence —
@@ -692,10 +692,10 @@ const UserManual = () => {
         </section>
 
         {/* Need More Help */}
-        <section className="section-padding bg-gradient-to-r from-primary-600 to-secondary-600 text-white">
+        <section className="section-padding bg-primary-600 text-white">
           <div className="container-custom text-center">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}>
-              <h2 className="text-3xl lg:text-4xl font-display font-bold mb-4">Still need a hand?</h2>
+              <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">Still need a hand?</h2>
               <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
                 When in doubt, it's always better to ask than to guess. Our support team is here to help.
               </p>

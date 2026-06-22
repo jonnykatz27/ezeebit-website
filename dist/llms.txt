@@ -1,0 +1,72 @@
+# Ezeebit
+
+> Ezeebit is Africa's FSCA-regulated crypto and stablecoin payment infrastructure company — enabling merchants to accept digital assets in-store and online, with instant hedging and settlement in stablecoin or local fiat currency (ZAR, KES, NGN).
+
+Ezeebit (Ezee Solutions Group Pty Ltd) builds payment rails that let merchants across Africa accept crypto and stablecoins as easily as card payments. The company handles checkout, hedging, compliance, and settlement — offering merchants the choice of stablecoin settlement directly or fiat currency payouts in ZAR, KES, or NGN, with zero volatility risk.
+
+Key facts:
+
+- **Regulated:** Crypto Asset Service Provider (CASP) licensed by the FSCA under the FAIS Act — FSP No. 53664. FIC and POPIA compliant.
+- **Products:** ezeebit Pay (static QR), ePOS terminals (Android POS hardware), e-commerce plugins (Shopify Payments Platform partner), REST API with webhooks, Merchant Portal.
+- **Supported assets:** BTC, ETH, USDT (TRC20, ERC20, BEP20, SPL), USDC (ERC20, SPL), BNB (BEP20), DAI, PAXG.
+- **Supported chains:** Bitcoin, Ethereum, TRON, Binance Smart Chain, Solana.
+- **Wallet compatibility:** 700+ wallets via WalletConnect. Direct exchange integrations: Luno Pay, VALR Pay, Binance Pay.
+- **Settlement:** Stablecoin T+0 (instant) or fiat currency T+1 (next business day) in ZAR, KES, or NGN. Merchants always receive 100% of sale value — crypto volatility is hedged at point of sale.
+- **Pricing:** 1% transaction fee or lower depending on volume (excl. VAT), approximately 68% cheaper than standard card processing (2–3.5%).
+- **No chargebacks:** Blockchain payments are irreversible, eliminating chargeback fraud.
+- **Traction:** 130+ live stores across South Africa, 40,000+ successful transactions, R120M+ processed volume.
+- **Merchants:** iStore (Apple Premium Reseller), Diesel, Amiri, Le Creuset, Goodman Gallery, Tintswalo Lodges, Luxity, The Scoin Shop, SunBet (iGaming).
+- **Investors:** Founder Collective, Raba Partnership, DCG (Digital Currency Group).
+- **Founders:** Daniel Katz (CEO), Jonathan Katz (COO), David Katz (Co-Founder).
+- **HQ:** Cape Town, South Africa.
+
+How a payment works:
+
+1. Customer scans QR code or pays via online checkout
+2. Transaction is detected on blockchain
+3. Ezeebit instantly converts crypto to stablecoin (hedging volatility)
+4. Settlement occurs: stablecoin T+0 to wallet, or fiat (ZAR, KES, NGN) T+1 to bank account
+5. Merchant receives funds in their chosen currency
+
+Ezeebit is the only crypto payments provider in Africa with physical Android POS terminals for in-store acceptance, and the only African crypto Shopify Payments Platform partner. It serves premium-to-mainstream retail merchants, with key verticals in fashion and luxury retail, electronics, hospitality and tourism, art and culture, iGaming, and grocery.
+
+Target market:
+
+- **Primary geography:** South Africa, expanding into Kenya and Nigeria.
+- **Merchant profile:** Premium-to-mainstream retail merchants, typically multi-store operations with national footprint. Decision-makers are COOs, CFOs, and Heads of Payments.
+- **Key verticals:** Fashion and luxury retail, electronics, hospitality and tourism, art and culture, iGaming, grocery, and automotive.
+- **End customer profile:** Crypto holders aged 25–44, mobile-first, spending an average of ~$276 per transaction. Significant segment of international tourists and African foreign nationals who hold stablecoins as a primary store of value. USDT accounts for approximately 70% of all transactions.
+
+Key differentiators:
+
+- Only provider with physical Android POS terminals for in-store crypto acceptance in Africa.
+- Only African crypto Shopify Payments Platform partner with native checkout integration.
+- FSCA-regulated (CASP FSP 53664) in a market where regulation is becoming mandatory — most competitors are unlicensed.
+- 1% or lower transaction fee — approximately 68% cheaper than standard card processing.
+- Zero volatility risk — instant hedging at checkout ensures merchants receive 100% of sale value.
+- No chargeback risk — blockchain payments are irreversible.
+- Merchant-facing infrastructure, not a consumer exchange — merchants settle in local fiat and never need to touch crypto.
+- Premium merchant base (iStore, Diesel, Amiri, Le Creuset, SunBet) signals institutional trust.
+
+## Product Pages
+
+- [Ezeebit Homepage](https://www.ezeebit.com/): Overview of Ezeebit's crypto payment solution for African merchants
+- [About Ezeebit](https://www.ezeebit.com/resources/about): Company history, mission, values, and key milestones
+- [Merchant Signup](https://merchant.ezeebit.com/#/signup): Register as a merchant to start accepting crypto payments
+- [Contact Ezeebit](https://www.ezeebit.com/contact): Get in touch with the Ezeebit team across multiple channels
+- [Ezeebit Merchant Portal](https://merchant.ezeebit.com/): Merchant login for analytics, sales tracking, settlement views, and payout configuration
+- [Careers at Ezeebit](https://www.ezeebit.com/careers): Open roles at Ezeebit — currently hiring a Senior Software Engineer (Java & Spring)
+
+## Resources
+
+- [Ezeebit Blog](https://www.ezeebit.com/resources/blog): Company news, product updates, and crypto payments insights
+- [Ezeebit FAQ](https://www.ezeebit.com/resources/faq): Common questions about accepting crypto payments with Ezeebit
+- [Legal & Terms](https://www.ezeebit.com/resources/legal): Terms and conditions for use of the Ezeebit platform
+- [Where to Spend Crypto](https://www.ezeebit.com/resources/where-to-spend): Directory of 20+ verified merchants accepting crypto payments via Ezeebit across South Africa
+- [Sunbet Store Page](https://www.ezeebit.com/resources/stores/sunbet): Sunbet is integrated with Ezeebit as a crypto deposit method for their online sports betting and gaming platform
+
+## Optional
+
+- [Ezeebit on LinkedIn](https://za.linkedin.com/company/ezeebit): Company news and updates
+- [Ezeebit on X](https://x.com/ezeebit): Social media updates
+- [Ezeebit on Instagram](https://www.instagram.com/ezeebit/): Visual content and merchant stories

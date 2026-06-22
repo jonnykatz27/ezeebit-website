@@ -44,7 +44,7 @@ const WhereToSpend = () => {
             animate={{ opacity: 1, y: 0 }}
           >
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-neutral-900 mb-4 md:mb-6">
-              Where to <span className="text-gradient">Spend Crypto</span>
+              Where to <span className="text-gradient">spend crypto</span>
             </h1>
             <p className="text-base md:text-xl text-neutral-600 mb-4 md:mb-6 max-w-3xl mx-auto">
               Discover verified merchants across South Africa where you can pay with cryptocurrency using Ezeebit.
@@ -191,7 +191,7 @@ const WhereToSpend = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-12 md:py-16 bg-gradient-to-r from-primary-600 to-secondary-600 text-white">
+      <section className="py-12 md:py-16 bg-primary-600 text-white">
         <div className="container-custom text-center px-4">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
@@ -199,8 +199,8 @@ const WhereToSpend = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.3 }}
           >
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-3 md:mb-4">
-              Want to Accept Stablecoin and Crypto Payments?
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold text-white mb-3 md:mb-4">
+              Want to accept stablecoin and crypto payments?
             </h2>
             <p className="text-base md:text-xl mb-6 md:mb-8 max-w-2xl mx-auto opacity-90">
               Join these trusted merchants and start accepting stablecoin and cryptocurrency payments today.
@@ -210,12 +210,12 @@ const WhereToSpend = () => {
                 href="https://merchant.ezeebit.com/#/signup"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white text-primary-500 hover:bg-neutral-100 font-medium px-6 md:px-8 py-3 md:py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center text-sm md:text-base"
+                className="bg-white text-primary-600 hover:bg-neutral-100 font-medium px-6 md:px-8 py-3 md:py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center text-sm md:text-base"
               >
                 Become a Partner
                 <ArrowRight className="w-4 h-4 md:w-5 md:h-5 ml-2 inline" />
               </a>
-              <Link to="/contact" className="border-2 border-white text-white hover:bg-white hover:text-primary-500 font-medium px-6 md:px-8 py-3 md:py-4 rounded-lg transition-all duration-200 flex items-center justify-center text-sm md:text-base">
+              <Link to="/contact" className="border-2 border-white text-white hover:bg-white hover:text-primary-600 font-medium px-6 md:px-8 py-3 md:py-4 rounded-lg transition-all duration-200 flex items-center justify-center text-sm md:text-base">
                 Contact Sales
               </Link>
             </div>

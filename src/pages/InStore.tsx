@@ -10,22 +10,22 @@ const InStore = () => {
   const features = [
     {
       icon: <Zap className="w-6 h-6" />,
-      title: "Lightning Fast ePOS",
+      title: "Lightning-fast ePOS",
       description: "Process transactions in as quick as 0.5 seconds with our advanced point-of-sale technology"
     },
     {
       icon: <FileText className="w-6 h-6" />,
-      title: "Print Receipts",
+      title: "Print receipts",
       description: "Confirm successful crypto transactions with descriptive printed receipts"
     },
     {
       icon: <QrCode className="w-6 h-6" />,
-      title: "QR Code Payments",
+      title: "QR code payments",
       description: "Generate unique QR codes for seamless stablecoin and crypto payments from any wallet"
     },
     {
       icon: <Wifi className="w-6 h-6" />,
-      title: "Multi-Network Support",
+      title: "Multi-network support",
       description: "Works with WiFi or 4G, and offers SIM card compatibility"
     }
   ]
@@ -64,7 +64,7 @@ const InStore = () => {
               className="text-center lg:text-left"
             >
               <h1 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 mb-6">
-                Transform Your <span className="text-gradient">In-Store</span> Experience
+                Transform your <span className="text-gradient">in-store</span> experience
               </h1>
               <p className="text-xl text-neutral-600 mb-8">
                 Accept stablecoin and cryptocurrency payments at your physical location with our advanced ePOS devices or our ezeebit Pay static QR Codes. 
@@ -173,7 +173,7 @@ const InStore = () => {
               className="text-center lg:text-left"
             >
               <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-6">
-                Enterprise-Grade Specifications
+                Enterprise-grade specifications
               </h2>
               <p className="text-lg text-neutral-600 mb-8">
                 Built for reliability and performance, our ePOS devices meet the demanding needs of busy retail environments.
@@ -255,7 +255,7 @@ const InStore = () => {
               className="text-center lg:text-left"
             >
               <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-6">
-                Seamless QR Code Crypto Checkout
+                Seamless QR code crypto checkout
               </h2>
               <p className="text-lg text-neutral-600 mb-8">
                 Transform any location into a crypto payment point with our static QR code solution.
@@ -328,7 +328,7 @@ const InStore = () => {
             className="text-center mb-16"
           >
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
-              Simple Payment Flow
+              Simple payment flow
             </h2>
             <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
               From customer selection to settlement, every step is optimized for speed and security.
@@ -339,25 +339,25 @@ const InStore = () => {
             {[
               {
                 step: "1",
-                title: "Select Crypto",
+                title: "Select crypto",
                 description: "Customer chooses cryptocurrency payment option at checkout",
                 icon: <Smartphone className="w-8 h-8" />
               },
               {
                 step: "2",
-                title: "Scan & Pay",
+                title: "Scan & pay",
                 description: "Customer scans QR code or connects their wallet to pay",
                 icon: <QrCode className="w-8 h-8" />
               },
               {
                 step: "3",
-                title: "Instant Conversion",
+                title: "Instant conversion",
                 description: "Crypto is automatically converted to stablecoins in real-time",
                 icon: <Zap className="w-8 h-8" />
               },
               {
                 step: "4",
-                title: "Local Currency Settlement",
+                title: "Local currency settlement",
                 description: "Funds settled to your bank account in ZAR, KES, or NGN the next business day",
                 icon: <CheckCircle className="w-8 h-8" />
               }
@@ -387,14 +387,14 @@ const InStore = () => {
 
 
       {/* CTA Section */}
-      <section className="section-padding bg-gradient-to-r from-primary-600 to-secondary-600 text-white">
+      <section className="section-padding bg-primary-600 text-white">
         <div className="container-custom text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
           >
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">
-              Ready to Accept Stablecoin and Crypto Payments?
+              Ready to accept stablecoin and crypto payments?
             </h2>
             <p className="text-xl text-white mb-8 max-w-2xl mx-auto opacity-90">
               Join the future of payments today. Get started in minutes with no setup fees and full regulatory compliance.
@@ -404,14 +404,14 @@ const InStore = () => {
                 href="https://merchant.ezeebit.com/#/signup"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white text-primary-500 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+                className="bg-white text-primary-600 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
               >
                 Start Free Trial
                 <ArrowRight className="w-5 h-5 ml-2 inline" />
               </a>
               <Link
                 to="/contact"
-                className="border-2 border-white text-white hover:bg-white hover:text-primary-500 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
+                className="border-2 border-white text-white hover:bg-white hover:text-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
               >
                 Talk to Sales
               </Link>

@@ -202,34 +202,34 @@ print('Store created:', store)`,
     },
     {
       icon: <Webhook className="w-6 h-6" />,
-      title: "Real-time Webhooks",
+      title: "Real-time webhooks",
       description: "Instant notifications for payment events with signature verification"
     },
     {
       icon: <Shield className="w-6 h-6" />,
-      title: "Secure Authentication",
+      title: "Secure authentication",
       description: "JWT-based API authentication with comprehensive error handling"
     }
   ]
 
   const quickStartSteps = [
     {
-      title: "Get API Credentials",
+      title: "Get API credentials",
       description: "Obtain your API key from the merchant dashboard",
       icon: <Key className="w-6 h-6" />
     },
     {
-      title: "Choose Environment",
+      title: "Choose environment",
       description: "Use UAT for testing, Live for production",
       icon: <Globe className="w-6 h-6" />
     },
     {
-      title: "Create Your First Order",
+      title: "Create your first order",
       description: "Make a POST request to create a crypto payment order",
       icon: <Code className="w-6 h-6" />
     },
     {
-      title: "Handle Webhooks",
+      title: "Handle webhooks",
       description: "Set up webhook endpoints to receive payment notifications",
       icon: <Webhook className="w-6 h-6" />
     }
@@ -320,7 +320,7 @@ print('Store created:', store)`,
               className="text-center lg:text-left"
             >
               <h1 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 mb-6">
-                Ezeebit <span className="text-gradient">API</span> Documentation
+                Ezeebit <span className="text-gradient">API</span> documentation
               </h1>
               <p className="text-xl text-neutral-600 mb-8">
                 Integrate stablecoin and cryptocurrency payments with our comprehensive Payment Gateway and Merchant Management APIs.
@@ -440,7 +440,7 @@ print('Store created:', store)`,
             className="text-center mb-16"
           >
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
-              Quick Start Guide
+              Quick start guide
             </h2>
             <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
               Get up and running with the Ezeebit API in minutes.
@@ -484,7 +484,7 @@ print('Store created:', store)`,
             className="text-center mb-16"
           >
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
-              Two Powerful APIs
+              Two powerful APIs
             </h2>
             <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
               Everything you need for stablecoin and crypto payments and merchant management.
@@ -499,7 +499,7 @@ print('Store created:', store)`,
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
-                className="card p-6 text-center hover:scale-105 transition-transform"
+                className="card p-6 text-center hover:-translate-y-1 hover:shadow-lg transition-all duration-300 will-change-transform"
               >
                 <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4 text-primary-500">
                   {feature.icon}
@@ -527,7 +527,7 @@ print('Store created:', store)`,
             className="text-center mb-8 lg:mb-16"
           >
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
-              API Examples
+              API examples
             </h2>
             <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
               Interactive examples for key API endpoints.
@@ -645,7 +645,7 @@ print('Store created:', store)`,
             className="text-center mb-12"
           >
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
-              Supported Cryptos & Networks
+              Supported cryptos & networks
             </h2>
             <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
               Accept payments in multiple cryptocurrencies across different networks.
@@ -703,7 +703,7 @@ print('Store created:', store)`,
               transition={{ duration: 0.3 }}
             >
               <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-6">
-                Webhook Events
+                Webhook events
               </h2>
               <p className="text-lg text-neutral-600 mb-8">
                 Receive real-time notifications for payment events. All webhooks include signature verification 
@@ -759,7 +759,7 @@ print('Store created:', store)`,
             className="text-center mb-12"
           >
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
-              Error Handling
+              Error handling
             </h2>
             <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
               Standardized error responses with clear codes and actionable messages.
@@ -797,7 +797,7 @@ print('Store created:', store)`,
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding bg-gradient-to-r from-primary-600 to-secondary-600 text-white">
+      <section className="section-padding bg-primary-600 text-white">
         <div className="container-custom text-center">
           <motion.div
             initial={{ opacity: 0 }}
@@ -805,8 +805,8 @@ print('Store created:', store)`,
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.3 }}
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold mb-4">
-              Ready to Start Building?
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">
+              Ready to start building?
             </h2>
             <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
               Get your API keys and start integrating stablecoin and crypto payments today. Full documentation and sandbox environment included.
@@ -816,7 +816,7 @@ print('Store created:', store)`,
                 href="https://merchant.ezeebit.com/#/signup" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="bg-white text-primary-500 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+                className="bg-white text-primary-600 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
               >
                 Get API Keys
                 <Key className="w-5 h-5 ml-2 inline" />
@@ -825,7 +825,7 @@ print('Store created:', store)`,
                 href="https://docs.ezeebit.com" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="border-2 border-white text-white hover:bg-white hover:text-primary-500 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
+                className="border-2 border-white text-white hover:bg-white hover:text-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
               >
                 Full Documentation
                 <ExternalLink className="w-5 h-5 ml-2 inline" />

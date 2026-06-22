@@ -22,7 +22,7 @@ const NotFound = () => {
           <div className="mb-8">
             <h1 className="text-8xl md:text-9xl font-bold text-primary-500 mb-4">404</h1>
             <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
-              Page Not Found
+              Page not found
             </h2>
             <p className="text-lg text-neutral-600 mb-8">
               We couldn't find the page you're looking for. It may have been moved or doesn't exist.

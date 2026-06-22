@@ -110,7 +110,7 @@ const Resources = () => {
             animate={{ opacity: 1, y: 0 }}
           >
             <h1 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 mb-6">
-              Resources & <span className="text-gradient">Support</span>
+              Resources & <span className="text-gradient">support</span>
             </h1>
             <p className="text-xl text-neutral-600 mb-8 max-w-3xl mx-auto">
               Everything you need to succeed with Ezeebit. From getting started guides to 
@@ -183,7 +183,7 @@ const Resources = () => {
             className="text-center mb-12"
           >
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
-              Popular Resources
+              Popular resources
             </h2>
             <p className="text-xl text-neutral-600 max-w-2xl mx-auto">
               Most accessed guides and articles to help you get the most out of Ezeebit.
@@ -236,7 +236,7 @@ const Resources = () => {
             className="text-center mb-12"
           >
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
-              Quick Links
+              Quick links
             </h2>
             <p className="text-xl text-neutral-600 max-w-2xl mx-auto">
               Fast access to the most important tools and support channels.
@@ -269,14 +269,14 @@ const Resources = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding bg-gradient-to-r from-primary-600 to-secondary-600 text-white">
+      <section className="section-padding bg-primary-600 text-white">
         <div className="container-custom text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold mb-4">
-              Need More Help?
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">
+              Need more help?
             </h2>
             <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
               Can't find what you're looking for? Our support team is here to help you succeed.
@@ -286,12 +286,12 @@ const Resources = () => {
                 href="https://merchant.ezeebit.com/#/signup" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="bg-white text-primary-500 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+                className="bg-white text-primary-600 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
               >
                 Get Started
                 <ArrowRight className="w-5 h-5 ml-2 inline" />
               </a>
-              <Link to="/contact" className="border-2 border-white text-white hover:bg-white hover:text-primary-500 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center">
+              <Link to="/contact" className="border-2 border-white text-white hover:bg-white hover:text-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center">
                 Contact Support
               </Link>
             </div>

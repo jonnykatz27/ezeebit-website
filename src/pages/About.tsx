@@ -8,9 +8,9 @@ import SEO from '../components/SEO'
 
 const About = () => {
   const stats = [
-    { number: "40,000+", label: "Transactions Processed", icon: <TrendingUp className="w-6 h-6" /> },
-    { number: "150+", label: "Active Stores", icon: <Users className="w-6 h-6" /> },
-    { number: "7+", label: "Supported Cryptocurrencies", icon: <Globe className="w-6 h-6" /> },
+    { number: "100,000+", label: "Transactions processed", icon: <TrendingUp className="w-6 h-6" /> },
+    { number: "150+", label: "Active stores", icon: <Users className="w-6 h-6" /> },
+    { number: "7+", label: "Supported cryptocurrencies", icon: <Globe className="w-6 h-6" /> },
     { number: "99.99%", label: "Uptime", icon: <Shield className="w-6 h-6" /> }
   ]
 
@@ -55,11 +55,6 @@ const About = () => {
 
   const milestones = [
     {
-      year: "2022",
-      title: "Franchise Launched",
-      description: "Launched as Pundi X South Africa — the official franchisee bringing stablecoin and crypto payments to the continent."
-    },
-    {
       year: "2023",
       title: "Operations Begin",
       description: "Kicked off live operations, onboarding our very first merchants and enabling real-world stablecoin and crypto payments."
@@ -85,7 +80,7 @@ const About = () => {
     <>
       <SEO
         title="About Us"
-        description="Learn about Ezeebit's mission to revolutionize stablecoin and crypto payments in Africa. FSCA regulated, 40,000+ transactions processed, and backed by seed funding to accelerate growth."
+        description="Learn about Ezeebit's mission to revolutionize stablecoin and crypto payments in Africa. FSCA regulated, 100,000+ transactions processed, and backed by seed funding to accelerate growth."
         canonicalUrl="/resources/about"
       />
       <motion.div
@@ -110,7 +105,7 @@ const About = () => {
               />
             </div>
             <h1 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 mb-6">
-              Pioneering <span className="text-gradient">Stablecoin and Crypto Payments</span><br className="hidden lg:block" /> in Africa
+              Pioneering <span className="text-gradient">stablecoin and crypto payments</span><br className="hidden lg:block" /> in Africa
             </h1>
             <p className="text-base lg:text-xl text-neutral-600 mb-8 max-w-3xl mx-auto">
               We're on a mission to make stablecoin and cryptocurrency payments as simple and secure as traditional payments,
@@ -181,7 +176,7 @@ const About = () => {
               className="order-last lg:order-first text-center lg:text-left"
             >
               <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-6">
-                Our Mission
+                Our mission
               </h2>
               <p className="text-base lg:text-lg text-neutral-600">
                 To transform how businesses in Africa accept and settle digital payments — by building the trusted stablecoin and crypto infrastructure layer for modern commerce. We empower merchants with fast, secure, and compliant payment solutions that bridge traditional finance and the emerging crypto economy.
@@ -200,7 +195,7 @@ const About = () => {
             className="text-center mb-16"
           >
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
-              Our Core Values
+              Our core values
             </h2>
             <p className="text-base lg:text-xl text-neutral-600 max-w-3xl mx-auto">
               The principles that guide everything we do and every decision we make.
@@ -237,7 +232,7 @@ const About = () => {
                 <Globe className="w-8 h-8" />
               </div>
               <h3 className="text-xl font-semibold text-neutral-900 mb-3">
-                Access for All
+                Access for all
               </h3>
               <p className="text-neutral-600">
                 We're here to democratize stablecoin and crypto payments — not just for the privileged few, but for every merchant and customer across Africa and beyond.
@@ -256,7 +251,7 @@ const About = () => {
             className="text-center mb-16"
           >
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
-              Our Journey
+              Our journey
             </h2>
             <p className="text-base lg:text-xl text-neutral-600 max-w-3xl mx-auto">
               Key milestones in our mission to transform stablecoin and crypto payments in Africa.
@@ -302,7 +297,7 @@ const About = () => {
             className="text-center mb-12"
           >
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
-              Our Co-Founders
+              Our co-founders
             </h2>
             <p className="text-base lg:text-xl text-neutral-600 max-w-3xl mx-auto">
               Meet the team driving crypto payment innovation across Africa.
@@ -347,29 +342,29 @@ const About = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding bg-neutral-50">
+      <section className="section-padding bg-primary-600 text-white">
         <div className="container-custom text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
-              Join Our Mission
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">
+              Join our mission
             </h2>
-            <p className="text-base lg:text-xl text-neutral-600 mb-8 max-w-2xl mx-auto">
+            <p className="text-base lg:text-xl mb-8 max-w-2xl mx-auto opacity-90">
               Be part of the stablecoin and crypto payment revolution in Africa. Start accepting stablecoin and cryptocurrency payments today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a 
-                href="https://merchant.ezeebit.com/#/signup" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="btn-primary flex items-center justify-center"
+              <a
+                href="https://merchant.ezeebit.com/#/signup"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white text-primary-600 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
               >
                 Get Started Today
                 <ArrowRight className="w-5 h-5 ml-2" />
               </a>
-              <Link to="/contact" className="btn-secondary flex items-center justify-center">
+              <Link to="/contact" className="border-2 border-white text-white hover:bg-white hover:text-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center">
                 Contact Our Team
               </Link>
             </div>

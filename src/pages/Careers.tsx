@@ -111,7 +111,7 @@ const Careers = () => {
               whileInView={{ opacity: 1, y: 0 }}
               className="mb-10"
             >
-              <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 mb-2">Open Positions</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 mb-2">Open positions</h2>
               <p className="text-neutral-500">{jobPostings.length} role{jobPostings.length !== 1 ? 's' : ''} currently open</p>
             </motion.div>
 
@@ -192,22 +192,22 @@ const Careers = () => {
         </section>
 
         {/* CTA */}
-        <section className="py-16 md:py-24 bg-white">
+        <section className="py-16 md:py-24 bg-primary-600 text-white">
           <div className="container-custom text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               className="max-w-2xl mx-auto"
             >
-              <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 mb-4">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
                 Don't see your role?
               </h2>
-              <p className="text-neutral-600 mb-8">
+              <p className="mb-8 opacity-90">
                 We're always interested in exceptional people. If you're passionate about payments, fintech, or building for emerging markets, reach out.
               </p>
               <a
                 href="mailto:careers@ezeebit.com"
-                className="btn-primary inline-flex items-center gap-2"
+                className="bg-white text-primary-600 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl inline-flex items-center gap-2"
               >
                 Get in Touch
               </a>

@@ -1,37 +1,47 @@
+import { nextui } from '@nextui-org/react'
+import typography from '@tailwindcss/typography'
+
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    './index.html',
+    './src/**/*.{js,ts,jsx,tsx}',
+    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
+  ],
   theme: {
     extend: {
       fontFamily: {
-        sans: ["'THICCCBOI'", '-apple-system', 'BlinkMacSystemFont', "'Segoe UI'", 'Roboto', "'Helvetica Neue'", 'Arial', 'sans-serif'],
-        display: ["'THICCCBOI'", '-apple-system', 'BlinkMacSystemFont', "'Segoe UI'", 'Roboto', "'Helvetica Neue'", 'Arial', 'sans-serif'],
+        sans: ["'THICCCBOI'", "'Inter'", '-apple-system', 'BlinkMacSystemFont', "'Segoe UI'", 'Roboto', "'Helvetica Neue'", 'Arial', 'sans-serif'],
+        display: ["'THICCCBOI'", "'Inter'", '-apple-system', 'BlinkMacSystemFont', "'Segoe UI'", 'Roboto', "'Helvetica Neue'", 'Arial', 'sans-serif'],
         mono: ["'SF Mono'", "'Fira Code'", "'Fira Mono'", "'Roboto Mono'", "'Courier New'", 'monospace'],
       },
       colors: {
+        // Ezeebit master brand palette — Ezeebit Blue #0074E4 is the hero accent
         primary: {
-          50: '#EBF5FF',
+          50: '#E6F0FC',
           100: '#D6EAFF',
           200: '#ADD5FF',
           300: '#70B8FF',
-          400: '#3399FF',
-          500: '#0074E3',
-          600: '#005CB8',
+          400: '#3D9AED',
+          500: '#0074E4',
+          600: '#00509E',
           700: '#00458A',
           800: '#002E5C',
           900: '#001A36',
         },
+        // Secondary maps to the brand's blue family (Blue Mid / Blue Dark) —
+        // the old cyan ramp is off-brand
         secondary: {
-          50: '#ECFCFF',
-          100: '#CFF7FE',
-          200: '#A5F0FC',
-          300: '#67E3F9',
-          400: '#22CCEE',
-          500: '#06AED4',
-          600: '#088AB2',
-          700: '#0E6F90',
-          800: '#155876',
-          900: '#164964',
+          50: '#E6F0FC',
+          100: '#D6EAFF',
+          200: '#ADD5FF',
+          300: '#70B8FF',
+          400: '#3D9AED',
+          500: '#3D9AED',
+          600: '#00509E',
+          700: '#00458A',
+          800: '#002E5C',
+          900: '#001A36',
         },
         neutral: {
           0: '#FFFFFF',
@@ -45,7 +55,7 @@ export default {
           700: '#374151',
           800: '#1F2937',
           900: '#111827',
-          950: '#030712',
+          950: '#111111',
         },
         success: {
           50: '#ECFDF5',
@@ -155,6 +165,44 @@ export default {
     },
   },
   plugins: [
-    require('@tailwindcss/typography'),
+    typography,
+    nextui({
+      themes: {
+        light: {
+          colors: {
+            primary: {
+              50: '#E6F0FC',
+              100: '#D6EAFF',
+              200: '#ADD5FF',
+              300: '#70B8FF',
+              400: '#3D9AED',
+              500: '#0074E4',
+              600: '#00509E',
+              700: '#00458A',
+              800: '#002E5C',
+              900: '#001A36',
+              DEFAULT: '#0074E4',
+              foreground: '#FFFFFF',
+            },
+            secondary: {
+              DEFAULT: '#3D9AED',
+              foreground: '#FFFFFF',
+            },
+            success: {
+              DEFAULT: '#10B981',
+              foreground: '#FFFFFF',
+            },
+            warning: {
+              DEFAULT: '#F59E0B',
+              foreground: '#FFFFFF',
+            },
+            danger: {
+              DEFAULT: '#EF4444',
+              foreground: '#FFFFFF',
+            },
+          },
+        },
+      },
+    }),
   ],
 }

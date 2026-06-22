@@ -164,7 +164,7 @@ const StoreDetail = () => {
             className="text-center mb-16"
           >
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
-              How to Pay with Ezeebit
+              How to pay with Ezeebit
             </h2>
             <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
               Paying with cryptocurrency at {store.name} is simple, secure, and fast. 

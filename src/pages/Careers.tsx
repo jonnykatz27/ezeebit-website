@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { MapPin, Clock, Briefcase, ExternalLink, Users, Zap, Globe } from 'lucide-react'
+import { MapPin, Clock, Briefcase, ExternalLink, Zap, Compass, ShieldCheck, Sparkles, Coffee } from 'lucide-react'
 import SEO from '../components/SEO'
 
 const jobPostings = [
@@ -17,21 +17,26 @@ const jobPostings = [
   },
 ]
 
-const perks = [
-  {
-    icon: Globe,
-    title: 'Meaningful work',
-    description: "Build payment infrastructure that expands financial access across Africa — not another ad-tech product.",
-  },
+const principles = [
   {
     icon: Zap,
-    title: 'Move fast',
-    description: 'Small team, high ownership. Ship real features to real merchants, not demos.',
+    title: 'Iterate relentlessly',
+    description: "We move fast and learn faster — laying the tracks as we ride the train. Your work ships to real merchants, and we treat every mistake as a lesson, not a loss.",
   },
   {
-    icon: Users,
-    title: 'Great people',
-    description: 'Work alongside the founding team and early engineers who care deeply about the mission.',
+    icon: Compass,
+    title: 'High agency, high ownership',
+    description: "Everyone here acts like a founder. You take initiative, own the outcome, and don't wait to be told. A problem is everyone's until it's solved.",
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Compliance by design',
+    description: "We're FSCA-regulated and we build for legitimacy from day one. Regulation isn't a blocker here — it's part of the product, and it's our edge.",
+  },
+  {
+    icon: Sparkles,
+    title: 'Simplicity builds trust',
+    description: "We make complex systems feel simple and reliable. From our code to a merchant's first payment, clarity always wins over noise.",
   },
 ]
 
@@ -64,13 +69,13 @@ const Careers = () => {
                 Build the future of <span className="text-gradient">African payments</span>
               </h1>
               <p className="text-base md:text-xl text-neutral-600 max-w-2xl mx-auto">
-                Ezeebit is a small, focused team on a big mission — making stablecoin and crypto payments accessible for merchants across Africa. Come help us build it.
+                We're a small team in Cape Town building the rails that let merchants across Africa accept stablecoins and crypto — instantly hedged, settled the next business day. 130+ stores already run on Ezeebit. We're just getting started.
               </p>
             </motion.div>
           </div>
         </section>
 
-        {/* Why Ezeebit */}
+        {/* How we work */}
         <section className="py-16 md:py-24 bg-white">
           <div className="container-custom">
             <motion.div
@@ -78,33 +83,57 @@ const Careers = () => {
               whileInView={{ opacity: 1, y: 0 }}
               className="text-center mb-12"
             >
-              <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 mb-3">Why Ezeebit?</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 mb-3">How we work</h2>
               <p className="text-neutral-600 max-w-xl mx-auto">
-                We raised $2M to build payment rails that didn't exist — and we're just getting started.
+                FSCA-regulated, backed by Founder Collective, Raba, and DCG — and small enough that what you build reaches real merchants this week. These are the principles we actually run on.
               </p>
             </motion.div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-              {perks.map((perk, index) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+              {principles.map((principle, index) => (
                 <motion.div
-                  key={perk.title}
+                  key={principle.title}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className="card p-6 md:p-8"
+                  className="card p-6 text-center hover:scale-105 transition-transform"
                 >
-                  <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center mb-4">
-                    <perk.icon className="w-5 h-5 text-primary-600" />
+                  <div className="w-16 h-16 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4 text-primary-500">
+                    <principle.icon className="w-8 h-8" />
                   </div>
-                  <h3 className="text-lg font-semibold text-neutral-900 mb-2">{perk.title}</h3>
-                  <p className="text-neutral-600 text-sm leading-relaxed">{perk.description}</p>
+                  <h3 className="text-xl font-semibold text-neutral-900 mb-3">{principle.title}</h3>
+                  <p className="text-neutral-600">{principle.description}</p>
                 </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Open Positions */}
+        {/* In the room, together */}
         <section className="py-16 md:py-24 bg-neutral-50">
+          <div className="container-custom">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="card p-8 md:p-12 max-w-4xl mx-auto text-center"
+            >
+              <div className="w-16 h-16 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4 text-primary-500">
+                <Coffee className="w-8 h-8" />
+              </div>
+              <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 mb-4">
+                We build in the room, together
+              </h2>
+              <p className="text-neutral-600 leading-relaxed mb-4">
+                We work from our office in Cape Town, and it's a deliberate choice. With a small team, being in the same room means everyone is exposed to every part of the business — sales, engineering, compliance, support. That's how our focus and our vision stay sharp, and it's a big part of how we keep moving quickly.
+              </p>
+              <p className="text-neutral-600 leading-relaxed">
+                Some of our best decisions start as water-cooler conversations. You can't schedule those — you just have to be there for them.
+              </p>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Open Positions */}
+        <section className="py-16 md:py-24 bg-white">
           <div className="container-custom">
             <motion.div
               initial={{ opacity: 0, y: 20 }}

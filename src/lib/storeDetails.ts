@@ -186,6 +186,22 @@ export const storeDetailsMap: Record<string, StoreDetailData> = {
       }
     ]
   },
+  'skins': {
+    locations: [
+      {
+        name: 'Sandton City, Johannesburg',
+        address: 'Shop U79, Upper Level, Sandton City Shopping Centre',
+        city: 'Sandton',
+        phone: ''
+      },
+      {
+        name: 'V&A Waterfront, Cape Town',
+        address: 'Victoria Wharf Shopping Centre, V&A Waterfront',
+        city: 'Cape Town',
+        phone: ''
+      }
+    ]
+  },
   'le-creuset': {
     locations: [
       {

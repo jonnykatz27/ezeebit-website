@@ -69,7 +69,7 @@ const Careers = () => {
                 Build the future of <span className="text-gradient">African payments</span>
               </h1>
               <p className="text-base md:text-xl text-neutral-600 max-w-2xl mx-auto">
-                We're a small team in Cape Town building the rails that let merchants across Africa accept stablecoins and crypto — instantly hedged, settled the next business day. 130+ stores already run on Ezeebit. We're just getting started.
+                We're a small team in Cape Town building the rails that let merchants across Africa accept stablecoins and crypto — instantly hedged, settled the next business day. 150+ stores already run on Ezeebit. We're just getting started.
               </p>
             </motion.div>
           </div>

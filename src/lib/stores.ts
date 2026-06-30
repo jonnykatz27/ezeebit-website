@@ -97,15 +97,15 @@ export const stores: Store[] = [
     moreInfoRoute: "/resources/stores/hydraulics"
   },
   {
-    name: "Le Creuset",
-    slug: "le-creuset",
-    category: "Home & Kitchen",
-    excerpt: "A globally renowned cookware brand, best known for its colourful enameled cast-iron casseroles and cooking tools. Offers premium kitchen-to-table solutions, appealing to serious home chefs and lifestyle-conscious buyers.",
-    about: "Global leader in premium French cookware and kitchen lifestyle products, internationally recognized for signature colorful enameled cast-iron casseroles and innovative cooking tools. Offers quality kitchenware designed for serious home chefs and cooking enthusiasts, featuring exceptional durability, authentic craftsmanship, and vibrant aesthetic appeal that transforms everyday cooking into culinary artistry.",
-    websiteUrl: "https://www.lecreuset.co.za/",
-    image: "/lecreuset-store.webp",
+    name: "Skins Cosmetics",
+    slug: "skins",
+    category: "Beauty & Cosmetics",
+    excerpt: "South Africa's premier luxury beauty boutique, offering an expertly curated edit of niche, artisan and hand-crafted brands from around the world. The first Skins boutique to open outside Europe, it brings hard-to-find luxury fragrance, skincare and make-up to discerning beauty lovers.",
+    about: "Luxury beauty destination that opened its first South African boutique in Sandton City in August 2017—the very first Skins location outside Europe—followed by its Cape Town store at the V&A Waterfront. Skins specialises in a meticulously curated selection of niche, artisan, and hand-crafted brands rarely found elsewhere in the country, including diptyque, BYREDO, and Creed fragrances, Aesop and Susanne Kaufmann skincare, and Laura Mercier and Westman Atelier make-up. The boutiques pair expert consultation and an elevated retail experience with access to some of the world's most coveted beauty houses.",
+    websiteUrl: "https://skins.co.za/",
+    image: "/skins store image.webp",
     order: 8,
-    moreInfoRoute: "/resources/stores/le-creuset"
+    moreInfoRoute: "/resources/stores/skins"
   },
   {
     name: "Amiri",
@@ -150,6 +150,17 @@ export const stores: Store[] = [
     image: "/tintswalo-store.webp",
     order: 12,
     moreInfoRoute: "/resources/stores/tintswalo-lodge"
+  },
+  {
+    name: "Le Creuset",
+    slug: "le-creuset",
+    category: "Home & Kitchen",
+    excerpt: "A globally renowned cookware brand, best known for its colourful enameled cast-iron casseroles and cooking tools. Offers premium kitchen-to-table solutions, appealing to serious home chefs and lifestyle-conscious buyers.",
+    about: "Global leader in premium French cookware and kitchen lifestyle products, internationally recognized for signature colorful enameled cast-iron casseroles and innovative cooking tools. Offers quality kitchenware designed for serious home chefs and cooking enthusiasts, featuring exceptional durability, authentic craftsmanship, and vibrant aesthetic appeal that transforms everyday cooking into culinary artistry.",
+    websiteUrl: "https://www.lecreuset.co.za/",
+    image: "/lecreuset-store.webp",
+    order: 12.5,
+    moreInfoRoute: "/resources/stores/le-creuset"
   },
   {
     name: "Swest Kicks",
@@ -278,6 +289,7 @@ export const categories = [
   "All",
   "Art & Culture",
   "Automotive",
+  "Beauty & Cosmetics",
   "Electronics",
   "Entertainment & Gaming",
   "Fashion & Apparel",

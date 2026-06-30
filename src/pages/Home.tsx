@@ -241,6 +241,7 @@ const Home = () => {
             <PartnerCarousel
               partners={[
                 { name: 'iStore', logo: '/istore-logo(final).png', scale: 1.06 },
+                { name: 'Skins', logo: '/skins-logo.png' },
                 { name: 'Le Creuset', logo: '/le-creuset-logo(final).png', scale: 1.475 },
                 { name: 'Amiri', logo: '/amiri-logo(latest).png', mobileScale: 0.95 },
                 { name: 'Court Order', logo: '/courtorder-logo(latest).png', scale: 0.75 },

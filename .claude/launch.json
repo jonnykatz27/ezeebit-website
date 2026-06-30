@@ -4,8 +4,9 @@
     {
       "name": "dev",
       "runtimeExecutable": "/bin/zsh",
-      "runtimeArgs": ["-c", "PATH=/opt/homebrew/bin:$PATH npx vite"],
-      "port": 5173
+      "runtimeArgs": ["-c", "PATH=/opt/homebrew/bin:$PATH npx vite --port \"$PORT\" --strictPort"],
+      "port": 5173,
+      "autoPort": true
     }
   ]
 }

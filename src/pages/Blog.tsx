@@ -32,7 +32,7 @@ const Blog = () => {
       title: "Crypto deposits for iGaming: inside the Sunbet integration",
       excerpt: "Sunbet — a subsidiary of JSE-listed Sun International — is one of the first online gaming platforms in South Africa to accept crypto deposits. Here's the complexity behind letting any user fund their account from any wallet, how we kept compliance and innovation at the forefront, and why the same deposit rail extends to FX, trading, and any platform that takes deposits.",
       author: 'Daniel Katz',
-      date: '2026-06-01',
+      date: '2026-07-03',
       readTime: '6 min read',
       category: 'Product',
       categoryId: 'product',

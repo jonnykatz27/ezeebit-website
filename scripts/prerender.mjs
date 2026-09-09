@@ -86,7 +86,79 @@ const routes = [
 // ---------------------------------------------------------------------------
 // Load template and SSR bundle
 // ---------------------------------------------------------------------------
-const template = fs.readFileSync(toAbs('dist/index.html'), 'utf-8')
+// The homepage is written back to dist/index.html, which is also our template
+// source. Once that happens the <!--ssr-outlet--> marker is gone, so a second
+// run without an intervening `npm run build` would stamp the homepage body into
+// every route. Keep a pristine copy alongside it and prefer that on re-runs.
+const templatePath = toAbs('dist/index.html')
+// Cached outside dist/ so it is never deployed with the site.
+const pristinePath = toAbs('node_modules/.cache/prerender-template.html')
+
+function loadTemplate() {
+  const built = fs.existsSync(templatePath)
+    ? fs.readFileSync(templatePath, 'utf-8')
+    : null
+
+  if (built?.includes('<!--ssr-outlet-->')) {
+    fs.mkdirSync(path.dirname(pristinePath), { recursive: true })
+    fs.writeFileSync(pristinePath, built, 'utf-8')
+    return built
+  }
+
+  if (fs.existsSync(pristinePath)) {
+    return fs.readFileSync(pristinePath, 'utf-8')
+  }
+
+  throw new Error(
+    'dist/index.html has no <!--ssr-outlet--> marker and no pristine copy was ' +
+      'cached. Run `npm run build` before pre-rendering.'
+  )
+}
+
+// Head tags SEO.tsx re-emits through Helmet. Leaving the template's own copies
+// in place would ship two of each, so strip them before injecting.
+const SUPERSEDED_META_NAMES = [
+  'description',
+  'keywords',
+  'robots',
+  'googlebot',
+  'twitter:card',
+  'twitter:title',
+  'twitter:description',
+  'twitter:image',
+]
+const SUPERSEDED_META_PROPS = [
+  'og:title',
+  'og:description',
+  'og:image',
+  'og:url',
+  'og:type',
+  'og:site_name',
+]
+
+function stripSupersededHead(html) {
+  let out = html
+    // Anything a previous pre-render injected.
+    .replace(/^[ \t]*<[^>]*\sdata-rh="true"[^>]*>.*$\n?/gim, '')
+    .replace(/<title[^>]*>[\s\S]*?<\/title>\s*/gi, '')
+    .replace(/^[ \t]*<link[^>]*rel="canonical"[^>]*>\s*$\n?/gim, '')
+
+  for (const name of SUPERSEDED_META_NAMES) {
+    out = out.replace(
+      new RegExp(`^[ \\t]*<meta[^>]*name="${name}"[^>]*>\\s*$\\n?`, 'gim'),
+      ''
+    )
+  }
+  for (const prop of SUPERSEDED_META_PROPS) {
+    out = out.replace(
+      new RegExp(`^[ \\t]*<meta[^>]*property="${prop}"[^>]*>\\s*$\\n?`, 'gim'),
+      ''
+    )
+  }
+  return out
+}
+
+const template = stripSupersededHead(loadTemplate())
 
 // Dynamic import of the SSR bundle built by `vite build --ssr`
 const { render } = await import(toAbs('dist/server/entry-server.js'))
@@ -105,7 +177,10 @@ for (const url of routes) {
     let page = template
 
     // Inject rendered app HTML
-    page = page.replace('<!--ssr-outlet-->', appHtml)
+    if (!page.includes('<!--ssr-outlet-->')) {
+      throw new Error('template is missing the <!--ssr-outlet--> marker')
+    }
+    page = page.replace('<!--ssr-outlet-->', () => appHtml)
 
     // Inject Helmet head tags (title, meta, canonical, og, etc.)
     if (helmet) {
@@ -120,10 +195,9 @@ for (const url of routes) {
         .join('\n    ')
 
       if (headTags) {
-        // Remove the generic <title> already in the template to avoid duplicates
-        page = page.replace(/<title>[^<]*<\/title>/, '')
-        // Inject before </head>
-        page = page.replace('</head>', `  ${headTags}\n  </head>`)
+        // The template already had its superseded tags stripped, so this is
+        // the only title/description/og set on the page.
+        page = page.replace('</head>', () => `  ${headTags}\n  </head>`)
       }
     }
 

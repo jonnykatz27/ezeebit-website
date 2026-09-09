@@ -828,7 +828,10 @@ const BlogPost = () => {
     )
   }
 
-  const shareUrl = window.location.href
+  // Falls back to the canonical URL during SSR, where there is no window.
+  const shareUrl = typeof window !== 'undefined'
+    ? window.location.href
+    : `https://ezeebit.com/blog/${slug}`
   const shareTitle = post.title
 
   const handleShare = (platform: string) => {

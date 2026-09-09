@@ -45,4 +45,10 @@ function safeBuildCopyPlugin() {
 
 export default defineConfig({
   plugins: [react(), safeBuildCopyPlugin()],
+  ssr: {
+    // react-helmet-async ships CommonJS. Left external, Node's ESM loader can't
+    // resolve its named exports and the SSR bundle throws on import. Bundling it
+    // lets Vite handle the interop.
+    noExternal: ['react-helmet-async'],
+  },
 })

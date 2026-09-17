@@ -28,6 +28,8 @@ const staticRoutes = [
   '/',
   '/in-store',
   '/online',
+  '/payouts',
+  '/wallets',
   '/otc',
   '/pricing',
   '/developers',
@@ -172,6 +174,16 @@ let failCount = 0
 for (const url of routes) {
   try {
     const { html: appHtml, helmet } = render(url)
+
+    // entry-server.tsx keeps its own copy of the route table, so a route added
+    // to App.tsx but not there falls through to the catch-all and renders the
+    // 404 page. That still writes a file and still looks like a success, so
+    // catch it here rather than shipping a 404 at a real URL.
+    if (url !== '/404' && /rel="canonical"[^>]*\/404"/.test(helmet?.link?.toString() ?? '')) {
+      throw new Error(
+        'rendered the 404 page — add this route to src/entry-server.tsx as well as src/App.tsx'
+      )
+    }
 
     // Start from the client-built template
     let page = template

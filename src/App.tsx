@@ -10,6 +10,8 @@ import Home from './pages/Home'
 const InStore = lazy(() => import('./pages/InStore'))
 const Online = lazy(() => import('./pages/Online'))
 const OTC = lazy(() => import('./pages/OTC'))
+const Payouts = lazy(() => import('./pages/Payouts'))
+const Wallets = lazy(() => import('./pages/Wallets'))
 const Pricing = lazy(() => import('./pages/Pricing'))
 const Developers = lazy(() => import('./pages/Developers'))
 const Resources = lazy(() => import('./pages/Resources'))
@@ -48,6 +50,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/in-store" element={<InStore />} />
             <Route path="/online" element={<Online />} />
+            <Route path="/payouts" element={<Payouts />} />
+            <Route path="/wallets" element={<Wallets />} />
             <Route path="/otc" element={<OTC />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/developers" element={<Developers />} />

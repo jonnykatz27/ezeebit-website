@@ -3,6 +3,26 @@ import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, ChevronDown } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
+type NavLink = {
+  name: string
+  href: string
+  description: string
+}
+
+type NavGroup = {
+  /** Heading shown above the links. Omitted for ungrouped links. */
+  group?: string
+  items: NavLink[]
+}
+
+/**
+ * A plain link always has a route. A dropdown parent only has one when it is
+ * also a page of its own, which Products is not.
+ */
+type NavItem =
+  | { name: string; href: string; dropdown?: undefined }
+  | { name: string; href?: string; dropdown: NavGroup[] }
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
@@ -22,24 +42,44 @@ const Header = () => {
     setActiveDropdown(null)
   }, [location.pathname])
 
-  const navigation = [
+  const navigation: NavItem[] = [
     { name: 'Home', href: '/' },
-    { name: 'In-Store', href: '/in-store' },
-    { name: 'Online', href: '/online' },
-    { name: 'OTC', href: '/otc' },
+    {
+      name: 'Products',
+      dropdown: [
+        {
+          group: 'Payments',
+          items: [
+            { name: 'In-Store', href: '/in-store', description: 'Accept payments at the point of sale' },
+            { name: 'Online', href: '/online', description: 'Hosted checkout for your website' },
+            { name: 'Payouts', href: '/payouts', description: 'Pay your customers out in stablecoin' },
+          ],
+        },
+        {
+          items: [
+            { name: 'Wallets', href: '/wallets', description: 'Hold, convert, and withdraw balances' },
+            { name: 'OTC', href: '/otc', description: 'Large-volume trades with a dedicated dealer' },
+          ],
+        },
+      ],
+    },
     { name: 'Pricing', href: '/pricing' },
     { name: 'Developers', href: '/developers' },
     {
       name: 'Resources',
       href: '/resources',
       dropdown: [
-        { name: 'About Us', href: '/resources/about', description: 'Our story and mission' },
-        { name: 'FAQ', href: '/resources/faq', description: 'Frequently asked questions' },
-        { name: 'Legal', href: '/resources/legal', description: 'Terms, privacy, and compliance' },
-        { name: 'Blog', href: '/resources/blog', description: 'Latest news and insights' },
-        { name: 'User Manual', href: '/resources/user-manual', description: 'How-to guides and tutorials' },
-        { name: 'Where to Spend Crypto', href: '/resources/where-to-spend', description: 'Verified merchants accepting crypto' },
-        { name: 'Careers', href: '/careers', description: 'Open roles at Ezeebit' },
+        {
+          items: [
+            { name: 'About Us', href: '/resources/about', description: 'Our story and mission' },
+            { name: 'FAQ', href: '/resources/faq', description: 'Frequently asked questions' },
+            { name: 'Legal', href: '/resources/legal', description: 'Terms, privacy, and compliance' },
+            { name: 'Blog', href: '/resources/blog', description: 'Latest news and insights' },
+            { name: 'User Manual', href: '/resources/user-manual', description: 'How-to guides and tutorials' },
+            { name: 'Where to Spend Crypto', href: '/resources/where-to-spend', description: 'Verified merchants accepting crypto' },
+            { name: 'Careers', href: '/careers', description: 'Open roles at Ezeebit' },
+          ],
+        },
       ]
     },
     { name: 'Contact', href: '/contact' },
@@ -49,6 +89,12 @@ const Header = () => {
     if (href === '/') return location.pathname === '/'
     return location.pathname.startsWith(href)
   }
+
+  // A dropdown parent highlights for its own route and for any route beneath it,
+  // so Products stays lit on /in-store, /payouts and the rest without being a page.
+  const isItemActive = (item: NavItem) =>
+    (item.href ? isActive(item.href) : false) ||
+    (item.dropdown?.some((group) => group.items.some((sub) => isActive(sub.href))) ?? false)
 
   return (
     <header
@@ -79,7 +125,7 @@ const Header = () => {
                   >
                     <button
                       className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-base font-medium transition-colors ${
-                        isActive(item.href)
+                        isItemActive(item)
                           ? 'text-primary-600'
                           : 'text-neutral-700 hover:text-primary-600 hover:bg-neutral-50'
                       }`}
@@ -100,15 +146,29 @@ const Header = () => {
                           transition={{ duration: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
                           className="absolute top-full left-0 mt-1 w-72 bg-white rounded-xl shadow-xl border border-neutral-100 py-1.5 overflow-hidden"
                         >
-                          {item.dropdown.map((subItem) => (
-                            <Link
-                              key={subItem.name}
-                              to={subItem.href}
-                              className="block px-4 py-3 hover:bg-neutral-50 transition-colors"
+                          {item.dropdown.map((group, groupIndex) => (
+                            <div
+                              key={group.group ?? `group-${groupIndex}`}
+                              className={
+                                groupIndex > 0 ? 'border-t border-neutral-100 mt-1.5 pt-1.5' : ''
+                              }
                             >
-                              <div className="text-sm font-medium text-neutral-900">{subItem.name}</div>
-                              <div className="text-xs text-neutral-500 mt-0.5">{subItem.description}</div>
-                            </Link>
+                              {group.group && (
+                                <div className="px-4 pt-2 pb-1 text-[0.6875rem] font-semibold uppercase tracking-wider text-neutral-400">
+                                  {group.group}
+                                </div>
+                              )}
+                              {group.items.map((subItem) => (
+                                <Link
+                                  key={subItem.name}
+                                  to={subItem.href}
+                                  className="block px-4 py-3 hover:bg-neutral-50 transition-colors"
+                                >
+                                  <div className="text-sm font-medium text-neutral-900">{subItem.name}</div>
+                                  <div className="text-xs text-neutral-500 mt-0.5">{subItem.description}</div>
+                                </Link>
+                              ))}
+                            </div>
                           ))}
                         </motion.div>
                       )}
@@ -174,7 +234,11 @@ const Header = () => {
                       <div>
                         <button
                           onClick={() => setActiveDropdown(activeDropdown === item.name ? null : item.name)}
-                          className="flex items-center justify-between w-full px-5 py-3 text-neutral-700 hover:text-primary-600 font-medium text-sm"
+                          className={`flex items-center justify-between w-full px-5 py-3 font-medium text-sm transition-colors ${
+                            isItemActive(item)
+                              ? 'text-primary-600'
+                              : 'text-neutral-700 hover:text-primary-600'
+                          }`}
                         >
                           <span>{item.name}</span>
                           <ChevronDown
@@ -192,15 +256,27 @@ const Header = () => {
                               transition={{ duration: 0.15 }}
                               className="bg-neutral-50"
                             >
-                              {item.dropdown.map((subItem) => (
-                                <Link
-                                  key={subItem.name}
-                                  to={subItem.href}
-                                  className="block px-9 py-2.5 text-sm text-neutral-600 hover:text-primary-600 transition-colors"
-                                  onClick={() => setIsMenuOpen(false)}
+                              {item.dropdown.map((group, groupIndex) => (
+                                <div
+                                  key={group.group ?? `group-${groupIndex}`}
+                                  className={groupIndex > 0 ? 'border-t border-neutral-200/70' : ''}
                                 >
-                                  {subItem.name}
-                                </Link>
+                                  {group.group && (
+                                    <div className="px-9 pt-3 pb-1 text-[0.6875rem] font-semibold uppercase tracking-wider text-neutral-400">
+                                      {group.group}
+                                    </div>
+                                  )}
+                                  {group.items.map((subItem) => (
+                                    <Link
+                                      key={subItem.name}
+                                      to={subItem.href}
+                                      className="block px-9 py-2.5 text-sm text-neutral-600 hover:text-primary-600 transition-colors"
+                                      onClick={() => setIsMenuOpen(false)}
+                                    >
+                                      {subItem.name}
+                                    </Link>
+                                  ))}
+                                </div>
                               ))}
                             </motion.div>
                           )}

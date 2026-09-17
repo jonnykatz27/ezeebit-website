@@ -6,6 +6,9 @@ const Footer = () => {
     Products: [
       { name: 'In-Store Payments', href: '/in-store' },
       { name: 'Online Payments', href: '/online' },
+      { name: 'Payouts', href: '/payouts' },
+      { name: 'Wallets', href: '/wallets' },
+      { name: 'OTC', href: '/otc' },
       { name: 'Pricing', href: '/pricing' },
       { name: 'API Documentation', href: '/developers' },
     ],

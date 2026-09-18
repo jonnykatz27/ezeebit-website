@@ -161,10 +161,10 @@ const Payouts = () => {
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative hidden lg:block"
+                className="relative"
               >
                 {/* Withdrawal method mockup - how Ezeebit appears inside your product */}
-                <figure className="relative max-w-sm mx-auto">
+                <figure className="relative max-w-sm mx-auto text-left">
                   <div className="card p-6 shadow-2xl bg-white">
                     <div className="mb-5">
                       <p className="text-sm font-medium text-neutral-500 mb-1">Withdraw</p>

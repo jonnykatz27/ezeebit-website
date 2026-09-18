@@ -131,10 +131,10 @@ const Wallets = () => {
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative hidden lg:block"
+                className="relative w-full"
               >
                 {/* Merchant Portal balances card */}
-                <figure className="relative max-w-md mx-auto">
+                <figure className="relative max-w-md mx-auto text-left">
                   <div className="bg-white rounded-xl shadow-2xl border border-neutral-100 overflow-hidden">
                     <div className="p-6">
                       {/* Total + legend */}

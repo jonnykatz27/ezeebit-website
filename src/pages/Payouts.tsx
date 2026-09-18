@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import {
   ArrowRight, Send, Globe, Clock, ShieldCheck,
-  Webhook, Link2
+  Webhook, Link2, CheckCircle
 } from 'lucide-react'
 import SEO from '../components/SEO'
 
@@ -55,6 +55,21 @@ const Payouts = () => {
       number: "03",
       title: "Funds land and you reconcile",
       description: "The transfer settles on-chain and we post a signed webhook with the final status and transaction hash."
+    }
+  ]
+
+  const customerExperience = [
+    {
+      title: "Your brand, not ours",
+      description: "The widget carries your name and colours. Ezeebit sits quietly underneath as the provider."
+    },
+    {
+      title: "Live status, start to finish",
+      description: "Each stage is ticked off as it happens, so nobody is left wondering whether the money is coming."
+    },
+    {
+      title: "A reference they can quote",
+      description: "Every payout carries an ID your support team can look up, alongside the amount and destination wallet."
     }
   ]
 
@@ -267,8 +282,60 @@ const Payouts = () => {
           </div>
         </section>
 
-        {/* Use Cases */}
+        {/* What your customer sees */}
         <section className="section-padding bg-white">
+          <div className="container-custom">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+                className="order-2 lg:order-1 flex justify-center"
+              >
+                <img
+                  src="/payout-widget-mockup.webp"
+                  alt="The Ezeebit payout widget on a phone, showing a withdrawal progressing through quote accepted, transaction sent, confirming transaction, and funds transferred, with the amount received in USDT and a payout reference."
+                  width={800}
+                  height={1615}
+                  loading="lazy"
+                  className="w-full max-w-[18rem] h-auto"
+                />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                viewport={{ once: true }}
+                className="order-1 lg:order-2"
+              >
+                <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+                  What your customer sees
+                </h2>
+                <p className="text-xl text-neutral-600 mb-8">
+                  The payout link opens in any mobile browser. No app to install, no Ezeebit
+                  account to create, and nothing for your support team to talk anyone through.
+                </p>
+
+                <ul className="space-y-5">
+                  {customerExperience.map((point) => (
+                    <li key={point.title} className="flex gap-4">
+                      <CheckCircle className="w-5 h-5 text-primary-500 flex-shrink-0 mt-1" />
+                      <div>
+                        <h3 className="font-semibold text-neutral-900 mb-1">{point.title}</h3>
+                        <p className="text-neutral-600">{point.description}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* Use Cases */}
+        <section className="section-padding bg-neutral-50">
           <div className="container-custom">
             <motion.div
               initial={{ opacity: 0, y: 20 }}

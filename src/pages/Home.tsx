@@ -147,11 +147,11 @@ const Home = () => {
               className="text-center lg:text-left lg:col-span-3"
             >
               <h1 className="text-4xl lg:text-[3.5rem] font-display font-bold text-neutral-900 mb-6 leading-none lg:leading-[1.15]">
-                <span className="text-primary-500">
-                  Grow your business, reach new customers.
-                </span>
+                Grow your business, reach new customers.
                 <br />
-                Accept stablecoin and crypto payments.
+                <span className="text-primary-500">
+                  Accept stablecoin and crypto payments.
+                </span>
               </h1>
               <p className="text-lg lg:text-xl text-neutral-600 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                 Accept crypto and stablecoin payments in-store and online. Ezeebit handles the checkout, hedging, and compliance — you get settled in stablecoin or local currency (ZAR, KES, NGN) the next business day.

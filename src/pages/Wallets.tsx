@@ -237,15 +237,15 @@ const Wallets = () => {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="card p-6 hover:scale-105 transition-transform"
+                  className="card px-5 py-4 text-center hover:scale-[1.03] transition-transform"
                 >
-                  <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4 text-primary-500">
+                  <div className="w-12 h-12 bg-primary-50 rounded-xl flex items-center justify-center mx-auto mb-2 text-primary-500">
                     {feature.icon}
                   </div>
-                  <h3 className="text-xl font-semibold text-neutral-900 mb-3">
+                  <h3 className="text-lg font-semibold text-neutral-900 mb-1">
                     {feature.title}
                   </h3>
-                  <p className="text-neutral-600">
+                  <p className="text-neutral-600 text-sm leading-relaxed">
                     {feature.description}
                   </p>
                 </motion.div>

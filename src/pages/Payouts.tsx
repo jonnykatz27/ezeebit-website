@@ -163,37 +163,43 @@ const Payouts = () => {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="relative hidden lg:block"
               >
-                {/* Payout card mockup */}
-                <div className="relative max-w-sm mx-auto">
+                {/* Withdrawal method mockup - how Ezeebit appears inside your product */}
+                <figure className="relative max-w-sm mx-auto">
                   <div className="card p-6 shadow-2xl bg-white">
-                    <div className="flex items-center justify-between mb-6">
-                      <span className="text-sm font-medium text-neutral-500">Payout</span>
-                      <span className="flex items-center text-xs font-medium text-green-600">
-                        <span className="w-2 h-2 rounded-full bg-green-500 mr-1.5 animate-pulse"></span>
-                        Completed
-                      </span>
+                    <div className="mb-5">
+                      <p className="text-sm font-medium text-neutral-500 mb-1">Withdraw</p>
+                      <p className="text-3xl font-bold text-neutral-900">R 18,400</p>
                     </div>
-                    <div className="space-y-4">
-                      <div>
-                        <p className="text-xs text-neutral-500 mb-1">You send</p>
-                        <p className="text-2xl font-bold text-neutral-900">R 18,400</p>
+
+                    <p className="text-sm text-neutral-600 mb-3">How would you like to receive it?</p>
+
+                    <div className="space-y-2.5">
+                      <div className="flex items-center gap-3 rounded-lg border border-neutral-200 p-3">
+                        <span className="w-4 h-4 rounded-full border-2 border-neutral-300 flex-shrink-0"></span>
+                        <span className="flex-1 text-sm font-medium text-neutral-700">Bank transfer</span>
+                        <span className="text-xs text-neutral-500">2&ndash;3 days</span>
                       </div>
-                      <div className="flex justify-center">
-                        <div className="w-9 h-9 rounded-full bg-primary-100 flex items-center justify-center text-primary-600">
-                          <ArrowRight className="w-4 h-4 rotate-90" />
+
+                      <div className="rounded-lg border-2 border-primary-500 bg-primary-50 p-3">
+                        <div className="flex items-center gap-3">
+                          <span className="w-4 h-4 rounded-full border-[5px] border-primary-500 flex-shrink-0"></span>
+                          <span className="flex-1 text-sm font-medium text-neutral-900">Stablecoin</span>
+                          <span className="text-xs font-medium text-primary-600">Minutes</span>
                         </div>
-                      </div>
-                      <div>
-                        <p className="text-xs text-neutral-500 mb-1">They receive</p>
-                        <p className="text-2xl font-bold text-neutral-900">1,000 USDT</p>
+                        <p className="text-xs text-neutral-500 mt-1.5 pl-7">Powered by <span className="font-semibold text-primary-600">Ezeebit</span></p>
                       </div>
                     </div>
-                    <div className="mt-6 pt-4 border-t border-neutral-100 flex items-center justify-between text-sm">
-                      <span className="text-neutral-500">Network</span>
-                      <span className="font-medium text-neutral-900">Chosen by recipient</span>
+
+                    <div className="mt-5 w-full rounded-lg bg-primary-500 text-white text-sm font-medium py-2.5 text-center">
+                      Continue
                     </div>
                   </div>
-                </div>
+                  <figcaption className="sr-only">
+                    A withdrawal screen inside a merchant&rsquo;s own product, offering a bank
+                    transfer taking two to three days alongside a stablecoin payout powered by
+                    Ezeebit that arrives in minutes.
+                  </figcaption>
+                </figure>
               </motion.div>
             </div>
           </div>

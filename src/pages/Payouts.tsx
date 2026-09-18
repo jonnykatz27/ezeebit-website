@@ -164,23 +164,23 @@ const Payouts = () => {
                 className="relative"
               >
                 {/* Withdrawal method mockup - how Ezeebit appears inside your product */}
-                <figure className="relative max-w-sm mx-auto text-left">
-                  <div className="card p-6 shadow-2xl bg-white">
-                    <div className="mb-5">
-                      <p className="text-sm font-medium text-neutral-500 mb-1">Withdraw</p>
-                      <p className="text-3xl font-bold text-neutral-900">R2,000.00</p>
+                <figure className="relative w-full max-w-md mx-auto lg:max-w-sm text-left">
+                  <div className="card p-4 lg:p-6 shadow-2xl bg-white">
+                    <div className="flex items-baseline justify-between gap-3 mb-4 lg:block lg:mb-5">
+                      <p className="text-sm font-medium text-neutral-500 lg:mb-1">Withdraw</p>
+                      <p className="text-2xl lg:text-3xl font-bold text-neutral-900">R2,000.00</p>
                     </div>
 
-                    <p className="text-sm text-neutral-600 mb-3">How would you like to receive it?</p>
+                    <p className="text-sm text-neutral-600 mb-2.5 lg:mb-3">How would you like to receive it?</p>
 
-                    <div className="space-y-2.5">
-                      <div className="flex items-center gap-3 rounded-lg border border-neutral-200 p-3">
+                    <div className="space-y-2 lg:space-y-2.5">
+                      <div className="flex items-center gap-3 rounded-lg border border-neutral-200 p-2.5 lg:p-3">
                         <span className="w-4 h-4 rounded-full border-2 border-neutral-300 flex-shrink-0"></span>
                         <span className="flex-1 text-sm font-medium text-neutral-700">Bank transfer</span>
                         <span className="text-xs text-neutral-500">2&ndash;3 days</span>
                       </div>
 
-                      <div className="rounded-lg border-2 border-primary-500 bg-primary-50 p-3">
+                      <div className="rounded-lg border-2 border-primary-500 bg-primary-50 p-2.5 lg:p-3">
                         <div className="flex items-center gap-3">
                           <span className="w-4 h-4 rounded-full border-[5px] border-primary-500 flex-shrink-0"></span>
                           <span className="flex-1 text-sm font-medium text-neutral-900">Stablecoin</span>
@@ -193,7 +193,7 @@ const Payouts = () => {
                       </div>
                     </div>
 
-                    <div className="mt-5 w-full rounded-lg bg-primary-500 text-white text-sm font-medium py-2.5 text-center">
+                    <div className="mt-4 lg:mt-5 w-full rounded-lg bg-primary-500 text-white text-sm font-medium py-2 lg:py-2.5 text-center">
                       Continue
                     </div>
                   </div>

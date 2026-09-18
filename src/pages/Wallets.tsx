@@ -134,14 +134,14 @@ const Wallets = () => {
                 className="relative w-full"
               >
                 {/* Merchant Portal balances card */}
-                <figure className="relative max-w-md mx-auto text-left">
+                <figure className="relative w-full max-w-sm mx-auto lg:max-w-md text-left">
                   <div className="bg-white rounded-xl shadow-2xl border border-neutral-100 overflow-hidden">
-                    <div className="p-6">
+                    <div className="p-4 lg:p-6">
                       {/* Total + legend */}
-                      <div className="mb-5">
+                      <div className="mb-4 lg:mb-5">
                         <p className="text-sm text-neutral-500 mb-1">Total wallet balance</p>
                         <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1 mb-3">
-                          <span className="text-2xl font-bold text-neutral-900">~R 1,529,602.25</span>
+                          <span className="text-xl lg:text-2xl font-bold text-neutral-900">~R 1,529,602.25</span>
                           <span className="text-xs font-medium text-green-700 bg-green-50 rounded px-1.5 py-0.5">
                             +5.2%
                           </span>
@@ -160,23 +160,23 @@ const Wallets = () => {
                       </div>
 
                       {/* Split bar */}
-                      <div className="h-2 w-full rounded-full bg-primary-200 overflow-hidden mb-6">
+                      <div className="h-2 w-full rounded-full bg-primary-200 overflow-hidden mb-4 lg:mb-6">
                         <div className="h-full w-[46.7%] rounded-full bg-primary-800"></div>
                       </div>
 
                       {/* The two wallets */}
-                      <div className="space-y-4">
+                      <div className="space-y-3 lg:space-y-4">
                         <div className="flex items-center gap-3">
-                          <img src="/za-flag.svg" alt="" width={40} height={40} className="w-10 h-10 flex-shrink-0 !mx-0" />
+                          <img src="/za-flag.svg" alt="" width={40} height={40} className="w-8 h-8 lg:w-10 lg:h-10 flex-shrink-0 !mx-0" />
                           <div>
-                            <p className="text-lg font-semibold text-neutral-900">R714,602.25</p>
+                            <p className="text-base lg:text-lg font-semibold text-neutral-900">R714,602.25</p>
                             <p className="text-sm text-neutral-500">ZAR wallet</p>
                           </div>
                         </div>
                         <div className="flex items-center gap-3">
-                          <img src="/usdt-badge.svg" alt="" width={40} height={40} className="w-10 h-10 flex-shrink-0 !mx-0" />
+                          <img src="/usdt-badge.svg" alt="" width={40} height={40} className="w-8 h-8 lg:w-10 lg:h-10 flex-shrink-0 !mx-0" />
                           <div>
-                            <p className="text-lg font-semibold text-neutral-900">50,000.00 USDT</p>
+                            <p className="text-base lg:text-lg font-semibold text-neutral-900">50,000.00 USDT</p>
                             <p className="text-sm text-neutral-500">USDT wallet</p>
                           </div>
                         </div>
@@ -184,7 +184,7 @@ const Wallets = () => {
                     </div>
 
                     {/* Actions */}
-                    <div className="border-t border-neutral-100 px-6 py-4">
+                    <div className="border-t border-neutral-100 px-4 lg:px-6 py-3 lg:py-4">
                       <div className="flex items-center gap-4 text-primary-600 font-medium text-sm">
                         <span className="flex items-center gap-2">
                           <ArrowDownToLine className="w-4 h-4" />

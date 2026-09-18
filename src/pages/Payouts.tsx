@@ -120,7 +120,7 @@ const Payouts = () => {
         className="overflow-hidden -mt-20"
       >
         {/* Hero Section */}
-        <section className="relative min-h-[60vh] flex items-center gradient-bg pt-40">
+        <section className="relative min-h-[60vh] flex items-center gradient-bg pt-28 pb-14 lg:pt-40 lg:pb-0">
           <div className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-secondary-600/10"></div>
           <div className="container-custom relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -161,7 +161,7 @@ const Payouts = () => {
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative"
+                className="relative w-full"
               >
                 {/* Withdrawal method mockup - how Ezeebit appears inside your product */}
                 <figure className="relative w-full max-w-md mx-auto lg:max-w-sm text-left">

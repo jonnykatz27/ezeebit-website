@@ -90,7 +90,7 @@ const Wallets = () => {
         className="overflow-hidden -mt-20"
       >
         {/* Hero Section */}
-        <section className="relative min-h-[60vh] flex items-center gradient-bg pt-28 pb-14 lg:pt-40 lg:pb-0">
+        <section className="relative min-h-[60vh] flex items-center gradient-bg pt-40 pb-14 lg:pb-0">
           <div className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-secondary-600/10"></div>
           <div className="container-custom relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -108,7 +108,7 @@ const Wallets = () => {
                   fund your customer payouts from the same balance, and withdraw to your bank
                   or your own wallet.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center lg:justify-start">
+                <div className="flex flex-col sm:flex-row gap-4 mb-2 lg:mb-8 justify-center lg:justify-start">
                   <a
                     href="https://merchant.ezeebit.com/#/signup"
                     target="_blank"

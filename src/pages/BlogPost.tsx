@@ -247,7 +247,7 @@ const blogPostsData: Record<string, {
           ))}
         </div>
 
-        <p className="mt-12 text-neutral-500 italic text-center">Secure. Speedy. Ezee.</p>
+        <p className="mt-12 text-center font-accent font-bold text-2xl text-primary-600">Secure. Speedy. Ezee.</p>
       </>
     )
   },
@@ -672,7 +672,7 @@ const blogPostsData: Record<string, {
           ))}
         </div>
 
-        <p className="mt-12 text-neutral-500 italic text-center">Secure. Speedy. Ezee.</p>
+        <p className="mt-12 text-center font-accent font-bold text-2xl text-primary-600">Secure. Speedy. Ezee.</p>
       </>
     )
   },

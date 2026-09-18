@@ -44,6 +44,9 @@ const Footer = () => {
               className="h-7 md:h-9 w-auto filter brightness-0 invert"
             />
           </Link>
+          <p className="font-accent font-bold text-2xl md:text-3xl text-primary-300 mb-3 md:mb-4">
+            Secure. Speedy. Ezee.
+          </p>
           <p className="text-neutral-400 mb-4 md:mb-5 max-w-md mx-auto text-xs md:text-sm leading-relaxed">
             Leading cryptocurrency and stablecoin payment solutions for African merchants. Fast, simple, and secure with stablecoin or fiat settlement.
           </p>

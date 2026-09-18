@@ -14,6 +14,8 @@ export default {
         sans: ["'THICCCBOI'", "'Inter'", '-apple-system', 'BlinkMacSystemFont', "'Segoe UI'", 'Roboto', "'Helvetica Neue'", 'Arial', 'sans-serif'],
         display: ["'THICCCBOI'", "'Inter'", '-apple-system', 'BlinkMacSystemFont', "'Segoe UI'", 'Roboto', "'Helvetica Neue'", 'Arial', 'sans-serif'],
         mono: ["'SF Mono'", "'Fira Code'", "'Fira Mono'", "'Roboto Mono'", "'Courier New'", 'monospace'],
+        // Brand accent — Caveat Bold, used sparingly for one-line emphasis
+        accent: ["'Caveat'", 'ui-rounded', 'cursive'],
       },
       colors: {
         // Ezeebit master brand palette — Ezeebit Blue #0074E4 is the hero accent

@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import {
   ArrowRight, Wallet, ArrowLeftRight, Landmark,
-  Receipt, ShieldCheck, Database
+  Receipt, ShieldCheck, Database, ArrowDownToLine, ArrowUpFromLine, RefreshCw
 } from 'lucide-react'
 import SEO from '../components/SEO'
 
@@ -93,12 +93,12 @@ const Wallets = () => {
         <section className="relative min-h-[60vh] flex items-center gradient-bg pt-40">
           <div className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-secondary-600/10"></div>
           <div className="container-custom relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
               <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
-                className="max-w-4xl text-center lg:text-left"
+                className="max-w-3xl mx-auto text-center"
               >
                 <h1 className="text-5xl lg:text-5xl font-display font-bold text-neutral-900 mb-6">
                   <span itemProp="name">Your money, in <span className="text-gradient">fiat or stablecoin</span></span>
@@ -108,7 +108,7 @@ const Wallets = () => {
                   fund your customer payouts from the same balance, and withdraw to your bank
                   or your own wallet.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center lg:justify-start">
+                <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center">
                   <a
                     href="https://merchant.ezeebit.com/#/signup"
                     target="_blank"
@@ -127,45 +127,110 @@ const Wallets = () => {
                 </div>
               </motion.div>
 
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative hidden lg:block"
-              >
-                {/* Balances card mockup */}
-                <div className="relative max-w-sm mx-auto">
-                  <div className="card p-6 shadow-2xl bg-white">
-                    <div className="flex items-center justify-between mb-6">
-                      <span className="text-sm font-medium text-neutral-500">Balances</span>
-                      <span className="flex items-center text-xs font-medium text-green-600">
-                        <span className="w-2 h-2 rounded-full bg-green-500 mr-1.5 animate-pulse"></span>
-                        Available
+            </div>
+          </div>
+        </section>
+
+        {/* Balances card */}
+        <section className="section-padding bg-neutral-50">
+          <div className="container-custom">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+                Your balances at a glance
+              </h2>
+              <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+                Both wallets, what they come to together, and the three things you do most,
+                on the first screen of the Merchant Portal.
+              </p>
+            </motion.div>
+
+            <motion.figure
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              viewport={{ once: true }}
+              className="max-w-3xl mx-auto"
+            >
+              <div className="bg-white rounded-xl shadow-lg border border-neutral-100 overflow-hidden">
+                <div className="p-6 sm:p-8">
+                  {/* Total + legend */}
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-5">
+                    <div>
+                      <p className="text-sm text-neutral-500 mb-1">Total wallet balance</p>
+                      <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                        <span className="text-2xl sm:text-3xl font-bold text-neutral-900">R 1,429,204.50</span>
+                        <span className="text-xs font-medium text-green-700 bg-green-50 rounded px-1.5 py-0.5">
+                          +5.2%
+                        </span>
+                        <span className="text-xs text-neutral-500">vs last month</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4 text-sm text-neutral-700">
+                      <span className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-primary-800"></span>
+                        Fiat wallet
+                      </span>
+                      <span className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-primary-200"></span>
+                        USDT wallet
                       </span>
                     </div>
-                    <div className="space-y-4">
+                  </div>
+
+                  {/* Split bar */}
+                  <div className="h-2 w-full rounded-full bg-primary-200 overflow-hidden mb-8">
+                    <div className="h-full w-1/2 rounded-full bg-primary-800"></div>
+                  </div>
+
+                  {/* The two wallets */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div className="flex items-center gap-3">
+                      <img src="/za-flag.svg" alt="" width={40} height={40} className="w-10 h-10 flex-shrink-0 !mx-0" />
                       <div>
-                        <p className="text-xs text-neutral-500 mb-1">Fiat wallet</p>
-                        <p className="text-2xl font-bold text-neutral-900">R 412,880</p>
-                      </div>
-                      <div className="flex justify-center">
-                        <div className="w-9 h-9 rounded-full bg-primary-100 flex items-center justify-center text-primary-600">
-                          <ArrowLeftRight className="w-4 h-4" />
-                        </div>
-                      </div>
-                      <div>
-                        <p className="text-xs text-neutral-500 mb-1">USDT wallet</p>
-                        <p className="text-2xl font-bold text-neutral-900">22,410 USDT</p>
+                        <p className="text-lg font-semibold text-neutral-900">R714,602.25</p>
+                        <p className="text-sm text-neutral-500">Fiat wallet</p>
                       </div>
                     </div>
-                    <div className="mt-6 pt-4 border-t border-neutral-100 flex items-center justify-between text-sm">
-                      <span className="text-neutral-500">Withdrawals</span>
-                      <span className="font-medium text-neutral-900">Bank &middot; On-chain</span>
+                    <div className="flex items-center gap-3">
+                      <img src="/usdt-badge.svg" alt="" width={40} height={40} className="w-10 h-10 flex-shrink-0 !mx-0" />
+                      <div>
+                        <p className="text-lg font-semibold text-neutral-900">$714,602.25</p>
+                        <p className="text-sm text-neutral-500">USDT wallet</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </motion.div>
-            </div>
+
+                {/* Actions */}
+                <div className="border-t border-neutral-100 px-6 sm:px-8 py-4">
+                  <div className="flex items-center gap-4 sm:gap-8 text-primary-600 font-medium">
+                    <span className="flex items-center gap-2">
+                      <ArrowDownToLine className="w-4 h-4" />
+                      Deposit
+                    </span>
+                    <span className="w-px h-5 bg-neutral-200" aria-hidden="true"></span>
+                    <span className="flex items-center gap-2">
+                      <ArrowUpFromLine className="w-4 h-4" />
+                      Withdraw
+                    </span>
+                    <span className="w-px h-5 bg-neutral-200" aria-hidden="true"></span>
+                    <span className="flex items-center gap-2">
+                      <RefreshCw className="w-4 h-4" />
+                      Convert
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <figcaption className="sr-only">
+                The Merchant Portal dashboard, showing a total wallet balance split between a
+                fiat wallet and a USDT wallet, with deposit, withdraw and convert actions.
+              </figcaption>
+            </motion.figure>
           </div>
         </section>
 

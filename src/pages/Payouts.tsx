@@ -168,7 +168,7 @@ const Payouts = () => {
                   <div className="card p-6 shadow-2xl bg-white">
                     <div className="mb-5">
                       <p className="text-sm font-medium text-neutral-500 mb-1">Withdraw</p>
-                      <p className="text-3xl font-bold text-neutral-900">R 18,400</p>
+                      <p className="text-3xl font-bold text-neutral-900">R2,000.00</p>
                     </div>
 
                     <p className="text-sm text-neutral-600 mb-3">How would you like to receive it?</p>
@@ -186,7 +186,10 @@ const Payouts = () => {
                           <span className="flex-1 text-sm font-medium text-neutral-900">Stablecoin</span>
                           <span className="text-xs font-medium text-primary-600">Minutes</span>
                         </div>
-                        <p className="text-xs text-neutral-500 mt-1.5 pl-7">Powered by <span className="font-semibold text-primary-600">Ezeebit</span></p>
+                        <div className="flex items-center gap-1.5 mt-1.5 pl-7">
+                          <span className="text-xs text-neutral-500">Powered by</span>
+                          <img src="/ezeebit_black.png" alt="Ezeebit" width={63} height={16} className="h-4 w-auto !mx-0" />
+                        </div>
                       </div>
                     </div>
 

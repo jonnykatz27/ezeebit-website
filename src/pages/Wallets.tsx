@@ -163,7 +163,7 @@ const Wallets = () => {
                     <div>
                       <p className="text-sm text-neutral-500 mb-1">Total wallet balance</p>
                       <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                        <span className="text-2xl sm:text-3xl font-bold text-neutral-900">R 1,429,204.50</span>
+                        <span className="text-2xl sm:text-3xl font-bold text-neutral-900">~R 1,529,602.25</span>
                         <span className="text-xs font-medium text-green-700 bg-green-50 rounded px-1.5 py-0.5">
                           +5.2%
                         </span>
@@ -173,7 +173,7 @@ const Wallets = () => {
                     <div className="flex items-center gap-4 text-sm text-neutral-700">
                       <span className="flex items-center gap-2">
                         <span className="w-2.5 h-2.5 rounded-full bg-primary-800"></span>
-                        Fiat wallet
+                        ZAR wallet
                       </span>
                       <span className="flex items-center gap-2">
                         <span className="w-2.5 h-2.5 rounded-full bg-primary-200"></span>
@@ -184,7 +184,7 @@ const Wallets = () => {
 
                   {/* Split bar */}
                   <div className="h-2 w-full rounded-full bg-primary-200 overflow-hidden mb-8">
-                    <div className="h-full w-1/2 rounded-full bg-primary-800"></div>
+                    <div className="h-full w-[46.7%] rounded-full bg-primary-800"></div>
                   </div>
 
                   {/* The two wallets */}
@@ -193,13 +193,13 @@ const Wallets = () => {
                       <img src="/za-flag.svg" alt="" width={40} height={40} className="w-10 h-10 flex-shrink-0 !mx-0" />
                       <div>
                         <p className="text-lg font-semibold text-neutral-900">R714,602.25</p>
-                        <p className="text-sm text-neutral-500">Fiat wallet</p>
+                        <p className="text-sm text-neutral-500">ZAR wallet</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <img src="/usdt-badge.svg" alt="" width={40} height={40} className="w-10 h-10 flex-shrink-0 !mx-0" />
                       <div>
-                        <p className="text-lg font-semibold text-neutral-900">$714,602.25</p>
+                        <p className="text-lg font-semibold text-neutral-900">50,000.00 USDT</p>
                         <p className="text-sm text-neutral-500">USDT wallet</p>
                       </div>
                     </div>
@@ -227,8 +227,8 @@ const Wallets = () => {
                 </div>
               </div>
               <figcaption className="sr-only">
-                The Merchant Portal dashboard, showing a total wallet balance split between a
-                fiat wallet and a USDT wallet, with deposit, withdraw and convert actions.
+                The Merchant Portal dashboard, showing an estimated total wallet balance split
+                between a ZAR wallet and a USDT wallet, with deposit, withdraw and convert actions.
               </figcaption>
             </motion.figure>
           </div>

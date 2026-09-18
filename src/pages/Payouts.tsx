@@ -105,7 +105,7 @@ const Payouts = () => {
           "description": "Pay customers out in stablecoin and crypto from a fiat balance, with recipient-completed payout links, address screening, and signed webhooks.",
           "serviceType": "Stablecoin and cryptocurrency payouts",
           "areaServed": ["ZA", "KE", "NG"],
-          "currenciesAccepted": ["ZAR", "USDT", "USDC", "BTC", "ETH"],
+          "currenciesAccepted": ["ZAR", "KES", "NGN", "USDT", "USDC", "BTC", "ETH"],
           "provider": {
             "@type": "Organization",
             "name": "Ezeebit",

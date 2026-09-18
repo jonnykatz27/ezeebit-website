@@ -15,13 +15,13 @@ const Wallets = () => {
     },
     {
       icon: <ArrowLeftRight className="w-6 h-6" />,
-      title: "Convert between ZAR and USDT",
-      description: "Move between local currency and stablecoin at a quoted rate, and hold the balance in whichever one suits your exposure."
+      title: "Convert between fiat and USDT",
+      description: "Move between local currency and stablecoin at a quoted rate, and hold the balance in whichever one suits your exposure. Settle in ZAR, KES, or NGN."
     },
     {
       icon: <Landmark className="w-6 h-6" />,
       title: "Withdraw to bank or chain",
-      description: "Send ZAR to your bank account or USDT to your own wallet. Fiat settles T+1, stablecoin settles same day."
+      description: "Send fiat to your bank account or USDT to your own wallet. Fiat settles the next business day, stablecoin settles same day."
     },
     {
       icon: <Receipt className="w-6 h-6" />,
@@ -49,7 +49,7 @@ const Wallets = () => {
     {
       number: "02",
       title: "Hold or convert",
-      description: "Keep the balance in ZAR or USDT and convert between them whenever the rate or your obligations call for it."
+      description: "Keep the balance in fiat or USDT and convert between them whenever the rate or your obligations call for it."
     },
     {
       number: "03",
@@ -61,9 +61,9 @@ const Wallets = () => {
   return (
     <>
       <SEO
-        title="Business Wallets for ZAR and Stablecoin"
-        description="Hold ZAR and USDT balances with Ezeebit, convert between them, fund customer payouts, and withdraw to your bank or your own wallet. A full ledger, API access, and an FSCA-regulated CASP behind it."
-        keywords="business stablecoin wallet, USDT wallet for business, ZAR stablecoin conversion, merchant wallet Africa, crypto treasury, stablecoin balance, business crypto withdrawal, CASP regulated wallet"
+        title="Business Wallets for Fiat and Stablecoin"
+        description="Hold fiat and USDT balances with Ezeebit, convert between them, fund customer payouts, and withdraw to your bank or your own wallet. Settle in ZAR, KES, or NGN, with a full ledger, API access, and an FSCA-regulated CASP behind it."
+        keywords="business stablecoin wallet, USDT wallet for business, fiat to stablecoin conversion, ZAR KES NGN settlement, merchant wallet Africa, crypto treasury, stablecoin balance, business crypto withdrawal, CASP regulated wallet"
         canonicalUrl="/wallets"
       />
       <script type="application/ld+json">
@@ -72,10 +72,10 @@ const Wallets = () => {
           "@type": "FinancialService",
           "name": "Ezeebit Wallets",
           "url": "https://ezeebit.com/wallets",
-          "description": "Business wallets holding ZAR and USDT balances, with conversion between them, payout funding, bank and on-chain withdrawals, and a full ledger.",
+          "description": "Business wallets holding fiat and USDT balances, with conversion between them, payout funding, bank and on-chain withdrawals, and a full ledger.",
           "serviceType": "Business wallet and settlement balances",
           "areaServed": ["ZA", "KE", "NG"],
-          "currenciesAccepted": ["ZAR", "USDT"],
+          "currenciesAccepted": ["ZAR", "KES", "NGN", "USDT"],
           "provider": {
             "@type": "Organization",
             "name": "Ezeebit",
@@ -101,10 +101,10 @@ const Wallets = () => {
                 className="max-w-4xl text-center lg:text-left"
               >
                 <h1 className="text-5xl lg:text-5xl font-display font-bold text-neutral-900 mb-6">
-                  <span itemProp="name">Your money, in <span className="text-gradient">rands or stablecoin</span></span>
+                  <span itemProp="name">Your money, in <span className="text-gradient">fiat or stablecoin</span></span>
                 </h1>
                 <p className="text-xl text-neutral-600 mb-8" itemProp="description">
-                  Hold ZAR and USDT in one place, convert between them when it suits you,
+                  Hold fiat and USDT in one place, convert between them when it suits you,
                   fund your customer payouts from the same balance, and withdraw to your bank
                   or your own wallet.
                 </p>
@@ -145,7 +145,7 @@ const Wallets = () => {
                     </div>
                     <div className="space-y-4">
                       <div>
-                        <p className="text-xs text-neutral-500 mb-1">ZAR wallet</p>
+                        <p className="text-xs text-neutral-500 mb-1">Fiat wallet</p>
                         <p className="text-2xl font-bold text-neutral-900">R 412,880</p>
                       </div>
                       <div className="flex justify-center">
@@ -263,7 +263,7 @@ const Wallets = () => {
                 Open your wallets
               </h2>
               <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
-                Sign up and your ZAR and USDT wallets are ready from your first transaction.
+                Sign up and your fiat and USDT wallets are ready from your first transaction.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a

@@ -19,7 +19,7 @@ const FLOWS = [
 type FlowId = (typeof FLOWS)[number]['id']
 
 /** How far each logo in a group tucks under the one before it. */
-const OVERLAP = '-ml-4'
+const OVERLAP = '-ml-5'
 /** Every digital-asset mark is drawn the same way, wherever it appears. */
 const ASSET_CHIP = 'w-9 h-9 rounded-full bg-white shadow-sm object-contain !mx-0'
 
@@ -93,20 +93,6 @@ const StepConnector = ({ still, index }: { still: boolean; index: number }) => {
   )
 }
 
-/** A mark with a slow ring pulsing out of it. */
-const PulseMark = ({ children, still }: { children: React.ReactNode; still: boolean }) => (
-  <div className="relative flex items-center justify-center">
-    {!still && (
-      <motion.span
-        className="absolute w-12 h-12 rounded-full border-2 border-primary-300"
-        animate={{ scale: [1, 1.6], opacity: [0.6, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: 'easeOut' }}
-      />
-    )}
-    {children}
-  </div>
-)
-
 const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string; visual: React.ReactNode }[]> => ({
   'pay-in': [
     {
@@ -139,16 +125,12 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
       title: 'You start the payout',
       body: 'Send us the amount and your own reference. We hold the funds aside.',
       visual: (
-        <motion.div
-          className="flex items-center gap-2 bg-white border border-neutral-200 rounded-full pl-3 pr-2 py-1.5 shadow-sm"
-          animate={still ? undefined : { y: [0, -4, 0] }}
-          transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
-        >
+        <div className="flex items-center gap-2 bg-white border border-neutral-200 rounded-full pl-3 pr-2 py-1.5 shadow-sm">
           <span className="text-sm font-semibold text-neutral-900">R2,000.00</span>
           <span className="w-6 h-6 rounded-full bg-primary-500 text-white flex items-center justify-center">
             <Send className="w-3 h-3" />
           </span>
-        </motion.div>
+        </div>
       ),
     },
     {
@@ -169,9 +151,7 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
       title: 'It lands in minutes',
       body: 'Stablecoin arrives, and you get a confirmation to match against your records.',
       visual: (
-        <PulseMark still={still}>
-          <img src="/usdt-logo.svg" alt="USDT" className={ASSET_CHIP} />
-        </PulseMark>
+        <img src="/usdt-logo.svg" alt="USDT" className={ASSET_CHIP} />
       ),
     },
   ],
@@ -274,7 +254,7 @@ const FLOW_DEMOS: Record<FlowId, { label: string; node: React.ReactNode }> = {
               <img src="/za-flag.svg" alt="" className="w-8 h-8 shrink-0 !mx-0" />
               <div>
                 <p className="font-semibold text-neutral-900 text-sm">R714,602.25</p>
-                <p className="text-xs text-neutral-500">Fiat wallet</p>
+                <p className="text-xs text-neutral-500">ZAR wallet</p>
               </div>
             </div>
             <div className="bg-neutral-50 rounded-xl p-3 flex items-center gap-2.5">

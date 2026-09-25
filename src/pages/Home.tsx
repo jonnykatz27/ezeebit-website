@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
 import {
@@ -18,6 +18,11 @@ const FLOWS = [
 
 type FlowId = (typeof FLOWS)[number]['id']
 
+/** How far each logo in a group tucks under the one before it. */
+const OVERLAP = '-ml-4'
+/** Every digital-asset mark is drawn the same way, wherever it appears. */
+const ASSET_CHIP = 'w-9 h-9 rounded-full bg-white shadow-sm object-contain !mx-0'
+
 /** Overlapping coin logos that pop in one after another. */
 const CoinStack = ({ coins }: { coins: string[] }) => (
   <div className="flex items-center">
@@ -27,7 +32,7 @@ const CoinStack = ({ coins }: { coins: string[] }) => (
         src={`/${coin}-logo.svg`}
         alt={coin.toUpperCase()}
         variants={{ hidden: { opacity: 0, scale: 0.5 }, visible: { opacity: 1, scale: 1 } }}
-        className={`w-9 h-9 rounded-full bg-white shadow-sm object-contain !mx-0 ${i > 0 ? '-ml-3' : ''}`}
+        className={`${ASSET_CHIP} ${i > 0 ? OVERLAP : ''}`}
         style={{ zIndex: coins.length - i }}
       />
     ))}
@@ -43,12 +48,50 @@ const FlagStack = () => (
         src={`/${c}-flag.svg`}
         alt=""
         variants={{ hidden: { opacity: 0, scale: 0.5 }, visible: { opacity: 1, scale: 1 } }}
-        className={`w-9 h-9 rounded-full shadow-sm !mx-0 ${i > 0 ? '-ml-4' : ''}`}
+        className={`w-9 h-9 rounded-full shadow-sm !mx-0 ${i > 0 ? OVERLAP : ''}`}
         style={{ zIndex: 3 - i }}
       />
     ))}
   </div>
 )
+
+/**
+ * The rail between two steps, with a blue head running along it. Each one
+ * starts later than the last, so the pulse reads left to right down the row.
+ */
+const StepConnector = ({ still, index }: { still: boolean; index: number }) => {
+  const timing = {
+    duration: 1.5,
+    repeat: Infinity,
+    repeatDelay: 1.4,
+    delay: index * 0.75,
+    ease: 'linear' as const,
+  }
+  return (
+    <div className="flex items-center justify-center py-3 md:py-0 md:px-3 shrink-0">
+      <div className="relative overflow-hidden rounded-full bg-neutral-200/60 w-[3px] h-8 md:hidden">
+        {!still && (
+          <motion.div
+            className="absolute left-0 right-0"
+            style={{ height: 16, background: 'linear-gradient(to bottom, transparent, #0074E3)' }}
+            animate={{ y: [-16, 32] }}
+            transition={timing}
+          />
+        )}
+      </div>
+      <div className="relative overflow-hidden rounded-full bg-neutral-200/60 h-[3px] w-10 hidden md:block">
+        {!still && (
+          <motion.div
+            className="absolute top-0 bottom-0"
+            style={{ width: 18, background: 'linear-gradient(to right, transparent, #0074E3)' }}
+            animate={{ x: [-18, 40] }}
+            transition={timing}
+          />
+        )}
+      </div>
+    </div>
+  )
+}
 
 /** A mark with a slow ring pulsing out of it. */
 const PulseMark = ({ children, still }: { children: React.ReactNode; still: boolean }) => (
@@ -84,8 +127,8 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
           <FlagStack />
           <span className="text-xs font-medium text-neutral-400">or</span>
           <div className="flex items-center">
-            <img src="/usdt-badge.svg" alt="USDT" className="w-9 h-9 !mx-0" />
-            <img src="/usdc-logo.svg" alt="USDC" className="w-9 h-9 -ml-4 !mx-0" />
+            <img src="/usdt-logo.svg" alt="USDT" className={ASSET_CHIP} />
+            <img src="/usdc-logo.svg" alt="USDC" className={`${ASSET_CHIP} ${OVERLAP}`} />
           </div>
         </div>
       ),
@@ -127,7 +170,7 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
       body: 'Stablecoin arrives, and you get a confirmation to match against your records.',
       visual: (
         <PulseMark still={still}>
-          <img src="/usdt-badge.svg" alt="USDT" className="w-11 h-11 !mx-0" />
+          <img src="/usdt-logo.svg" alt="USDT" className={ASSET_CHIP} />
         </PulseMark>
       ),
     },
@@ -135,14 +178,19 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
   'hold': [
     {
       title: 'Everything lands together',
-      body: 'In-store, online and OTC all settle into the same balance.',
+      body: 'In-store, online, OTC and direct deposits all land in the same balance.',
       visual: (
         <div className="flex items-center gap-1.5">
-          {[<Store key="s" className="w-4 h-4" />, <Globe key="g" className="w-4 h-4" />, <TrendingUp key="t" className="w-4 h-4" />].map((icon, i) => (
+          {[
+            <Store key="s" className="w-4 h-4" />,
+            <Globe key="g" className="w-4 h-4" />,
+            <TrendingUp key="t" className="w-4 h-4" />,
+            <ArrowDownToLine key="d" className="w-4 h-4" />,
+          ].map((icon, i) => (
             <motion.span
               key={i}
               variants={{ hidden: { opacity: 0, x: -6 }, visible: { opacity: 1, x: 0 } }}
-              className="w-9 h-9 rounded-lg bg-white border border-neutral-200 text-primary-600 flex items-center justify-center shadow-sm"
+              className="w-8 h-8 rounded-lg bg-white border border-neutral-200 text-primary-600 flex items-center justify-center shadow-sm"
             >
               {icon}
             </motion.span>
@@ -158,12 +206,12 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
           <FlagStack />
           <motion.span
             className="text-primary-500"
-            animate={still ? undefined : { rotate: [0, 180, 360] }}
-            transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', repeatDelay: 0.6 }}
+            animate={still ? undefined : { rotate: 180 }}
+            transition={{ duration: 2.2, repeat: Infinity, repeatType: 'reverse', repeatDelay: 1.6, ease: 'easeInOut' }}
           >
             <ArrowLeftRight className="w-4 h-4" />
           </motion.span>
-          <img src="/usdt-badge.svg" alt="USDT" className="w-9 h-9 !mx-0" />
+          <img src="/usdt-logo.svg" alt="USDT" className={ASSET_CHIP} />
         </div>
       ),
     },
@@ -230,7 +278,7 @@ const FLOW_DEMOS: Record<FlowId, { label: string; node: React.ReactNode }> = {
               </div>
             </div>
             <div className="bg-neutral-50 rounded-xl p-3 flex items-center gap-2.5">
-              <img src="/usdt-badge.svg" alt="" className="w-8 h-8 shrink-0 !mx-0" />
+              <img src="/usdt-logo.svg" alt="" className="w-8 h-8 rounded-full bg-white shadow-sm object-contain shrink-0 !mx-0" />
               <div>
                 <p className="font-semibold text-neutral-900 text-sm">50,000.00 USDT</p>
                 <p className="text-xs text-neutral-500">USDT wallet</p>
@@ -255,19 +303,19 @@ const FlowCards = ({ flow, isActive }: { flow: FlowId; isActive: boolean }) => {
 
   return (
     <motion.div
-      className="grid grid-cols-1 md:grid-cols-3 gap-4"
       initial="hidden"
       animate={isActive ? 'visible' : 'hidden'}
       variants={{ visible: { transition: { staggerChildren: 0.09 } } }}
     >
+      <div className="flex flex-col md:flex-row md:items-stretch">
       {steps.map((step, index) => (
+        <Fragment key={step.title}>
         <motion.div
-          key={step.title}
           variants={{
             hidden: { opacity: 0, y: 14 },
             visible: { opacity: 1, y: 0, transition: { duration: 0.4, staggerChildren: 0.06 } },
           }}
-          className="bg-white border border-neutral-200/80 rounded-2xl shadow-sm px-5 py-6 text-center"
+          className="flex-1 bg-white border border-neutral-200/80 rounded-2xl shadow-sm px-5 py-6 text-center"
         >
           <div className="h-12 flex items-center justify-center mb-4">{step.visual}</div>
           <div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-400 mb-2">
@@ -276,12 +324,15 @@ const FlowCards = ({ flow, isActive }: { flow: FlowId; isActive: boolean }) => {
           <h3 className="text-lg font-semibold text-neutral-900 mb-2">{step.title}</h3>
           <p className="text-sm text-neutral-500 leading-relaxed">{step.body}</p>
         </motion.div>
+        {index < steps.length - 1 && <StepConnector still={still} index={index} />}
+        </Fragment>
       ))}
+      </div>
 
       {/* The product itself, under the steps that describe it */}
       <motion.div
         variants={{ hidden: { opacity: 0, y: 14 }, visible: { opacity: 1, y: 0, transition: { duration: 0.45 } } }}
-        className="md:col-span-3 mt-4"
+        className="mt-8"
       >
         <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-400 mb-4">
           {FLOW_DEMOS[flow].label}

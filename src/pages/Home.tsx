@@ -1,11 +1,10 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import {
   Zap, Shield, Globe, TrendingUp,
   ArrowRight, Star, ChevronLeft, ChevronRight,
-  ThumbsUp, Headphones, Lock, Landmark, Link2, Wallet, Send, CheckCircle,
-  ArrowDownToLine, ArrowLeftRight, ArrowUpFromLine
+  ThumbsUp, Headphones, Lock, Landmark, Link2, Wallet, Send, Store, ArrowLeftRight
 } from 'lucide-react'
 import PartnerCarousel from '../components/PartnerCarousel'
 import SEO from '../components/SEO'
@@ -18,80 +17,188 @@ const FLOWS = [
 
 type FlowId = (typeof FLOWS)[number]['id']
 
-const FLOW_STEPS: Record<FlowId, { icon: React.ReactNode; title: string; body: string }[]> = {
+/** Overlapping coin logos that pop in one after another. */
+const CoinStack = ({ coins }: { coins: string[] }) => (
+  <div className="flex items-center">
+    {coins.map((coin, i) => (
+      <motion.img
+        key={coin}
+        src={`/${coin}-logo.svg`}
+        alt={coin.toUpperCase()}
+        variants={{ hidden: { opacity: 0, scale: 0.5 }, visible: { opacity: 1, scale: 1 } }}
+        className={`w-9 h-9 rounded-full bg-white shadow-sm object-contain !mx-0 ${i > 0 ? '-ml-3' : ''}`}
+        style={{ zIndex: coins.length - i }}
+      />
+    ))}
+  </div>
+)
+
+/** A mark with a slow ring pulsing out of it. */
+const PulseMark = ({ children, still }: { children: React.ReactNode; still: boolean }) => (
+  <div className="relative flex items-center justify-center">
+    {!still && (
+      <motion.span
+        className="absolute w-12 h-12 rounded-full border-2 border-primary-300"
+        animate={{ scale: [1, 1.6], opacity: [0.6, 0] }}
+        transition={{ duration: 2, repeat: Infinity, ease: 'easeOut' }}
+      />
+    )}
+    {children}
+  </div>
+)
+
+const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string; visual: React.ReactNode }[]> => ({
   'pay-in': [
     {
-      icon: <Wallet className="w-5 h-5" />,
       title: 'Your customer pays',
       body: 'From whichever wallet or exchange they already use. Nothing new to download.',
+      visual: <CoinStack coins={['btc', 'eth', 'usdt', 'usdc', 'bnb']} />,
     },
     {
-      icon: <Zap className="w-5 h-5" />,
       title: 'We lock the rate',
       body: 'The amount is fixed and hedged the moment they pay, so its value cannot move.',
+      visual: (
+        <PulseMark still={still}>
+          <img src="/ezeebit-icon-blue.png" alt="Ezeebit" className="w-11 h-11 object-contain !mx-0" />
+        </PulseMark>
+      ),
     },
     {
-      icon: <Landmark className="w-5 h-5" />,
       title: 'You get settled',
       body: 'Rands in your bank the next business day, or stablecoin the same day.',
+      visual: (
+        <div className="flex items-center gap-2">
+          <img src="/za-flag.svg" alt="" className="w-10 h-10 !mx-0" />
+          <img src="/usdt-badge.svg" alt="" className="w-10 h-10 !mx-0" />
+        </div>
+      ),
     },
   ],
   'pay-out': [
     {
-      icon: <Send className="w-5 h-5" />,
       title: 'You start the payout',
       body: 'Send us the amount and your own reference. We hold the funds aside.',
+      visual: (
+        <motion.div
+          className="flex items-center gap-2 bg-white border border-neutral-200 rounded-full pl-3 pr-2 py-1.5 shadow-sm"
+          animate={still ? undefined : { y: [0, -4, 0] }}
+          transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <span className="text-sm font-semibold text-neutral-900">R2,000.00</span>
+          <span className="w-6 h-6 rounded-full bg-primary-500 text-white flex items-center justify-center">
+            <Send className="w-3 h-3" />
+          </span>
+        </motion.div>
+      ),
     },
     {
-      icon: <Link2 className="w-5 h-5" />,
       title: 'They claim it',
       body: 'Your customer opens a link and enters their own wallet address.',
+      visual: (
+        <div className="flex items-center gap-2">
+          <span className="w-10 h-10 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center shrink-0">
+            <Link2 className="w-5 h-5" />
+          </span>
+          <span className="font-mono text-xs text-neutral-500 bg-white border border-neutral-200 rounded-lg px-2 py-1">
+            0x7Ab2…c21F
+          </span>
+        </div>
+      ),
     },
     {
-      icon: <CheckCircle className="w-5 h-5" />,
       title: 'It lands in minutes',
       body: 'Stablecoin arrives, and you get a confirmation to match against your records.',
+      visual: (
+        <PulseMark still={still}>
+          <img src="/usdt-badge.svg" alt="USDT" className="w-11 h-11 !mx-0" />
+        </PulseMark>
+      ),
     },
   ],
   'hold': [
     {
-      icon: <ArrowDownToLine className="w-5 h-5" />,
       title: 'Everything lands together',
       body: 'In-store, online and OTC all settle into the same balance.',
+      visual: (
+        <div className="flex items-center gap-1.5">
+          {[<Store key="s" className="w-4 h-4" />, <Globe key="g" className="w-4 h-4" />, <TrendingUp key="t" className="w-4 h-4" />].map((icon, i) => (
+            <motion.span
+              key={i}
+              variants={{ hidden: { opacity: 0, x: -6 }, visible: { opacity: 1, x: 0 } }}
+              className="w-9 h-9 rounded-lg bg-white border border-neutral-200 text-primary-600 flex items-center justify-center shadow-sm"
+            >
+              {icon}
+            </motion.span>
+          ))}
+        </div>
+      ),
     },
     {
-      icon: <ArrowLeftRight className="w-5 h-5" />,
       title: 'Hold it how you like',
       body: 'Keep rands or stablecoin, and switch between them whenever it suits you.',
+      visual: (
+        <div className="flex items-center gap-2">
+          <img src="/za-flag.svg" alt="" className="w-10 h-10 !mx-0" />
+          <motion.span
+            className="text-primary-500"
+            animate={still ? undefined : { rotate: [0, 180, 360] }}
+            transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', repeatDelay: 0.6 }}
+          >
+            <ArrowLeftRight className="w-4 h-4" />
+          </motion.span>
+          <img src="/usdt-badge.svg" alt="" className="w-10 h-10 !mx-0" />
+        </div>
+      ),
     },
     {
-      icon: <ArrowUpFromLine className="w-5 h-5" />,
       title: 'Move it when you need',
       body: 'Fund payouts, or withdraw to your bank account or your own wallet.',
+      visual: (
+        <div className="flex items-center gap-2">
+          <span className="w-10 h-10 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center">
+            <Landmark className="w-5 h-5" />
+          </span>
+          <span className="w-10 h-10 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center">
+            <Wallet className="w-5 h-5" />
+          </span>
+        </div>
+      ),
     },
   ],
-}
+})
 
 /** Three steps side by side, one row per flow. */
-const FlowCards = ({ flow }: { flow: FlowId }) => (
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-    {FLOW_STEPS[flow].map((step, index) => (
-      <div
-        key={step.title}
-        className="bg-white border border-neutral-200/80 rounded-2xl shadow-sm px-5 py-6 text-center"
-      >
-        <div className="w-11 h-11 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center mx-auto mb-3">
-          {step.icon}
-        </div>
-        <div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-400 mb-2">
-          Step 0{index + 1}
-        </div>
-        <h3 className="text-lg font-semibold text-neutral-900 mb-2">{step.title}</h3>
-        <p className="text-sm text-neutral-500 leading-relaxed">{step.body}</p>
-      </div>
-    ))}
-  </div>
-)
+const FlowCards = ({ flow, isActive }: { flow: FlowId; isActive: boolean }) => {
+  const still = useReducedMotion() ?? false
+  const steps = flowSteps(still)[flow]
+
+  return (
+    <motion.div
+      className="grid grid-cols-1 md:grid-cols-3 gap-4"
+      initial="hidden"
+      animate={isActive ? 'visible' : 'hidden'}
+      variants={{ visible: { transition: { staggerChildren: 0.09 } } }}
+    >
+      {steps.map((step, index) => (
+        <motion.div
+          key={step.title}
+          variants={{
+            hidden: { opacity: 0, y: 14 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.4, staggerChildren: 0.06 } },
+          }}
+          className="bg-white border border-neutral-200/80 rounded-2xl shadow-sm px-5 py-6 text-center"
+        >
+          <div className="h-12 flex items-center justify-center mb-4">{step.visual}</div>
+          <div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-400 mb-2">
+            Step 0{index + 1}
+          </div>
+          <h3 className="text-lg font-semibold text-neutral-900 mb-2">{step.title}</h3>
+          <p className="text-sm text-neutral-500 leading-relaxed">{step.body}</p>
+        </motion.div>
+      ))}
+    </motion.div>
+  )
+}
 
 const Home = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
@@ -470,7 +577,7 @@ const Home = () => {
               aria-labelledby={`flow-tab-${flow.id}`}
               hidden={activeFlow !== flow.id}
             >
-              <FlowCards flow={flow.id} />
+              <FlowCards flow={flow.id} isActive={activeFlow === flow.id} />
             </div>
           ))}
 

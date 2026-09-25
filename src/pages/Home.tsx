@@ -4,7 +4,8 @@ import { motion, useReducedMotion } from 'framer-motion'
 import {
   Zap, Shield, Globe, TrendingUp,
   ArrowRight, Star, ChevronLeft, ChevronRight,
-  ThumbsUp, Headphones, Lock, Landmark, Link2, Wallet, Send, Store, ArrowLeftRight
+  ThumbsUp, Headphones, Lock, Landmark, Link2, Wallet, Send, Store, ArrowLeftRight,
+  ArrowDownToLine, ArrowUpFromLine, RefreshCw
 } from 'lucide-react'
 import PartnerCarousel from '../components/PartnerCarousel'
 import SEO from '../components/SEO'
@@ -28,6 +29,22 @@ const CoinStack = ({ coins }: { coins: string[] }) => (
         variants={{ hidden: { opacity: 0, scale: 0.5 }, visible: { opacity: 1, scale: 1 } }}
         className={`w-9 h-9 rounded-full bg-white shadow-sm object-contain !mx-0 ${i > 0 ? '-ml-3' : ''}`}
         style={{ zIndex: coins.length - i }}
+      />
+    ))}
+  </div>
+)
+
+/** The three settlement currencies, overlapping. */
+const FlagStack = () => (
+  <div className="flex items-center">
+    {['za', 'ke', 'ng'].map((c, i) => (
+      <motion.img
+        key={c}
+        src={`/${c}-flag.svg`}
+        alt=""
+        variants={{ hidden: { opacity: 0, scale: 0.5 }, visible: { opacity: 1, scale: 1 } }}
+        className={`w-9 h-9 rounded-full shadow-sm !mx-0 ${i > 0 ? '-ml-3' : ''}`}
+        style={{ zIndex: 3 - i }}
       />
     ))}
   </div>
@@ -65,11 +82,11 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
     },
     {
       title: 'You get settled',
-      body: 'Rands in your bank the next business day, or stablecoin the same day.',
+      body: 'Fiat in your bank the next business day — ZAR, KES or NGN — or stablecoin the same day.',
       visual: (
-        <div className="flex items-center gap-2">
-          <img src="/za-flag.svg" alt="" className="w-10 h-10 !mx-0" />
-          <img src="/usdt-badge.svg" alt="" className="w-10 h-10 !mx-0" />
+        <div className="flex items-center gap-2.5">
+          <FlagStack />
+          <img src="/usdt-badge.svg" alt="USDT" className="w-9 h-9 !mx-0" />
         </div>
       ),
     },
@@ -135,10 +152,10 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
     },
     {
       title: 'Hold it how you like',
-      body: 'Keep rands or stablecoin, and switch between them whenever it suits you.',
+      body: 'Keep fiat or stablecoin, and switch between them whenever it suits you.',
       visual: (
         <div className="flex items-center gap-2">
-          <img src="/za-flag.svg" alt="" className="w-10 h-10 !mx-0" />
+          <FlagStack />
           <motion.span
             className="text-primary-500"
             animate={still ? undefined : { rotate: [0, 180, 360] }}
@@ -146,7 +163,7 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
           >
             <ArrowLeftRight className="w-4 h-4" />
           </motion.span>
-          <img src="/usdt-badge.svg" alt="" className="w-10 h-10 !mx-0" />
+          <img src="/usdt-badge.svg" alt="USDT" className="w-9 h-9 !mx-0" />
         </div>
       ),
     },
@@ -166,6 +183,70 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
     },
   ],
 })
+
+const FLOW_DEMOS: Record<FlowId, { label: string; node: React.ReactNode }> = {
+  'pay-in': {
+    label: 'Ezeebit Checkout',
+    node: (
+      <img
+        src="/corrected-ezeebitpay.webp"
+        alt="The Ezeebit checkout asking a customer to select a payment method, listing VALR Pay, Luno Pay, Binance Pay, WalletConnect and an on-chain address."
+        width={2828}
+        height={4000}
+        loading="lazy"
+        className="w-auto max-h-[340px] rounded-2xl border border-neutral-200/80 shadow-sm !mx-0"
+      />
+    ),
+  },
+  'pay-out': {
+    label: 'The payout your customer receives',
+    node: (
+      <img
+        src="/payout-widget-mockup.webp"
+        alt="The payout widget on a phone, showing a withdrawal moving through to funds transferred."
+        width={800}
+        height={1615}
+        loading="lazy"
+        className="w-auto max-h-[340px] !mx-0"
+      />
+    ),
+  },
+  'hold': {
+    label: 'Your balances in the Merchant Portal',
+    node: (
+      <div className="w-full max-w-md bg-white rounded-2xl border border-neutral-200/80 shadow-sm overflow-hidden text-left">
+        <div className="p-5">
+          <p className="text-sm text-neutral-500 mb-1">Total wallet balance</p>
+          <p className="text-xl font-bold text-neutral-900 mb-3">~R 1,529,602.25</p>
+          <div className="h-2 w-full rounded-full bg-primary-200 overflow-hidden mb-5">
+            <div className="h-full w-[46.7%] rounded-full bg-primary-800" />
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="bg-neutral-50 rounded-xl p-3 flex items-center gap-2.5">
+              <img src="/za-flag.svg" alt="" className="w-8 h-8 shrink-0 !mx-0" />
+              <div>
+                <p className="font-semibold text-neutral-900 text-sm">R714,602.25</p>
+                <p className="text-xs text-neutral-500">Fiat wallet</p>
+              </div>
+            </div>
+            <div className="bg-neutral-50 rounded-xl p-3 flex items-center gap-2.5">
+              <img src="/usdt-badge.svg" alt="" className="w-8 h-8 shrink-0 !mx-0" />
+              <div>
+                <p className="font-semibold text-neutral-900 text-sm">50,000.00 USDT</p>
+                <p className="text-xs text-neutral-500">USDT wallet</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="border-t border-neutral-100 px-5 py-3 flex items-center gap-5 text-primary-600 font-medium text-sm">
+          <span className="flex items-center gap-1.5"><ArrowDownToLine className="w-4 h-4" />Deposit</span>
+          <span className="flex items-center gap-1.5"><ArrowUpFromLine className="w-4 h-4" />Withdraw</span>
+          <span className="flex items-center gap-1.5"><RefreshCw className="w-4 h-4" />Convert</span>
+        </div>
+      </div>
+    ),
+  },
+}
 
 /** Three steps side by side, one row per flow. */
 const FlowCards = ({ flow, isActive }: { flow: FlowId; isActive: boolean }) => {
@@ -196,6 +277,17 @@ const FlowCards = ({ flow, isActive }: { flow: FlowId; isActive: boolean }) => {
           <p className="text-sm text-neutral-500 leading-relaxed">{step.body}</p>
         </motion.div>
       ))}
+
+      {/* The product itself, under the steps that describe it */}
+      <motion.div
+        variants={{ hidden: { opacity: 0, y: 14 }, visible: { opacity: 1, y: 0, transition: { duration: 0.45 } } }}
+        className="md:col-span-3 mt-4"
+      >
+        <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-400 mb-4">
+          {FLOW_DEMOS[flow].label}
+        </p>
+        <div className="flex justify-center">{FLOW_DEMOS[flow].node}</div>
+      </motion.div>
     </motion.div>
   )
 }

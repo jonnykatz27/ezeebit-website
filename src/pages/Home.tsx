@@ -43,7 +43,7 @@ const FlagStack = () => (
         src={`/${c}-flag.svg`}
         alt=""
         variants={{ hidden: { opacity: 0, scale: 0.5 }, visible: { opacity: 1, scale: 1 } }}
-        className={`w-9 h-9 rounded-full shadow-sm !mx-0 ${i > 0 ? '-ml-3' : ''}`}
+        className={`w-9 h-9 rounded-full shadow-sm !mx-0 ${i > 0 ? '-ml-4' : ''}`}
         style={{ zIndex: 3 - i }}
       />
     ))}
@@ -82,7 +82,11 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
       visual: (
         <div className="flex items-center gap-2.5">
           <FlagStack />
-          <img src="/usdt-badge.svg" alt="USDT" className="w-9 h-9 !mx-0" />
+          <span className="text-xs font-medium text-neutral-400">or</span>
+          <div className="flex items-center">
+            <img src="/usdt-badge.svg" alt="USDT" className="w-9 h-9 !mx-0" />
+            <img src="/usdc-logo.svg" alt="USDC" className="w-9 h-9 -ml-4 !mx-0" />
+          </div>
         </div>
       ),
     },

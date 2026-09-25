@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import {
   Zap, Shield, Globe, TrendingUp,
   ArrowRight, Star, ChevronLeft, ChevronRight,
-  ThumbsUp, Headphones, Lock, Landmark, Store, Webhook, Receipt
+  ThumbsUp, Headphones, Lock, Landmark, Store, Webhook, Receipt, Link2
 } from 'lucide-react'
 import PartnerCarousel from '../components/PartnerCarousel'
 import SEO from '../components/SEO'
@@ -70,15 +70,36 @@ const PayOutFlow = () => (
       title="One API call."
       body="Send the amount and your reference. We reserve the fiat against your balance and hand back a link."
     >
-      <div className="bg-gray-900 rounded-2xl p-5 text-left overflow-x-auto">
-        <pre className="text-green-400 font-mono text-xs sm:text-sm leading-relaxed">{`POST /consumerPayout/newOrder
+      <div className="bg-neutral-50 rounded-2xl p-5 text-left">
+        <div className="flex items-center gap-2 mb-4">
+          <span className="text-[10px] font-bold tracking-wider text-white bg-primary-500 rounded px-2 py-1">
+            POST
+          </span>
+          <code className="font-mono text-xs sm:text-sm text-neutral-700 break-all">
+            /consumerPayout/newOrder
+          </code>
+        </div>
 
-{
-  "amount": "2000.00",
-  "merchantOrderNum": "PO-1042"
-}
+        <div className="bg-white rounded-xl divide-y divide-neutral-100 mb-4">
+          <div className="flex items-center justify-between px-4 py-3">
+            <span className="text-sm text-neutral-500">Amount</span>
+            <span className="text-sm font-semibold text-neutral-900">R2,000.00</span>
+          </div>
+          <div className="flex items-center justify-between px-4 py-3">
+            <span className="text-sm text-neutral-500">Your reference</span>
+            <span className="text-sm font-mono font-semibold text-neutral-900">PO-1042</span>
+          </div>
+        </div>
 
-→ 200 { "paymentLink": "https://pay.ezeebit.com/..." }`}</pre>
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-primary-50 text-primary-600 flex items-center justify-center shrink-0">
+            <Link2 className="w-4 h-4" />
+          </div>
+          <div className="min-w-0">
+            <p className="text-xs font-semibold text-neutral-900">Returns a payout link</p>
+            <p className="text-xs text-neutral-500 font-mono truncate">pay.ezeebit.com/p/8f2c…</p>
+          </div>
+        </div>
       </div>
     </FlowStep>
 
@@ -87,41 +108,31 @@ const PayOutFlow = () => (
     <FlowStep
       number="02"
       kicker="Your customer completes it"
-      title="They choose how to get paid."
-      body="They open the link, pick their asset and network, and enter their own wallet address. You never collect one."
+      title="They enter their own wallet address."
+      body="They open the link and complete the payout themselves, so a mistyped address is never your liability."
     >
       <div className="grid grid-cols-2 gap-3 text-left">
         <div className="bg-neutral-50 rounded-2xl p-5">
           <div className="flex items-center gap-1 mb-5 h-[58px]">
-            {['usdt', 'usdc', 'btc', 'eth'].map((t, i) => (
-              <img
-                key={t}
-                src={`/${t}-logo.svg`}
-                alt={t.toUpperCase()}
-                className={`w-9 h-9 object-contain !mx-0 ${i > 0 ? '-ml-2' : ''}`}
-              />
-            ))}
+            <img src="/usdt-logo.svg" alt="USDT" className="w-10 h-10 object-contain !mx-0" />
+            <img src="/usdc-logo.svg" alt="USDC" className="w-10 h-10 object-contain -ml-2 !mx-0" />
           </div>
-          <h4 className="font-semibold text-neutral-900 text-sm mb-1.5">Their asset</h4>
+          <h4 className="font-semibold text-neutral-900 text-sm mb-1.5">Paid in stablecoin</h4>
           <p className="text-sm text-neutral-500 leading-relaxed">
-            Stablecoins or major crypto — whatever the recipient actually wants to hold
+            USDT or USDC — dollar-pegged, so what they receive holds its value
           </p>
         </div>
 
         <div className="bg-neutral-50 rounded-2xl p-5">
-          <div className="flex flex-wrap items-center gap-1.5 mb-5 h-[58px] content-center">
-            {['Ethereum', 'TRON', 'BSC', 'Solana', 'Bitcoin'].map((n) => (
-              <span
-                key={n}
-                className="text-[11px] font-medium text-neutral-600 bg-white border border-neutral-200 rounded-full px-2 py-0.5"
-              >
-                {n}
-              </span>
-            ))}
+          <div className="flex items-center gap-3 mb-5 h-[58px]">
+            <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center p-2 shrink-0">
+              <img src="/eth-logo.svg" alt="Ethereum" className="w-full h-full object-contain !mx-0" />
+            </div>
+            <span className="text-sm font-semibold text-neutral-700">Ethereum</span>
           </div>
-          <h4 className="font-semibold text-neutral-900 text-sm mb-1.5">Their network</h4>
+          <h4 className="font-semibold text-neutral-900 text-sm mb-1.5">On Ethereum</h4>
           <p className="text-sm text-neutral-500 leading-relaxed">
-            They pick the chain with the fees and speed that suit them
+            Any wallet on the network, from self-custody to an exchange address
           </p>
         </div>
       </div>
@@ -136,14 +147,14 @@ const PayOutFlow = () => (
       body="Your customer watches it complete, and we post a signed webhook so your ledger reconciles itself."
     >
       <div className="grid grid-cols-2 gap-3 items-center text-left">
-        <div className="bg-neutral-50 rounded-2xl p-5 flex justify-center">
+        <div className="flex justify-center">
           <img
             src="/payout-widget-mockup.webp"
             alt="The payout widget showing a withdrawal completing and funds transferred"
             width={800}
             height={1615}
             loading="lazy"
-            className="w-full max-w-[9rem] h-auto !mx-0"
+            className="w-full max-w-[14rem] h-auto !mx-0"
           />
         </div>
 

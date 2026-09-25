@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import {
   Zap, Shield, Globe, TrendingUp,
   ArrowRight, Star, ChevronLeft, ChevronRight,
-  ThumbsUp, Headphones, Lock, Landmark
+  ThumbsUp, Headphones, Lock, Landmark, Store, Webhook, Receipt
 } from 'lucide-react'
 import PartnerCarousel from '../components/PartnerCarousel'
 import SEO from '../components/SEO'
@@ -17,47 +17,32 @@ const FLOWS = [
 
 type FlowId = (typeof FLOWS)[number]['id']
 
-const PAY_OUT_STEPS = [
-  {
-    number: '01',
-    kicker: 'You create it',
-    title: 'One API call.',
-    body: 'Send the amount and your reference. We reserve the fiat against your balance and hand back a link.',
-  },
-  {
-    number: '02',
-    kicker: 'Your customer completes it',
-    title: 'They choose how to get paid.',
-    body: 'They open the link, pick their asset and network, and enter their own wallet address. You never collect one.',
-  },
-  {
-    number: '03',
-    kicker: 'Funds land',
-    title: 'Settled on-chain in minutes.',
-    body: 'We post a signed webhook with the final status and transaction hash, so your ledger reconciles itself.',
-  },
-]
-
-const HOLD_STEPS = [
-  {
-    number: '01',
-    kicker: 'Money arrives',
-    title: 'Everything lands in one balance.',
-    body: 'In-store, online and OTC settlement all land in your wallets, hedged on arrival so you carry no volatility.',
-  },
-  {
-    number: '02',
-    kicker: 'You decide',
-    title: 'Hold fiat, or hold USDT.',
-    body: 'Convert between them at a quoted rate and keep the balance in whichever one suits your exposure.',
-  },
-  {
-    number: '03',
-    kicker: 'Money leaves',
-    title: 'Pay out, or withdraw.',
-    body: 'Fund customer payouts from the same balance, or withdraw to your bank account or your own wallet.',
-  },
-]
+/** Shell shared by every step card: number, kicker, headline, body, then its own visual. */
+const FlowStep = ({ number, kicker, title, body, children }: {
+  number: string
+  kicker: string
+  title: string
+  body: string
+  children?: React.ReactNode
+}) => (
+  <div className="bg-white border border-neutral-200/80 rounded-3xl shadow-sm">
+    <div className="p-6 sm:p-10">
+      <div className="flex items-center justify-center gap-3 mb-7">
+        <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary-50 text-xs font-semibold text-primary-600 shrink-0">
+          {number}
+        </span>
+        <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-400">
+          {kicker}
+        </span>
+      </div>
+      <h3 className="text-2xl lg:text-[1.75rem] font-bold text-neutral-900 mb-3">{title}</h3>
+      <p className={`text-neutral-500 leading-relaxed max-w-xl mx-auto ${children ? 'mb-8' : ''}`}>
+        {body}
+      </p>
+      {children}
+    </div>
+  </div>
+)
 
 /** The animated rail that links one step to the next. */
 const FlowConnector = () => (
@@ -77,30 +62,216 @@ const FlowConnector = () => (
   </div>
 )
 
-/**
- * Simplified step card for the flows that have not been designed out yet.
- * The pay-in panel still uses its own bespoke cards.
- */
-const FlowStep = ({ number, kicker, title, body }: {
-  number: string
-  kicker: string
-  title: string
-  body: string
-}) => (
-  <div className="bg-white border border-neutral-200/80 rounded-3xl shadow-sm">
-    <div className="p-6 sm:p-10">
-      <div className="flex items-center justify-center gap-3 mb-7">
-        <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary-50 text-xs font-semibold text-primary-600 shrink-0">
-          {number}
-        </span>
-        <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-400">
-          {kicker}
-        </span>
+const PayOutFlow = () => (
+  <>
+    <FlowStep
+      number="01"
+      kicker="You create it"
+      title="One API call."
+      body="Send the amount and your reference. We reserve the fiat against your balance and hand back a link."
+    >
+      <div className="bg-gray-900 rounded-2xl p-5 text-left overflow-x-auto">
+        <pre className="text-green-400 font-mono text-xs sm:text-sm leading-relaxed">{`POST /consumerPayout/newOrder
+
+{
+  "amount": "2000.00",
+  "merchantOrderNum": "PO-1042"
+}
+
+→ 200 { "paymentLink": "https://pay.ezeebit.com/..." }`}</pre>
       </div>
-      <h3 className="text-2xl lg:text-[1.75rem] font-bold text-neutral-900 mb-3">{title}</h3>
-      <p className="text-neutral-500 leading-relaxed max-w-xl mx-auto">{body}</p>
-    </div>
-  </div>
+    </FlowStep>
+
+    <FlowConnector />
+
+    <FlowStep
+      number="02"
+      kicker="Your customer completes it"
+      title="They choose how to get paid."
+      body="They open the link, pick their asset and network, and enter their own wallet address. You never collect one."
+    >
+      <div className="grid grid-cols-2 gap-3 text-left">
+        <div className="bg-neutral-50 rounded-2xl p-5">
+          <div className="flex items-center gap-1 mb-5 h-[58px]">
+            {['usdt', 'usdc', 'btc', 'eth'].map((t, i) => (
+              <img
+                key={t}
+                src={`/${t}-logo.svg`}
+                alt={t.toUpperCase()}
+                className={`w-9 h-9 object-contain !mx-0 ${i > 0 ? '-ml-2' : ''}`}
+              />
+            ))}
+          </div>
+          <h4 className="font-semibold text-neutral-900 text-sm mb-1.5">Their asset</h4>
+          <p className="text-sm text-neutral-500 leading-relaxed">
+            Stablecoins or major crypto — whatever the recipient actually wants to hold
+          </p>
+        </div>
+
+        <div className="bg-neutral-50 rounded-2xl p-5">
+          <div className="flex flex-wrap items-center gap-1.5 mb-5 h-[58px] content-center">
+            {['Ethereum', 'TRON', 'BSC', 'Solana', 'Bitcoin'].map((n) => (
+              <span
+                key={n}
+                className="text-[11px] font-medium text-neutral-600 bg-white border border-neutral-200 rounded-full px-2 py-0.5"
+              >
+                {n}
+              </span>
+            ))}
+          </div>
+          <h4 className="font-semibold text-neutral-900 text-sm mb-1.5">Their network</h4>
+          <p className="text-sm text-neutral-500 leading-relaxed">
+            They pick the chain with the fees and speed that suit them
+          </p>
+        </div>
+      </div>
+    </FlowStep>
+
+    <FlowConnector />
+
+    <FlowStep
+      number="03"
+      kicker="Funds land"
+      title="Settled on-chain in minutes."
+      body="Your customer watches it complete, and we post a signed webhook so your ledger reconciles itself."
+    >
+      <div className="grid grid-cols-2 gap-3 items-center text-left">
+        <div className="bg-neutral-50 rounded-2xl p-5 flex justify-center">
+          <img
+            src="/payout-widget-mockup.webp"
+            alt="The payout widget showing a withdrawal completing and funds transferred"
+            width={800}
+            height={1615}
+            loading="lazy"
+            className="w-full max-w-[9rem] h-auto !mx-0"
+          />
+        </div>
+
+        <div className="bg-neutral-50 rounded-2xl p-1 divide-y divide-neutral-100">
+          {[
+            { icon: <Webhook className="w-4 h-4" />, label: 'Signed webhook', desc: 'RSA-signed on every status change' },
+            { icon: <Shield className="w-4 h-4" />, label: 'Processed once', desc: 'retries and late confirmations are idempotent' },
+            { icon: <Receipt className="w-4 h-4" />, label: 'Transaction hash', desc: 'returned with the final status, for your ledger' },
+          ].map((f) => (
+            <div key={f.label} className="flex items-start gap-3 p-4">
+              <div className="w-8 h-8 bg-primary-50 rounded-lg flex items-center justify-center text-primary-600 shrink-0">
+                {f.icon}
+              </div>
+              <p className="text-sm text-neutral-600 leading-relaxed">
+                <span className="font-semibold text-neutral-900">{f.label}</span>
+                {' '}—{' '}{f.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </FlowStep>
+  </>
+)
+
+const HoldFlow = () => (
+  <>
+    <FlowStep
+      number="01"
+      kicker="Money arrives"
+      title="Everything lands in one balance."
+      body="In-store, online and OTC settlement all land in the same wallets, hedged on arrival so you carry no volatility."
+    >
+      <div className="grid grid-cols-3 gap-3">
+        {[
+          { name: 'In-store', icon: <Store className="w-5 h-5" />, note: 'ePOS and QR' },
+          { name: 'Online', icon: <Globe className="w-5 h-5" />, note: 'Hosted checkout' },
+          { name: 'OTC', icon: <TrendingUp className="w-5 h-5" />, note: 'Desk settlement' },
+        ].map((sourceItem) => (
+          <div key={sourceItem.name} className="bg-neutral-50 rounded-2xl p-5 flex flex-col items-center gap-3">
+            <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center text-primary-600">
+              {sourceItem.icon}
+            </div>
+            <span className="font-semibold text-neutral-900 text-sm">{sourceItem.name}</span>
+            <span className="text-xs text-neutral-400 text-center">{sourceItem.note}</span>
+          </div>
+        ))}
+      </div>
+    </FlowStep>
+
+    <FlowConnector />
+
+    <FlowStep
+      number="02"
+      kicker="You decide"
+      title="Hold fiat, or hold USDT."
+      body="Convert between them at a quoted rate and keep the balance in whichever one suits your exposure."
+    >
+      <div className="bg-neutral-50 rounded-2xl p-5 text-left">
+        <p className="text-sm text-neutral-500 mb-1">Total wallet balance</p>
+        <p className="text-xl sm:text-2xl font-bold text-neutral-900 mb-3">~R 1,529,602.25</p>
+
+        <div className="h-2 w-full rounded-full bg-primary-200 overflow-hidden mb-5">
+          <div className="h-full w-[46.7%] rounded-full bg-primary-800" />
+        </div>
+
+        <div className="grid grid-cols-2 gap-3">
+          <div className="bg-white rounded-xl p-4 flex items-center gap-3">
+            <img src="/za-flag.svg" alt="" width={32} height={32} className="w-8 h-8 shrink-0 !mx-0" />
+            <div>
+              <p className="font-semibold text-neutral-900 text-sm">R714,602.25</p>
+              <p className="text-xs text-neutral-500">ZAR wallet</p>
+            </div>
+          </div>
+          <div className="bg-white rounded-xl p-4 flex items-center gap-3">
+            <img src="/usdt-badge.svg" alt="" width={32} height={32} className="w-8 h-8 shrink-0 !mx-0" />
+            <div>
+              <p className="font-semibold text-neutral-900 text-sm">50,000.00 USDT</p>
+              <p className="text-xs text-neutral-500">USDT wallet</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </FlowStep>
+
+    <FlowConnector />
+
+    <FlowStep
+      number="03"
+      kicker="Money leaves"
+      title="Pay out, or withdraw."
+      body="Fund customer payouts from the same balance, or withdraw to your bank account or your own wallet."
+    >
+      <div className="grid grid-cols-2 gap-3 text-left">
+        <div className="bg-neutral-50 rounded-2xl p-5 flex flex-col">
+          <div className="h-10 flex items-center mb-4">
+            <div className="w-10 h-10 bg-primary-100 rounded-xl flex items-center justify-center">
+              <Landmark className="w-5 h-5 text-primary-600" />
+            </div>
+          </div>
+          <h4 className="font-semibold text-neutral-900 text-sm mb-1.5">To your bank</h4>
+          <p className="text-sm text-neutral-500 leading-relaxed mb-4">
+            Fiat withdrawal, next business day.
+          </p>
+          <div className="flex items-center gap-1.5 text-xs font-semibold text-primary-500 mt-auto">
+            <span>ZAR</span>
+            <span className="text-neutral-300">·</span>
+            <span>KES</span>
+            <span className="text-neutral-300">·</span>
+            <span>NGN</span>
+          </div>
+        </div>
+
+        <div className="bg-neutral-50 rounded-2xl p-5 flex flex-col">
+          <div className="h-10 flex items-center mb-4">
+            <img src="/usdt-badge.svg" alt="" width={40} height={40} className="w-10 h-10 !mx-0" />
+          </div>
+          <h4 className="font-semibold text-neutral-900 text-sm mb-1.5">To your own wallet</h4>
+          <p className="text-sm text-neutral-500 leading-relaxed mb-4">
+            On-chain withdrawal, same day.
+          </p>
+          <div className="flex items-center gap-1.5 text-xs font-semibold text-primary-500 mt-auto">
+            <span>USDT</span>
+          </div>
+        </div>
+      </div>
+    </FlowStep>
+  </>
 )
 
 const Home = () => {
@@ -755,12 +926,7 @@ const Home = () => {
             aria-labelledby="flow-tab-pay-out"
             hidden={activeFlow !== 'pay-out'}
           >
-            {PAY_OUT_STEPS.map((step, index) => (
-              <div key={step.number}>
-                <FlowStep {...step} />
-                {index < PAY_OUT_STEPS.length - 1 && <FlowConnector />}
-              </div>
-            ))}
+            <PayOutFlow />
           </div>
 
           {/* ── Hold & convert ── */}
@@ -770,12 +936,7 @@ const Home = () => {
             aria-labelledby="flow-tab-hold"
             hidden={activeFlow !== 'hold'}
           >
-            {HOLD_STEPS.map((step, index) => (
-              <div key={step.number}>
-                <FlowStep {...step} />
-                {index < HOLD_STEPS.length - 1 && <FlowConnector />}
-              </div>
-            ))}
+            <HoldFlow />
           </div>
 
           {/* OTC is a desk, not a self-serve flow, so it sits beside the tabs */}

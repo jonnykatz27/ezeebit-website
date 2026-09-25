@@ -74,11 +74,7 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
     {
       title: 'We lock the rate',
       body: 'The amount is fixed and hedged the moment they pay, so its value cannot move.',
-      visual: (
-        <PulseMark still={still}>
-          <img src="/ezeebit-icon-blue.png" alt="Ezeebit" className="w-11 h-11 object-contain !mx-0" />
-        </PulseMark>
-      ),
+      visual: <img src="/ezeebit-icon-blue.png" alt="Ezeebit" className="w-11 h-11 object-contain !mx-0" />,
     },
     {
       title: 'You get settled',

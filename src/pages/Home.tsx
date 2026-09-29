@@ -5,7 +5,7 @@ import {
   Zap, Shield, Globe, TrendingUp,
   ArrowRight, Star, ChevronLeft, ChevronRight,
   ThumbsUp, Headphones, Lock, Landmark, Link2, Wallet, Send, Store, ArrowLeftRight,
-  ArrowDownToLine, RotateCcw, ExternalLink
+  ArrowDownToLine, RotateCcw
 } from 'lucide-react'
 import PartnerCarousel from '../components/PartnerCarousel'
 import SEO from '../components/SEO'
@@ -218,7 +218,12 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
  */
 const DEMO_HEIGHT: Record<'payin' | 'payout', number> = { payin: 1171, payout: 900 }
 
-const FlowDemo = ({ src, flow, title }: { src: string; flow: 'payin' | 'payout'; title: string }) => {
+const FlowDemo = ({ src, flow, title, label }: {
+  src: string
+  flow: 'payin' | 'payout'
+  title: string
+  label: string
+}) => {
   const [height, setHeight] = useState(DEMO_HEIGHT[flow])
   // Bumping this remounts the iframe, which starts the flow again from the top
   const [run, setRun] = useState(0)
@@ -235,7 +240,19 @@ const FlowDemo = ({ src, flow, title }: { src: string; flow: 'payin' | 'payout';
   }, [flow])
 
   return (
-    <>
+    <DemoPanel
+      label={label}
+      action={
+        <button
+          type="button"
+          onClick={() => setRun((r) => r + 1)}
+          className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-primary-600 hover:text-primary-700"
+        >
+          <RotateCcw className="w-3.5 h-3.5" />
+          Restart
+        </button>
+      }
+    >
       <iframe
         key={run}
         src={src}
@@ -245,28 +262,9 @@ const FlowDemo = ({ src, flow, title }: { src: string; flow: 'payin' | 'payout';
         // real dimensions whether or not the demo reports back.
         height={height}
         style={{ height }}
-        className="block w-full flex-1 rounded-[20px] bg-[#F2F2F2] border-0 transition-[height] duration-300 !mx-0"
+        className="block w-full flex-1 rounded-t-[20px] rounded-b-[26px] bg-[#F2F2F2] border-0 transition-[height] duration-300 !mx-0"
       />
-      <div className="flex items-center justify-between gap-3 px-3 pt-2.5 pb-1 text-sm">
-        <button
-          type="button"
-          onClick={() => setRun((r) => r + 1)}
-          className="flex items-center gap-1.5 font-semibold text-primary-600 hover:text-primary-700"
-        >
-          <RotateCcw className="w-3.5 h-3.5" />
-          Restart
-        </button>
-        <a
-          href={src}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1.5 text-neutral-500 hover:text-primary-600"
-        >
-          Open full screen
-          <ExternalLink className="w-3.5 h-3.5" />
-        </a>
-      </div>
-    </>
+    </DemoPanel>
   )
 }
 
@@ -274,17 +272,21 @@ const FlowDemo = ({ src, flow, title }: { src: string; flow: 'payin' | 'payout';
  * The frame every demo sits in. Its label and hint live inside, at the top,
  * so the frame's top edge lines up with the first step beside it.
  */
-const DemoPanel = ({ label, children }: { label: string; children: React.ReactNode }) => (
-  <div className="h-full flex flex-col rounded-[28px] bg-white p-2 ring-1 ring-neutral-200/80 shadow-[0_24px_60px_-24px_rgba(0,46,92,0.35)]">
-    <p className="px-3 pt-1.5 pb-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-400">
-      {label}
-    </p>
+const DemoPanel = ({ label, action, children }: {
+  label: string
+  action?: React.ReactNode
+  children: React.ReactNode
+}) => (
+  <div className="h-full flex flex-col rounded-[28px] bg-white p-2 pb-0 ring-1 ring-neutral-200/80 shadow-[0_24px_60px_-24px_rgba(0,46,92,0.35)] overflow-hidden">
+    <div className="flex items-center justify-between gap-3 px-3 pt-1.5 pb-2">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-400">{label}</p>
+      {action}
+    </div>
     <div className="flex-1 flex flex-col">{children}</div>
   </div>
 )
 
 type FlowDemoSpec = {
-  label: string
   node: React.ReactNode
   /** Where to read more, shown under the steps. */
   links: { label: string; to: string }[]
@@ -292,20 +294,18 @@ type FlowDemoSpec = {
 
 const FLOW_DEMOS: Record<FlowId, FlowDemoSpec> = {
   'pay-in': {
-    label: 'Try it',
-    node: <FlowDemo src="/demos/pay-in.html" flow="payin" title="Interactive demo of the Ezeebit in-store checkout" />,
+    node: <FlowDemo src="/demos/pay-in.html" flow="payin" label="Try it" title="Interactive demo of the Ezeebit in-store checkout" />,
     links: [{ label: 'In-store payments', to: '/in-store' }, { label: 'Online checkout', to: '/online' }],
   },
   'pay-out': {
-    label: 'Try it',
-    node: <FlowDemo src="/demos/pay-out.html" flow="payout" title="Interactive demo of an Ezeebit payout" />,
+    node: <FlowDemo src="/demos/pay-out.html" flow="payout" label="Try it" title="Interactive demo of an Ezeebit payout" />,
     links: [{ label: 'Payouts', to: '/payouts' }],
   },
   'hold': {
-    label: 'Merchant Portal',
     // The portal's own page background, so the cards sit as they do in the product
     node: (
-      <div className="flex-1 rounded-[20px] bg-[#f8f9fb] p-3 space-y-3">
+      <DemoPanel label="Merchant Portal">
+      <div className="flex-1 rounded-t-[20px] rounded-b-[26px] bg-[#f8f9fb] p-3 space-y-3">
         <div className="rounded-[12px] border border-neutral-200/70 overflow-hidden">
           <PortalBalanceCard
             total="R 1,637,102.25"
@@ -325,6 +325,7 @@ const FLOW_DEMOS: Record<FlowId, FlowDemoSpec> = {
           />
         </div>
       </div>
+      </DemoPanel>
     ),
     links: [{ label: 'Wallets', to: '/wallets' }],
   },
@@ -394,7 +395,7 @@ const FlowCards = ({ flow, isActive }: { flow: FlowId; isActive: boolean }) => {
       {/* The product itself, beside the steps that describe it */}
       <motion.div variants={rise} className="w-full max-w-[360px] mx-auto lg:mx-0 flex flex-col">
         <div className="flex-1">
-          <DemoPanel label={demo.label}>{demo.node}</DemoPanel>
+          {demo.node}
         </div>
       </motion.div>
     </motion.div>

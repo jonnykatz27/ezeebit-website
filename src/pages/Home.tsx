@@ -211,8 +211,15 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
  * whenever the screen changes, so the frame grows with it instead of scrolling
  * inside the page.
  */
+/**
+ * Each demo's own natural height at full width, used until it reports its own.
+ * The iframe is sized from this rather than left to collapse, so a message
+ * that never arrives cannot break the layout.
+ */
+const DEMO_HEIGHT: Record<'payin' | 'payout', number> = { payin: 1171, payout: 900 }
+
 const FlowDemo = ({ src, flow, title }: { src: string; flow: 'payin' | 'payout'; title: string }) => {
-  const [height, setHeight] = useState(700)
+  const [height, setHeight] = useState(DEMO_HEIGHT[flow])
   // Bumping this remounts the iframe, which starts the flow again from the top
   const [run, setRun] = useState(0)
 
@@ -221,7 +228,7 @@ const FlowDemo = ({ src, flow, title }: { src: string; flow: 'payin' | 'payout';
       if (e.origin !== window.location.origin) return
       if (e.data?.type !== 'ezeebit:resize' || e.data.flow !== flow) return
       // A hidden tab reports zero; keep the last real height for when it shows
-      if (e.data.height > 0) setHeight(e.data.height)
+      if (typeof e.data.height === 'number' && e.data.height > 200) setHeight(e.data.height)
     }
     window.addEventListener('message', onMessage)
     return () => window.removeEventListener('message', onMessage)
@@ -234,8 +241,11 @@ const FlowDemo = ({ src, flow, title }: { src: string; flow: 'payin' | 'payout';
         src={src}
         title={title}
         loading="lazy"
-        style={{ minHeight: height }}
-        className="block w-full flex-1 rounded-[20px] bg-[#F2F2F2] transition-[min-height] duration-300 !mx-0"
+        // Height is set outright, not just as a minimum, so the frame always has
+        // real dimensions whether or not the demo reports back.
+        height={height}
+        style={{ height }}
+        className="block w-full flex-1 rounded-[20px] bg-[#F2F2F2] border-0 transition-[height] duration-300 !mx-0"
       />
       <div className="flex items-center justify-between gap-3 px-3 pt-2.5 pb-1 text-sm">
         <button

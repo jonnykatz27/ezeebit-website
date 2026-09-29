@@ -439,6 +439,9 @@ document.getElementById('cCopy').onclick = function(){
 };
 window.addEventListener('resize', fit);
 window.addEventListener('load', fit);
+// Measure straight away too: with a lazy iframe the load event can have fired
+// before this script runs, and then the parent never hears a height at all.
+fit();
 go(4);
 </script>
 </body>

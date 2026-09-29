@@ -5,7 +5,7 @@ import {
   Zap, Shield, Globe, TrendingUp,
   ArrowRight, Star, ChevronLeft, ChevronRight,
   ThumbsUp, Headphones, Lock, Landmark, Link2, Wallet, Send, Store, ArrowLeftRight,
-  ArrowDownToLine, RotateCcw, ExternalLink, MousePointerClick
+  ArrowDownToLine, RotateCcw, ExternalLink
 } from 'lucide-react'
 import PartnerCarousel from '../components/PartnerCarousel'
 import SEO from '../components/SEO'
@@ -274,24 +274,17 @@ const FlowDemo = ({ src, flow, title }: { src: string; flow: 'payin' | 'payout';
  * The frame every demo sits in. Its label and hint live inside, at the top,
  * so the frame's top edge lines up with the first step beside it.
  */
-const DemoPanel = ({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) => (
+const DemoPanel = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <div className="h-full flex flex-col rounded-[28px] bg-white p-2 ring-1 ring-neutral-200/80 shadow-[0_24px_60px_-24px_rgba(0,46,92,0.35)]">
-    <div className="px-3 pt-2 pb-3">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-400">{label}</p>
-      {hint && (
-        <p className="flex items-start gap-1.5 text-sm text-neutral-500 mt-1.5">
-          <MousePointerClick className="w-4 h-4 mt-0.5 text-primary-500 shrink-0" />
-          {hint}
-        </p>
-      )}
-    </div>
+    <p className="px-3 pt-1.5 pb-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-400">
+      {label}
+    </p>
     <div className="flex-1 flex flex-col">{children}</div>
   </div>
 )
 
 type FlowDemoSpec = {
   label: string
-  hint?: string
   node: React.ReactNode
   /** Where to read more, shown under the steps. */
   links: { label: string; to: string }[]
@@ -299,19 +292,17 @@ type FlowDemoSpec = {
 
 const FLOW_DEMOS: Record<FlowId, FlowDemoSpec> = {
   'pay-in': {
-    label: 'Try it: the in-store checkout',
-    hint: 'Key in an amount, pick a coin and network, and pay.',
+    label: 'Try it',
     node: <FlowDemo src="/demos/pay-in.html" flow="payin" title="Interactive demo of the Ezeebit in-store checkout" />,
     links: [{ label: 'In-store payments', to: '/in-store' }, { label: 'Online checkout', to: '/online' }],
   },
   'pay-out': {
-    label: 'Try it: the payout your customer receives',
-    hint: 'Confirm the quote and watch the payout settle.',
+    label: 'Try it',
     node: <FlowDemo src="/demos/pay-out.html" flow="payout" title="Interactive demo of an Ezeebit payout" />,
     links: [{ label: 'Payouts', to: '/payouts' }],
   },
   'hold': {
-    label: 'Your balances in the Merchant Portal',
+    label: 'Merchant Portal',
     // The portal's own page background, so the cards sit as they do in the product
     node: (
       <div className="flex-1 rounded-[20px] bg-[#f8f9fb] p-3 space-y-3">
@@ -403,7 +394,7 @@ const FlowCards = ({ flow, isActive }: { flow: FlowId; isActive: boolean }) => {
       {/* The product itself, beside the steps that describe it */}
       <motion.div variants={rise} className="w-full max-w-[360px] mx-auto lg:mx-0 flex flex-col">
         <div className="flex-1">
-          <DemoPanel label={demo.label} hint={demo.hint}>{demo.node}</DemoPanel>
+          <DemoPanel label={demo.label}>{demo.node}</DemoPanel>
         </div>
       </motion.div>
     </motion.div>

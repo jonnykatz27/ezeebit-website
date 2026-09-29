@@ -262,7 +262,7 @@ const FlowDemo = ({ src, flow, title, label }: {
         // real dimensions whether or not the demo reports back.
         height={height}
         style={{ height }}
-        className="block w-full flex-1 rounded-t-[20px] rounded-b-[26px] bg-[#F2F2F2] border-0 transition-[height] duration-300 !mx-0"
+        className="block w-full flex-1 rounded-[20px] bg-[#F2F2F2] border-0 transition-[height] duration-300 !mx-0"
       />
     </DemoPanel>
   )
@@ -277,7 +277,7 @@ const DemoPanel = ({ label, action, children }: {
   action?: React.ReactNode
   children: React.ReactNode
 }) => (
-  <div className="h-full flex flex-col rounded-[28px] bg-white p-2 pb-0 ring-1 ring-neutral-200/80 shadow-[0_24px_60px_-24px_rgba(0,46,92,0.35)] overflow-hidden">
+  <div className="h-full flex flex-col rounded-[28px] bg-white p-2 ring-1 ring-neutral-200/80 shadow-[0_24px_60px_-24px_rgba(0,46,92,0.35)] overflow-hidden">
     <div className="flex items-center justify-between gap-3 px-3 pt-1.5 pb-2">
       <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-400">{label}</p>
       {action}
@@ -305,7 +305,7 @@ const FLOW_DEMOS: Record<FlowId, FlowDemoSpec> = {
     // The portal's own page background, so the cards sit as they do in the product
     node: (
       <DemoPanel label="Merchant Portal">
-      <div className="flex-1 rounded-t-[20px] rounded-b-[26px] bg-[#f8f9fb] p-3 space-y-3">
+      <div className="flex-1 rounded-[20px] bg-[#f8f9fb] p-3 space-y-3">
         <div className="rounded-[12px] border border-neutral-200/70 overflow-hidden">
           <PortalBalanceCard
             total="R 1,637,102.25"

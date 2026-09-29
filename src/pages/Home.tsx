@@ -680,7 +680,7 @@ const Home = () => {
       </section>
 
       {/* ── How it works — one flow per product area ── */}
-      <section id="how-it-works" className="scroll-mt-20 pt-8 pb-16 lg:pt-12 lg:pb-24 bg-neutral-50/60">
+      <section id="how-it-works" className="scroll-mt-20 pt-8 pb-16 lg:pt-12 lg:pb-24 bg-white">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 text-center">
 
           <motion.div

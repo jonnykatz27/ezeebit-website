@@ -2,11 +2,12 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
-  Search, ChevronDown, HelpCircle,
+  ChevronDown, HelpCircle,
   Phone, Mail, Star,
   Shield, CreditCard, Zap, Users, ArrowRight
 } from 'lucide-react'
 import SEO from '../components/SEO'
+import PageHero, { HeroSearch } from '../components/hero/PageHero'
 
 const FAQ = () => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -271,33 +272,13 @@ const FAQ = () => {
       className="overflow-hidden -mt-20"
     >
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center gradient-bg pt-40">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-secondary-600/10"></div>
-        <div className="container-custom relative z-10 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <h1 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 mb-6">
-              Frequently asked <span className="text-gradient">questions</span>
-            </h1>
-            <p className="text-lg md:text-xl text-neutral-600 mb-6 md:mb-8 max-w-3xl mx-auto">
-              Find answers to common questions about Ezeebit's cryptocurrency payment solutions. 
-              Can't find what you're looking for? Our support team is here to help.
-            </p>
-            {/* Search Bar */}
-            <div className="max-w-xl md:max-w-2xl mx-auto mb-6 md:mb-8 px-4 md:px-0">
-              <div className="relative">
-                <Search className="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 text-neutral-400 w-4 h-4 md:w-5 md:h-5" />
-                <input
-                  type="text"
-                  placeholder="Search frequently asked questions..."
-                  value={searchTerm}
-                  onChange={e => setSearchTerm(e.target.value)}
-                  className="w-full pl-9 md:pl-12 pr-4 py-3 md:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-base md:text-lg"
-                />
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        title="Frequently asked"
+        accent="questions"
+        description="Find answers to common questions about Ezeebit's cryptocurrency payment solutions. Can't find what you're looking for? Our support team is here to help."
+      >
+        <HeroSearch placeholder="Search frequently asked questions..." value={searchTerm} onChange={setSearchTerm} />
+      </PageHero>
 
       {/* Categories */}
       <section className="bg-white border-b border-neutral-200 sticky top-20 z-40">

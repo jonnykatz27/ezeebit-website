@@ -1,9 +1,12 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import {
   ArrowRight, ShieldCheck, Banknote, Clock, UserCheck,
   TrendingUp, Lock
 } from 'lucide-react'
 import SEO from '../components/SEO'
+import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
+import OTCHeroVisual from '../components/hero/OTCHeroVisual'
 
 const OTC = () => {
   const features = [
@@ -89,77 +92,24 @@ const OTC = () => {
         className="overflow-hidden -mt-20"
       >
         {/* Hero Section */}
-        <section className="relative min-h-[60vh] flex items-center gradient-bg pt-40">
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-secondary-600/10"></div>
-          <div className="container-custom relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                className="max-w-4xl text-center lg:text-left"
-              >
-                <h1 className="text-5xl lg:text-5xl font-display font-bold text-neutral-900 mb-6">
-                  <span itemProp="name">Move <span className="text-gradient">large volumes</span> of crypto</span>
-                </h1>
-                <p className="text-xl text-neutral-600 mb-8" itemProp="description">
-                  Buy or sell crypto at scale without moving the market. Get a firm quote, lock the rate,
-                  and settle the same day in ZAR, KES, or NGN, with a dedicated dealer handling every trade.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center lg:justify-start">
-                  <a
-                    href="https://merchant.ezeebit.com/#/signup"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-primary flex items-center justify-center"
-                  >
-                    Sign Up
-                    <ArrowRight className="w-5 h-5 ml-2" />
-                  </a>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative hidden lg:block"
-              >
-                {/* Quote card mockup */}
-                <div className="relative max-w-sm mx-auto">
-                  <div className="card p-6 shadow-2xl bg-white">
-                    <div className="flex items-center justify-between mb-6">
-                      <span className="text-sm font-medium text-neutral-500">OTC Quote</span>
-                      <span className="flex items-center text-xs font-medium text-green-600">
-                        <span className="w-2 h-2 rounded-full bg-green-500 mr-1.5 animate-pulse"></span>
-                        Rate locked
-                      </span>
-                    </div>
-                    <div className="space-y-4">
-                      <div>
-                        <p className="text-xs text-neutral-500 mb-1">You sell</p>
-                        <p className="text-2xl font-bold text-neutral-900">300,000 USDT</p>
-                      </div>
-                      <div className="flex justify-center">
-                        <div className="w-9 h-9 rounded-full bg-primary-100 flex items-center justify-center text-primary-600">
-                          <ArrowRight className="w-4 h-4 rotate-90" />
-                        </div>
-                      </div>
-                      <div>
-                        <p className="text-xs text-neutral-500 mb-1">You receive</p>
-                        <p className="text-2xl font-bold text-neutral-900">R 5,550,000</p>
-                      </div>
-                    </div>
-                    <div className="mt-6 pt-4 border-t border-neutral-100 flex items-center justify-between text-sm">
-                      <span className="text-neutral-500">Settlement</span>
-                      <span className="font-medium text-neutral-900">Same day &middot; ZAR</span>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
+        <PageHero
+          title="Move large volumes"
+          accent="of crypto."
+          description="Buy or sell crypto at scale without moving the market. Get a firm quote, lock the rate, and settle the same day in ZAR, KES, or NGN, with a dedicated dealer handling every trade."
+          actions={
+            <>
+            <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
+              Get started free
+              <ArrowRight className="w-5 h-5 ml-2" />
+            </a>
+            <Link to="/contact" className={HERO_SECONDARY}>
+              Talk to the desk
+            </Link>
+            </>
+          }
+          visual={<OTCHeroVisual />}
+          itemProps
+        />
 
         {/* Features Section */}
         <section className="section-padding bg-white">

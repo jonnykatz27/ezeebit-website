@@ -16,6 +16,8 @@ export default {
         mono: ["'SF Mono'", "'Fira Code'", "'Fira Mono'", "'Roboto Mono'", "'Courier New'", 'monospace'],
         // Brand accent — Caveat Bold, used sparingly for one-line emphasis
         accent: ["'Caveat'", 'ui-rounded', 'cursive'],
+        // The Merchant Portal's typeface, for mockups of our product UI
+        ui: ["'Figtree'", "'Inter'", '-apple-system', 'BlinkMacSystemFont', "'Segoe UI'", 'Roboto', 'sans-serif'],
       },
       colors: {
         // Ezeebit master brand palette — Ezeebit Blue #0074E4 is the hero accent

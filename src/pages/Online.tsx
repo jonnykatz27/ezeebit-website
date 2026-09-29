@@ -6,6 +6,8 @@ import {
   CheckCircle, ArrowRight, ExternalLink
 } from 'lucide-react'
 import SEO from '../components/SEO'
+import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
+import OnlineHeroVisual from '../components/hero/OnlineHeroVisual'
 
 const Online = () => {
   const [activeTab, setActiveTab] = useState('shopify')
@@ -96,68 +98,24 @@ const Online = () => {
         className="overflow-hidden -mt-20"
       >
         {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center gradient-bg pt-40">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-secondary-600/10"></div>
-        <div className="container-custom relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="max-w-4xl text-center lg:text-left"
-            >
-              <h1 className="text-5xl lg:text-5xl font-display font-bold text-neutral-900 mb-6">
-                <span itemProp="name">Boost <span className="text-gradient">e-commerce</span> with crypto</span>
-              </h1>
-              <p className="text-xl text-neutral-600 mb-8" itemProp="description">
-                Integrate stablecoin and cryptocurrency payments into your online store with zero-code plugins.
-                Start accepting Bitcoin, Ethereum, stablecoins and more, with automatic settlement in ZAR, KES, or NGN.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center lg:justify-start">
-                <a
-                  href="https://merchant.ezeebit.com/#/signup"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-primary flex items-center justify-center"
-                >
-                  Install Plugin Now
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </a>
-                <Link to="/developers" className="btn-secondary flex items-center justify-center">
-                  View Documentation
-                </Link>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative hidden lg:block"
-            >
-              <div className="relative flex items-center justify-center">
-                <img
-                  src="/online-customer(latest).png"
-                  alt="Customer paying online"
-                  className="w-[150%] drop-shadow-2xl hidden lg:block"
-                />
-                <div className="absolute top-[80px] left-[-50px] z-10 hidden lg:block">
-                  <img
-                    src="/corrected-ezeebitpay.webp"
-                    alt="Payment amount and currency selector interface"
-                    className="w-[100%] max-w-[238px] rounded-xl shadow-2xl translate-x-4"
-                  />
-                </div>
-                <img
-                  src="/online-checkout.png"
-                  alt="Online checkout"
-                  className="absolute bottom-[-8px] right-[-80px] w-[68%] drop-shadow-lg z-10 hidden lg:block"
-                />
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        title="Stablecoin checkout"
+        accent="for your online store."
+        description="Add stablecoin and crypto payments to your store with zero-code plugins, or build on our API. Customers pay with Bitcoin, Ethereum, stablecoins, and more, and you're settled in ZAR, KES, or NGN."
+        actions={
+          <>
+          <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
+            Install a plugin
+            <ArrowRight className="w-5 h-5 ml-2" />
+          </a>
+          <Link to="/developers" className={HERO_SECONDARY}>
+            View the docs
+          </Link>
+          </>
+        }
+        visual={<OnlineHeroVisual />}
+        itemProps
+      />
 
       {/* Platform Integration */}
       <section className="section-padding bg-white">

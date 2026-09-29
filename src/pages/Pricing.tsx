@@ -6,6 +6,7 @@ import {
   Users, Building, Star
 } from 'lucide-react'
 import SEO from '../components/SEO'
+import PageHero from '../components/hero/PageHero'
 
 const Pricing = () => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('monthly')
@@ -86,48 +87,35 @@ const Pricing = () => {
       className="overflow-hidden -mt-20"
     >
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center gradient-bg pt-40">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-secondary-600/10"></div>
-        <div className="container-custom relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+      <PageHero
+        title="Simple, transparent"
+        accent="pricing"
+        description="Choose the perfect plan for your business. No hidden fees, no surprises. Start with our free plan and scale as you grow."
+      >
+        <div className="flex items-center justify-center">
+          <span className={`mr-3 ${billingCycle === 'monthly' ? 'text-neutral-900 font-medium' : 'text-neutral-500'}`}>
+            Monthly
+          </span>
+          <button
+            onClick={() => setBillingCycle(billingCycle === 'monthly' ? 'annual' : 'monthly')}
+            className="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
           >
-            <h1 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 mb-6">
-              Simple, <span className="text-gradient">transparent</span> pricing
-            </h1>
-            <p className="text-xl text-neutral-600 mb-8 max-w-3xl mx-auto">
-              Choose the perfect plan for your business. No hidden fees, no surprises. 
-              Start with our free plan and scale as you grow.
-            </p>
-            
-            {/* Billing Toggle */}
-            <div className="flex items-center justify-center mb-12">
-              <span className={`mr-3 ${billingCycle === 'monthly' ? 'text-neutral-900 font-medium' : 'text-neutral-500'}`}>
-                Monthly
-              </span>
-              <button
-                onClick={() => setBillingCycle(billingCycle === 'monthly' ? 'annual' : 'monthly')}
-                className="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-              >
-                <span
-                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                    billingCycle === 'annual' ? 'translate-x-6' : 'translate-x-1'
-                  }`}
-                />
-              </button>
-              <span className={`ml-3 ${billingCycle === 'annual' ? 'text-neutral-900 font-medium' : 'text-neutral-500'}`}>
-                Annual
-              </span>
-              {billingCycle === 'annual' && (
-                <span className="ml-2 bg-primary-500 text-white px-2 py-1 rounded-full text-xs font-medium">
-                  Save 17%
-                </span>
-              )}
-            </div>
-          </motion.div>
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                billingCycle === 'annual' ? 'translate-x-6' : 'translate-x-1'
+              }`}
+            />
+          </button>
+          <span className={`ml-3 ${billingCycle === 'annual' ? 'text-neutral-900 font-medium' : 'text-neutral-500'}`}>
+            Annual
+          </span>
+          {billingCycle === 'annual' && (
+            <span className="ml-2 bg-primary-500 text-white px-2 py-1 rounded-full text-xs font-medium">
+              Save 17%
+            </span>
+          )}
         </div>
-      </section>
+      </PageHero>
 
       {/* Pricing Plans */}
       <section className="py-12 bg-white">

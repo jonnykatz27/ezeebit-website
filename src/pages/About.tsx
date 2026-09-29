@@ -5,6 +5,7 @@ import {
   ArrowRight, Heart
 } from 'lucide-react'
 import SEO from '../components/SEO'
+import PageHero from '../components/hero/PageHero'
 
 const About = () => {
   const stats = [
@@ -90,44 +91,16 @@ const About = () => {
         className="overflow-hidden -mt-20"
       >
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center gradient-bg pt-40">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-secondary-600/10"></div>
-        <div className="container-custom relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <div className="flex justify-center mb-6">
-              <img
-                src="/ezeebit_black.png"
-                alt="Ezeebit"
-                className="h-16 w-auto hidden md:block"
-              />
-            </div>
-            <h1 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 mb-6">
-              Pioneering <span className="text-gradient">stablecoin and crypto payments</span><br className="hidden lg:block" /> in Africa
-            </h1>
-            <p className="text-base lg:text-xl text-neutral-600 mb-8 max-w-3xl mx-auto">
-              We're on a mission to make stablecoin and cryptocurrency payments as simple and secure as traditional payments,
-              empowering African merchants to embrace the future of finance.
-            </p>
-            <div className="flex items-center justify-center space-x-6 text-sm text-neutral-500">
-              <div className="flex items-center">
-                <Award className="w-4 h-4 md:w-5 md:h-5 text-secondary-500 mr-1 md:mr-2" />
-                <span className="text-xs md:text-sm">FSCA Regulated</span>
-              </div>
-              <div className="flex items-center">
-                <Shield className="w-4 h-4 md:w-5 md:h-5 text-secondary-500 mr-1 md:mr-2" />
-                <span className="text-xs md:text-sm">Bank-Grade Security</span>
-              </div>
-              <div className="flex items-center">
-                <Users className="w-4 h-4 md:w-5 md:h-5 text-secondary-500 mr-1 md:mr-2" />
-                <span className="text-xs md:text-sm">150+ Stores</span>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        title="Pioneering stablecoin"
+        accent="payments in Africa"
+        description="We're on a mission to make stablecoin and cryptocurrency payments as simple and secure as traditional payments, empowering African merchants to embrace the future of finance."
+        trust={[
+          { icon: <Award />, label: 'FSCA regulated' },
+          { icon: <Shield />, label: 'Bank-grade security' },
+          { icon: <Users />, label: '150+ stores' },
+        ]}
+      />
 
       {/* Stats Section */}
       <section className="section-padding bg-white">
@@ -342,6 +315,195 @@ const About = () => {
       </section>
 
       {/* CTA Section */}
+      <section className="section-padding bg-neutral-50">
+        <div className="container-custom">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-center mb-8 lg:mb-12"
+          >
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Backed by world-class investors</h2>
+            <p className="text-lg text-neutral-600 max-w-2xl mx-auto leading-relaxed">
+              Supported by leading global funds and industry veterans who share our belief in building the future of payments in Africa
+            </p>
+          </motion.div>
+
+          <div className="max-w-5xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="mb-12"
+            >
+              <p className="text-xs font-semibold text-neutral-500 uppercase tracking-widest text-center mb-6">
+                Lead Investors
+              </p>
+              <div className="flex flex-wrap justify-center items-center gap-10 md:gap-16">
+                <a
+                  href="https://foundercollective.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center hover:opacity-80 transition-opacity"
+                >
+                  <img
+                    src="/founder_collective_logo.png"
+                    alt="Founder Collective"
+                    className="h-7 md:h-8 w-auto object-contain"
+                  />
+                </a>
+                <a
+                  href="https://rabacap.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center hover:opacity-80 transition-opacity"
+                >
+                  <img
+                    src="/Raba_logo.webp"
+                    alt="Raba Partnership"
+                    className="h-6 md:h-7 w-auto object-contain"
+                  />
+                </a>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15 }}
+              className="border-t border-neutral-200 pt-10 mb-12"
+            >
+              <p className="text-xs font-semibold text-neutral-500 uppercase tracking-widest text-center mb-6">
+                Strategic Investors
+              </p>
+              <div className="flex justify-center items-center">
+                <a
+                  href="https://dcg.co/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center hover:opacity-80 transition-opacity"
+                >
+                  <img
+                    src="/digital-currency-group-logo-nobg.png"
+                    alt="Digital Currency Group"
+                    className="h-14 md:h-[70px] w-auto object-contain"
+                  />
+                </a>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="border-t border-neutral-200 pt-10"
+            >
+              <p className="text-xs font-semibold text-neutral-500 uppercase tracking-widest text-center mb-8">
+                Angel Investors
+              </p>
+              <div className="max-w-2xl mx-auto">
+                <div className="grid grid-cols-3 gap-6 md:gap-8 mb-6 md:mb-8">
+                  {[
+                    { name: 'Terry Angelos', note: 'ex-Visa', image: '/terry-image-nobg.png', linkedin: 'https://www.linkedin.com/in/tangelos' },
+                    { name: 'Anton Katz', note: 'Talos', image: '/anton_image-nobg.png', linkedin: 'https://www.linkedin.com/in/katzanton' },
+                    { name: 'David|de Picciotto', note: 'ex-Revolut', image: '/david_image-nobg.png', linkedin: 'https://www.linkedin.com/in/david-de-picciotto' }
+                  ].map((investor, index) => (
+                    <motion.div
+                      key={investor.name}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.3 + index * 0.05 }}
+                      className="text-center"
+                    >
+                      <a
+                        href={investor.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block w-20 h-20 mx-auto mb-3 rounded-full overflow-hidden bg-gradient-to-br from-primary-100 to-secondary-100 hover:ring-4 hover:ring-primary-200 transition-all"
+                        aria-label={`${investor.name.replace('|', ' ')} LinkedIn profile`}
+                      >
+                        <img
+                          src={investor.image}
+                          alt={investor.name.replace('|', ' ')}
+                          className="w-full h-full object-cover"
+                        />
+                      </a>
+                      <p className="text-sm font-medium text-neutral-700 leading-tight">
+                        {investor.name.includes('|')
+                          ? investor.name.split('|').map((part, i) => (
+                              <span key={i}>
+                                {part}
+                                {i < investor.name.split('|').length - 1 && <br />}
+                              </span>
+                            ))
+                          : investor.name.split(' ').map((part, i) => (
+                              <span key={i}>
+                                {part}
+                                {i < investor.name.split(' ').length - 1 && <br />}
+                              </span>
+                            ))
+                        }
+                      </p>
+                      <p className="text-[10px] text-neutral-400 mt-0.5">{investor.note}</p>
+                    </motion.div>
+                  ))}
+                </div>
+                <div className="grid grid-cols-2 gap-6 md:gap-8 max-w-md mx-auto">
+                  {[
+                    { name: 'Nadir Khamissa', note: 'Hello Group', image: '/nadir_image-nobg.png', linkedin: 'https://www.linkedin.com/in/nadir-khamissa' },
+                    { name: 'Chris Harmse', note: 'BVNK', image: '/chris_image-nobg.png', linkedin: 'https://www.linkedin.com/in/chrisharmse' }
+                  ].map((investor, index) => (
+                    <motion.div
+                      key={investor.name}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.3 + (index + 3) * 0.05 }}
+                      className="text-center"
+                    >
+                      <a
+                        href={investor.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block w-20 h-20 mx-auto mb-3 rounded-full overflow-hidden bg-gradient-to-br from-primary-100 to-secondary-100 hover:ring-4 hover:ring-primary-200 transition-all"
+                        aria-label={`${investor.name} LinkedIn profile`}
+                      >
+                        <img
+                          src={investor.image}
+                          alt={investor.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </a>
+                      <p className="text-sm font-medium text-neutral-700 leading-tight">
+                        {investor.name.split(' ').map((part, i) => (
+                          <span key={i}>
+                            {part}
+                            {i < investor.name.split(' ').length - 1 && <br />}
+                          </span>
+                        ))}
+                      </p>
+                      <p className="text-[10px] text-neutral-400 mt-0.5">{investor.note}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              className="mt-12 text-center"
+            >
+              <div className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-neutral-200 rounded-full shadow-xs">
+                <Shield className="w-5 h-5 text-secondary-600" />
+                <span className="text-sm font-medium text-neutral-700">
+                  Trusted by industry leaders and backed by experienced investors
+                </span>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       <section className="section-padding bg-primary-600 text-white">
         <div className="container-custom text-center">
           <motion.div

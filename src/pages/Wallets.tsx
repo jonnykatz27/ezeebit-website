@@ -2,9 +2,11 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import {
   ArrowRight, Wallet, ArrowLeftRight, Landmark,
-  Receipt, ShieldCheck, Database, ArrowDownToLine, ArrowUpFromLine, RefreshCw
+  Receipt, ShieldCheck, Database
 } from 'lucide-react'
 import SEO from '../components/SEO'
+import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
+import WalletsHeroVisual from '../components/hero/WalletsHeroVisual'
 
 const Wallets = () => {
   const features = [
@@ -90,128 +92,24 @@ const Wallets = () => {
         className="overflow-hidden -mt-20"
       >
         {/* Hero Section */}
-        <section className="relative min-h-[60vh] flex items-center gradient-bg pt-40 pb-14 lg:pb-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-secondary-600/10"></div>
-          <div className="container-custom relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                className="max-w-4xl text-center lg:text-left"
-              >
-                <h1 className="text-5xl lg:text-5xl font-display font-bold text-neutral-900 mb-6">
-                  <span itemProp="name">Your money, in <span className="text-gradient">fiat or stablecoin</span></span>
-                </h1>
-                <p className="text-xl text-neutral-600 mb-8" itemProp="description">
-                  Hold fiat and USDT in one place, convert between them when it suits you,
-                  fund your customer payouts from the same balance, and withdraw to your bank
-                  or your own wallet.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 mb-2 lg:mb-8 justify-center lg:justify-start">
-                  <a
-                    href="https://merchant.ezeebit.com/#/signup"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-primary flex items-center justify-center"
-                  >
-                    Sign Up
-                    <ArrowRight className="w-5 h-5 ml-2" />
-                  </a>
-                  <Link
-                    to="/developers"
-                    className="btn-secondary flex items-center justify-center"
-                  >
-                    View the API
-                  </Link>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative w-full"
-              >
-                {/* Merchant Portal balances card */}
-                <figure className="relative w-full max-w-sm mx-auto lg:max-w-md text-left">
-                  <div className="bg-white rounded-xl shadow-2xl border border-neutral-100 overflow-hidden">
-                    <div className="p-4 lg:p-6">
-                      {/* Total + legend */}
-                      <div className="mb-4 lg:mb-5">
-                        <p className="text-sm text-neutral-500 mb-1">Total wallet balance</p>
-                        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1 mb-3">
-                          <span className="text-xl lg:text-2xl font-bold text-neutral-900">~R 1,529,602.25</span>
-                          <span className="text-xs font-medium text-green-700 bg-green-50 rounded px-1.5 py-0.5">
-                            +5.2%
-                          </span>
-                          <span className="text-xs text-neutral-500">vs last month</span>
-                        </div>
-                        <div className="flex items-center gap-4 text-sm text-neutral-700">
-                          <span className="flex items-center gap-2">
-                            <span className="w-2.5 h-2.5 rounded-full bg-primary-800"></span>
-                            ZAR wallet
-                          </span>
-                          <span className="flex items-center gap-2">
-                            <span className="w-2.5 h-2.5 rounded-full bg-primary-200"></span>
-                            USDT wallet
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Split bar */}
-                      <div className="h-2 w-full rounded-full bg-primary-200 overflow-hidden mb-4 lg:mb-6">
-                        <div className="h-full w-[46.7%] rounded-full bg-primary-800"></div>
-                      </div>
-
-                      {/* The two wallets */}
-                      <div className="space-y-3 lg:space-y-4">
-                        <div className="flex items-center gap-3">
-                          <img src="/za-flag.svg" alt="" width={40} height={40} className="w-8 h-8 lg:w-10 lg:h-10 flex-shrink-0 !mx-0" />
-                          <div>
-                            <p className="text-base lg:text-lg font-semibold text-neutral-900">R714,602.25</p>
-                            <p className="text-sm text-neutral-500">ZAR wallet</p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <img src="/usdt-badge.svg" alt="" width={40} height={40} className="w-8 h-8 lg:w-10 lg:h-10 flex-shrink-0 !mx-0" />
-                          <div>
-                            <p className="text-base lg:text-lg font-semibold text-neutral-900">50,000.00 USDT</p>
-                            <p className="text-sm text-neutral-500">USDT wallet</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Actions */}
-                    <div className="border-t border-neutral-100 px-4 lg:px-6 py-3 lg:py-4">
-                      <div className="flex items-center gap-4 text-primary-600 font-medium text-sm">
-                        <span className="flex items-center gap-2">
-                          <ArrowDownToLine className="w-4 h-4" />
-                          Deposit
-                        </span>
-                        <span className="w-px h-5 bg-neutral-200" aria-hidden="true"></span>
-                        <span className="flex items-center gap-2">
-                          <ArrowUpFromLine className="w-4 h-4" />
-                          Withdraw
-                        </span>
-                        <span className="w-px h-5 bg-neutral-200" aria-hidden="true"></span>
-                        <span className="flex items-center gap-2">
-                          <RefreshCw className="w-4 h-4" />
-                          Convert
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <figcaption className="sr-only">
-                    The Merchant Portal dashboard, showing an estimated total wallet balance split
-                    between a ZAR wallet and a USDT wallet, with deposit, withdraw and convert actions.
-                  </figcaption>
-                </figure>
-              </motion.div>
-            </div>
-          </div>
-        </section>
+        <PageHero
+          title="Your money,"
+          accent="in fiat or stablecoin."
+          description="Hold fiat and USDT in one place, convert between them when it suits you, fund your customer payouts from the same balance, and withdraw to your bank or your own wallet."
+          actions={
+            <>
+            <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
+              Get started free
+              <ArrowRight className="w-5 h-5 ml-2" />
+            </a>
+            <Link to="/developers" className={HERO_SECONDARY}>
+              View the API
+            </Link>
+            </>
+          }
+          visual={<WalletsHeroVisual />}
+          itemProps
+        />
 
         {/* Features Section */}
         <section className="section-padding bg-white">

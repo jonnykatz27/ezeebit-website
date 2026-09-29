@@ -1,14 +1,17 @@
-import { useState, Fragment } from 'react'
+import { useState, useEffect, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
 import {
   Zap, Shield, Globe, TrendingUp,
   ArrowRight, Star, ChevronLeft, ChevronRight,
   ThumbsUp, Headphones, Lock, Landmark, Link2, Wallet, Send, Store, ArrowLeftRight,
-  ArrowDownToLine, ArrowUpFromLine, RefreshCw
+  ArrowDownToLine, RotateCcw, ExternalLink, MousePointerClick
 } from 'lucide-react'
 import PartnerCarousel from '../components/PartnerCarousel'
 import SEO from '../components/SEO'
+import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
+import HomeHeroVisual from '../components/hero/HomeHeroVisual'
+import { PortalBalanceCard, PortalConvertCard } from '../components/portal/PortalUI'
 
 const FLOWS = [
   { id: 'pay-in', label: 'Pay in' },
@@ -18,10 +21,18 @@ const FLOWS = [
 
 type FlowId = (typeof FLOWS)[number]['id']
 
-/** How far each logo in a group tucks under the one before it. */
-const OVERLAP = '-ml-5'
-/** Every digital-asset mark is drawn the same way, wherever it appears. */
-const ASSET_CHIP = 'w-9 h-9 rounded-full bg-white shadow-sm object-contain !mx-0'
+/**
+ * How far each logo in a group tucks under the one before it. Important, so
+ * it wins over the !mx-0 each logo carries against the site-wide phone rule
+ * that centres images.
+ */
+const OVERLAP = '!-ml-2.5'
+/**
+ * Every digital-asset mark is drawn the same way, wherever it appears: a white
+ * ring, then a faint outline, so marks with white in them (like Nigeria's flag)
+ * keep their edge on a white card and stay distinct where they overlap.
+ */
+const ASSET_CHIP = 'relative w-9 h-9 rounded-full bg-white ring-2 ring-white shadow-[0_0_0_3px_rgba(9,30,66,0.1)] object-contain !mx-0'
 
 /** Overlapping coin logos that pop in one after another. */
 const CoinStack = ({ coins }: { coins: string[] }) => (
@@ -48,7 +59,7 @@ const FlagStack = () => (
         src={`/${c}-flag.svg`}
         alt=""
         variants={{ hidden: { opacity: 0, scale: 0.5 }, visible: { opacity: 1, scale: 1 } }}
-        className={`w-9 h-9 rounded-full shadow-sm !mx-0 ${i > 0 ? OVERLAP : ''}`}
+        className={`relative w-9 h-9 rounded-full ring-2 ring-white shadow-[0_0_0_3px_rgba(9,30,66,0.1)] !mx-0 ${i > 0 ? OVERLAP : ''}`}
         style={{ zIndex: 3 - i }}
       />
     ))}
@@ -56,42 +67,24 @@ const FlagStack = () => (
 )
 
 /**
- * The rail between two steps, with a blue head running along it. Each one
- * starts later than the last, so the pulse reads left to right down the row.
+ * The rail between two stacked steps, with a blue head running down it. Each
+ * one starts later than the last, so the pulse reads top to bottom. On wider
+ * screens it lines up under the column of step visuals.
  */
-const StepConnector = ({ still, index }: { still: boolean; index: number }) => {
-  const timing = {
-    duration: 1.5,
-    repeat: Infinity,
-    repeatDelay: 1.4,
-    delay: index * 0.75,
-    ease: 'linear' as const,
-  }
-  return (
-    <div className="flex items-center justify-center py-3 md:py-0 md:px-3 shrink-0">
-      <div className="relative overflow-hidden rounded-full bg-neutral-200/60 w-[3px] h-8 md:hidden">
-        {!still && (
-          <motion.div
-            className="absolute left-0 right-0"
-            style={{ height: 16, background: 'linear-gradient(to bottom, transparent, #0074E3)' }}
-            animate={{ y: [-16, 32] }}
-            transition={timing}
-          />
-        )}
-      </div>
-      <div className="relative overflow-hidden rounded-full bg-neutral-200/60 h-[3px] w-10 hidden md:block">
-        {!still && (
-          <motion.div
-            className="absolute top-0 bottom-0"
-            style={{ width: 18, background: 'linear-gradient(to right, transparent, #0074E3)' }}
-            animate={{ x: [-18, 40] }}
-            transition={timing}
-          />
-        )}
-      </div>
+const StepConnector = ({ still, index }: { still: boolean; index: number }) => (
+  <div aria-hidden="true" className="flex justify-center sm:justify-start sm:pl-[115px] lg:pl-[139px] py-2">
+    <div className="relative overflow-hidden rounded-full bg-neutral-200/60 w-[3px] h-7">
+      {!still && (
+        <motion.div
+          className="absolute left-0 right-0"
+          style={{ height: 16, background: 'linear-gradient(to bottom, transparent, #0074E3)' }}
+          animate={{ y: [-16, 28] }}
+          transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 1.4, delay: index * 0.75, ease: 'linear' }}
+        />
+      )}
     </div>
-  )
-}
+  </div>
+)
 
 const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string; visual: React.ReactNode }[]> => ({
   'pay-in': [
@@ -212,112 +205,196 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
   ],
 })
 
-const FLOW_DEMOS: Record<FlowId, { label: string; node: React.ReactNode }> = {
-  'pay-in': {
-    label: 'Ezeebit Checkout',
-    node: (
-      <img
-        src="/corrected-ezeebitpay.webp"
-        alt="The Ezeebit checkout asking a customer to select a payment method, listing VALR Pay, Luno Pay, Binance Pay, WalletConnect and an on-chain address."
-        width={2828}
-        height={4000}
+/**
+ * A live, clickable copy of a flow, served from /public/demos. Each demo lays
+ * out at 640px and scales itself to the frame, then posts its new height up
+ * whenever the screen changes, so the frame grows with it instead of scrolling
+ * inside the page.
+ */
+const FlowDemo = ({ src, flow, title }: { src: string; flow: 'payin' | 'payout'; title: string }) => {
+  const [height, setHeight] = useState(700)
+  // Bumping this remounts the iframe, which starts the flow again from the top
+  const [run, setRun] = useState(0)
+
+  useEffect(() => {
+    const onMessage = (e: MessageEvent) => {
+      if (e.origin !== window.location.origin) return
+      if (e.data?.type !== 'ezeebit:resize' || e.data.flow !== flow) return
+      // A hidden tab reports zero; keep the last real height for when it shows
+      if (e.data.height > 0) setHeight(e.data.height)
+    }
+    window.addEventListener('message', onMessage)
+    return () => window.removeEventListener('message', onMessage)
+  }, [flow])
+
+  return (
+    <>
+      <iframe
+        key={run}
+        src={src}
+        title={title}
         loading="lazy"
-        className="w-auto max-h-[340px] rounded-2xl border border-neutral-200/80 shadow-sm !mx-0"
+        style={{ minHeight: height }}
+        className="block w-full flex-1 rounded-[20px] bg-[#F2F2F2] transition-[min-height] duration-300 !mx-0"
       />
-    ),
+      <div className="flex items-center justify-between gap-3 px-3 pt-2.5 pb-1 text-sm">
+        <button
+          type="button"
+          onClick={() => setRun((r) => r + 1)}
+          className="flex items-center gap-1.5 font-semibold text-primary-600 hover:text-primary-700"
+        >
+          <RotateCcw className="w-3.5 h-3.5" />
+          Restart
+        </button>
+        <a
+          href={src}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1.5 text-neutral-500 hover:text-primary-600"
+        >
+          Open full screen
+          <ExternalLink className="w-3.5 h-3.5" />
+        </a>
+      </div>
+    </>
+  )
+}
+
+/**
+ * The frame every demo sits in. Its label and hint live inside, at the top,
+ * so the frame's top edge lines up with the first step beside it.
+ */
+const DemoPanel = ({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) => (
+  <div className="h-full flex flex-col rounded-[28px] bg-white p-2 ring-1 ring-neutral-200/80 shadow-[0_24px_60px_-24px_rgba(0,46,92,0.35)]">
+    <div className="px-3 pt-2 pb-3">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-400">{label}</p>
+      {hint && (
+        <p className="flex items-start gap-1.5 text-sm text-neutral-500 mt-1.5">
+          <MousePointerClick className="w-4 h-4 mt-0.5 text-primary-500 shrink-0" />
+          {hint}
+        </p>
+      )}
+    </div>
+    <div className="flex-1 flex flex-col">{children}</div>
+  </div>
+)
+
+type FlowDemoSpec = {
+  label: string
+  hint?: string
+  node: React.ReactNode
+  /** Where to read more, shown under the steps. */
+  links: { label: string; to: string }[]
+}
+
+const FLOW_DEMOS: Record<FlowId, FlowDemoSpec> = {
+  'pay-in': {
+    label: 'Try it: the in-store checkout',
+    hint: 'Key in an amount, pick a coin and network, and pay.',
+    node: <FlowDemo src="/demos/pay-in.html" flow="payin" title="Interactive demo of the Ezeebit in-store checkout" />,
+    links: [{ label: 'In-store payments', to: '/in-store' }, { label: 'Online checkout', to: '/online' }],
   },
   'pay-out': {
-    label: 'The payout your customer receives',
-    node: (
-      <img
-        src="/payout-widget-mockup.webp"
-        alt="The payout widget on a phone, showing a withdrawal moving through to funds transferred."
-        width={800}
-        height={1615}
-        loading="lazy"
-        className="w-auto max-h-[340px] !mx-0"
-      />
-    ),
+    label: 'Try it: the payout your customer receives',
+    hint: 'Confirm the quote and watch the payout settle.',
+    node: <FlowDemo src="/demos/pay-out.html" flow="payout" title="Interactive demo of an Ezeebit payout" />,
+    links: [{ label: 'Payouts', to: '/payouts' }],
   },
   'hold': {
     label: 'Your balances in the Merchant Portal',
+    // The portal's own page background, so the cards sit as they do in the product
     node: (
-      <div className="w-full max-w-md bg-white rounded-2xl border border-neutral-200/80 shadow-sm overflow-hidden text-left">
-        <div className="p-5">
-          <p className="text-sm text-neutral-500 mb-1">Total wallet balance</p>
-          <p className="text-xl font-bold text-neutral-900 mb-3">~R 1,529,602.25</p>
-          <div className="h-2 w-full rounded-full bg-primary-200 overflow-hidden mb-5">
-            <div className="h-full w-[46.7%] rounded-full bg-primary-800" />
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="bg-neutral-50 rounded-xl p-3 flex items-center gap-2.5">
-              <img src="/za-flag.svg" alt="" className="w-8 h-8 shrink-0 !mx-0" />
-              <div>
-                <p className="font-semibold text-neutral-900 text-sm">R714,602.25</p>
-                <p className="text-xs text-neutral-500">ZAR wallet</p>
-              </div>
-            </div>
-            <div className="bg-neutral-50 rounded-xl p-3 flex items-center gap-2.5">
-              <img src="/usdt-logo.svg" alt="" className="w-8 h-8 rounded-full bg-white shadow-sm object-contain shrink-0 !mx-0" />
-              <div>
-                <p className="font-semibold text-neutral-900 text-sm">50,000.00 USDT</p>
-                <p className="text-xs text-neutral-500">USDT wallet</p>
-              </div>
-            </div>
-          </div>
+      <div className="flex-1 rounded-[20px] bg-[#f8f9fb] p-3 space-y-3">
+        <div className="rounded-[12px] border border-neutral-200/70 overflow-hidden">
+          <PortalBalanceCard
+            total="R 1,637,102.25"
+            fiatShare={43.65}
+            fiat={{ mark: '/za-flag.svg', amount: 'R714,602.25' }}
+            stable={{ amount: '$50,000.00' }}
+          />
         </div>
-        <div className="border-t border-neutral-100 px-5 py-3 flex items-center gap-5 text-primary-600 font-medium text-sm">
-          <span className="flex items-center gap-1.5"><ArrowDownToLine className="w-4 h-4" />Deposit</span>
-          <span className="flex items-center gap-1.5"><ArrowUpFromLine className="w-4 h-4" />Withdraw</span>
-          <span className="flex items-center gap-1.5"><RefreshCw className="w-4 h-4" />Convert</span>
+        <div className="rounded-[12px] border border-neutral-200/70 overflow-hidden">
+          <PortalConvertCard
+            from="Fiat (ZAR)"
+            fromMark="/za-flag.svg"
+            fromAmount="50,000.00"
+            balance="714,602"
+            toAmount="2,710.03"
+            rate="Exchange rate: 1 ZAR = 0.0542 USDT"
+          />
         </div>
       </div>
     ),
+    links: [{ label: 'Wallets', to: '/wallets' }],
   },
 }
 
-/** Three steps side by side, one row per flow. */
+/**
+ * One flow: its three steps stacked on the left, and the product itself beside
+ * them, so the explanation and the thing it explains are read together. On
+ * wide screens the step cards stretch to the demo's height, so both columns
+ * start and end together however tall the current demo screen is.
+ */
 const FlowCards = ({ flow, isActive }: { flow: FlowId; isActive: boolean }) => {
   const still = useReducedMotion() ?? false
   const steps = flowSteps(still)[flow]
+  const demo = FLOW_DEMOS[flow]
+  const rise = {
+    hidden: { opacity: 0, y: 14 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.4, staggerChildren: 0.06 } },
+  }
 
   return (
     <motion.div
       initial="hidden"
       animate={isActive ? 'visible' : 'hidden'}
       variants={{ visible: { transition: { staggerChildren: 0.09 } } }}
+      className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px] gap-10 lg:gap-14 items-start lg:items-stretch text-left"
     >
-      <div className="flex flex-col md:flex-row md:items-stretch">
-      {steps.map((step, index) => (
-        <Fragment key={step.title}>
-        <motion.div
-          variants={{
-            hidden: { opacity: 0, y: 14 },
-            visible: { opacity: 1, y: 0, transition: { duration: 0.4, staggerChildren: 0.06 } },
-          }}
-          className="flex-1 bg-white border border-neutral-200/80 rounded-2xl shadow-sm px-5 py-6 text-center"
-        >
-          <div className="h-12 flex items-center justify-center mb-4">{step.visual}</div>
-          <div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-400 mb-2">
-            Step 0{index + 1}
-          </div>
-          <h3 className="text-lg font-semibold text-neutral-900 mb-2">{step.title}</h3>
-          <p className="text-sm text-neutral-500 leading-relaxed">{step.body}</p>
-        </motion.div>
-        {index < steps.length - 1 && <StepConnector still={still} index={index} />}
-        </Fragment>
-      ))}
+      <div className="flex flex-col">
+      <ol className="flex flex-col lg:flex-1">
+        {steps.map((step, index) => (
+          <Fragment key={step.title}>
+            <motion.li
+              variants={rise}
+              className="lg:flex-1 bg-white border border-neutral-200/80 rounded-2xl shadow-sm p-5 lg:p-7 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 lg:gap-6 text-center sm:text-left"
+            >
+              <div className="sm:w-48 lg:w-56 shrink-0 h-12 flex items-center justify-center lg:scale-[1.15]">{step.visual}</div>
+              <div className="min-w-0">
+                {/* The same large number as the steps on the Wallets page */}
+                <div className="text-3xl lg:text-4xl font-display font-bold text-gradient leading-none mb-3">
+                  <span className="sr-only">Step </span>0{index + 1}
+                </div>
+                <h3 className="text-lg lg:text-xl font-semibold text-neutral-900 mb-1 lg:mb-1.5">{step.title}</h3>
+                <p className="text-sm lg:text-[15px] text-neutral-500 leading-relaxed">{step.body}</p>
+              </div>
+            </motion.li>
+            {index < steps.length - 1 && <StepConnector still={still} index={index} />}
+          </Fragment>
+        ))}
+      </ol>
+
+      {/* Somewhere to go next, for anyone the steps have convinced */}
+      <motion.div variants={rise} className="mt-6 flex flex-wrap items-center justify-center sm:justify-start gap-3">
+        <span className="text-sm text-neutral-500">Read more:</span>
+        {demo.links.map((l) => (
+          <Link
+            key={l.to}
+            to={l.to}
+            className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm font-semibold text-primary-600 shadow-xs hover:border-primary-200 hover:text-primary-700 transition-colors"
+          >
+            {l.label}
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        ))}
+      </motion.div>
       </div>
 
-      {/* The product itself, under the steps that describe it */}
-      <motion.div
-        variants={{ hidden: { opacity: 0, y: 14 }, visible: { opacity: 1, y: 0, transition: { duration: 0.45 } } }}
-        className="mt-8"
-      >
-        <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-400 mb-4">
-          {FLOW_DEMOS[flow].label}
-        </p>
-        <div className="flex justify-center">{FLOW_DEMOS[flow].node}</div>
+      {/* The product itself, beside the steps that describe it */}
+      <motion.div variants={rise} className="w-full max-w-[360px] mx-auto lg:mx-0 flex flex-col">
+        <div className="flex-1">
+          <DemoPanel label={demo.label} hint={demo.hint}>{demo.node}</DemoPanel>
+        </div>
       </motion.div>
     </motion.div>
   )
@@ -408,7 +485,7 @@ const Home = () => {
     <>
       <SEO
         title="Crypto Payment Solutions for African Merchants"
-        description="Accept Bitcoin, Ethereum, and stablecoins at your store. FSCA regulated, instant ZAR, KES, and NGN settlement, and 100,000+ transactions processed. Join 150+ merchants across South Africa."
+        description="Accept crypto and stablecoins in-store and online, pay your customers out in minutes, and hold your balance in fiat or stablecoin. FSCA regulated, with settlement in ZAR, KES, or NGN."
         canonicalUrl="/"
       />
       <script type="application/ld+json">
@@ -462,72 +539,33 @@ const Home = () => {
         className="overflow-hidden -mt-20"
       >
 
-      <section className="relative min-h-[60vh] flex items-center gradient-bg pt-40">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-secondary-600/10"></div>
-        <div className="container-custom relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-6 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center lg:text-left lg:col-span-3"
+      <PageHero
+        title="Stablecoin payments,"
+        accent="in and out."
+        description="Accept crypto and stablecoins in-store and online, pay your customers out in minutes, and hold your balance in fiat or stablecoin. One regulated account, settled in ZAR, KES, or NGN."
+        actions={
+          <>
+            <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
+              Get started free
+              <ArrowRight className="w-5 h-5 ml-2" />
+            </a>
+            {/* A button, not a #hash link: the router scrolls to the top on hash changes */}
+            <button
+              type="button"
+              onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
+              className={HERO_SECONDARY}
             >
-              <h1 className="text-4xl lg:text-[3.5rem] font-display font-bold text-neutral-900 mb-6 leading-none lg:leading-[1.15]">
-                Grow your business, reach new customers.
-                <br />
-                <span className="text-primary-500">
-                  Accept stablecoin and crypto payments.
-                </span>
-              </h1>
-              <p className="text-lg lg:text-xl text-neutral-600 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                Accept crypto and stablecoin payments in-store and online. Ezeebit handles the checkout, hedging, and compliance — you get settled in stablecoin or local currency (ZAR, KES, NGN) the next business day.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center lg:justify-start">
-                <a
-                  href="https://merchant.ezeebit.com/#/signup"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 flex items-center justify-center"
-                >
-                  <ArrowRight className="w-5 h-5 mr-2" />
-                  Get Started Free
-                </a>
-              </div>
-              <div className="flex items-center justify-center lg:justify-start space-x-6 text-sm text-neutral-500 -mt-4 pb-6">
-                <div className="flex items-center gap-1.5">
-                  <ThumbsUp className="w-4 h-4 text-secondary-500" />
-                  No setup fees
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <Shield className="w-4 h-4 text-secondary-500" />
-                  FSCA regulated
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <Headphones className="w-4 h-4 text-secondary-500" />
-                  24/7 support
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative lg:col-span-3"
-            >
-              <div className="relative z-10">
-                <img
-                  src="/merchant-portal.png"
-                  alt="Ezeebit Merchant Portal"
-                  className="rounded-2xl shadow-xl w-full max-w-[32rem] lg:max-w-[43rem] xl:max-w-[50rem] scale-110 origin-center"
-                />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-br from-primary-200 to-secondary-200 rounded-2xl transform rotate-3 scale-110 -z-10"></div>
-              <div className="absolute inset-0 bg-gradient-to-br from-primary-200 to-secondary-200 rounded-2xl transform rotate-3 scale-110 translate-x-2 -z-10"></div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+              See how it works
+            </button>
+          </>
+        }
+        trust={[
+          { icon: <ThumbsUp />, label: 'No setup fees' },
+          { icon: <Shield />, label: 'FSCA regulated' },
+          { icon: <Headphones />, label: '24/7 support' },
+        ]}
+        visual={<HomeHeroVisual />}
+      />
 
       <section className="py-10 lg:py-20 bg-neutral-50">
         <div className="container-custom">
@@ -642,8 +680,8 @@ const Home = () => {
       </section>
 
       {/* ── How it works — one flow per product area ── */}
-      <section className="pt-8 pb-16 lg:pt-12 lg:pb-24 bg-neutral-50/60">
-        <div className="max-w-[920px] mx-auto px-5 sm:px-8 text-center">
+      <section id="how-it-works" className="scroll-mt-20 pt-8 pb-16 lg:pt-12 lg:pb-24 bg-neutral-50/60">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 text-center">
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -776,192 +814,47 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-10 lg:py-20 bg-white">
+      <section className="py-10 lg:py-16 bg-white">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-8 lg:mb-12"
+            viewport={{ once: true }}
+            className="text-center"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Backed by world-class investors</h2>
-            <p className="text-lg text-neutral-600 max-w-2xl mx-auto leading-relaxed">
-              Supported by leading global funds and industry veterans who share our belief in building the future of payments in Africa
+            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-400 mb-8">
+              Backed by
+            </p>
+
+            <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-8 lg:gap-x-20">
+              {/*
+                Heights are per logo. Two things pull against each other: DCG
+                fills only 863x226 of its 900x500 canvas so it needs the most
+                height, while Founder Collective is a long two-line lockup that
+                grows wide fast, so it needs the least. Matched by eye on how
+                large each reads, not on artwork height or cap height alone.
+              */}
+              {[
+                { name: 'Founder Collective', logo: '/founder_collective_logo.png', size: 'h-6 lg:h-8' },
+                { name: 'Raba Partnership', logo: '/Raba_logo.webp', size: 'h-6 lg:h-7' },
+                { name: 'Digital Currency Group', logo: '/digital-currency-group-logo-nobg.png', size: 'h-10 lg:h-12' },
+              ].map((backer) => (
+                <img
+                  key={backer.name}
+                  src={backer.logo}
+                  alt={backer.name}
+                  loading="lazy"
+                  className={`${backer.size} w-auto object-contain`}
+                />
+              ))}
+            </div>
+
+            <p className="mt-8 text-sm text-neutral-500">
+              <Link to="/resources/about" className="font-semibold text-primary-600 hover:text-primary-700">
+                Meet our investors and angels →
+              </Link>
             </p>
           </motion.div>
-
-          <div className="max-w-5xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="mb-12"
-            >
-              <p className="text-xs font-semibold text-neutral-500 uppercase tracking-widest text-center mb-6">
-                Lead Investors
-              </p>
-              <div className="flex flex-wrap justify-center items-center gap-10 md:gap-16">
-                <a
-                  href="https://foundercollective.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center hover:opacity-80 transition-opacity"
-                >
-                  <img
-                    src="/founder_collective_logo.png"
-                    alt="Founder Collective"
-                    className="h-8 md:h-10 w-auto object-contain"
-                  />
-                </a>
-                <a
-                  href="https://rabacap.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center hover:opacity-80 transition-opacity"
-                >
-                  <img
-                    src="/Raba_logo.webp"
-                    alt="Raba Partnership"
-                    className="h-7 md:h-9 w-auto object-contain"
-                  />
-                </a>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.15 }}
-              className="border-t border-neutral-200 pt-10 mb-12"
-            >
-              <p className="text-xs font-semibold text-neutral-500 uppercase tracking-widest text-center mb-6">
-                Strategic Investors
-              </p>
-              <div className="flex justify-center items-center">
-                <a
-                  href="https://dcg.co/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center hover:opacity-80 transition-opacity"
-                >
-                  <img
-                    src="/digital-currency-group-logo-nobg.png"
-                    alt="Digital Currency Group"
-                    className="h-14 md:h-[70px] w-auto object-contain"
-                  />
-                </a>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="border-t border-neutral-200 pt-10"
-            >
-              <p className="text-xs font-semibold text-neutral-500 uppercase tracking-widest text-center mb-8">
-                Angel Investors
-              </p>
-              <div className="max-w-2xl mx-auto">
-                <div className="grid grid-cols-3 gap-6 md:gap-8 mb-6 md:mb-8">
-                  {[
-                    { name: 'Terry Angelos', note: 'ex-Visa', image: '/terry-image-nobg.png', linkedin: 'https://www.linkedin.com/in/tangelos' },
-                    { name: 'Anton Katz', note: 'Talos', image: '/anton_image-nobg.png', linkedin: 'https://www.linkedin.com/in/katzanton' },
-                    { name: 'David|de Picciotto', note: 'ex-Revolut', image: '/david_image-nobg.png', linkedin: 'https://www.linkedin.com/in/david-de-picciotto' }
-                  ].map((investor, index) => (
-                    <motion.div
-                      key={investor.name}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.3 + index * 0.05 }}
-                      className="text-center"
-                    >
-                      <a
-                        href={investor.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block w-20 h-20 mx-auto mb-3 rounded-full overflow-hidden bg-gradient-to-br from-primary-100 to-secondary-100 hover:ring-4 hover:ring-primary-200 transition-all"
-                        aria-label={`${investor.name.replace('|', ' ')} LinkedIn profile`}
-                      >
-                        <img
-                          src={investor.image}
-                          alt={investor.name.replace('|', ' ')}
-                          className="w-full h-full object-cover"
-                        />
-                      </a>
-                      <p className="text-sm font-medium text-neutral-700 leading-tight">
-                        {investor.name.includes('|')
-                          ? investor.name.split('|').map((part, i) => (
-                              <span key={i}>
-                                {part}
-                                {i < investor.name.split('|').length - 1 && <br />}
-                              </span>
-                            ))
-                          : investor.name.split(' ').map((part, i) => (
-                              <span key={i}>
-                                {part}
-                                {i < investor.name.split(' ').length - 1 && <br />}
-                              </span>
-                            ))
-                        }
-                      </p>
-                      <p className="text-[10px] text-neutral-400 mt-0.5">{investor.note}</p>
-                    </motion.div>
-                  ))}
-                </div>
-                <div className="grid grid-cols-2 gap-6 md:gap-8 max-w-md mx-auto">
-                  {[
-                    { name: 'Nadir Khamissa', note: 'Hello Group', image: '/nadir_image-nobg.png', linkedin: 'https://www.linkedin.com/in/nadir-khamissa' },
-                    { name: 'Chris Harmse', note: 'BVNK', image: '/chris_image-nobg.png', linkedin: 'https://www.linkedin.com/in/chrisharmse' }
-                  ].map((investor, index) => (
-                    <motion.div
-                      key={investor.name}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.3 + (index + 3) * 0.05 }}
-                      className="text-center"
-                    >
-                      <a
-                        href={investor.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block w-20 h-20 mx-auto mb-3 rounded-full overflow-hidden bg-gradient-to-br from-primary-100 to-secondary-100 hover:ring-4 hover:ring-primary-200 transition-all"
-                        aria-label={`${investor.name} LinkedIn profile`}
-                      >
-                        <img
-                          src={investor.image}
-                          alt={investor.name}
-                          className="w-full h-full object-cover"
-                        />
-                      </a>
-                      <p className="text-sm font-medium text-neutral-700 leading-tight">
-                        {investor.name.split(' ').map((part, i) => (
-                          <span key={i}>
-                            {part}
-                            {i < investor.name.split(' ').length - 1 && <br />}
-                          </span>
-                        ))}
-                      </p>
-                      <p className="text-[10px] text-neutral-400 mt-0.5">{investor.note}</p>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              className="mt-12 text-center"
-            >
-              <div className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-neutral-200 rounded-full shadow-xs">
-                <Shield className="w-5 h-5 text-secondary-600" />
-                <span className="text-sm font-medium text-neutral-700">
-                  Trusted by industry leaders and backed by experienced investors
-                </span>
-              </div>
-            </motion.div>
-          </div>
         </div>
       </section>
 

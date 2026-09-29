@@ -5,6 +5,8 @@ import {
   Webhook, Link2, CheckCircle
 } from 'lucide-react'
 import SEO from '../components/SEO'
+import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
+import PayoutsHeroVisual from '../components/hero/PayoutsHeroVisual'
 
 const Payouts = () => {
   const features = [
@@ -120,93 +122,24 @@ const Payouts = () => {
         className="overflow-hidden -mt-20"
       >
         {/* Hero Section */}
-        <section className="relative min-h-[60vh] flex items-center gradient-bg pt-40 pb-14 lg:pb-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-secondary-600/10"></div>
-          <div className="container-custom relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                className="max-w-4xl text-center lg:text-left"
-              >
-                <h1 className="text-5xl lg:text-5xl font-display font-bold text-neutral-900 mb-6">
-                  <span itemProp="name">Pay your customers in <span className="text-gradient">stablecoin</span></span>
-                </h1>
-                <p className="text-xl text-neutral-600 mb-8" itemProp="description">
-                  Send payouts from your fiat balance without collecting a single wallet address.
-                  Your customer picks the asset and network, completes the payout themselves,
-                  and the funds settle on-chain in minutes.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 mb-2 lg:mb-8 justify-center lg:justify-start">
-                  <a
-                    href="https://merchant.ezeebit.com/#/signup"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-primary flex items-center justify-center"
-                  >
-                    Sign Up
-                    <ArrowRight className="w-5 h-5 ml-2" />
-                  </a>
-                  <Link
-                    to="/developers"
-                    className="btn-secondary flex items-center justify-center"
-                  >
-                    View the API
-                  </Link>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative w-full"
-              >
-                {/* Withdrawal method mockup - how Ezeebit appears inside your product */}
-                <figure className="relative w-full max-w-md mx-auto lg:max-w-sm text-left">
-                  <div className="card p-4 lg:p-6 shadow-2xl bg-white">
-                    <div className="flex items-baseline justify-between gap-3 mb-4 lg:block lg:mb-5">
-                      <p className="text-sm font-medium text-neutral-500 lg:mb-1">Withdraw</p>
-                      <p className="text-2xl lg:text-3xl font-bold text-neutral-900">R2,000.00</p>
-                    </div>
-
-                    <p className="text-sm text-neutral-600 mb-2.5 lg:mb-3">How would you like to receive it?</p>
-
-                    <div className="space-y-2 lg:space-y-2.5">
-                      <div className="flex items-center gap-3 rounded-lg border border-neutral-200 p-2.5 lg:p-3">
-                        <span className="w-4 h-4 rounded-full border-2 border-neutral-300 flex-shrink-0"></span>
-                        <span className="flex-1 text-sm font-medium text-neutral-700">Bank transfer</span>
-                        <span className="text-xs text-neutral-500">2&ndash;3 days</span>
-                      </div>
-
-                      <div className="rounded-lg border-2 border-primary-500 bg-primary-50 p-2.5 lg:p-3">
-                        <div className="flex items-center gap-3">
-                          <span className="w-4 h-4 rounded-full border-[5px] border-primary-500 flex-shrink-0"></span>
-                          <span className="flex-1 text-sm font-medium text-neutral-900">Stablecoin</span>
-                          <span className="text-xs font-medium text-primary-600">Minutes</span>
-                        </div>
-                        <div className="flex items-center gap-1.5 mt-1.5 pl-7">
-                          <span className="text-xs text-neutral-500">Powered by</span>
-                          <img src="/ezeebit_black.png" alt="Ezeebit" width={63} height={16} className="h-4 w-auto !mx-0" />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="mt-4 lg:mt-5 w-full rounded-lg bg-primary-500 text-white text-sm font-medium py-2 lg:py-2.5 text-center">
-                      Continue
-                    </div>
-                  </div>
-                  <figcaption className="sr-only">
-                    A withdrawal screen inside a merchant&rsquo;s own product, offering a bank
-                    transfer taking two to three days alongside a stablecoin payout powered by
-                    Ezeebit that arrives in minutes.
-                  </figcaption>
-                </figure>
-              </motion.div>
-            </div>
-          </div>
-        </section>
+        <PageHero
+          title="Pay your customers"
+          accent="in stablecoin."
+          description="Send payouts from your fiat balance without collecting a single wallet address. Your customer picks the asset and network, completes the payout themselves, and the funds settle on-chain in minutes."
+          actions={
+            <>
+            <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
+              Get started free
+              <ArrowRight className="w-5 h-5 ml-2" />
+            </a>
+            <Link to="/developers" className={HERO_SECONDARY}>
+              View the API
+            </Link>
+            </>
+          }
+          visual={<PayoutsHeroVisual />}
+          itemProps
+        />
 
         {/* Features Section */}
         <section className="section-padding bg-white">

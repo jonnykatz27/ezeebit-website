@@ -6,6 +6,7 @@ import {
 } from 'lucide-react'
 import { stores, categories } from '../lib/stores'
 import SEO from '../components/SEO'
+import PageHero, { HeroSearch } from '../components/hero/PageHero'
 
 const WhereToSpend = () => {
   const [selectedCategory, setSelectedCategory] = useState('All')
@@ -36,41 +37,13 @@ const WhereToSpend = () => {
       className="overflow-hidden -mt-20"
     >
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center gradient-bg pt-40">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-secondary-600/10"></div>
-        <div className="container-custom relative z-10 text-center px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-neutral-900 mb-4 md:mb-6">
-              Where to <span className="text-gradient">spend crypto</span>
-            </h1>
-            <p className="text-base md:text-xl text-neutral-600 mb-4 md:mb-6 max-w-3xl mx-auto">
-              Discover verified merchants across South Africa where you can pay with cryptocurrency using Ezeebit.
-            </p>
-            <p className="text-sm md:text-lg text-neutral-600 mb-6 md:mb-8 max-w-2xl mx-auto hidden md:block">
-              Shop with confidence knowing these trusted partners offer seamless stablecoin and crypto payments with
-              lightning-fast confirmations and bank-grade security.
-            </p>
-
-            {/* Search Bar */}
-            <div className="max-w-2xl mx-auto mb-6 md:mb-8">
-              <div className="relative">
-                <Search className="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 text-neutral-400 w-4 h-4 md:w-5 md:h-5" />
-                <input
-                  type="text"
-                  placeholder="Search stores..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 md:pl-12 pr-4 py-3 md:py-4 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-base md:text-lg"
-                />
-              </div>
-            </div>
-
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        title="Where to"
+        accent="spend crypto"
+        description="Discover verified merchants across South Africa where you can pay with cryptocurrency using Ezeebit."
+      >
+        <HeroSearch placeholder="Search stores..." value={searchTerm} onChange={setSearchTerm} />
+      </PageHero>
 
       {/* Categories Filter */}
       <section className="bg-white border-b border-neutral-200 sticky top-20 z-40">

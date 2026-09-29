@@ -5,6 +5,7 @@ import {
   Headphones, Users, ArrowRight, CheckCircle
 } from 'lucide-react'
 import SEO from '../components/SEO'
+import PageHero from '../components/hero/PageHero'
 
 const Contact = () => {
   useEffect(() => {
@@ -59,44 +60,16 @@ const Contact = () => {
       className="overflow-hidden -mt-20"
     >
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center gradient-bg pt-40">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-secondary-600/10"></div>
-        <div className="container-custom relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <div className="flex justify-center mb-6">
-              <img
-                src="/ezeebit_black.png"
-                alt="Ezeebit"
-                className="h-16 w-auto hidden md:block"
-              />
-            </div>
-            <h1 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 mb-6">
-              Get in <span className="text-gradient">touch</span>
-            </h1>
-            <p className="text-xl text-neutral-600 mb-8 max-w-3xl mx-auto">
-              Have questions about our crypto payment solutions? Our team is here to help you 
-              get started and support your business every step of the way.
-            </p>
-            <div className="flex items-center justify-center space-x-8 text-sm text-neutral-500">
-              <div className="flex items-center">
-                <Clock className="w-4 h-4 mr-2" />
-                <span>24/7 Support</span>
-              </div>
-              <div className="flex items-center">
-                <Users className="w-4 h-4 mr-2" />
-                <span>Expert Team</span>
-              </div>
-              <div className="flex items-center">
-                <CheckCircle className="w-4 h-4 mr-2" />
-                <span>Quick Response</span>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        title="Get in touch"
+        accent="with our team"
+        description="Have questions about our crypto payment solutions? Our team is here to help you get started and support your business every step of the way."
+        trust={[
+          { icon: <Clock />, label: '24/7 support' },
+          { icon: <Users />, label: 'Expert team' },
+          { icon: <CheckCircle />, label: 'Quick response' },
+        ]}
+      />
 
       {/* Contact Methods */}
       <section className="section-padding bg-neutral-50">

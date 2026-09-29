@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { MapPin, Clock, Briefcase, ExternalLink, Zap, Compass, ShieldCheck, Sparkles, Coffee } from 'lucide-react'
 import SEO from '../components/SEO'
+import PageHero from '../components/hero/PageHero'
 
 const jobPostings = [
   {
@@ -55,25 +56,11 @@ const Careers = () => {
         className="overflow-hidden -mt-20"
       >
         {/* Hero */}
-        <section className="relative min-h-[55vh] flex items-center gradient-bg pt-40 pb-16">
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-secondary-600/10" />
-          <div className="container-custom relative z-10 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <span className="inline-block bg-primary-100 text-primary-700 text-sm font-medium px-4 py-1.5 rounded-full mb-5">
-                We're hiring
-              </span>
-              <h1 className="text-3xl md:text-5xl font-display font-bold text-neutral-900 mb-5">
-                Build the future of <span className="text-gradient">African payments</span>
-              </h1>
-              <p className="text-base md:text-xl text-neutral-600 max-w-2xl mx-auto">
-                We're a small team in Cape Town building the rails that let merchants across Africa accept stablecoins and crypto — instantly hedged, settled the next business day. 150+ stores already run on Ezeebit. We're just getting started.
-              </p>
-            </motion.div>
-          </div>
-        </section>
+        <PageHero
+          title="Build the future of"
+          accent="African payments"
+          description="We're a small team in Cape Town building the rails that let merchants across Africa accept stablecoins and crypto — instantly hedged, settled the next business day. 150+ stores already run on Ezeebit. We're just getting started."
+        />
 
         {/* How we work */}
         <section className="py-16 md:py-24 bg-white">

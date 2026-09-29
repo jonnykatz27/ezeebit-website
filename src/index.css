@@ -18,6 +18,10 @@
 /* Caveat — accent only: pull quotes and emphasis moments, never body copy */
 @font-face { font-family: 'Caveat'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/Caveat-Bold.woff2') format('woff2'); }
 
+/* Figtree — the Merchant Portal's typeface, used only where the site depicts our product UI */
+@font-face { font-family: 'Figtree'; font-style: normal; font-weight: 400 700; font-display: swap; src: url('/fonts/Figtree-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Figtree'; font-style: normal; font-weight: 400 700; font-display: swap; src: url('/fonts/Figtree-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
 /* ============================================================
    CSS Custom Properties — Design Tokens
    ============================================================ */
@@ -571,4 +575,34 @@
   .grid.grid-cols-1.md\:grid-cols-2.lg\:grid-cols-3 > * {
     max-width: 280px;
   }
+}
+
+/* ============================================================
+   Hero backdrop — drifting glows and a fading grid
+   ============================================================ */
+.hero-grid {
+  background-image:
+    linear-gradient(to right, rgba(0, 116, 228, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 116, 228, 0.07) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 70% 35%, #000 10%, transparent 75%);
+  mask-image: radial-gradient(ellipse 70% 60% at 70% 35%, #000 10%, transparent 75%);
+}
+
+.hero-blob { will-change: transform; }
+.hero-blob-a { animation: hero-drift-a 18s ease-in-out infinite; }
+.hero-blob-b { animation: hero-drift-b 22s ease-in-out infinite; }
+
+@keyframes hero-drift-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-8%, 10%, 0) scale(1.1); }
+}
+
+@keyframes hero-drift-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(12%, -6%, 0) scale(0.92); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-blob { animation: none; }
 }

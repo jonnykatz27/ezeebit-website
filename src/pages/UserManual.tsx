@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import {
-  Search, Download, ArrowRight, Book, FileText,
+  Download, ArrowRight, Book, FileText,
   Rocket, QrCode, GraduationCap, HelpCircle,
   LogIn, Percent, Store, Users,
   ScanLine, Banknote, Globe, Coins, Send, CheckCircle2,
@@ -10,6 +10,7 @@ import {
   Smartphone, ShoppingCart, CreditCard
 } from 'lucide-react'
 import SEO from '../components/SEO'
+import PageHero, { HeroSearch } from '../components/hero/PageHero'
 
 type TabId = 'getting-started' | 'payments' | 'basics' | 'faq' | 'downloads'
 
@@ -353,34 +354,13 @@ const UserManual = () => {
         className="overflow-hidden -mt-20"
       >
         {/* Hero Section */}
-        <section className="relative flex items-center gradient-bg pt-40 pb-12">
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-secondary-600/10"></div>
-          <div className="container-custom relative z-10 text-center">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-              <h1 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 mb-6">
-                User <span className="text-gradient">manual</span>
-              </h1>
-              <p className="text-xl text-neutral-600 mb-8 max-w-3xl mx-auto">
-                Everything you need to set up Ezeebit and accept crypto payments with confidence —
-                no technical background required.
-              </p>
-
-              {/* Search Bar */}
-              <div className="max-w-2xl mx-auto">
-                <div className="relative">
-                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-neutral-400 w-5 h-5" />
-                  <input
-                    type="text"
-                    placeholder="Search the manual… e.g. 'network', 'VAT', 'QR code'"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-12 pr-4 py-4 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-lg bg-white"
-                  />
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
+        <PageHero
+          title="The Ezeebit"
+          accent="user manual"
+          description="Everything you need to set up Ezeebit and accept crypto payments with confidence — no technical background required."
+        >
+          <HeroSearch placeholder="Search the manual… e.g. 'network', 'VAT', 'QR code'" value={searchTerm} onChange={setSearchTerm} />
+        </PageHero>
 
         {/* Sticky Tab Bar */}
         <section className="bg-white border-b border-neutral-200 sticky top-20 z-40">

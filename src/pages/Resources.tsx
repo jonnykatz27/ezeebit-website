@@ -2,9 +2,10 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import {
   Book, HelpCircle, FileText, Newspaper, Users,
-  ArrowRight, Search, Clock
+  ArrowRight, Clock
 } from 'lucide-react'
 import SEO from '../components/SEO'
+import PageHero, { HeroSearch } from '../components/hero/PageHero'
 
 const Resources = () => {
   const resourceCategories = [
@@ -102,35 +103,13 @@ const Resources = () => {
         className="overflow-hidden -mt-20"
     >
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center gradient-bg pt-40">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-secondary-600/10"></div>
-        <div className="container-custom relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <h1 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 mb-6">
-              Resources & <span className="text-gradient">support</span>
-            </h1>
-            <p className="text-xl text-neutral-600 mb-8 max-w-3xl mx-auto">
-              Everything you need to succeed with Ezeebit. From getting started guides to 
-              legal documentation, we've got you covered.
-            </p>
-            
-            {/* Search Bar */}
-            <div className="max-w-2xl mx-auto mb-8">
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input
-                  type="text"
-                  placeholder="Search resources, guides, and FAQs..."
-                  className="w-full pl-12 pr-4 py-4 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-lg"
-                />
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        title="Resources"
+        accent="and support"
+        description="Everything you need to succeed with Ezeebit. From getting started guides to legal documentation, we've got you covered."
+      >
+        <HeroSearch placeholder="Search resources, guides, and FAQs..." />
+      </PageHero>
 
       {/* Resource Categories */}
       <section className="section-padding bg-white">

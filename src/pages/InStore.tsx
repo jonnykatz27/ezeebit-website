@@ -5,6 +5,8 @@ import {
   CheckCircle, ArrowRight, Zap
 } from 'lucide-react'
 import SEO from '../components/SEO'
+import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
+import InStoreHeroVisual from '../components/hero/InStoreHeroVisual'
 
 const InStore = () => {
   const features = [
@@ -53,64 +55,23 @@ const InStore = () => {
       className="overflow-hidden -mt-20"
     >
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center gradient-bg pt-40">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-secondary-600/10"></div>
-        <div className="container-custom relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center lg:text-left"
-            >
-              <h1 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 mb-6">
-                Transform your <span className="text-gradient">in-store</span> experience
-              </h1>
-              <p className="text-xl text-neutral-600 mb-8">
-                Accept stablecoin and cryptocurrency payments at your physical location with our advanced ePOS devices or our ezeebit Pay static QR Codes. 
-                Lightning-fast transactions, multi-currency support, and rapid settlement in ZAR, KES, or NGN.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center lg:justify-start">
-                <a
-                  href="https://merchant.ezeebit.com/#/signup"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-primary flex items-center justify-center"
-                >
-                  <span className="flex items-center justify-center">
-                    Get Your ePOS Device
-                  </span>
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </a>
-                <Link
-                  to="/contact"
-                  className="btn-secondary flex items-center justify-center"
-                >
-                  Schedule Demo
-                </Link>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative flex items-center justify-center hidden lg:flex"
-            >
-              <img
-                src="/ezeebitpay.webp"
-                alt="ezeebit Pay QR Code solution"
-                className="w-[70%] max-w-[500px] drop-shadow-2xl -ml-16"
-              />
-              <img
-                src="/epos-image.webp"
-                alt="Ezeebit ePOS device"
-                className="w-[25%] max-w-[130px] drop-shadow-2xl -ml-36"
-              />
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        title="Accept stablecoins"
+        accent="at the counter."
+        description="Take stablecoin and crypto payments in your store with an ePOS device or an ezeebit Pay QR code. Every payment is hedged on the spot and settled in ZAR, KES, or NGN."
+        actions={
+          <>
+          <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
+            Get your ePOS device
+            <ArrowRight className="w-5 h-5 ml-2" />
+          </a>
+          <Link to="/contact" className={HERO_SECONDARY}>
+            Book a demo
+          </Link>
+          </>
+        }
+        visual={<InStoreHeroVisual />}
+      />
 
       {/* Features Section */}
       <section className="section-padding bg-white">

@@ -7,6 +7,8 @@ import {
   Fingerprint, Wrench
 } from 'lucide-react'
 import SEO from '../components/SEO'
+import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
+import DevelopersHeroVisual from '../components/hero/DevelopersHeroVisual'
 
 const DOCS = 'https://docs.ezeebit.com'
 
@@ -505,126 +507,55 @@ app.post(
       className="overflow-hidden -mt-20"
     >
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center gradient-bg pt-40">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-secondary-600/10"></div>
-        <div className="container-custom relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4 }}
-              className="text-center lg:text-left"
+      <PageHero
+        title="Build on the"
+        accent="Ezeebit API."
+        description="Accept crypto, hold and convert balances, and pay your customers out — from one API and one set of credentials."
+        actions={
+          <>
+          <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
+            Get API keys
+            <Key className="w-5 h-5 ml-2" />
+          </a>
+          <a href={DOCS} target="_blank" rel="noopener noreferrer" className={HERO_SECONDARY}>
+            Full documentation
+            <ExternalLink className="w-5 h-5 ml-2" />
+          </a>
+          </>
+        }
+        trust={[
+          { icon: <CheckCircle />, label: 'Signed REST API' },
+          { icon: <CheckCircle />, label: 'HMAC-SHA512' },
+          { icon: <CheckCircle />, label: 'Signed webhooks' },
+        ]}
+        visual={<DevelopersHeroVisual environment={environment} baseUrl={baseUrls[environment]} checkoutHost={checkoutHosts[environment]} />}
+      >
+        <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mb-8">
+          <span className="text-sm font-medium text-neutral-700">Environment:</span>
+          <div className="flex bg-white/80 border border-neutral-200 rounded-lg p-1 shadow-xs">
+            <button
+              onClick={() => setEnvironment('uat')}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                environment === 'uat'
+                  ? 'bg-orange-500 text-white shadow-sm'
+                  : 'text-neutral-600 hover:text-neutral-900'
+              }`}
             >
-              <h1 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 mb-6">
-                Ezeebit <span className="text-gradient">API</span> documentation
-              </h1>
-              <p className="text-xl text-neutral-600 mb-8">
-                Accept crypto, hold and convert balances, and pay your customers out — from one API
-                and one set of credentials.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center lg:justify-start">
-                <a
-                  href="https://merchant.ezeebit.com/#/signup"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-primary flex items-center justify-center"
-                >
-                  Get API Keys
-                  <Key className="w-5 h-5 ml-2" />
-                </a>
-                <a href={DOCS} target="_blank" rel="noopener noreferrer" className="btn-secondary flex items-center justify-center">
-                  Full Documentation
-                  <ExternalLink className="w-5 h-5 ml-2" />
-                </a>
-              </div>
-
-              {/* Environment Toggle */}
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mb-6">
-                <span className="text-sm font-medium text-neutral-700">Environment:</span>
-                <div className="flex bg-neutral-100 rounded-lg p-1">
-                  <button
-                    onClick={() => setEnvironment('uat')}
-                    className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
-                      environment === 'uat'
-                        ? 'bg-orange-500 text-white shadow-sm'
-                        : 'text-neutral-600 hover:text-neutral-900'
-                    }`}
-                  >
-                    UAT (Testing)
-                  </button>
-                  <button
-                    onClick={() => setEnvironment('live')}
-                    className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
-                      environment === 'live'
-                        ? 'bg-green-500 text-white shadow-sm'
-                        : 'text-neutral-600 hover:text-neutral-900'
-                    }`}
-                  >
-                    Live (Production)
-                  </button>
-                </div>
-              </div>
-
-              <div className="block lg:hidden mt-6">
-                <div className="bg-gray-900 rounded-lg p-4 text-green-400 font-mono text-sm overflow-x-auto">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex space-x-2">
-                      <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                      <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                    </div>
-                    <span className="text-neutral-400">API Terminal</span>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="break-all"><span className="text-blue-400">$</span> curl -X POST {baseUrls[environment]}/newOrder</div>
-                    <div className="text-neutral-400">&#10003; &#123;"code": 200, "msg": "success"&#125;</div>
-                    <div><span className="text-blue-400">$</span> <span className="animate-pulse">|</span></div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 lg:gap-6 text-sm text-neutral-500 mt-6">
-                <div className="flex items-center">
-                  <CheckCircle className="w-4 h-4 text-primary-500 mr-2" />
-                  Signed REST API
-                </div>
-                <div className="flex items-center">
-                  <CheckCircle className="w-4 h-4 text-primary-500 mr-2" />
-                  HMAC-SHA512
-                </div>
-                <div className="flex items-center">
-                  <CheckCircle className="w-4 h-4 text-primary-500 mr-2" />
-                  Signed Webhooks
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4, delay: 0.1 }}
-              className="relative hidden lg:block"
+              UAT (Testing)
+            </button>
+            <button
+              onClick={() => setEnvironment('live')}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                environment === 'live'
+                  ? 'bg-green-500 text-white shadow-sm'
+                  : 'text-neutral-600 hover:text-neutral-900'
+              }`}
             >
-              <div className="bg-gray-900 rounded-lg p-6 text-green-400 font-mono text-sm overflow-x-auto">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex space-x-2">
-                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                  </div>
-                  <span className="text-neutral-400">API Terminal</span>
-                </div>
-                <div className="space-y-2">
-                  <div className="break-all"><span className="text-blue-400">$</span> curl -X POST {baseUrls[environment]}/newOrder</div>
-                  <div className="text-neutral-400">&#10003; &#123;"code": 200, "msg": "success"&#125;</div>
-                  <div className="text-neutral-400">&#8618; paymentLink: https://pay.ezeebit.com/...</div>
-                  <div><span className="text-blue-400">$</span> <span className="animate-pulse">|</span></div>
-                </div>
-              </div>
-            </motion.div>
+              Live (Production)
+            </button>
           </div>
         </div>
-      </section>
+      </PageHero>
 
       {/* Quick Start */}
       <section className="section-padding bg-white">

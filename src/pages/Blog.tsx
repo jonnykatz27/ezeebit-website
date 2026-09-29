@@ -2,9 +2,10 @@ import { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import {
-  Calendar, Clock, ArrowRight, Search
+  Calendar, Clock, ArrowRight
 } from 'lucide-react'
 import SEO from '../components/SEO'
+import PageHero, { HeroSearch } from '../components/hero/PageHero'
 
 const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState('all')
@@ -156,37 +157,13 @@ const Blog = () => {
         className="overflow-hidden -mt-20"
     >
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center gradient-bg pt-40">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-secondary-600/10"></div>
-        <div className="container-custom relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <h1 className="text-2xl md:text-4xl lg:text-5xl font-display font-bold text-neutral-900 mb-4 md:mb-6">
-              Ezeebit <span className="text-gradient">Blog</span>
-            </h1>
-            <p className="text-base md:text-xl text-neutral-600 mb-6 md:mb-8 max-w-3xl mx-auto px-4">
-              Stay updated with the latest news, insights, and tutorials from the world of
-              stablecoin and cryptocurrency payments and African fintech.
-            </p>
-            
-            {/* Search Bar */}
-            <div className="max-w-2xl mx-auto mb-6 md:mb-8 px-4">
-              <div className="relative">
-                <Search className="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 text-neutral-400 w-4 h-4 md:w-5 md:h-5" />
-                <input
-                  type="text"
-                  placeholder="Search articles..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-9 md:pl-12 pr-4 py-3 md:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-base md:text-lg"
-                />
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        title="News and insights"
+        accent="from Ezeebit"
+        description="Stay updated with the latest news, insights, and tutorials from the world of stablecoin and cryptocurrency payments and African fintech."
+      >
+        <HeroSearch placeholder="Search articles..." value={searchTerm} onChange={setSearchTerm} />
+      </PageHero>
 
       {/* Categories */}
       <section className="bg-white border-b border-neutral-200 sticky top-20 z-40">

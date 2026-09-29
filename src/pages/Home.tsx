@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment } from 'react'
+import { useState, useEffect, useRef, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
 import {
@@ -216,7 +216,7 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
  * The iframe is sized from this rather than left to collapse, so a message
  * that never arrives cannot break the layout.
  */
-const DEMO_HEIGHT: Record<'payin' | 'payout', number> = { payin: 1171, payout: 900 }
+const DEMO_HEIGHT: Record<'payin' | 'payout', number> = { payin: 1100, payout: 951 }
 
 const FlowDemo = ({ src, flow, title, label }: {
   src: string
@@ -272,6 +272,45 @@ const FlowDemo = ({ src, flow, title, label }: {
  * The frame every demo sits in. Its label and hint live inside, at the top,
  * so the frame's top edge lines up with the first step beside it.
  */
+/**
+ * Renders its children at a fixed design width and scales them down to whatever
+ * width it actually gets, reporting the scaled height so the box does not keep
+ * the unscaled one. The same trick the demo iframes use on themselves, so the
+ * portal view can sit at the same size as they do without the shared portal
+ * components being resized for every other page that uses them.
+ */
+const ScaleToFit = ({ design, children }: { design: number; children: React.ReactNode }) => {
+  const box = useRef<HTMLDivElement>(null)
+  const inner = useRef<HTMLDivElement>(null)
+  const [fit, setFit] = useState<{ scale: number; height?: number }>({ scale: 1 })
+
+  useEffect(() => {
+    const b = box.current
+    const i = inner.current
+    if (!b || !i) return
+    const measure = () => {
+      const scale = Math.min(1, b.clientWidth / design)
+      setFit({ scale, height: i.offsetHeight * scale })
+    }
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(b)
+    ro.observe(i)
+    return () => ro.disconnect()
+  }, [design])
+
+  return (
+    <div ref={box} style={{ height: fit.height }}>
+      <div
+        ref={inner}
+        style={{ width: design, transform: `scale(${fit.scale})`, transformOrigin: 'top left' }}
+      >
+        {children}
+      </div>
+    </div>
+  )
+}
+
 const DemoPanel = ({ label, action, children }: {
   label: string
   action?: React.ReactNode
@@ -305,7 +344,8 @@ const FLOW_DEMOS: Record<FlowId, FlowDemoSpec> = {
     // The portal's own page background, so the cards sit as they do in the product
     node: (
       <DemoPanel label="Merchant Portal">
-      <div className="flex-1 rounded-[20px] bg-[#f8f9fb] p-3 space-y-3">
+      <ScaleToFit design={430}>
+      <div className="rounded-[20px] bg-[#f8f9fb] p-3 space-y-3">
         <div className="rounded-[12px] border border-neutral-200/70 overflow-hidden">
           <PortalBalanceCard
             total="R 1,637,102.25"
@@ -325,6 +365,7 @@ const FLOW_DEMOS: Record<FlowId, FlowDemoSpec> = {
           />
         </div>
       </div>
+      </ScaleToFit>
       </DemoPanel>
     ),
     links: [{ label: 'Wallets', to: '/wallets' }],

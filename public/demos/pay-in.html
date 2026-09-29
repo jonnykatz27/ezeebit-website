@@ -337,6 +337,7 @@ document.getElementById('keys').addEventListener('click', e => {
   else { if(amount.replace('.','').length < 9) amount += k; }
   paintAmount();
 });
+function money(n){ return n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
 function paintAmount(){
   document.getElementById('amtVal').textContent = amount || '0';
   const n = parseFloat(amount||'0');
@@ -345,7 +346,7 @@ function paintAmount(){
 }
 document.getElementById('payBtn').onclick = () => {
   const n = parseFloat(amount||'0');
-  document.getElementById('methodAmt').textContent = 'R'+n.toFixed(2);
+  document.getElementById('methodAmt').textContent = 'R'+money(n);
   go('B');
 };
 
@@ -432,12 +433,20 @@ function go(id){
   window.scrollTo(0,0);
   fit();
 }
-function reset(){
-  amount=''; picked=null; pickedNet=null; paintAmount();
+/* The demo opens on the payment method screen with an amount already keyed in.
+   Tapping out a number is the least interesting part of the flow and costs the
+   reader a screen before anything happens, so the keypad is left behind the
+   back button rather than in front of the demo. */
+const START_AMOUNT = '4000';
+function start(){
+  amount = START_AMOUNT; picked = null; pickedNet = null;
+  paintAmount();
+  document.getElementById('methodAmt').textContent = 'R' + money(parseFloat(amount));
   document.querySelectorAll('.acard').forEach(c=>c.classList.remove('sel'));
   clearInterval(timerId);
-  go('A');
+  go('B');
 }
+function reset(){ start(); }
 function fit(){
   const frame = document.getElementById('frame');
   const stage = document.getElementById('stage');
@@ -455,7 +464,7 @@ function fit(){
 }
 window.addEventListener('resize', fit);
 window.addEventListener('load', fit);
-paintAmount(); fit();
+start();
 </script>
 </body>
 </html>

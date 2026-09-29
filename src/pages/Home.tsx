@@ -216,7 +216,7 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
  * The iframe is sized from this rather than left to collapse, so a message
  * that never arrives cannot break the layout.
  */
-const DEMO_HEIGHT: Record<'payin' | 'payout', number> = { payin: 1100, payout: 951 }
+const DEMO_HEIGHT: Record<'payin' | 'payout', number> = { payin: 798, payout: 951 }
 
 const FlowDemo = ({ src, flow, title, label }: {
   src: string

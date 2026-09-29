@@ -112,6 +112,17 @@ button{font-family:inherit;border:0;background:none;cursor:pointer;color:inherit
 .wcard span{font-size:28px;font-weight:500;font-family:var(--font-alt);flex:1}
 .wcard .ic{width:24px;height:24px;color:var(--icon)}
 
+/* The method screen is where the demo opens and the tallest of the set, so at
+   the width the home page gives it the frame had to scroll to reach the last
+   wallet. Trimmed here only; the later screens keep their proportions. */
+#screenB .body{padding-top:32px;gap:24px}
+#screenB .sect{gap:14px}
+#screenB .acard{height:88px}
+#screenB .wlist{gap:14px}
+#screenB .wcard{padding:14px 16px}
+#screenB .wcard .co{width:52px;height:52px}
+#screenB .wcard span{font-size:24px}
+
 /* ---------- C: network sheet ---------- */
 .veil{position:absolute;inset:0;background:rgba(0,0,0,.8);display:none;z-index:20}
 .veil.on{display:block}
@@ -212,10 +223,6 @@ button{font-family:inherit;border:0;background:none;cursor:pointer;color:inherit
 
 <!-- ============ B. SELECT PAYMENT METHOD ============ -->
 <section class="screen" id="screenB">
-  <div class="hdr">
-    <button class="ic" onclick="go('A')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></button>
-    <i class="ic" style="opacity:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></i>
-  </div>
   <div class="body">
     <div>
       <div class="h1">Select payment method</div>

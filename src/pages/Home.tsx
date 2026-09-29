@@ -845,9 +845,9 @@ const Home = () => {
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center mb-8 lg:mb-12"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Trusted by merchants across Africa</h2>
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Trusted by businesses across Africa</h2>
             <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
-              Join hundreds of businesses already accepting stablecoin and crypto payments with confidence.
+              Join hundreds of businesses already moving money with stablecoin, in and out, with confidence.
             </p>
           </motion.div>
 

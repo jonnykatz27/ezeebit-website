@@ -577,7 +577,7 @@ const Home = () => {
           >
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Our partners</h2>
             <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
-              Trusted by leading brands across South Africa and beyond.
+              Trusted by leading brands.
             </p>
           </motion.div>
 

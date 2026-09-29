@@ -351,32 +351,46 @@ const FlowCards = ({ flow, isActive }: { flow: FlowId; isActive: boolean }) => {
       initial="hidden"
       animate={isActive ? 'visible' : 'hidden'}
       variants={{ visible: { transition: { staggerChildren: 0.09 } } }}
-      className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px] gap-10 lg:gap-14 items-start lg:items-stretch text-left"
+      className="text-left"
     >
-      <div className="flex flex-col">
-      <ol className="flex flex-col lg:flex-1">
-        {steps.map((step, index) => (
-          <Fragment key={step.title}>
-            <motion.li
-              variants={rise}
-              className="lg:flex-1 bg-white border border-neutral-200/80 rounded-2xl shadow-sm p-5 lg:p-7 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 lg:gap-6 text-center sm:text-left"
-            >
-              <div className="sm:w-48 lg:w-56 shrink-0 h-12 flex items-center justify-center lg:scale-[1.15]">{step.visual}</div>
-              <div className="min-w-0">
-                {/* The same large number as the steps on the Wallets page */}
-                <div className="text-3xl lg:text-4xl font-display font-bold text-gradient leading-none mb-3">
-                  <span className="sr-only">Step </span>0{index + 1}
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px] gap-10 lg:gap-14 items-start lg:items-stretch">
+        {/* The steps are the whole column, so the last one finishes level with
+            the demo rather than stopping short of it. */}
+        <ol className="flex flex-col">
+          {steps.map((step, index) => (
+            <Fragment key={step.title}>
+              <motion.li
+                variants={rise}
+                className="lg:flex-1 bg-white border border-neutral-200/80 rounded-2xl shadow-sm p-5 lg:p-7 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 lg:gap-6 text-center sm:text-left"
+              >
+                <div className="sm:w-48 lg:w-56 shrink-0 h-12 flex items-center justify-center lg:scale-[1.15]">{step.visual}</div>
+                <div className="min-w-0">
+                  {/* The same large number as the steps on the Wallets page */}
+                  <div className="text-3xl lg:text-4xl font-display font-bold text-gradient leading-none mb-3">
+                    <span className="sr-only">Step </span>0{index + 1}
+                  </div>
+                  <h3 className="text-lg lg:text-xl font-semibold text-neutral-900 mb-1 lg:mb-1.5">{step.title}</h3>
+                  <p className="text-sm lg:text-[15px] text-neutral-500 leading-relaxed">{step.body}</p>
                 </div>
-                <h3 className="text-lg lg:text-xl font-semibold text-neutral-900 mb-1 lg:mb-1.5">{step.title}</h3>
-                <p className="text-sm lg:text-[15px] text-neutral-500 leading-relaxed">{step.body}</p>
-              </div>
-            </motion.li>
-            {index < steps.length - 1 && <StepConnector still={still} index={index} />}
-          </Fragment>
-        ))}
-      </ol>
+              </motion.li>
+              {index < steps.length - 1 && <StepConnector still={still} index={index} />}
+            </Fragment>
+          ))}
+        </ol>
 
-      {/* Somewhere to go next, for anyone the steps have convinced */}
+        {/* The product itself, beside the steps that describe it */}
+        <motion.div variants={rise} className="w-full max-w-[360px] mx-auto lg:mx-0 flex flex-col">
+          <div className="flex-1">
+            {demo.node}
+          </div>
+        </motion.div>
+      </div>
+
+      {/*
+        Somewhere to go next. It sits under the grid rather than inside the
+        steps column, where it used to take the height the last card needed to
+        finish level with the demo.
+      */}
       <motion.div variants={rise} className="mt-6 flex flex-wrap items-center justify-center sm:justify-start gap-3">
         <span className="text-sm text-neutral-500">Read more:</span>
         {demo.links.map((l) => (
@@ -389,14 +403,6 @@ const FlowCards = ({ flow, isActive }: { flow: FlowId; isActive: boolean }) => {
             <ArrowRight className="w-4 h-4" />
           </Link>
         ))}
-      </motion.div>
-      </div>
-
-      {/* The product itself, beside the steps that describe it */}
-      <motion.div variants={rise} className="w-full max-w-[360px] mx-auto lg:mx-0 flex flex-col">
-        <div className="flex-1">
-          {demo.node}
-        </div>
       </motion.div>
     </motion.div>
   )

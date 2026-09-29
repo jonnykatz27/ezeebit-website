@@ -45,12 +45,12 @@ const About = () => {
     {
       icon: <Zap className="w-8 h-8" />,
       title: "Innovation",
-      description: "We continuously push the boundaries of what's possible in stablecoin and crypto payments, delivering cutting-edge solutions."
+      description: "We keep pushing at what stablecoin infrastructure can do, from checkout and payouts to the wallets underneath them."
     },
     {
       icon: <Heart className="w-8 h-8" />,
       title: "Customer Success",
-      description: "Your success is our success. We're committed to providing exceptional support and service to every merchant."
+      description: "Your success is our success. We're committed to providing exceptional support and service to every business we work with."
     }
   ]
 
@@ -81,7 +81,7 @@ const About = () => {
     <>
       <SEO
         title="About Us"
-        description="Learn about Ezeebit's mission to revolutionize stablecoin and crypto payments in Africa. FSCA regulated, 100,000+ transactions processed, and backed by seed funding to accelerate growth."
+        description="Learn about Ezeebit's mission to build stablecoin payment infrastructure across Africa — payments in, balances held in fiat or stablecoin, and payouts. FSCA regulated, 100,000+ transactions processed, backed by Founder Collective, Raba and DCG."
         canonicalUrl="/resources/about"
       />
       <motion.div
@@ -94,7 +94,7 @@ const About = () => {
       <PageHero
         title="Pioneering stablecoin"
         accent="payments in Africa"
-        description="We're on a mission to make stablecoin and cryptocurrency payments as simple and secure as traditional payments, empowering African merchants to embrace the future of finance."
+        description="We're on a mission to make stablecoin payments as simple and secure as traditional ones — money in, money held and money out — so African businesses can move value as easily as information."
         trust={[
           { icon: <Award />, label: 'FSCA regulated' },
           { icon: <Shield />, label: 'Bank-grade security' },
@@ -152,7 +152,7 @@ const About = () => {
                 Our mission
               </h2>
               <p className="text-base lg:text-lg text-neutral-600">
-                To transform how businesses in Africa accept and settle digital payments — by building the trusted stablecoin and crypto infrastructure layer for modern commerce. We empower merchants with fast, secure, and compliant payment solutions that bridge traditional finance and the emerging crypto economy.
+                To transform how businesses in Africa move money — by building the trusted stablecoin infrastructure layer beneath it. We give them one place to take payments in, hold a balance in fiat or stablecoin, and pay customers out, with the hedging and compliance handled underneath.
               </p>
             </motion.div>
           </div>
@@ -208,7 +208,7 @@ const About = () => {
                 Access for all
               </h3>
               <p className="text-neutral-600">
-                We're here to democratize stablecoin and crypto payments — not just for the privileged few, but for every merchant and customer across Africa and beyond.
+                We're here to democratise stablecoin payments — not just for the privileged few, but for every business and customer across Africa and beyond.
               </p>
             </motion.div>
           </div>

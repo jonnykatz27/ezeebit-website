@@ -14,15 +14,6 @@ const FAQ = () => {
   const [activeCategory, setActiveCategory] = useState('all')
   const [openItems, setOpenItems] = useState<string[]>([])
 
-  const categories = [
-    { id: 'all', name: 'All Questions', icon: <HelpCircle className="w-4 h-4" />, count: 26 },
-    { id: 'popular', name: 'Popular', icon: <Star className="w-4 h-4" />, count: 15 },
-    { id: 'getting-started', name: 'Getting Started', icon: <Users className="w-4 h-4" />, count: 3 },
-    { id: 'payments', name: 'Payments', icon: <CreditCard className="w-4 h-4" />, count: 11 },
-    { id: 'security', name: 'Security', icon: <Shield className="w-4 h-4" />, count: 3 },
-    { id: 'technical', name: 'Technical', icon: <Zap className="w-4 h-4" />, count: 9 }
-  ]
-
   const faqItems = [
     {
       id: '1',
@@ -206,7 +197,52 @@ const FAQ = () => {
       answer: 'Ezeebit does not currently process refunds on behalf of merchants—all refunds are handled directly by the store.\n\nFor customers: If you paid with crypto and need a refund, contact the store directly with your proof or confirmation of payment. The merchant will refund you in ZAR (via cash or bank transfer) or offer store credit, depending on their refund policy.\n\nFor merchants: When a customer requests a refund on a crypto payment, request their proof or confirmation of payment, then simply refund them in ZAR or offer store credit as you normally would. The original crypto payment is still settled to your account as usual. This approach avoids the complexity of crypto-to-crypto refunds, wallet address verification, and blockchain fees—keeping the process simple for everyone.',
       popular: true
     },
+    {
+      id: '27',
+      category: 'payments',
+      question: 'Can I pay my customers out in stablecoin?',
+      answer: 'Yes. Our Payout Gateway lets you send payouts from your fiat balance without collecting a single wallet address. You create the payout with an amount and your own reference, we reserve the fiat and hand back a link, and your customer enters their own wallet address to claim it. Payouts settle on-chain in minutes, at any hour.',
+      popular: true
+    },
+    {
+      id: '28',
+      category: 'payments',
+      question: 'Do I have to collect and store wallet addresses to pay someone?',
+      answer: 'No, and that is deliberate. Your customer supplies their own address in our widget, so a mistyped address is never your liability and you are not holding wallet details you would rather not hold. Every recipient address is screened before funds move.',
+      popular: false
+    },
+    {
+      id: '29',
+      category: 'payments',
+      question: 'Can I hold a balance with Ezeebit?',
+      answer: 'Yes. Your Ezeebit wallets hold both fiat and USDT, and you can convert between them at a quoted rate. What you take in funds what you pay out, so pay-ins and payouts draw on the same balance. Withdraw fiat to your bank account, or stablecoin to your own wallet.',
+      popular: true
+    },
+    {
+      id: '30',
+      category: 'payments',
+      question: 'Do you handle large one-off trades?',
+      answer: 'Our OTC desk does. It is for volumes that would move the market on an exchange: you get a firm quote from a named dealer, the rate is locked when you accept it, and settlement is same day in ZAR, KES or NGN. It is a desk rather than a self-serve product, so it starts with a conversation.',
+      popular: false
+    },
   ]
+
+  // Counted from the list rather than written down beside it, so the numbers
+  // cannot fall behind the questions the way they already had.
+  const countIn = (id: string) =>
+    id === 'all' ? faqItems.length
+    : id === 'popular' ? faqItems.filter((i) => i.popular).length
+    : faqItems.filter((i) => i.category === id).length
+
+  const categories = [
+    { id: 'all', name: 'All Questions', icon: <HelpCircle className="w-4 h-4" />, count: countIn('all') },
+    { id: 'popular', name: 'Popular', icon: <Star className="w-4 h-4" />, count: countIn('popular') },
+    { id: 'getting-started', name: 'Getting Started', icon: <Users className="w-4 h-4" />, count: countIn('getting-started') },
+    { id: 'payments', name: 'Payments', icon: <CreditCard className="w-4 h-4" />, count: countIn('payments') },
+    { id: 'security', name: 'Security', icon: <Shield className="w-4 h-4" />, count: countIn('security') },
+    { id: 'technical', name: 'Technical', icon: <Zap className="w-4 h-4" />, count: countIn('technical') }
+  ]
+
 
   const toggleItem = (id: string) => {
     setOpenItems(prev =>
@@ -248,7 +284,7 @@ const FAQ = () => {
     <>
       <SEO
         title="Frequently Asked Questions"
-        description="Get answers to common questions about Ezeebit stablecoin and crypto payments. Learn about getting started, security, transaction fees, and technical integration."
+        description="Answers to common questions about Ezeebit — taking payments in, paying customers out in stablecoin, holding a fiat or USDT balance, fees, settlement, security and integration."
         canonicalUrl="/resources/faq"
       />
       <script type="application/ld+json">

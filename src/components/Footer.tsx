@@ -48,7 +48,7 @@ const Footer = () => {
             Secure. Speedy. Ezee.
           </p>
           <p className="text-neutral-400 mb-4 md:mb-5 max-w-md mx-auto text-xs md:text-sm leading-relaxed">
-            Leading cryptocurrency and stablecoin payment solutions for African merchants. Fast, simple, and secure with stablecoin or fiat settlement.
+            Leading cryptocurrency and stablecoin payment solutions for African businesses. Fast, simple, and secure with stablecoin or fiat settlement.
           </p>
           <div className="flex justify-center space-x-3">
             <a href="https://x.com/ezeebit?s=21&t=rrRGqEbfDYVjQGYAxoWTRg" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-lg bg-neutral-800 hover:bg-neutral-700 flex items-center justify-center text-neutral-400 hover:text-white transition-all duration-200">

@@ -464,7 +464,7 @@ const Home = () => {
   return (
     <>
       <SEO
-        title="Crypto Payment Solutions for African Merchants"
+        title="Crypto Payment Solutions for African Businesses"
         description="Accept crypto and stablecoins in-store and online, pay your customers out in minutes, and hold your balance in fiat or stablecoin. FSCA regulated, with settlement in ZAR, KES, or NGN."
         canonicalUrl="/"
       />
@@ -475,7 +475,7 @@ const Home = () => {
           "name": "Ezeebit",
           "url": "https://ezeebit.com",
           "logo": "https://ezeebit.com/ezeebit_black.png",
-          "description": "Leading crypto payment solutions for African merchants. Accept Bitcoin, Ethereum, and stablecoins with instant settlement in ZAR, KES, or NGN.",
+          "description": "Leading crypto payment solutions for African businesses. Accept Bitcoin, Ethereum, and stablecoins with instant settlement in ZAR, KES, or NGN.",
           "foundingDate": "2023",
           "address": {
             "@type": "PostalAddress",
@@ -631,7 +631,7 @@ const Home = () => {
           >
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Why choose Ezeebit?</h2>
             <p className="text-lg text-neutral-600 max-w-3xl mx-auto leading-relaxed">
-              Built for African merchants who want to embrace the future of payments without compromising on security or simplicity.
+              Built for African businesses who want to embrace the future of payments without compromising on security or simplicity.
             </p>
           </motion.div>
 

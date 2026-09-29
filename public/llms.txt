@@ -50,7 +50,7 @@ Key differentiators:
 
 ## Product Pages
 
-- [Ezeebit Homepage](https://www.ezeebit.com/): Overview of Ezeebit's crypto payment solution for African merchants
+- [Ezeebit Homepage](https://www.ezeebit.com/): Overview of Ezeebit's crypto payment solution for African businesses
 - [About Ezeebit](https://www.ezeebit.com/resources/about): Company history, mission, values, and key milestones
 - [Merchant Signup](https://merchant.ezeebit.com/#/signup): Register as a merchant to start accepting crypto payments
 - [Contact Ezeebit](https://www.ezeebit.com/contact): Get in touch with the Ezeebit team across multiple channels

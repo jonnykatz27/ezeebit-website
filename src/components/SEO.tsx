@@ -11,7 +11,7 @@ interface SEOProps {
 const SEO = ({
   title,
   description,
-  keywords = 'cryptocurrency, stablecoin and crypto payments, bitcoin, ethereum, stablecoins, ZAR settlement, African merchants, crypto checkout, blockchain payments',
+  keywords = 'cryptocurrency, stablecoin and crypto payments, bitcoin, ethereum, stablecoins, ZAR settlement, African businesses, crypto checkout, blockchain payments',
   ogImage = '/ezeebit_black.png',
   canonicalUrl
 }: SEOProps) => {

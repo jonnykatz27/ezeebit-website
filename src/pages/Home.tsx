@@ -5,10 +5,11 @@ import {
   Zap, Shield, Globe, TrendingUp,
   ArrowRight, Star, ChevronLeft, ChevronRight,
   ThumbsUp, Headphones, Lock, Landmark, Link2, Wallet, Send, Store, ArrowLeftRight,
-  ArrowDownToLine, RotateCcw
+  ArrowDownToLine
 } from 'lucide-react'
 import PartnerCarousel from '../components/PartnerCarousel'
 import SEO from '../components/SEO'
+import FlowDemo, { DemoPanel } from '../components/demo/FlowDemo'
 import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import HomeHeroVisual from '../components/hero/HomeHeroVisual'
 import { PortalBalanceCard, PortalConvertCard } from '../components/portal/PortalUI'
@@ -216,62 +217,6 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
  * The iframe is sized from this rather than left to collapse, so a message
  * that never arrives cannot break the layout.
  */
-const DEMO_HEIGHT: Record<'payin' | 'payout', number> = { payin: 798, payout: 951 }
-
-const FlowDemo = ({ src, flow, title, label }: {
-  src: string
-  flow: 'payin' | 'payout'
-  title: string
-  label: string
-}) => {
-  const [height, setHeight] = useState(DEMO_HEIGHT[flow])
-  // Bumping this remounts the iframe, which starts the flow again from the top
-  const [run, setRun] = useState(0)
-
-  useEffect(() => {
-    const onMessage = (e: MessageEvent) => {
-      if (e.origin !== window.location.origin) return
-      if (e.data?.type !== 'ezeebit:resize' || e.data.flow !== flow) return
-      // A hidden tab reports zero; keep the last real height for when it shows
-      if (typeof e.data.height === 'number' && e.data.height > 200) setHeight(e.data.height)
-    }
-    window.addEventListener('message', onMessage)
-    return () => window.removeEventListener('message', onMessage)
-  }, [flow])
-
-  return (
-    <DemoPanel
-      label={label}
-      action={
-        <button
-          type="button"
-          onClick={() => setRun((r) => r + 1)}
-          className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-primary-600 hover:text-primary-700"
-        >
-          <RotateCcw className="w-3.5 h-3.5" />
-          Restart
-        </button>
-      }
-    >
-      <iframe
-        key={run}
-        src={src}
-        title={title}
-        loading="lazy"
-        // Height is set outright, not just as a minimum, so the frame always has
-        // real dimensions whether or not the demo reports back.
-        height={height}
-        style={{ height }}
-        className="block w-full flex-1 rounded-[20px] bg-[#F2F2F2] border-0 transition-[height] duration-300 !mx-0"
-      />
-    </DemoPanel>
-  )
-}
-
-/**
- * The frame every demo sits in. Its label and hint live inside, at the top,
- * so the frame's top edge lines up with the first step beside it.
- */
 /**
  * Renders its children at a fixed design width and scales them down to whatever
  * width it actually gets, reporting the scaled height so the box does not keep
@@ -311,20 +256,6 @@ const ScaleToFit = ({ design, children }: { design: number; children: React.Reac
   )
 }
 
-const DemoPanel = ({ label, action, children }: {
-  label: string
-  action?: React.ReactNode
-  children: React.ReactNode
-}) => (
-  <div className="h-full flex flex-col rounded-[28px] bg-white p-2 ring-1 ring-neutral-200/80 shadow-[0_24px_60px_-24px_rgba(0,46,92,0.35)] overflow-hidden">
-    <div className="flex items-center justify-between gap-3 px-3 pt-1.5 pb-2">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-400">{label}</p>
-      {action}
-    </div>
-    <div className="flex-1 flex flex-col">{children}</div>
-  </div>
-)
-
 type FlowDemoSpec = {
   node: React.ReactNode
   /** Where to read more, shown under the steps. */
@@ -333,11 +264,11 @@ type FlowDemoSpec = {
 
 const FLOW_DEMOS: Record<FlowId, FlowDemoSpec> = {
   'pay-in': {
-    node: <FlowDemo src="/demos/pay-in.html" flow="payin" label="Try it" title="Interactive demo of the Ezeebit in-store checkout" />,
+    node: <FlowDemo src="/demos/pay-in.html" flow="payin" label="Try it" fill title="Interactive demo of the Ezeebit in-store checkout" />,
     links: [{ label: 'In-store payments', to: '/in-store' }, { label: 'Online checkout', to: '/online' }],
   },
   'pay-out': {
-    node: <FlowDemo src="/demos/pay-out.html" flow="payout" label="Try it" title="Interactive demo of an Ezeebit payout" />,
+    node: <FlowDemo src="/demos/pay-out.html" flow="payout" label="Try it" fill title="Interactive demo of an Ezeebit payout" />,
     links: [{ label: 'Payouts', to: '/payouts' }],
   },
   'hold': {

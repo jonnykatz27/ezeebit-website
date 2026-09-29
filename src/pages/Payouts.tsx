@@ -5,6 +5,7 @@ import {
   Webhook, Link2, CheckCircle
 } from 'lucide-react'
 import SEO from '../components/SEO'
+import FlowDemo from '../components/demo/FlowDemo'
 import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import PayoutsHeroVisual from '../components/hero/PayoutsHeroVisual'
 
@@ -233,15 +234,14 @@ const Payouts = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-                className="order-2 lg:order-1 flex justify-center"
+                className="order-2 lg:order-1 w-full max-w-[380px] mx-auto"
               >
-                <img
-                  src="/payout-widget-mockup.webp"
-                  alt="The Ezeebit payout widget on a phone, showing a withdrawal progressing through quote accepted, transaction sent, confirming transaction, and funds transferred, with the amount received in USDT and a payout reference."
-                  width={800}
-                  height={1615}
-                  loading="lazy"
-                  className="w-full max-w-[18rem] h-auto"
+                {/* The widget itself, rather than a picture of it */}
+                <FlowDemo
+                  src="/demos/pay-out.html"
+                  flow="payout"
+                  label="Try it"
+                  title="Interactive demo of an Ezeebit payout"
                 />
               </motion.div>
 

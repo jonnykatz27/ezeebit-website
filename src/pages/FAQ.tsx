@@ -33,7 +33,7 @@ const FAQ = () => {
       id: '3',
       category: 'payments',
       question: 'Which cryptocurrencies are supported?',
-      answer: 'Accept Bitcoin (BTC), Ethereum (ETH), USDT, USDC, BNB, DAI, PAXG and more. All transactions are instantly hedged to stablecoins at checkout to shield you from volatility, then settled in your local currency (ZAR, KES, or NGN).',
+      answer: 'Accept Bitcoin (BTC), Ethereum (ETH), USDT, USDC, BNB, DAI, PAXG, and the rand-backed stablecoins ZARP and ZARU, which settle on Ethereum and Solana. All transactions are instantly hedged to stablecoins at checkout to shield you from volatility, then settled in your local currency (ZAR, KES, or NGN).',
       popular: true
     },
     {

@@ -46,6 +46,8 @@ const EzeebitResources = () => {
             <img src="/usdc-logo.svg" alt="USDC" className="w-9 h-9 md:w-10 md:h-10" />
             <img src="/bnb-logo.svg" alt="BNB" className="w-9 h-9 md:w-10 md:h-10" />
             <img src="/paxg-logo.svg" alt="PAXG" className="w-9 h-9 md:w-10 md:h-10" />
+            <img src="/zarp-logo.png" alt="ZARP" className="w-9 h-9 md:w-10 md:h-10 rounded-full" />
+            <img src="/zaru-logo.png" alt="ZARU" className="w-9 h-9 md:w-10 md:h-10 rounded-full" />
           </div>
           <p className="text-xs md:text-sm text-primary-500 uppercase tracking-widest mt-5 md:mt-7 mb-4 md:mb-5">Direct Integrations</p>
           <div className="grid grid-cols-4 gap-3 md:gap-4 max-w-sm md:max-w-xl mx-auto">

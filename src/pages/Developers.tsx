@@ -463,7 +463,9 @@ app.post(
     { name: 'Binance Coin', symbol: 'BNB', network: 'BEP20', asset: 'BNB', description: 'Binance Smart Chain' },
     { name: 'USD Coin', symbol: 'USDC', network: 'ERC20 | SPL', asset: 'USDC', description: 'USD-backed stablecoin' },
     { name: 'PAX Gold', symbol: 'PAXG', network: 'ERC20', asset: 'PAXG', description: 'Gold-backed token' },
-    { name: 'Dai', symbol: 'DAI', network: 'BEP20', asset: 'DAI', description: 'Decentralized stablecoin' }
+    { name: 'Dai', symbol: 'DAI', network: 'BEP20', asset: 'DAI', description: 'Decentralized stablecoin' },
+    { name: 'ZARP', symbol: 'ZARP', network: 'ERC20 | SPL', asset: 'ZARP', description: 'Rand-backed stablecoin' },
+    { name: 'ZARU', symbol: 'ZARU', network: 'ERC20 | SPL', asset: 'ZARU', description: 'Rand-backed stablecoin' }
   ]
 
   const currentEndpoint = apiEndpoints[activeTab as keyof typeof apiEndpoints]
@@ -868,7 +870,7 @@ app.post(
           </div>
 
           <div className="grid grid-cols-[repeat(2,minmax(0,1fr))] md:grid-cols-[repeat(4,minmax(0,1fr))] gap-4 auto-rows-fr">
-            {supportedAssets.slice(0, 7).map((asset) => (
+            {supportedAssets.map((asset) => (
               <div
                 key={`${asset.asset}-${asset.network}`}
                 className="card p-4 flex flex-col items-center justify-center space-y-1 text-center overflow-hidden"

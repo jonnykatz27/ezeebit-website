@@ -11,7 +11,7 @@ const RATE = 18.45
 const START = { zar: 714_602.25, usdt: 50_000 }
 
 type Activity =
-  | { kind: 'in'; channel: 'In-store' | 'Online'; asset: 'usdt' | 'btc' | 'usdc'; zar: number }
+  | { kind: 'in'; channel: 'In-store' | 'Online'; asset: 'usdt' | 'btc' | 'usdc' | 'zarp'; zar: number }
   | { kind: 'out'; usdt: number; to: string }
   | { kind: 'convert'; zar: number; usdt: number }
 
@@ -24,7 +24,7 @@ const ACTIVITY: Activity[] = [
   { kind: 'in', channel: 'In-store', asset: 'usdt', zar: 4_500 },
   { kind: 'in', channel: 'Online', asset: 'btc', zar: 12_800 },
   { kind: 'out', usdt: 250, to: '0x7Ab2…c21F' },
-  { kind: 'in', channel: 'In-store', asset: 'usdc', zar: 2_150 },
+  { kind: 'in', channel: 'In-store', asset: 'zarp', zar: 2_150 },
   { kind: 'convert', zar: 19_450, usdt: 1_054.2 },
   { kind: 'out', usdt: 804.2, to: 'TXk9…4bQe' },
 ]

@@ -33,7 +33,7 @@ body{font-family:var(--font);color:var(--text);min-height:100vh;
 #frame{width:100%;max-width:640px;margin:0 auto;position:relative;overflow:hidden}
 #stage{width:640px;transform-origin:top left;position:relative;background:var(--bg);overflow:hidden}
 .screen{display:none;position:relative;width:640px;background:var(--bg)}
-.screen.on{display:block}
+.screen.on{display:block;min-height:100%}
 button{font-family:inherit;border:0;background:none;cursor:pointer;color:inherit}
 .ic{display:block}
 .ic svg{display:block;width:100%;height:100%}
@@ -314,9 +314,10 @@ const ASSETS = [
   {k:'ETH', img:A.eth,  nets:['Ethereum']},
   {k:'USDT',img:A.usdt, nets:['Ethereum','Binance Smart Chain','Tron','Solana']},
   {k:'USDC',img:A.usdc, nets:['Ethereum','Binance Smart Chain','Tron','Solana']},
+  {k:'ZARP',img:'/zarp-logo.png', nets:['Ethereum','Solana']},
+  {k:'ZARU',img:'/zaru-logo.png', nets:['Ethereum','Solana']},
   {k:'BNB', img:A.bnb,  nets:['Binance Smart Chain']},
   {k:'PAXG',img:A.paxg, nets:['Ethereum']},
-  {k:'DAI', img:A.dai,  nets:['Ethereum']}
 ];
 const WALLETS = [
   {k:'VALR Pay', img:A.valr},
@@ -460,7 +461,13 @@ function fit(){
   const k = Math.min(1, frame.clientWidth/640);
   stage.style.transform = 'scale('+k+')';
   const active = document.querySelector('.screen.on');
-  const h = active ? active.offsetHeight : 1171;
+  const content = active ? active.offsetHeight : 1171;
+  /* Fill the viewport when the content is shorter than it. The network sheet is
+     anchored to the bottom of the screen, so if the screen stops short of the
+     frame the sheet floats above a band of dead space instead of sitting at the
+     bottom the reader can see. Measured in stage units, hence the divide by k. */
+  const viewport = document.documentElement.clientHeight / k;
+  const h = Math.max(content, viewport);
   stage.style.height = h+'px';
   frame.style.height = (h*k)+'px';
   // let the embedding page resize the iframe to fit

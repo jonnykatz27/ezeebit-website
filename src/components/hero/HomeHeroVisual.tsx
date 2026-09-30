@@ -96,8 +96,11 @@ const HomeHeroVisual = () => {
       <FloatingCoin src="/btc-logo.svg" x={20} y={300} delay={0.4} still={still} />
       <FloatingCoin src="/eth-logo.svg" x={508} y={250} delay={0.8} still={still} />
       <FloatingCoin src="/usdc-logo.svg" x={150} y={446} delay={1.2} still={still} />
-      <FloatingCoin src="/zarp-logo.png" x={30} y={90} delay={1.6} still={still} />
-      <FloatingCoin src="/zaru-logo.png" x={500} y={400} delay={2} still={still} />
+      {/* Clear of the three cards: the activity row above (x 0-246, y 50-110),
+          the balance card (x 62-499, y 146-356) and the payout row below
+          (x 284-530, y 372-432). The first spots put both behind a card. */}
+      <FloatingCoin src="/zarp-logo.png" x={310} y={8} delay={1.6} still={still} />
+      <FloatingCoin src="/zaru-logo.png" x={420} y={450} delay={2} still={still} />
 
       {/* ── The wallet balance card, as on the portal's dashboard ── */}
       <motion.div className={`absolute ${PORTAL_CARD} overflow-hidden`} style={{ left: 62, top: 146 }} {...arrive(0.25)}>

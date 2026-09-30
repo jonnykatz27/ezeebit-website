@@ -457,15 +457,15 @@ app.post(
 
 
   const supportedAssets = [
-    { name: 'Bitcoin', symbol: 'BTC', network: 'Mainnet', asset: 'BTC', description: 'Bitcoin network' },
-    { name: 'Ethereum', symbol: 'ETH', network: 'ERC20', asset: 'ETH', description: 'Ethereum network' },
-    { name: 'Tether', symbol: 'USDT', network: 'ERC20 | TRC20 | BEP20 | SPL', asset: 'USDT', description: 'USD-backed stablecoin' },
-    { name: 'Binance Coin', symbol: 'BNB', network: 'BEP20', asset: 'BNB', description: 'Binance Smart Chain' },
-    { name: 'USD Coin', symbol: 'USDC', network: 'ERC20 | SPL', asset: 'USDC', description: 'USD-backed stablecoin' },
-    { name: 'PAX Gold', symbol: 'PAXG', network: 'ERC20', asset: 'PAXG', description: 'Gold-backed token' },
-    { name: 'Dai', symbol: 'DAI', network: 'BEP20', asset: 'DAI', description: 'Decentralized stablecoin' },
-    { name: 'ZARP', symbol: 'ZARP', network: 'ERC20 | SPL', asset: 'ZARP', description: 'Rand-backed stablecoin' },
-    { name: 'ZARU', symbol: 'ZARU', network: 'ERC20 | SPL', asset: 'ZARU', description: 'Rand-backed stablecoin' }
+    { name: 'Bitcoin', symbol: 'BTC', network: 'Mainnet', asset: 'BTC', description: 'Bitcoin network', logo: '/btc-logo.svg' },
+    { name: 'Ethereum', symbol: 'ETH', network: 'ERC20', asset: 'ETH', description: 'Ethereum network', logo: '/eth-logo.svg' },
+    { name: 'Tether', symbol: 'USDT', network: 'ERC20 | TRC20 | BEP20 | SPL', asset: 'USDT', description: 'USD-backed stablecoin', logo: '/usdt-logo.svg' },
+    { name: 'Binance Coin', symbol: 'BNB', network: 'BEP20', asset: 'BNB', description: 'Binance Smart Chain', logo: '/bnb-logo.svg' },
+    { name: 'USD Coin', symbol: 'USDC', network: 'ERC20 | SPL', asset: 'USDC', description: 'USD-backed stablecoin', logo: '/usdc-logo.svg' },
+    { name: 'PAX Gold', symbol: 'PAXG', network: 'ERC20', asset: 'PAXG', description: 'Gold-backed token', logo: '/paxg-logo.svg' },
+    { name: 'Dai', symbol: 'DAI', network: 'BEP20', asset: 'DAI', description: 'Decentralized stablecoin', logo: '/dai-logo.svg' },
+    { name: 'ZARP', symbol: 'ZARP', network: 'ERC20 | SPL', asset: 'ZARP', description: 'Rand-backed stablecoin', logo: '/zarp-logo.png' },
+    { name: 'ZARU', symbol: 'ZARU', network: 'ERC20 | SPL', asset: 'ZARU', description: 'Rand-backed stablecoin', logo: '/zaru-logo.png' }
   ]
 
   const currentEndpoint = apiEndpoints[activeTab as keyof typeof apiEndpoints]
@@ -877,9 +877,9 @@ app.post(
               >
                 <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
                   <img
-                    src={`/${asset.symbol.toLowerCase()}-logo.svg`}
+                    src={asset.logo}
                     alt={`${asset.symbol} logo`}
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-contain rounded-full"
                   />
                 </div>
                 <div className="text-center w-full overflow-hidden">

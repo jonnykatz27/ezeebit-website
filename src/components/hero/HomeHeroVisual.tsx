@@ -96,6 +96,8 @@ const HomeHeroVisual = () => {
       <FloatingCoin src="/btc-logo.svg" x={20} y={300} delay={0.4} still={still} />
       <FloatingCoin src="/eth-logo.svg" x={508} y={250} delay={0.8} still={still} />
       <FloatingCoin src="/usdc-logo.svg" x={150} y={446} delay={1.2} still={still} />
+      <FloatingCoin src="/zarp-logo.png" x={30} y={90} delay={1.6} still={still} />
+      <FloatingCoin src="/zaru-logo.png" x={500} y={400} delay={2} still={still} />
 
       {/* ── The wallet balance card, as on the portal's dashboard ── */}
       <motion.div className={`absolute ${PORTAL_CARD} overflow-hidden`} style={{ left: 62, top: 146 }} {...arrive(0.25)}>

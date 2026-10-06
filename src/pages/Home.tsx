@@ -398,24 +398,24 @@ const Home = () => {
 
   const features = [
     {
-      icon: <Zap className="w-6 h-6" />,
-      title: "Lightning fast",
-      description: "Near-instant payment verification with advanced crypto payment technology"
+      icon: <Wallet className="w-6 h-6" />,
+      title: "Any wallet, both directions",
+      description: "Customers pay on-chain from any wallet, or through Binance Pay, Luno Pay, VALR Pay and 700+ wallets via WalletConnect. Pay them back out to any address they control."
     },
     {
-      icon: <Shield className="w-6 h-6" />,
-      title: "Bank-grade security",
-      description: "FSCA regulated and FIC compliant with enterprise-level security protocols"
+      icon: <ArrowLeftRight className="w-6 h-6" />,
+      title: "One balance behind it all",
+      description: "What you take in funds what you pay out. Hold it in fiat or stablecoin, convert between them, and withdraw to your bank or your own wallet."
     },
     {
-      icon: <Globe className="w-6 h-6" />,
-      title: "Multi-currency support",
-      description: "Accept Bitcoin, Ethereum, USDT, USDC, BNB and more"
+      icon: <Landmark className="w-6 h-6" />,
+      title: "Settlement on your terms",
+      description: "Fiat to your bank the next business day in ZAR, KES or NGN. Stablecoin the same day. Customer payouts that land in minutes."
     },
     {
-      icon: <TrendingUp className="w-6 h-6" />,
-      title: "Stablecoin settlement",
-      description: "Automatic conversion to stablecoins and settlement in ZAR, KES, or NGN to eliminate volatility risk"
+      icon: <Lock className="w-6 h-6" />,
+      title: "Your funds, held safely",
+      description: "Keys are split across parties with MPC custody, so no one person can move your money. FSCA-regulated as a CASP, FSP No. 53664."
     }
   ]
 
@@ -631,7 +631,7 @@ const Home = () => {
           >
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Why choose Ezeebit?</h2>
             <p className="text-lg text-neutral-600 max-w-3xl mx-auto leading-relaxed">
-              Built for African businesses who want to embrace the future of payments without compromising on security or simplicity.
+              One regulated account for money in, money held and money out — with the volatility hedged the moment it lands.
             </p>
           </motion.div>
 

@@ -400,7 +400,7 @@ const Home = () => {
     {
       icon: <Wallet className="w-6 h-6" />,
       title: "Any wallet, both directions",
-      description: "Any wallet on-chain, plus Binance Pay, Luno Pay, VALR Pay and 700+ via WalletConnect. Payouts reach any address."
+      description: "Any wallet on-chain, plus Binance Pay, Luno Pay, VALR Pay and 700+ via WalletConnect Pay."
     },
     {
       icon: <ArrowLeftRight className="w-6 h-6" />,

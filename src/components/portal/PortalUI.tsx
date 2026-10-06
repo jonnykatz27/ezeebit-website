@@ -132,7 +132,7 @@ export const PortalBalanceCard = ({
             <p className="text-[12px]" style={{ color: C.subtle }}>{fiat.label ?? 'Fiat wallet'}</p>
           </div>
         </div>
-        <div className="relative flex flex-1 items-center gap-3 min-w-0 rounded-xl">
+        <div className="relative flex flex-1 items-center gap-3 min-w-0 rounded-xl [@container(max-width:480px)]:w-full">
           {flash?.stable}
           <span className="relative size-10 rounded-full flex items-center justify-center shrink-0" style={{ background: C.stable }}>
             <img src="/portal/usdt.png" alt="" className="size-8 object-cover" />

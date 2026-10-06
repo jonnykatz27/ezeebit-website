@@ -206,7 +206,18 @@ export const Counter = ({ value, format, still, delay = 0 }: {
     return () => controls.stop()
   }, [value, format, still, delay])
 
-  return <span ref={ref} className="tabular-nums">{format(initial)}</span>
+  /*
+   * The animating text is taken out of flow and a hidden copy of the target
+   * value holds the width. Written straight into the flow, the figure relaid
+   * out on every frame as its digits changed, and everything beside it — the
+   * percentage badge, the wallet label — jittered along with it.
+   */
+  return (
+    <span className="relative inline-block tabular-nums whitespace-nowrap align-baseline">
+      <span aria-hidden className="invisible">{format(value)}</span>
+      <span ref={ref} className="absolute inset-0">{format(initial)}</span>
+    </span>
+  )
 }
 
 /** A soft wash across a row whose value just changed. */

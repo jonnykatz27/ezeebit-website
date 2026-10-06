@@ -271,20 +271,6 @@ button{font-family:inherit;border:0;background:none;cursor:pointer;color:inherit
     </div>
     <div style="height:40px"></div>
   </div>
-  <div class="veil" id="veil">
-    <div class="sheet">
-      <div class="sh">
-        <button class="ic" onclick="closeSheet()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg></button>
-        <div class="mid">
-          <h3>Select network</h3>
-          <div class="pay"><span>Paying with <span id="sheetAsset">USDT</span></span><i class="co" id="sheetCoin"></i></div>
-        </div>
-        <i class="ic" style="opacity:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></i>
-      </div>
-      <div class="netbox" id="netbox"></div>
-      <div class="bc"><button class="btn" id="confirmBtn" onclick="confirmNet()">Confirm</button></div>
-    </div>
-  </div>
 </section>
 
 <!-- ============ D. PAY / QR ============ -->
@@ -378,6 +364,24 @@ button{font-family:inherit;border:0;background:none;cursor:pointer;color:inherit
   </div>
 </section>
 
+
+<!-- The network sheet sits on the stage, not inside a screen: the stage is the
+     height fit() controls, so the sheet can anchor to the bottom of what is
+     actually visible rather than the bottom of a screen that overflows it. -->
+  <div class="veil" id="veil">
+    <div class="sheet">
+      <div class="sh">
+        <button class="ic" onclick="closeSheet()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg></button>
+        <div class="mid">
+          <h3>Select network</h3>
+          <div class="pay"><span>Paying with <span id="sheetAsset">USDT</span></span><i class="co" id="sheetCoin"></i></div>
+        </div>
+        <i class="ic" style="opacity:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></i>
+      </div>
+      <div class="netbox" id="netbox"></div>
+      <div class="bc"><button class="btn" id="confirmBtn" onclick="confirmNet()">Confirm</button></div>
+    </div>
+  </div>
 </div></div>
 
 <script>
@@ -629,13 +633,29 @@ function fit(){
   const k = Math.min(1, frame.clientWidth/640);
   stage.style.transform = 'scale('+k+')';
   const active = document.querySelector('.screen.on');
+  /*
+   * Collapse the stage before measuring. Screens are stretched to fill it, so
+   * measuring one while the stage still has its old height just reads that
+   * height back — and the tallest screen visited would pin every screen after
+   * it, pushing the network sheet's anchor below the frame.
+   */
+  stage.style.height = 'auto';
   const content = active ? active.offsetHeight : 1171;
   /* Fill the viewport when the content is shorter than it. The network sheet is
      anchored to the bottom of the screen, so if the screen stops short of the
      frame the sheet floats above a band of dead space instead of sitting at the
      bottom the reader can see. Measured in stage units, hence the divide by k. */
   const viewport = document.documentElement.clientHeight / k;
-  const h = Math.max(content, viewport);
+  /*
+   * While the network sheet is up, the stage is exactly the visible height. The
+   * sheet is anchored to the bottom of the screen, so if the screen is taller
+   * than the frame — which it is whenever the method list does not fit — that
+   * bottom sits below what anyone can see, and the Confirm button goes with it.
+   * A bottom sheet belongs at the bottom of the view, not the bottom of the
+   * page behind it.
+   */
+  const sheetUp = document.getElementById('veil').classList.contains('on');
+  const h = sheetUp ? viewport : Math.max(content, viewport);
   stage.style.height = h+'px';
   frame.style.height = (h*k)+'px';
   // let the embedding page resize the iframe to fit

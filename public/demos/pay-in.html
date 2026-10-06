@@ -200,7 +200,15 @@ button{font-family:inherit;border:0;background:none;cursor:pointer;color:inherit
 .copyicon{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;
   color:var(--icon);vertical-align:middle;margin-left:8px}
 .copyicon .ic{width:22px;height:22px}
-#screenF .wlist{gap:14px}
+/* Eight rows at the wallet list's size run far past the frame, so this screen
+   keeps the shape and tightens it until all eight fit without scrolling. */
+#screenF .wlist{gap:10px}
+#screenF .wcard{padding:10px 16px;gap:14px}
+#screenF .wcard .co{width:44px;height:44px}
+#screenF .wcard span{font-size:24px}
+#screenF .body{padding-top:24px;gap:16px}
+#screenF .sect{gap:12px}
+#screenF .sect h2{font-size:26px}
 
 /* ---------- E: done ---------- */
 .done{padding:140px 32px 60px;display:flex;flex-direction:column;align-items:center;gap:32px;min-height:1100px}

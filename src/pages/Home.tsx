@@ -400,22 +400,22 @@ const Home = () => {
     {
       icon: <Wallet className="w-6 h-6" />,
       title: "Any wallet, both directions",
-      description: "Customers pay on-chain from any wallet, or through Binance Pay, Luno Pay, VALR Pay and 700+ wallets via WalletConnect. Pay them back out to any address they control."
+      description: "Any wallet on-chain, plus Binance Pay, Luno Pay, VALR Pay and 700+ via WalletConnect. Payouts reach any address."
     },
     {
       icon: <ArrowLeftRight className="w-6 h-6" />,
       title: "One balance behind it all",
-      description: "What you take in funds what you pay out. Hold it in fiat or stablecoin, convert between them, and withdraw to your bank or your own wallet."
+      description: "Money in funds money out. Hold it in fiat or stablecoin and convert whenever."
     },
     {
       icon: <Landmark className="w-6 h-6" />,
       title: "Settlement on your terms",
-      description: "Fiat to your bank the next business day in ZAR, KES or NGN. Stablecoin the same day. Customer payouts that land in minutes."
+      description: "Fiat next business day in ZAR, KES or NGN. Stablecoin same day. Payouts in minutes."
     },
     {
       icon: <Lock className="w-6 h-6" />,
       title: "Your funds, held safely",
-      description: "Keys are split across parties with MPC custody, so no one person can move your money. FSCA-regulated as a CASP, FSP No. 53664."
+      description: "MPC custody splits the keys, so no one person can move your money. FSCA-regulated, FSP No. 53664."
     }
   ]
 

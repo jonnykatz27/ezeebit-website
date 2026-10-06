@@ -77,13 +77,26 @@ const HomeHeroVisual = () => {
     return () => window.clearTimeout(t)
   }, [payOut.at, justChanged, still])
 
-  const bal = balancesAt(wrap(step))
+  /*
+   * The balance follows the activity that caused it rather than moving with it.
+   * Everything changing on the same frame is what made the loop feel like a
+   * jolt every few seconds; this reads as payment, then balance.
+   */
+  const [settled, setSettled] = useState(step)
+  useEffect(() => {
+    if (still) { setSettled(step); return }
+    const t = window.setTimeout(() => setSettled(step), 420)
+    return () => window.clearTimeout(t)
+  }, [step, still])
+  const settledChange = settled > 0 ? ACTIVITY[wrap(settled - 1)].kind : null
+
+  const bal = balancesAt(wrap(settled))
   const sum = bal.zar + bal.usdt * RATE
 
   const inAct = ACTIVITY[payIn.i] as Extract<Activity, { kind: 'in' }>
   const outAct = ACTIVITY[payOut.i] as Extract<Activity, { kind: 'out' }>
   const confirmed = confirmedAt === payOut.at
-  const action = justChanged === 'in' ? 'deposit' : justChanged === 'out' ? 'withdraw' : justChanged === 'convert' ? 'convert' : null
+  const action = settledChange === 'in' ? 'deposit' : settledChange === 'out' ? 'withdraw' : settledChange === 'convert' ? 'convert' : null
 
   return (
     <HeroStage
@@ -112,8 +125,8 @@ const HomeHeroVisual = () => {
             stable={{ amount: <Counter value={bal.usdt} format={usd} still={still} /> }}
             active={action}
             flash={{
-              fiat: <Flash on={justChanged === 'in' || justChanged === 'convert'} id={step} />,
-              stable: <Flash on={justChanged === 'out' || justChanged === 'convert'} id={step} />,
+              fiat: <Flash on={settledChange === 'in' || settledChange === 'convert'} id={settled} />,
+              stable: <Flash on={settledChange === 'out' || settledChange === 'convert'} id={settled} />,
             }}
           />
         </PortalScale>

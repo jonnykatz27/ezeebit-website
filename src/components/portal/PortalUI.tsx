@@ -122,7 +122,7 @@ export const PortalBalanceCard = ({
       </div>
 
       <div className="flex items-start gap-3 pb-6 [@container(max-width:480px)]:flex-col [@container(max-width:480px)]:gap-4">
-        <div className="relative flex items-center gap-3 w-[307px] max-w-[50%] rounded-xl [@container(max-width:480px)]:w-full [@container(max-width:480px)]:max-w-none">
+        <div className="relative flex flex-1 items-center gap-3 min-w-0 rounded-xl [@container(max-width:480px)]:w-full">
           {flash?.fiat}
           <span className="relative size-10 rounded-full flex items-center justify-center shrink-0" style={{ background: C.teal }}>
             <img src={fiat.mark} alt="" className="size-8 rounded-full object-cover" />

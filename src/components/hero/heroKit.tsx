@@ -8,6 +8,13 @@ import { motion, animate, useInView, useReducedMotion } from 'framer-motion'
 
 export const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1]
 
+/**
+ * For values that count or fill rather than enter. EASE is near-instant at the
+ * start and then crawls, which on a number reads as a jolt followed by a drift;
+ * this moves evenly and settles.
+ */
+export const EASE_VALUE: [number, number, number, number] = [0.33, 1, 0.68, 1]
+
 /** A floating white card with the soft, blue-tinted shadow every hero uses. */
 export const CARD =
   'bg-white/95 backdrop-blur rounded-2xl border border-neutral-200/70 shadow-[0_18px_50px_-18px_rgba(0,46,92,0.28)]'
@@ -170,7 +177,13 @@ export const FloatingCoin = memo(({ src, x, y, delay, still, size = 44 }: { src:
 FloatingCoin.displayName = 'FloatingCoin'
 
 /** A figure that counts to its new value instead of jumping. */
-export const Counter = ({ value, format, still }: { value: number; format: (v: number) => string; still: boolean }) => {
+export const Counter = ({ value, format, still, delay = 0 }: {
+  value: number
+  format: (v: number) => string
+  still: boolean
+  /** Lets a figure follow the thing that caused it to change. */
+  delay?: number
+}) => {
   const ref = useRef<HTMLSpanElement>(null)
   const prev = useRef(value)
   // Rendered once; after that the text is driven directly, frame by frame
@@ -185,12 +198,13 @@ export const Counter = ({ value, format, still }: { value: number; format: (v: n
       return
     }
     const controls = animate(from, value, {
-      duration: 0.9,
-      ease: EASE,
+      duration: 1.2,
+      delay,
+      ease: EASE_VALUE,
       onUpdate: (v) => { if (ref.current) ref.current.textContent = format(v) },
     })
     return () => controls.stop()
-  }, [value, format, still])
+  }, [value, format, still, delay])
 
   return <span ref={ref} className="tabular-nums">{format(initial)}</span>
 }

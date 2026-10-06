@@ -345,7 +345,7 @@ button{font-family:inherit;border:0;background:none;cursor:pointer;color:inherit
   <div class="timer"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></i><span id="gClock">00:05:00</span></div>
   <div class="qrwrap"><div id="gQr"></div><div class="badge" id="gBadge"></div></div>
   <div class="scanline" id="gScan">Scan with your wallet</div>
-  <button class="btn qrbtn" onclick="go('E')">Pay Now</button>
+  <button class="btn qrbtn" onclick="payNow()">Pay Now</button>
   <div style="height:40px"></div>
 </section>
 
@@ -356,8 +356,8 @@ button{font-family:inherit;border:0;background:none;cursor:pointer;color:inherit
     <h2>Payment received</h2>
     <div class="recap">
       <div><span>Amount</span><span id="doneZar">R0.00</span></div>
-      <div><span>Paid in</span><span id="doneCrypto">0.00 USDT</span></div>
-      <div><span>Network</span><span id="doneNet">Tron</span></div>
+      <div id="doneCryptoRow"><span>Paid in</span><span id="doneCrypto">0.00 USDT</span></div>
+      <div><span id="doneViaLbl">Network</span><span id="doneNet">Tron</span></div>
       <div><span>Reference</span><span>EZB-4417-2290</span></div>
     </div>
     <button class="btn" style="width:576px" onclick="reset()">New payment</button>
@@ -497,8 +497,29 @@ document.getElementById('walletList').addEventListener('click', e => {
   openWallet(wallet, null);
 });
 
+/* The wallet screens know the method, and only VALR knows an asset, so the
+   receipt reports what was actually used rather than the on-chain defaults. */
+let payVia = null, payAsset = null;
+
+function payNow(){
+  const zar = parseFloat(amount||'0');
+  document.getElementById('doneZar').textContent = 'R' + money(zar);
+  document.getElementById('doneViaLbl').textContent = 'Paid with';
+  document.getElementById('doneNet').textContent = payVia ? payVia.k : '';
+  const row = document.getElementById('doneCryptoRow');
+  if (payAsset) {
+    row.style.display = '';
+    document.getElementById('doneCrypto').textContent = units(zar/payAsset.rate) + ' ' + payAsset.k;
+  } else {
+    // Luno, Binance and WalletConnect quote in rands and settle the asset themselves
+    row.style.display = 'none';
+  }
+  go('E');
+}
+
 /* Draws the scan screen for a wallet, with the asset line only when there is one. */
 function openWallet(w, asset){
+  payVia = w; payAsset = asset;
   const zar = parseFloat(amount||'0');
   document.getElementById('gZar').textContent = 'R' + money(zar);
   document.getElementById('gCrypto').textContent = asset ? units(zar/asset.rate) + ' ' + asset.k : '';
@@ -547,11 +568,13 @@ function confirmNet(){
   const crypto = zar/picked.rate;
   document.getElementById('sendAmt').textContent = units(crypto);
   document.getElementById('sendCur').textContent = picked.k;
-  document.getElementById('sendZar').textContent = 'R'+zar.toFixed(2);
+  document.getElementById('sendZar').textContent = 'R'+money(zar);
   document.getElementById('qrBadge').innerHTML = coinHTML(picked);
-  document.getElementById('doneZar').textContent = 'R'+zar.toFixed(2);
+  document.getElementById('doneZar').textContent = 'R'+money(zar);
   document.getElementById('doneCrypto').textContent = units(crypto)+' '+picked.k;
+  document.getElementById('doneViaLbl').textContent = 'Network';
   document.getElementById('doneNet').textContent = pickedNet;
+  document.getElementById('doneCryptoRow').style.display = '';
   document.getElementById('netChip').textContent = picked.k + ' - ' + pickedNet + ' network';
   drawQR();
   startClock();

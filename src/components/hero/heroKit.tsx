@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef, useState, type ReactNode } from 'react'
+import { forwardRef, memo, useEffect, useRef, useState, type ReactNode } from 'react'
 import { motion, animate, useInView, useReducedMotion } from 'framer-motion'
 
 /**
@@ -24,9 +24,11 @@ export const LABEL = 'text-[11px] font-semibold uppercase tracking-[0.1em] text-
 
 /** Content that is replaced in place: the old copy lifts away as the new one settles. */
 export const SWAP = {
-  initial: { opacity: 0, y: 12, filter: 'blur(4px)' },
-  animate: { opacity: 1, y: 0, filter: 'blur(0px)' },
-  exit: { opacity: 0, y: -12, filter: 'blur(4px)' },
+  // Opacity and transform only. Animating `filter` repaints the layer every
+  // frame, and two of these run at once while the counters are also moving.
+  initial: { opacity: 0, y: 10 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -10 },
   transition: { duration: 0.45, ease: EASE },
 }
 
@@ -54,13 +56,26 @@ export function useHeroLoop(ms: number) {
 
   useEffect(() => {
     if (still || !inView) return
-    let id: number | undefined
-    const start = () => { window.clearInterval(id); id = window.setInterval(() => setStep((s) => s + 1), ms) }
-    const stop = () => window.clearInterval(id)
-    const onVisibility = () => (document.hidden ? stop() : start())
-    start()
+    /*
+     * Advance on a frame boundary rather than on an interval. An interval can
+     * fire part-way through a frame, so the re-render it triggers lands on top
+     * of the swap and counter animations it starts, which is where the hitch
+     * came from. requestAnimationFrame also stops on its own in a hidden tab.
+     */
+    let raf = 0
+    let last = performance.now()
+    const tick = (now: number) => {
+      if (now - last >= ms) {
+        last = now
+        setStep((s) => s + 1)
+      }
+      raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    // Coming back to the tab should not immediately fire the backlog
+    const onVisibility = () => { if (!document.hidden) last = performance.now() }
     document.addEventListener('visibilitychange', onVisibility)
-    return () => { stop(); document.removeEventListener('visibilitychange', onVisibility) }
+    return () => { cancelAnimationFrame(raf); document.removeEventListener('visibilitychange', onVisibility) }
   }, [still, inView, ms])
 
   return { ref, step, still }
@@ -100,7 +115,16 @@ export const HeroStage = forwardRef<HTMLDivElement, { width?: number; height?: n
         <div
           // [&_img]:!mx-0 undoes the site-wide phone rule that centres every image
           className="absolute top-0 left-0 origin-top-left transition-opacity duration-500 [&_img]:!mx-0"
-          style={{ width, height, transform: `scale(${scale ?? 1})`, opacity: scale ? 1 : 0 }}
+          style={{
+            width,
+            height,
+            // translateZ keeps the scaled canvas on its own compositor layer, so
+            // the counters rewriting their text do not re-rasterise the whole
+            // illustration at a fractional scale every frame.
+            transform: `scale(${scale ?? 1}) translateZ(0)`,
+            willChange: 'transform',
+            opacity: scale ? 1 : 0,
+          }}
         >
           {children}
         </div>
@@ -128,7 +152,7 @@ export const Rings = ({ x, y, still, size = 460 }: { x: number; y: number; still
 )
 
 /** A coin, or any small logo, bobbing gently in place. */
-export const FloatingCoin = ({ src, x, y, delay, still, size = 44 }: { src: string; x: number; y: number; delay: number; still: boolean; size?: number }) => (
+export const FloatingCoin = memo(({ src, x, y, delay, still, size = 44 }: { src: string; x: number; y: number; delay: number; still: boolean; size?: number }) => (
   <motion.img
     src={src}
     alt=""
@@ -142,7 +166,8 @@ export const FloatingCoin = ({ src, x, y, delay, still, size = 44 }: { src: stri
       y: { duration: 4.5 + delay * 2, repeat: Infinity, ease: 'easeInOut', delay },
     }}
   />
-)
+))
+FloatingCoin.displayName = 'FloatingCoin'
 
 /** A figure that counts to its new value instead of jumping. */
 export const Counter = ({ value, format, still }: { value: number; format: (v: number) => string; still: boolean }) => {

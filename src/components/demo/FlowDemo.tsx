@@ -41,6 +41,9 @@ const FlowDemo = ({ src, flow, title, label, fill = false }: {
   fill?: boolean
 }) => {
   const [height, setHeight] = useState(DEMO_HEIGHT[flow])
+  // public/demos ships unhashed, so without this a browser can keep showing an
+  // old build of the demo. The stamp only moves when a demo file changes.
+  const versioned = `${src}${src.includes('?') ? '&' : '?'}v=${__DEMO_VERSION__}`
   // Bumping this remounts the iframe, which starts the flow again from the top
   const [run, setRun] = useState(0)
 
@@ -71,7 +74,7 @@ const FlowDemo = ({ src, flow, title, label, fill = false }: {
     >
       <iframe
         key={run}
-        src={src}
+        src={versioned}
         title={title}
         loading="lazy"
         // Height is set outright, not just as a minimum, so the frame always has

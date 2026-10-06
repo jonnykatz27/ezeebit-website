@@ -295,7 +295,7 @@ button{font-family:inherit;border:0;background:none;cursor:pointer;color:inherit
   <div style="margin-top:22px">
     <div class="lbl">Wallet address</div>
     <div class="addr"><span id="addrText">0xa7ab249e7a5643frt568907vbt1wd4seh7890</span><button class="copyicon" id="copyPill"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg></i></button></div>
-    <div class="netchipwrap"><span class="netchip" id="netChip">BTC - Bitcoin network</span></div>
+    <div class="netchipwrap"><span class="netchip" id="netChip"></span></div>
     <div class="timer"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></i><span id="countdown">29:48</span></div>
   </div>
   <div class="qrwrap"><div id="qrBox"></div><div class="badge" id="qrBadge"></div></div>
@@ -355,9 +355,9 @@ button{font-family:inherit;border:0;background:none;cursor:pointer;color:inherit
     <div class="ring"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.4l2.4 2.4 4.6-5.1"/></svg></i></div>
     <h2>Payment received</h2>
     <div class="recap">
-      <div><span>Amount</span><span id="doneZar">R0.00</span></div>
-      <div id="doneCryptoRow"><span>Paid in</span><span id="doneCrypto">0.00 USDT</span></div>
-      <div><span id="doneViaLbl">Network</span><span id="doneNet">Tron</span></div>
+      <div><span>Amount</span><span id="doneZar"></span></div>
+      <div id="doneCryptoRow"><span>Paid in</span><span id="doneCrypto"></span></div>
+      <div><span id="doneViaLbl">Network</span><span id="doneNet"></span></div>
       <div><span>Reference</span><span>EZB-4417-2290</span></div>
     </div>
     <button class="btn" style="width:576px" onclick="reset()">New payment</button>
@@ -513,6 +513,7 @@ function payNow(){
   } else {
     // Luno, Binance and WalletConnect quote in rands and settle the asset themselves
     row.style.display = 'none';
+    document.getElementById('doneCrypto').textContent = '';
   }
   go('E');
 }

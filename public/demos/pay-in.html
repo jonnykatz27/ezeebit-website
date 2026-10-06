@@ -174,8 +174,7 @@ button{font-family:inherit;border:0;background:none;cursor:pointer;color:inherit
 .qrbtn{margin:16px auto 0;width:462px;margin-left:auto;margin-right:auto}
 
 /* ---------- F: VALR asset pick, G: wallet QR ---------- */
-.btnsec{display:block;width:462px;margin:14px auto 0;padding:24px 0;border-radius:20px;background:#F1F2F4;
-  color:var(--brand);font-size:26px;font-weight:600;text-align:center}
+.back{position:absolute;left:32px;top:8px;width:36px;height:36px;color:var(--text)}
 .scanline{text-align:center;font-size:22px;font-weight:400;color:var(--text-subtle);margin-top:22px}
 .amtline{text-align:center;font-size:26px;font-weight:400;color:var(--text-subtle);margin-top:28px}
 .amtline b{color:var(--brand);font-weight:600}
@@ -304,7 +303,7 @@ button{font-family:inherit;border:0;background:none;cursor:pointer;color:inherit
       <div class="divider"></div>
       <img src="" id="fPowered" alt="Powered by Ezeebit" style="height:34px">
     </div>
-    <button class="close ic" onclick="go('B')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg></button>
+    <button class="back ic" id="fBack" onclick="go('B')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></button>
   </div>
   <div class="amtline">Amount: <b id="fZar">R0.00</b></div>
   <div class="body" style="padding-top:34px;gap:14px">
@@ -313,7 +312,6 @@ button{font-family:inherit;border:0;background:none;cursor:pointer;color:inherit
       <div class="grid" id="valrGrid"></div>
     </div>
   </div>
-  <button class="btnsec" onclick="go('B')">Back</button>
   <div style="height:40px"></div>
 </section>
 
@@ -325,7 +323,7 @@ button{font-family:inherit;border:0;background:none;cursor:pointer;color:inherit
       <div class="divider"></div>
       <img src="" id="gPowered" alt="Powered by Ezeebit" style="height:34px">
     </div>
-    <button class="close ic" onclick="go('B')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg></button>
+    <button class="back ic" id="gBack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></button>
   </div>
   <div class="amtline">Amount: <b id="gZar">R0.00</b></div>
   <div class="cryptobig" id="gCrypto"></div>
@@ -333,7 +331,6 @@ button{font-family:inherit;border:0;background:none;cursor:pointer;color:inherit
   <div class="qrwrap"><div id="gQr"></div><div class="badge" id="gBadge"></div></div>
   <div class="scanline" id="gScan">Scan with your wallet</div>
   <button class="btn qrbtn" onclick="go('E')">Pay Now</button>
-  <button class="btnsec" id="gBack">Back</button>
   <div style="height:40px"></div>
 </section>
 
@@ -394,9 +391,9 @@ const VALR_ASSETS = [
 
 const WALLETS = [
   {k:'VALR Pay', img:A.valr},
-  {k:'Luno Pay', img:A.luno},
+  {k:'Luno Pay', img:'/luno_logo (clean).png'},
   {k:'Binance Pay', img:A.binance},
-  {k:'WalletConnect', img:A.wc}
+  {k:'WalletConnect Pay', img:'/walletconnect-pay.svg'}
 ];
 const NETIMG = {'Ethereum':A.eth,'Binance Smart Chain':A.binance,'Tron':A.tron,'Solana':A.sol,'Bitcoin':A.btc};
 

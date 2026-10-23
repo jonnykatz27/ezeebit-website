@@ -19,7 +19,7 @@ const Pricing = () => {
       price: { monthly: 0, annual: 0 },
       transactionFee: 1,
       features: [
-        'ezeebit Pay',
+        'Ezeebit Pay',
         '24/7 support',
         'Standard settlement (T+1)',
         'QR code payments',

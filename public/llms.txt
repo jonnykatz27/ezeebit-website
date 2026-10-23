@@ -1,17 +1,17 @@
 # Ezeebit
 
-> Ezeebit is Africa's FSCA-regulated crypto and stablecoin payment infrastructure company — enabling merchants to accept digital assets in-store and online, with instant hedging and settlement in stablecoin or local fiat currency (ZAR, KES, NGN).
+> Ezeebit is Africa's FSCA-regulated crypto and stablecoin payment infrastructure company — enabling merchants to accept digital assets in-store and online, with instant hedging and settlement in stablecoin or fiat (ZAR, KES, NGN, USD).
 
-Ezeebit (Ezee Solutions Group Pty Ltd) builds payment rails that let merchants across Africa accept crypto and stablecoins as easily as card payments. The company handles checkout, hedging, compliance, and settlement — offering merchants the choice of stablecoin settlement directly or fiat currency payouts in ZAR, KES, or NGN, with zero volatility risk.
+Ezeebit (Ezee Solutions Group Pty Ltd) builds payment rails that let merchants across Africa accept crypto and stablecoins as easily as card payments. The company handles checkout, hedging, compliance, and settlement — offering merchants the choice of stablecoin settlement directly or fiat currency payouts in ZAR, KES, NGN or USD, with zero volatility risk.
 
 Key facts:
 
 - **Regulated:** Crypto Asset Service Provider (CASP) licensed by the FSCA under the FAIS Act — FSP No. 53664. FIC and POPIA compliant.
-- **Products:** ezeebit Pay (static QR), ePOS terminals (Android POS hardware), e-commerce plugins (Shopify Payments Platform partner), REST API with webhooks, Merchant Portal.
+- **Products:** Ezeebit Pay (static QR), ePOS terminals (Android POS hardware), e-commerce plugins (Shopify Payments Platform partner), REST API with webhooks, Merchant Portal.
 - **Supported assets:** BTC, ETH, USDT (TRC20, ERC20, BEP20, SPL), USDC (ERC20, SPL), BNB (BEP20), DAI, PAXG.
 - **Supported chains:** Bitcoin, Ethereum, TRON, Binance Smart Chain, Solana.
 - **Wallet compatibility:** 700+ wallets via WalletConnect. Direct exchange integrations: Luno Pay, VALR Pay, Binance Pay.
-- **Settlement:** Stablecoin T+0 (instant) or fiat currency T+1 (next business day) in ZAR, KES, or NGN. Merchants always receive 100% of sale value — crypto volatility is hedged at point of sale.
+- **Settlement:** Stablecoin T+0 (instant) or fiat currency T+1 (next business day) in ZAR, KES, NGN or USD. Merchants always receive 100% of sale value — crypto volatility is hedged at point of sale.
 - **Pricing:** 1% transaction fee or lower depending on volume (excl. VAT), approximately 68% cheaper than standard card processing (2–3.5%).
 - **No chargebacks:** Blockchain payments are irreversible, eliminating chargeback fraud.
 - **Traction:** 130+ live stores across South Africa, 40,000+ successful transactions, R120M+ processed volume.
@@ -25,7 +25,7 @@ How a payment works:
 1. Customer scans QR code or pays via online checkout
 2. Transaction is detected on blockchain
 3. Ezeebit instantly converts crypto to stablecoin (hedging volatility)
-4. Settlement occurs: stablecoin T+0 to wallet, or fiat (ZAR, KES, NGN) T+1 to bank account
+4. Settlement occurs: stablecoin T+0 to wallet, or fiat (ZAR, KES, NGN, USD) T+1 to bank account
 5. Merchant receives funds in their chosen currency
 
 Ezeebit is the only crypto payments provider in Africa with physical Android POS terminals for in-store acceptance, and the only African crypto Shopify Payments Platform partner. It serves premium-to-mainstream retail merchants, with key verticals in fashion and luxury retail, electronics, hospitality and tourism, art and culture, iGaming, and grocery.

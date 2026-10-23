@@ -18,7 +18,7 @@ const Wallets = () => {
     {
       icon: <ArrowLeftRight className="w-6 h-6" />,
       title: "Convert between fiat and USDT",
-      description: "Move between local currency and stablecoin at a quoted rate, and hold the balance in whichever one suits your exposure. Settle in ZAR, KES, or NGN."
+      description: "Move between local currency and stablecoin at a quoted rate, and hold the balance in whichever one suits your exposure. Settle in ZAR, KES, NGN or USD."
     },
     {
       icon: <Landmark className="w-6 h-6" />,
@@ -64,8 +64,8 @@ const Wallets = () => {
     <>
       <SEO
         title="Business Wallets for Fiat and Stablecoin"
-        description="Hold fiat and USDT balances with Ezeebit, convert between them, fund customer payouts, and withdraw to your bank or your own wallet. Settle in ZAR, KES, or NGN, with a full ledger, API access, and an FSCA-regulated CASP behind it."
-        keywords="business stablecoin wallet, USDT wallet for business, fiat to stablecoin conversion, ZAR KES NGN settlement, merchant wallet Africa, crypto treasury, stablecoin balance, business crypto withdrawal, CASP regulated wallet"
+        description="Hold fiat and USDT balances with Ezeebit, convert between them, fund customer payouts, and withdraw to your bank or your own wallet. Settle in ZAR, KES, NGN or USD, with a full ledger, API access, and an FSCA-regulated CASP behind it."
+        keywords="business stablecoin wallet, USDT wallet for business, fiat to stablecoin conversion, ZAR KES NGN USD settlement, merchant wallet Africa, crypto treasury, stablecoin balance, business crypto withdrawal, CASP regulated wallet"
         canonicalUrl="/wallets"
       />
       <script type="application/ld+json">
@@ -77,7 +77,7 @@ const Wallets = () => {
           "description": "Business wallets holding fiat and USDT balances, with conversion between them, payout funding, bank and on-chain withdrawals, and a full ledger.",
           "serviceType": "Business wallet and settlement balances",
           "areaServed": ["ZA", "KE", "NG"],
-          "currenciesAccepted": ["ZAR", "KES", "NGN", "USDT"],
+          "currenciesAccepted": ["ZAR", "KES", "NGN", "USD", "USDT"],
           "provider": {
             "@type": "Organization",
             "name": "Ezeebit",

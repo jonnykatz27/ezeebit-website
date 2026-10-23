@@ -66,7 +66,7 @@ const Online = () => {
     <>
       <SEO
         title="Online Stablecoin and Crypto Payments for E-Commerce"
-        description="Accept stablecoin and cryptocurrency payments in your online store with Ezeebit. Shopify, WooCommerce, and Magento plugins available. Zero-code integration, instant settlement in ZAR, KES, or NGN. Support for Bitcoin, Ethereum, USDT, USDC and more."
+        description="Accept stablecoin and cryptocurrency payments in your online store with Ezeebit. Shopify, WooCommerce, and Magento plugins available. Zero-code integration, instant settlement in ZAR, KES, NGN or USD. Support for Bitcoin, Ethereum, USDT, USDC and more."
         keywords="online stablecoin and crypto payments, e-commerce cryptocurrency, Shopify crypto plugin, WooCommerce bitcoin payments, accept crypto online, cryptocurrency checkout, bitcoin e-commerce, ethereum payments, stablecoin checkout, crypto payment gateway, online crypto merchant"
         canonicalUrl="/online"
       />
@@ -101,7 +101,7 @@ const Online = () => {
       <PageHero
         title="Stablecoin checkout"
         accent="for your online store."
-        description="Add stablecoin and crypto payments to your store with zero-code plugins, or build on our API. Customers pay with Bitcoin, Ethereum, stablecoins, and more, and you're settled in ZAR, KES, or NGN."
+        description="Add stablecoin and crypto payments to your store with zero-code plugins, or build on our API. Customers pay with Bitcoin, Ethereum, stablecoins, and more, and you're settled in ZAR, KES, NGN or USD."
         actions={
           <>
           <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>

@@ -101,7 +101,7 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
     },
     {
       title: 'You get settled',
-      body: 'Fiat in your bank the next business day — ZAR, KES or NGN — or stablecoin the same day.',
+      body: 'Fiat in your bank the next business day — ZAR, KES, NGN or USD — or stablecoin the same day.',
       visual: (
         <div className="flex items-center gap-2.5">
           <FlagStack />
@@ -410,7 +410,7 @@ const Home = () => {
     {
       icon: <Landmark className="w-6 h-6" />,
       title: "Settlement on your terms",
-      description: "Fiat next business day in ZAR, KES or NGN. Stablecoin same day. Payouts in minutes."
+      description: "Fiat next business day in ZAR, KES, NGN or USD. Stablecoin same day. Payouts in minutes."
     },
     {
       icon: <Lock className="w-6 h-6" />,
@@ -465,7 +465,7 @@ const Home = () => {
     <>
       <SEO
         title="Crypto Payment Solutions for African Businesses"
-        description="Accept crypto and stablecoins in-store and online, pay your customers out in minutes, and hold your balance in fiat or stablecoin. FSCA regulated, with settlement in ZAR, KES, or NGN."
+        description="Accept crypto and stablecoins in-store and online, pay your customers out in minutes, and hold your balance in fiat or stablecoin. FSCA regulated, with settlement in ZAR, KES, NGN or USD."
         canonicalUrl="/"
       />
       <script type="application/ld+json">
@@ -475,7 +475,7 @@ const Home = () => {
           "name": "Ezeebit",
           "url": "https://ezeebit.com",
           "logo": "https://ezeebit.com/ezeebit_black.png",
-          "description": "Leading crypto payment solutions for African businesses. Accept Bitcoin, Ethereum, and stablecoins with instant settlement in ZAR, KES, or NGN.",
+          "description": "Leading crypto payment solutions for African businesses. Accept Bitcoin, Ethereum, and stablecoins with instant settlement in ZAR, KES, NGN or USD.",
           "foundingDate": "2023",
           "address": {
             "@type": "PostalAddress",
@@ -522,7 +522,7 @@ const Home = () => {
       <PageHero
         title="Stablecoin payments,"
         accent="in and out."
-        description="Accept crypto and stablecoins in-store and online, pay your customers out in minutes, and hold your balance in fiat or stablecoin. One regulated account, settled in ZAR, KES, or NGN."
+        description="Accept crypto and stablecoins in-store and online, pay your customers out in minutes, and hold your balance in fiat or stablecoin. One regulated account, settled in ZAR, KES, NGN or USD."
         actions={
           <>
             <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
@@ -588,7 +588,6 @@ const Home = () => {
                 { name: 'Skins', logo: '/skins-logo.png' },
                 { name: 'Le Creuset', logo: '/le-creuset-logo(final).png', scale: 1.475 },
                 { name: 'Amiri', logo: '/amiri-logo(latest).png', mobileScale: 0.95 },
-                { name: 'Court Order', logo: '/courtorder-logo(latest).png', scale: 0.75 },
                 { name: 'Ritual', logo: '/ritual-logo(latest).png', scale: 1.15 },
                 { name: 'Hydraulics', logo: '/hydraulics-logo(latest).png', scale: 1.15 },
                 { name: 'Al Capone', logo: '/alcapone-logo(final).png', scale: 1.15 },
@@ -607,7 +606,7 @@ const Home = () => {
                 { name: 'Yawa', logo: '/yawa-logo(final).png', scale: 0.9, mobileScale: 1.089 },
                 { name: 'Tintswalo Lodge', logo: '/tintswalo-logo(latest).png', scale: 1.32, mobileScale: 1.2245 },
                 { name: 'Luxity', logo: '/luxity-logo(latest).png', mobileScale: 0.8 },
-                { name: 'Story', logo: '/story-logo(latest).png', mobileScale: 0.95 },
+                { name: 'The Capital', logo: '/thecapital-logo.png', scale: 1.25 },
                 { name: 'Spar', logo: '/spar-logo(latest).png', mobileScale: 0.8 },
                 { name: 'Cultish', logo: '/cultish-logo(latest).png', scale: 1.6, mobileScale: 1.32 },
                 { name: 'Watch Channel', logo: '/watch-channel-logo(final).png', mobileScale: 1.05 },

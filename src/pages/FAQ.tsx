@@ -19,7 +19,7 @@ const FAQ = () => {
       id: '1',
       category: 'getting-started',
       question: 'How do I get started with Ezeebit?',
-      answer: 'Sign up for a merchant account, complete our quick online KYC, then choose either an in-store ePOS device, ezeebit Pay QR code or plug in our online payment plugin. We guide you through every step until you\'re live.',
+      answer: 'Sign up for a merchant account, complete our quick online KYC, then choose either an in-store ePOS device, Ezeebit Pay QR code or plug in our online payment plugin. We guide you through every step until you\'re live.',
       popular: true
     },
     {
@@ -33,14 +33,14 @@ const FAQ = () => {
       id: '3',
       category: 'payments',
       question: 'Which cryptocurrencies are supported?',
-      answer: 'Accept Bitcoin (BTC), Ethereum (ETH), USDT, USDC, BNB, DAI, PAXG, and the rand-backed stablecoins ZARP and ZARU, which settle on Ethereum and Solana. All transactions are instantly hedged to stablecoins at checkout to shield you from volatility, then settled in your local currency (ZAR, KES, or NGN).',
+      answer: 'Accept Bitcoin (BTC), Ethereum (ETH), USDT, USDC, BNB, DAI, PAXG, and the rand-backed stablecoins ZARP and ZARU, which settle on Ethereum and Solana. All transactions are instantly hedged to stablecoins at checkout to shield you from volatility, then settled in fiat (ZAR, KES, NGN or USD).',
       popular: true
     },
     {
       id: '4',
       category: 'payments',
       question: 'How fast are payments processed?',
-      answer: 'In-store ePOS payments can complete in as quick as 0.5 seconds. BTC transactions can take longer. Online transactions confirm within a minute on most networks, and fiat settlement (ZAR, KES, or NGN) lands in your bank by the next business day.',
+      answer: 'In-store ePOS payments can complete in as quick as 0.5 seconds. BTC transactions can take longer. Online transactions confirm within a minute on most networks, and fiat settlement (ZAR, KES, NGN or USD) lands in your bank by the next business day.',
       popular: true
     },
     {
@@ -124,7 +124,7 @@ const FAQ = () => {
       id: '16',
       category: 'payments',
       question: 'Are there any monthly fees or hidden costs?',
-      answer: 'None. There are no monthly subscriptions, no setup fees for ePOS and ezeebit Pay, and no hidden charges. You only pay a small percentage when a transaction completes successfully.',
+      answer: 'None. There are no monthly subscriptions, no setup fees for ePOS and Ezeebit Pay, and no hidden charges. You only pay a small percentage when a transaction completes successfully.',
       popular: true
     },
     {
@@ -152,7 +152,7 @@ const FAQ = () => {
       id: '20',
       category: 'payments',
       question: 'Can I choose to be paid in stablecoins instead of local currency?',
-      answer: 'Yes. You decide how you want to be settled: stablecoins (USDT or USDC) for speed and flexibility, or local currency (ZAR, KES, or NGN) deposited directly into your bank account.',
+      answer: 'Yes. You decide how you want to be settled: stablecoins (USDT or USDC) for speed and flexibility, or fiat (ZAR, KES, NGN or USD) deposited directly into your bank account.',
       popular: true
     },
     {
@@ -222,7 +222,7 @@ const FAQ = () => {
       id: '30',
       category: 'payments',
       question: 'Do you handle large one-off trades?',
-      answer: 'Our OTC desk does. It is for volumes that would move the market on an exchange: you get a firm quote from a named dealer, the rate is locked when you accept it, and settlement is same day in ZAR, KES or NGN. It is a desk rather than a self-serve product, so it starts with a conversation.',
+      answer: 'Our OTC desk does. It is for volumes that would move the market on an exchange: you get a firm quote from a named dealer, the rate is locked when you accept it, and settlement is same day in ZAR, KES, NGN or USD. It is a desk rather than a self-serve product, so it starts with a conversation.',
       popular: false
     },
   ]

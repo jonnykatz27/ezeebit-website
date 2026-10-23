@@ -104,7 +104,7 @@ const blogPostsData: Record<string, {
         </p>
 
         <ul className="list-disc pl-6 mb-4 space-y-2">
-          <li><strong>Local currency (ZAR, KES, NGN), T+1:</strong> funds land in the platform's bank account the next business day, at the rate locked when the player deposited. No crypto ever touches the balance sheet.</li>
+          <li><strong>Fiat (ZAR, KES, NGN, USD), T+1:</strong> funds land in the platform's bank account the next business day, at the rate locked when the player deposited. No crypto ever touches the balance sheet.</li>
           <li><strong>Stablecoins (USDT or USDC), T+0:</strong> settlement within minutes, for platforms running dollar-pegged treasury or operating across multiple markets.</li>
         </ul>
 
@@ -202,7 +202,7 @@ const blogPostsData: Record<string, {
         <ul className="list-disc pl-6 mb-6 space-y-2">
           <li><strong>Deposit API:</strong> per-user deposit requests, real-time crediting callbacks, and full reconciliation</li>
           <li><strong>Any-wallet coverage:</strong> on-chain, WalletConnect (700+ wallets), and Exchange Pay (Luno, VALR, Binance) out of the box</li>
-          <li><strong>Settlement on your terms:</strong> T+0 stablecoin or T+1 local currency (ZAR, KES, NGN), always hedged</li>
+          <li><strong>Settlement on your terms:</strong> T+0 stablecoin or T+1 fiat (ZAR, KES, NGN, USD), always hedged</li>
         </ul>
 
         <p>
@@ -537,10 +537,10 @@ const blogPostsData: Record<string, {
           Every Ezeebit transaction is hedged at the point of sale. The moment a customer pays, the fiat value is locked. Merchants receive 100% of the sale value regardless of what happens to crypto prices in the seconds, minutes, or days that follow.
         </p>
 
-        <h3 className="text-xl font-semibold text-neutral-900 mt-6 mb-3">Local currency (ZAR, KES, NGN), T+1</h3>
+        <h3 className="text-xl font-semibold text-neutral-900 mt-6 mb-3">Fiat (ZAR, KES, NGN, USD), T+1</h3>
 
         <p className="mb-4">
-          Fiat settlement lands in the merchant's bank account the next business day, in the local currency of the market they operate in: South African rand (ZAR), Kenyan shilling (KES), or Nigerian naira (NGN). No crypto ever touches the balance sheet.
+          Fiat settlement lands in the merchant's bank account the next business day, in their local currency or in dollars: South African rand (ZAR), Kenyan shilling (KES), Nigerian naira (NGN) or US dollar (USD). No crypto ever touches the balance sheet.
         </p>
 
         <p>
@@ -578,7 +578,7 @@ const blogPostsData: Record<string, {
             { step: '03', text: 'The transaction is broadcast or executed instantly.' },
             { step: '04', text: 'Ezeebit detects the payment and hedges the crypto at the locked rate.' },
             { step: '05', text: 'The merchant sees the payment confirmed in real time on the Merchant Portal.' },
-            { step: '06', text: 'Settlement: T+0 in stablecoin, or T+1 in local currency (ZAR, KES, or NGN) to the merchant\'s bank account.' },
+            { step: '06', text: 'Settlement: T+0 in stablecoin, or T+1 in fiat (ZAR, KES, NGN or USD) to the merchant\'s bank account.' },
           ].map(({ step, text }) => (
             <div key={step} className="flex items-start gap-4">
               <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary-50 text-xs font-semibold text-primary-600 shrink-0 mt-0.5">{step}</span>
@@ -638,7 +638,7 @@ const blogPostsData: Record<string, {
             },
             {
               q: 'How fast is settlement?',
-              a: 'T+0 in stablecoin (within minutes). T+1 in local currency (ZAR, KES, or NGN) to the merchant\'s bank account, next business day.'
+              a: 'T+0 in stablecoin (within minutes). T+1 in fiat (ZAR, KES, NGN or USD) to the merchant\'s bank account, next business day.'
             },
             {
               q: 'What happens if the crypto price moves between payment and settlement?',
@@ -662,7 +662,7 @@ const blogPostsData: Record<string, {
             },
             {
               q: 'Which countries does Ezeebit operate in?',
-              a: 'South Africa, Kenya, and Nigeria. Merchants can settle in local currency (ZAR, KES, NGN) or in stablecoins.'
+              a: 'South Africa, Kenya, and Nigeria. Merchants can settle in fiat (ZAR, KES, NGN or USD) or in stablecoins.'
             },
           ].map(({ q, a }) => (
             <div key={q} className="border-b border-neutral-100 pb-6">

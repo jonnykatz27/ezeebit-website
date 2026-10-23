@@ -37,7 +37,7 @@ const InStore = () => {
     { label: "Network Support", value: "WiFi, 4G, SIM Card ports" },
     { label: "Payment Methods", value: "QR Scan" },
     { label: "Supported Currencies", value: "7+ Cryptocurrencies" },
-    { label: "Settlement", value: "Instant stablecoin, T+1 ZAR/KES/NGN" },
+    { label: "Settlement", value: "Instant stablecoin, T+1 ZAR/KES/NGN/USD" },
     { label: "Receipt", value: "Printed receipts" }
   ]
 
@@ -45,7 +45,7 @@ const InStore = () => {
     <>
       <SEO
         title="In-Store Stablecoin and Crypto Payments with ePOS"
-        description="Accept cryptocurrency at your physical store with our lightning-fast ePOS system. QR code payments, printed receipts, and instant settlement in ZAR, KES, or NGN."
+        description="Accept cryptocurrency at your physical store with our lightning-fast ePOS system. QR code payments, printed receipts, and instant settlement in ZAR, KES, NGN or USD."
         canonicalUrl="/in-store"
       />
       <motion.div
@@ -58,7 +58,7 @@ const InStore = () => {
       <PageHero
         title="Accept stablecoins"
         accent="at the counter."
-        description="Take stablecoin and crypto payments in your store with an ePOS device or an ezeebit Pay QR code. Every payment is hedged on the spot and settled in ZAR, KES, or NGN."
+        description="Take stablecoin and crypto payments in your store with an ePOS device or an Ezeebit Pay QR code. Every payment is hedged on the spot and settled in ZAR, KES, NGN or USD."
         actions={
           <>
           <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
@@ -170,7 +170,7 @@ const InStore = () => {
         </div>
       </section>
 
-      {/* ezeebit Pay Section */}
+      {/* Ezeebit Pay Section */}
       <section className="section-padding bg-neutral-50">
         <div className="container-custom">
           <motion.div
@@ -181,7 +181,7 @@ const InStore = () => {
             <div className="flex justify-center mb-6">
               <img
                 src="/ezeebitpay-logo.png"
-                alt="ezeebitPay logo"
+                alt="Ezeebit Pay logo"
                 className="h-24 w-auto max-w-[384px]"
               />
             </div>
@@ -191,13 +191,13 @@ const InStore = () => {
               <div className="relative flex justify-center items-center w-full max-w-md px-4 -translate-x-4">
                 <img
                   src="/ezeebitpay-copy.webp"
-                  alt="ezeebit Pay QR Code device"
+                  alt="Ezeebit Pay QR Code device"
                   className="w-full max-w-[308px]"
                 />
                 <div className="absolute right-4 top-8 z-10">
                   <img
-                    src="/corrected-ezeebitpay.webp"
-                    alt="Payment amount and currency selector interface"
+                    src="/ezeebit-pay-checkout.webp"
+                    alt="Ezeebit checkout: select a payment method, from on-chain crypto or a wallet"
                     className="w-[128px] rounded-xl shadow-2xl"
                   />
                 </div>
@@ -263,14 +263,14 @@ const InStore = () => {
                 <div className="relative">
                   <img
                     src="/ezeebitpay-copy.webp"
-                    alt="ezeebit Pay QR Code device"
+                    alt="Ezeebit Pay QR Code device"
                     className="w-[150%] -ml-8"
                   />
                 </div>
                 <div className="absolute right-[40px] z-10">
                   <img
-                    src="/corrected-ezeebitpay.webp"
-                    alt="Payment amount and currency selector interface"
+                    src="/ezeebit-pay-checkout.webp"
+                    alt="Ezeebit checkout: select a payment method, from on-chain crypto or a wallet"
                     className="w-[100%] max-w-[240px] rounded-xl shadow-2xl translate-x-4"
                   />
                 </div>
@@ -318,8 +318,8 @@ const InStore = () => {
               },
               {
                 step: "4",
-                title: "Local currency settlement",
-                description: "Funds settled to your bank account in ZAR, KES, or NGN the next business day",
+                title: "Fiat settlement",
+                description: "Funds settled to your bank account in ZAR, KES, NGN or USD the next business day",
                 icon: <CheckCircle className="w-8 h-8" />
               }
             ].map((step, index) => (

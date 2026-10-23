@@ -1,20 +1,35 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { Check, Clock, Store } from 'lucide-react'
 import {
-  CARD, PORTAL_CARD, COIN, SWAP, arrive, money, rands,
+  CARD, PORTAL_CARD, COIN, SWAP, arrive, money,
   useHeroLoop, HeroStage, Rings, FloatingCoin, Counter,
 } from './heroKit'
 import { PortalScale, PortalStatCard } from '../portal/PortalUI'
 
-/** Illustrative sales the terminal rings up, one after another. */
+type Fiat = 'ZAR' | 'KES' | 'NGN' | 'USD'
+
+/** How the terminal writes each currency a merchant can settle in. */
+const FIAT: Record<Fiat, (v: number) => string> = {
+  ZAR: (v) => `R${money(v)}`,
+  KES: (v) => `KSh ${money(v)}`,
+  NGN: (v) => `₦${money(v)}`,
+  USD: (v) => `$${money(v)}`,
+}
+
+/**
+ * Illustrative sales the terminal rings up, one after another, each in a
+ * different settlement currency. `rate` is that currency per unit of the asset.
+ */
 const SALES = [
-  { zar: 4_500, asset: 'usdt', network: 'Tron', rate: 18.45, dp: 2 },
-  { zar: 1_250, asset: 'usdc', network: 'Solana', rate: 18.45, dp: 2 },
-  { zar: 8_990, asset: 'btc', network: 'Bitcoin', rate: 1_948_000, dp: 6 },
+  { amount: 4_500, fiat: 'ZAR', asset: 'usdt', network: 'Tron', rate: 18.45, dp: 2 },
+  { amount: 32_000, fiat: 'KES', asset: 'usdc', network: 'Solana', rate: 129.5, dp: 2 },
+  { amount: 185_000, fiat: 'NGN', asset: 'btc', network: 'Bitcoin', rate: 165_765_000, dp: 6 },
+  { amount: 240, fiat: 'USD', asset: 'eth', network: 'Ethereum', rate: 2_596, dp: 4 },
 ] as const
 
 const PHASES = ['amount', 'qr', 'paid'] as const
-const TODAY_START = 38_240
+/** The day's takings before the loop starts, in each currency. */
+const TODAY_START: Record<Fiat, number> = { ZAR: 38_240, KES: 268_500, NGN: 3_120_000, USD: 2_075 }
 
 /**
  * A real, scannable QR code for https://ezeebit.com/in-store — version 4 at
@@ -93,9 +108,13 @@ const InStoreHeroVisual = () => {
   const phase = still ? 'paid' : PHASES[step % 3]
   const saleIndex = Math.floor(step / 3) % SALES.length
   const sale = SALES[saleIndex]
-  const crypto = sale.zar / sale.rate
+  const fmt = FIAT[sale.fiat]
+  const crypto = sale.amount / sale.rate
   const completed = Math.floor((step + 1) / 3)
-  const today = TODAY_START + Array.from({ length: completed }, (_, i) => SALES[i % SALES.length].zar).reduce((a, b) => a + b, 0)
+  // The takings card follows the sale's currency, adding up only the sales made in it
+  const today = TODAY_START[sale.fiat] + Array.from({ length: completed }, (_, i) => SALES[i % SALES.length])
+    .filter((s) => s.fiat === sale.fiat)
+    .reduce((sum, s) => sum + s.amount, 0)
 
   return (
     <HeroStage ref={ref} label="An Ezeebit ePOS terminal taking a payment: the amount is entered, the customer scans a QR code, and the payment is confirmed.">
@@ -129,7 +148,7 @@ const InStoreHeroVisual = () => {
               <motion.div key={`a${step}`} {...SWAP} className="absolute inset-0 px-4 pt-5 flex flex-col items-center">
                 <p className="text-[13px] font-semibold text-neutral-800 mb-3">Enter amount</p>
                 <p className="text-[26px] font-semibold text-neutral-900 tracking-tight mb-1">
-                  <Counter value={sale.zar} format={(v) => money(v, 0)} still={still} /> <span className="text-neutral-400">ZAR</span>
+                  <Counter value={sale.amount} format={(v) => money(v, 0)} still={still} /> <span className="text-neutral-400">{sale.fiat}</span>
                 </p>
                 <p className="text-[10px] text-neutral-500 bg-white border border-neutral-200 rounded-md px-1.5 py-0.5 mb-4">
                   ≈ {money(crypto, sale.dp)} {sale.asset.toUpperCase()}
@@ -151,14 +170,14 @@ const InStoreHeroVisual = () => {
                 <p className="text-[22px] font-semibold text-neutral-900 tracking-tight leading-tight">
                   {money(crypto, sale.dp)} <span className="text-sm text-primary-600">{sale.asset.toUpperCase()}</span>
                 </p>
-                <p className="text-[10px] text-neutral-500 mb-3">≈ {rands(sale.zar)} · {sale.network}</p>
+                <p className="text-[10px] text-neutral-500 mb-3">≈ {fmt(sale.amount)} · {sale.network}</p>
                 <div className="p-1 rounded-2xl bg-white border border-neutral-200 shadow-sm mb-3">
                   <QR size={152} coin={`/${sale.asset}-logo.svg`} />
                 </div>
                 <p className="flex items-center gap-1 text-[10px] text-neutral-500 mb-3">
                   <Clock className="w-3 h-3" /> 14:52
                 </p>
-                <span className="w-full h-9 rounded-xl bg-primary-500 text-white text-sm font-semibold flex items-center justify-center">I have paid</span>
+                <span className="w-full h-9 rounded-xl bg-primary-500 text-white text-sm font-semibold flex items-center justify-center">Pay</span>
               </motion.div>
             )}
 
@@ -173,7 +192,7 @@ const InStoreHeroVisual = () => {
                   <Check className="w-10 h-10" strokeWidth={2.5} />
                 </motion.span>
                 <p className="text-lg font-semibold text-neutral-900 mb-1">Payment received</p>
-                <p className="text-[22px] font-bold text-neutral-900 tracking-tight mb-1">{rands(sale.zar)}</p>
+                <p className="text-[22px] font-bold text-neutral-900 tracking-tight mb-1">{fmt(sale.amount)}</p>
                 <p className="text-[11px] text-neutral-500 flex items-center gap-1.5">
                   <img src={`/${sale.asset}-logo.svg`} alt="" className={`w-4 h-4 ${COIN}`} />
                   Paid in {sale.asset.toUpperCase()} on {sale.network}
@@ -184,7 +203,7 @@ const InStoreHeroVisual = () => {
         </div>
       </motion.div>
 
-      {/* ── The ezeebit Pay poster a merchant prints from the portal (Figma artwork, with our safe QR) ── */}
+      {/* ── The Ezeebit Pay poster a merchant prints from the portal (Figma artwork, with our safe QR) ── */}
       <motion.div
         className="absolute rounded-md overflow-hidden shadow-[0_18px_40px_-14px_rgba(0,46,92,0.35)] [&_img]:!mx-0"
         style={{ left: 18, top: 58, width: 130, rotate: -4 }}
@@ -196,7 +215,8 @@ const InStoreHeroVisual = () => {
       {/* ── The day's takings, as the portal's Total volume card ── */}
       <motion.div className={`absolute ${PORTAL_CARD} !border-0`} style={{ left: 372, top: 362 }} {...arrive(0.6, 'right')}>
         <PortalScale width={232} scale={0.8}>
-          <PortalStatCard label="Total volume" value={<Counter value={today} format={(v) => `R ${money(v)}`} still={still} />} />
+          {/* Re-keyed per currency, so a new currency swaps the figure rather than counting across from the last one */}
+          <PortalStatCard label="Total volume" value={<Counter key={sale.fiat} value={today} format={fmt} still={still} />} />
         </PortalScale>
       </motion.div>
     </HeroStage>

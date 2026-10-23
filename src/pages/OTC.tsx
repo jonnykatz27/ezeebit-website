@@ -23,7 +23,7 @@ const OTC = () => {
     {
       icon: <Clock className="w-6 h-6" />,
       title: "Same-day settlement",
-      description: "Funds land in your bank account in ZAR, KES, or NGN, often within hours of trade confirmation."
+      description: "Funds land in your bank account in ZAR, KES, NGN or USD, often within hours of trade confirmation."
     },
     {
       icon: <UserCheck className="w-6 h-6" />,
@@ -64,7 +64,7 @@ const OTC = () => {
     <>
       <SEO
         title="Crypto OTC Desk for Large Trades"
-        description="Ezeebit's OTC desk handles large-volume crypto-to-fiat trades with deep liquidity, firm locked pricing, and same-day settlement in ZAR, KES, or NGN. Work with a dedicated dealer for Bitcoin, Ethereum, USDT, USDC and more."
+        description="Ezeebit's OTC desk handles large-volume crypto-to-fiat trades with deep liquidity, firm locked pricing, and same-day settlement in ZAR, KES, NGN or USD. Work with a dedicated dealer for Bitcoin, Ethereum, USDT, USDC and more."
         keywords="crypto OTC desk, over the counter crypto trading, large crypto trades, bulk bitcoin sale, crypto to fiat settlement, OTC bitcoin, institutional crypto desk, ZAR crypto settlement, African crypto OTC, USDT OTC, stablecoin OTC"
         canonicalUrl="/otc"
       />
@@ -77,7 +77,7 @@ const OTC = () => {
           "description": "Over-the-counter desk for large-volume crypto-to-fiat trades with deep liquidity, firm pricing, and same-day settlement.",
           "serviceType": "Over-the-counter cryptocurrency trading",
           "areaServed": ["ZA", "KE", "NG"],
-          "currenciesAccepted": ["ZAR", "KES", "NGN", "USDT", "USDC", "BTC", "ETH"],
+          "currenciesAccepted": ["ZAR", "KES", "NGN", "USD", "USDT", "USDC", "BTC", "ETH"],
           "provider": {
             "@type": "Organization",
             "name": "Ezeebit",
@@ -95,7 +95,7 @@ const OTC = () => {
         <PageHero
           title="Move large volumes"
           accent="of crypto."
-          description="Buy or sell crypto at scale without moving the market. Get a firm quote, lock the rate, and settle the same day in ZAR, KES, or NGN, with a dedicated dealer handling every trade."
+          description="Buy or sell crypto at scale without moving the market. Get a firm quote, lock the rate, and settle the same day in ZAR, KES, NGN or USD, with a dedicated dealer handling every trade."
           actions={
             <>
             <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
+import { motion } from '../../lib/motion'
 import {
   PORTAL_CARD, SWAP, arrive, money,
   useHeroLoop, HeroStage, Rings, FloatingCoin, Counter, Flash,

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import { Link } from 'react-router-dom'
 import {
   Code, ExternalLink, Copy,
@@ -498,9 +498,10 @@ app.post(
   return (
     <>
       <SEO
-        title="API Documentation for Developers"
-        description="Integrate Ezeebit crypto payments, payouts and wallet infrastructure with one API and one set of credentials. Signed REST endpoints, hosted checkout, and signed webhooks."
+        title="Developer API"
+        description="Ezeebit API for payments, payouts and wallets. Signed REST requests, hosted checkout and signed webhooks."
         canonicalUrl="/developers"
+        crumbs={[{ name: 'Developer API', path: '/developers' }]}
       />
       <motion.div
       initial={{ opacity: 0 }}

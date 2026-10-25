@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import { Link } from 'react-router-dom'
 import {
   Smartphone, Wifi, QrCode, FileText,
@@ -44,9 +44,10 @@ const InStore = () => {
   return (
     <>
       <SEO
-        title="In-Store Stablecoin and Crypto Payments with ePOS"
-        description="Accept cryptocurrency at your physical store with our lightning-fast ePOS system. QR code payments, printed receipts, and instant settlement in ZAR, KES, NGN or USD."
+        title="In-store ePOS and static QR"
+        description="Accept stablecoin and crypto at the till with an Android ePOS or a static QR code. Settle in USDT or in ZAR, KES, NGN or USD."
         canonicalUrl="/in-store"
+        crumbs={[{ name: 'In-store ePOS', path: '/in-store' }]}
       />
       <motion.div
       initial={{ opacity: 0 }}

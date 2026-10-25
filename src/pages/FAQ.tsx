@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import {
   ChevronDown, HelpCircle,
   Phone, Mail, Star,
@@ -283,24 +283,22 @@ const FAQ = () => {
   return (
     <>
       <SEO
-        title="Frequently Asked Questions"
-        description="Answers to common questions about Ezeebit — taking payments in, paying customers out in stablecoin, holding a fiat or USDT balance, fees, settlement, security and integration."
+        title="FAQ"
+        description="Answers about Ezeebit payments, payouts, wallets, settlement and fees for merchants in South Africa."
         canonicalUrl="/resources/faq"
+        crumbs={[{ name: 'FAQ', path: '/resources/faq' }]}
+        extraNodes={[{
+          '@type': 'FAQPage',
+          '@id': 'https://ezeebit.com/resources/faq#faq',
+          mainEntity: faqItems
+            .filter((item) => !/FSCA|FAIS|68%|SOC 2|0\.5 seconds|100,000|150\+|130\+|40,000|R120|700 wallets|instant|half the cost|cheaper/i.test(`${item.question} ${item.answer}`))
+            .map((item) => ({
+              '@type': 'Question',
+              name: item.question,
+              acceptedAnswer: { '@type': 'Answer', text: item.answer },
+            })),
+        }]}
       />
-      <script type="application/ld+json">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          "mainEntity": faqItems.slice(0, 10).map(item => ({
-            "@type": "Question",
-            "name": item.question,
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": item.answer
-            }
-          }))
-        })}
-      </script>
       <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}

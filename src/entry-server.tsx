@@ -9,10 +9,10 @@ import Footer from './components/Footer'
 import Home from './pages/Home'
 import InStore from './pages/InStore'
 import Online from './pages/Online'
-import OTC from './pages/OTC'
 import Payouts from './pages/Payouts'
 import Platforms from './pages/Platforms'
 import Wallets from './pages/Wallets'
+import OTC from './pages/OTC'
 import Pricing from './pages/Pricing'
 import Developers from './pages/Developers'
 import Resources from './pages/Resources'
@@ -61,6 +61,7 @@ export function render(url: string) {
             <Route path="/resources/where-to-spend" element={<WhereToSpend />} />
             <Route path="/resources/stores/:slug" element={<StoreDetail />} />
             <Route path="/careers" element={<Careers />} />
+            <Route path="/404" element={<NotFound />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />

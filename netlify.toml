@@ -1,9 +1,14 @@
+# Production is AWS CloudFront + S3, not Netlify.
+# Redirects, 404s and cache headers for ezeebit.com live in infra/cloudfront/.
+# This file only affects a Netlify preview, if one is still used.
+
 [build]
   command = "npm run build:all"
   publish = "dist"
 
-# SPA fallback so client-side routes resolve
+# Pretty URLs are real files (dist/<route>/index.html) after pre-render.
+# Anything else should be a real 404, not a 200 rewrite to the homepage.
 [[redirects]]
   from = "/*"
-  to = "/index.html"
-  status = 200
+  to = "/404.html"
+  status = 404

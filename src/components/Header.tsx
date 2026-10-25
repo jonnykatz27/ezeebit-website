@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, ChevronDown } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
+import { motion } from '../lib/motion'
 
 type NavLink = {
   name: string
@@ -155,15 +156,12 @@ const Header = () => {
                         }`}
                       />
                     </button>
-                    <AnimatePresence>
-                      {activeDropdown === item.name && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 8, scale: 0.98 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: 8, scale: 0.98 }}
-                          transition={{ duration: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
-                          className="absolute top-full left-0 mt-1 w-72 bg-white rounded-xl shadow-xl border border-neutral-100 py-1.5 overflow-hidden"
-                        >
+                    {/* Always in the DOM so crawlers can follow the product links. */}
+                    <div
+                      className={`absolute top-full left-0 mt-1 w-72 bg-white rounded-xl shadow-xl border border-neutral-100 py-1.5 overflow-hidden ${
+                        activeDropdown === item.name ? 'visible' : 'invisible'
+                      }`}
+                    >
                           {item.dropdown.map((group, groupIndex) => (
                             <div
                               key={group.group ?? `group-${groupIndex}`}
@@ -188,9 +186,7 @@ const Header = () => {
                               ))}
                             </div>
                           ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                    </div>
                   </div>
                 ) : (
                   <Link

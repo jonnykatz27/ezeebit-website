@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import { Link } from 'react-router-dom'
 import {
   Plug, Zap, Shield, BarChart3,
@@ -65,32 +65,11 @@ const Online = () => {
   return (
     <>
       <SEO
-        title="Online Stablecoin and Crypto Payments for E-Commerce"
-        description="Accept stablecoin and cryptocurrency payments in your online store with Ezeebit. Shopify, WooCommerce, and Magento plugins available. Zero-code integration, instant settlement in ZAR, KES, NGN or USD. Support for Bitcoin, Ethereum, USDT, USDC and more."
-        keywords="online stablecoin and crypto payments, e-commerce cryptocurrency, Shopify crypto plugin, WooCommerce bitcoin payments, accept crypto online, cryptocurrency checkout, bitcoin e-commerce, ethereum payments, stablecoin checkout, crypto payment gateway, online crypto merchant"
+        title="Online payments for Shopify, WooCommerce and Magento"
+        description="Add stablecoin and crypto checkout to Shopify, WooCommerce or Magento, or use the API. Settle in USDT or in ZAR, KES, NGN or USD."
         canonicalUrl="/online"
+        crumbs={[{ name: 'Online payments', path: '/online' }]}
       />
-      <script type="application/ld+json">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "SoftwareApplication",
-          "name": "Ezeebit Online Payment Plugin",
-          "applicationCategory": "FinanceApplication",
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "ZAR"
-          },
-          "description": "Accept stablecoin and cryptocurrency payments in your online store with zero-code integration",
-          "operatingSystem": "Web",
-          "featureList": "Bitcoin payments, Ethereum payments, Stablecoin payments, Shopify integration, WooCommerce integration, Instant settlement",
-          "provider": {
-            "@type": "Organization",
-            "name": "Ezeebit",
-            "url": "https://ezeebit.com"
-          }
-        })}
-      </script>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

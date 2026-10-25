@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import {
   ArrowLeft, ExternalLink, MapPin,
   CheckCircle, Smartphone, QrCode, CreditCard
@@ -7,6 +7,8 @@ import {
 import { stores } from '../lib/stores'
 import { storeDetailsMap } from '../lib/storeDetails'
 import SEO from '../components/SEO'
+import BreadcrumbNav from '../components/Breadcrumbs'
+import { absoluteUrl } from '../lib/schema'
 
 const StoreDetail = () => {
   const { slug } = useParams<{ slug: string }>()
@@ -15,18 +17,26 @@ const StoreDetail = () => {
 
   if (!store) {
     return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="pt-20 min-h-screen flex items-center justify-center"
-      >
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-neutral-900 mb-4">Store Not Found</h1>
-          <Link to="/resources/where-to-spend" className="btn-primary">
-            Back to Stores
-          </Link>
-        </div>
-      </motion.div>
+      <>
+        <SEO
+          title="Store not found"
+          description="This store page does not exist. See where you can pay with crypto through Ezeebit in South Africa."
+          canonicalUrl="/resources/where-to-spend"
+          noindex
+        />
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="pt-20 min-h-screen flex items-center justify-center"
+        >
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-neutral-900 mb-4">Store Not Found</h1>
+            <Link to="/resources/where-to-spend" className="btn-primary">
+              Back to Stores
+            </Link>
+          </div>
+        </motion.div>
+      </>
     )
   }
 
@@ -40,9 +50,23 @@ const StoreDetail = () => {
   return (
     <>
       <SEO
-        title={`${store.name} — Pay with Crypto`}
-        description={`${store.excerpt} Pay with Bitcoin, Ethereum, or stablecoins at ${store.name} using Ezeebit.`}
+        title={`${store.name} — pay with crypto`}
+        description={`Pay with Bitcoin, Ethereum or stablecoins at ${store.name} in South Africa through Ezeebit.`}
         canonicalUrl={`/resources/stores/${store.slug}`}
+        crumbs={[
+          { name: 'Where to spend', path: '/resources/where-to-spend' },
+          { name: store.name, path: `/resources/stores/${store.slug}` },
+        ]}
+        extraNodes={[{
+          '@type': 'Store',
+          name: store.name,
+          url: `https://ezeebit.com/resources/stores/${store.slug}`,
+          image: absoluteUrl(store.image),
+          description: `Pay with Bitcoin, Ethereum or stablecoins at ${store.name} in South Africa through Ezeebit.`,
+          paymentAccepted: 'USDT, USDC, BTC, ETH',
+          currenciesAccepted: 'ZAR',
+          sameAs: store.websiteUrl,
+        }]}
       />
       <motion.div
         initial={{ opacity: 0 }}
@@ -73,6 +97,10 @@ const StoreDetail = () => {
               transition={{ duration: 0.8 }}
               className="text-center lg:text-left"
             >
+              <BreadcrumbNav items={[
+                { name: 'Where to spend', path: '/resources/where-to-spend' },
+                { name: store.name, path: `/resources/stores/${store.slug}` },
+              ]} />
               <div className="mb-6">
                 <span className="bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-sm font-medium">
                   {store.category}
@@ -110,6 +138,7 @@ const StoreDetail = () => {
                 <img
                   src={store.image}
                   alt={`${store.name} store`}
+                  loading="lazy"
                   className={`w-full ${store.detailImageHeight ?? 'h-96'} object-cover rounded-xl shadow-lg`}
                   style={store.imagePosition ? { objectPosition: store.imagePosition } : undefined}
                   onError={(e) => {

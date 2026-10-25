@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import { Link } from 'react-router-dom'
 import {
   Calendar, Clock, ArrowRight
@@ -147,8 +147,9 @@ const Blog = () => {
     <>
       <SEO
         title="Blog"
-        description="Latest news, insights, and updates from Ezeebit. Read about our funding rounds, product launches, and the future of stablecoin and crypto payments in Africa."
+        description="News and product notes from Ezeebit on stablecoin and crypto payments for merchants in South Africa."
         canonicalUrl="/resources/blog"
+        crumbs={[{ name: 'Blog', path: '/resources/blog' }]}
       />
       <motion.div
         initial={{ opacity: 0 }}

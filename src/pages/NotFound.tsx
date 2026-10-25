@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom'
 import { Home, ArrowRight, HelpCircle, CreditCard, Mail } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import SEO from '../components/SEO'
 
 const NotFound = () => {
   return (
     <>
       <SEO
-        title="Page Not Found"
-        description="The page you're looking for doesn't exist. Explore our crypto payment solutions for African businesses."
+        title="Page not found"
+        description="This page does not exist. Browse Ezeebit in-store ePOS, online payments, payouts, pricing and the developer API."
         canonicalUrl="/404"
+        noindex
       />
 
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-neutral-50 to-neutral-100 px-4">

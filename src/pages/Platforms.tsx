@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import { Link } from 'react-router-dom'
 import {
   ArrowRight, ArrowDownLeft, ArrowUpRight, SlidersHorizontal, ShieldCheck,
@@ -151,29 +151,12 @@ const Platforms = () => {
   return (
     <>
       <SEO
-        title="Crypto Pay-ins and Stablecoin Payouts for Platforms"
-        description="Accept crypto deposits and pay users out in stablecoin, without holding either. Ezeebit handles compliance, volatility and settlement, and you choose your exposure: stablecoin, or ZAR, KES, NGN or USD. For gaming, trading, wallets and payment gateways. FSCA regulated."
-        keywords="crypto pay-ins for platforms, stablecoin payouts for platforms, crypto deposit API, crypto payout API, accept crypto without holding it, stablecoin payouts without holding stablecoin, iGaming crypto deposits, pay out winnings in USDT, crypto withdrawals for betting sites, crypto payment gateway API, crypto payments for payment gateways, PSP crypto integration, crypto deposits Africa"
+        title="Crypto pay-ins and payouts for platforms"
+        description="Accept crypto deposits and pay users in stablecoin. Settlement can be in stablecoin or in ZAR, KES, NGN or USD."
         canonicalUrl="/platforms"
         ogImage="/og-platforms.jpg"
+        crumbs={[{ name: 'Platforms', path: '/platforms' }]}
       />
-      <script type="application/ld+json">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "FinancialService",
-          "name": "Ezeebit for Platforms",
-          "url": "https://ezeebit.com/platforms",
-          "description": "Crypto pay-ins and stablecoin payouts for platforms and payment gateways, without the platform holding crypto. Ezeebit handles compliance, volatility hedging and settlement in stablecoin or fiat.",
-          "serviceType": "Crypto pay-ins and stablecoin payouts",
-          "areaServed": ["ZA", "KE", "NG"],
-          "currenciesAccepted": ["ZAR", "KES", "NGN", "USD", "USDT", "USDC", "BTC", "ETH"],
-          "provider": {
-            "@type": "Organization",
-            "name": "Ezeebit",
-            "url": "https://ezeebit.com"
-          }
-        })}
-      </script>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

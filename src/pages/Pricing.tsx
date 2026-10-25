@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import { Link } from 'react-router-dom'
 import {
   Check, X, ArrowRight, Zap,
@@ -76,9 +76,10 @@ const Pricing = () => {
   return (
     <>
       <SEO
-        title="Pricing & Plans"
-        description="Transparent crypto payment pricing. No setup fees, just 1% transaction fees. Choose from Starter, Professional, or Enterprise plans for your business."
+        title="Pricing"
+        description="Ezeebit pricing for merchants. 1% per successful transaction, excluding VAT, or lower on higher volumes."
         canonicalUrl="/pricing"
+        crumbs={[{ name: 'Pricing', path: '/pricing' }]}
       />
       <motion.div
       initial={{ opacity: 0 }}

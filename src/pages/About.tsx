@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import { Link } from 'react-router-dom'
 import {
   Users, Award, Globe, TrendingUp, Shield, Zap,
@@ -80,9 +80,10 @@ const About = () => {
   return (
     <>
       <SEO
-        title="About Us"
-        description="Learn about Ezeebit's mission to build stablecoin payment infrastructure across Africa — payments in, balances held in fiat or stablecoin, and payouts. FSCA regulated, 100,000+ transactions processed, backed by Founder Collective, Raba and DCG."
+        title="About Ezeebit"
+        description="Ezeebit builds stablecoin and crypto payment infrastructure for merchants. Based in Cape Town, live in South Africa, expanding to Kenya and Nigeria."
         canonicalUrl="/resources/about"
+        crumbs={[{ name: 'About', path: '/resources/about' }]}
       />
       <motion.div
         initial={{ opacity: 0 }}

@@ -1,5 +1,6 @@
 import { forwardRef, memo, useEffect, useRef, useState, type ReactNode } from 'react'
-import { motion, animate, useInView, useReducedMotion } from 'framer-motion'
+import { animate, useInView, useReducedMotion } from 'framer-motion'
+import { motion } from '../../lib/motion'
 
 /**
  * The shared parts every hero illustration is built from, so each page's
@@ -130,7 +131,9 @@ export const HeroStage = forwardRef<HTMLDivElement, { width?: number; height?: n
             // illustration at a fractional scale every frame.
             transform: `scale(${scale ?? 1}) translateZ(0)`,
             willChange: 'transform',
-            opacity: scale ? 1 : 0,
+            // Stay visible before the client measures the column. Opacity 0 here
+            // would hide the illustration from crawlers, which never run that effect.
+            opacity: 1,
           }}
         >
           {children}

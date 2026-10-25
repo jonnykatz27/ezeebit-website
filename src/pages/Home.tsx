@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, Fragment } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, useReducedMotion } from 'framer-motion'
+import { useReducedMotion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import {
   Zap, Shield, Globe, TrendingUp,
   ArrowRight, Star, ChevronLeft, ChevronRight,
@@ -464,54 +465,11 @@ const Home = () => {
   return (
     <>
       <SEO
-        title="Crypto Payment Solutions for African Businesses"
-        description="Accept crypto and stablecoins in-store and online, pay your customers out in minutes, and hold your balance in fiat or stablecoin. FSCA regulated, with settlement in ZAR, KES, NGN or USD."
+        title="Ezeebit | Stablecoin and crypto payments in South Africa"
+        exactTitle
+        description="Accept stablecoin and crypto payments in South Africa, in-store and online. Settle in USDT or in ZAR, KES, NGN or USD."
         canonicalUrl="/"
       />
-      <script type="application/ld+json">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          "name": "Ezeebit",
-          "url": "https://ezeebit.com",
-          "logo": "https://ezeebit.com/ezeebit_black.png",
-          "description": "Leading crypto payment solutions for African businesses. Accept Bitcoin, Ethereum, and stablecoins with instant settlement in ZAR, KES, NGN or USD.",
-          "foundingDate": "2023",
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Cape Town",
-            "addressCountry": "ZA"
-          },
-          "contactPoint": {
-            "@type": "ContactPoint",
-            "telephone": "+27-21-879-5074",
-            "contactType": "customer service",
-            "email": "support@ezeebit.com",
-            "availableLanguage": "English"
-          },
-          "sameAs": [
-            "https://www.linkedin.com/company/ezeebit"
-          ]
-        })}
-      </script>
-      <script type="application/ld+json">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "LocalBusiness",
-          "name": "Ezeebit",
-          "image": "https://ezeebit.com/ezeebit_black.png",
-          "telephone": "+27-21-879-5074",
-          "email": "support@ezeebit.com",
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Cape Town",
-            "addressRegion": "Western Cape",
-            "addressCountry": "ZA"
-          },
-          "priceRange": "$$",
-          "openingHours": "Mo-Fr 08:00-18:00"
-        })}
-      </script>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -546,6 +504,18 @@ const Home = () => {
         ]}
         visual={<HomeHeroVisual />}
       />
+
+      <nav aria-label="Products" className="bg-white border-b border-neutral-100">
+        <div className="container-custom px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm font-medium">
+          <Link to="/in-store" className="text-neutral-700 hover:text-primary-600">In-store ePOS</Link>
+          <Link to="/online" className="text-neutral-700 hover:text-primary-600">Online payments</Link>
+          <Link to="/platforms" className="text-neutral-700 hover:text-primary-600">Platforms</Link>
+          <Link to="/payouts" className="text-neutral-700 hover:text-primary-600">Payouts</Link>
+          <Link to="/wallets" className="text-neutral-700 hover:text-primary-600">Wallets</Link>
+          <Link to="/pricing" className="text-neutral-700 hover:text-primary-600">Pricing</Link>
+          <Link to="/developers" className="text-neutral-700 hover:text-primary-600">Developer API</Link>
+        </div>
+      </nav>
 
       <section className="py-10 lg:py-20 bg-neutral-50">
         <div className="container-custom">

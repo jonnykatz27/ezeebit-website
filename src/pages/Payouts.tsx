@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import { Link } from 'react-router-dom'
 import {
   ArrowRight, Send, Globe, Clock, ShieldCheck,
@@ -94,28 +94,11 @@ const Payouts = () => {
   return (
     <>
       <SEO
-        title="Stablecoin Payouts for Businesses"
-        description="Pay your customers out in stablecoin and crypto from your Ezeebit fiat balance. Send a link, let recipients choose their asset and network, and settle on-chain in minutes. FSCA-regulated, with address screening and signed webhooks."
-        keywords="stablecoin payouts, crypto payouts, business payouts Africa, USDT payout, mass payouts, disbursements, payout API, betting winnings payout, marketplace seller payouts, cross-border payouts"
+        title="Stablecoin payouts"
+        description="Pay customers from an Ezeebit balance in USDT or other crypto. Recipients choose the asset and network."
         canonicalUrl="/payouts"
+        crumbs={[{ name: 'Payouts', path: '/payouts' }]}
       />
-      <script type="application/ld+json">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "FinancialService",
-          "name": "Ezeebit Payout Gateway",
-          "url": "https://ezeebit.com/payouts",
-          "description": "Pay customers out in stablecoin and crypto from a fiat balance, with recipient-completed payout links, address screening, and signed webhooks.",
-          "serviceType": "Stablecoin and cryptocurrency payouts",
-          "areaServed": ["ZA", "KE", "NG"],
-          "currenciesAccepted": ["ZAR", "KES", "NGN", "USD", "USDT", "USDC", "BTC", "ETH"],
-          "provider": {
-            "@type": "Organization",
-            "name": "Ezeebit",
-            "url": "https://ezeebit.com"
-          }
-        })}
-      </script>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

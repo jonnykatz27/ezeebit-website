@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import { Link } from 'react-router-dom'
 import {
   ArrowRight, Wallet, ArrowLeftRight, Landmark,
@@ -63,28 +63,11 @@ const Wallets = () => {
   return (
     <>
       <SEO
-        title="Business Wallets for Fiat and Stablecoin"
-        description="Hold fiat and USDT balances with Ezeebit, convert between them, fund customer payouts, and withdraw to your bank or your own wallet. Settle in ZAR, KES, NGN or USD, with a full ledger, API access, and an FSCA-regulated CASP behind it."
-        keywords="business stablecoin wallet, USDT wallet for business, fiat to stablecoin conversion, ZAR KES NGN USD settlement, merchant wallet Africa, crypto treasury, stablecoin balance, business crypto withdrawal, CASP regulated wallet"
+        title="Business wallets for fiat and stablecoin"
+        description="Hold fiat and USDT, convert between them, fund payouts, and withdraw to a bank or a wallet. Balances in ZAR, KES, NGN or USD."
         canonicalUrl="/wallets"
+        crumbs={[{ name: 'Wallets', path: '/wallets' }]}
       />
-      <script type="application/ld+json">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "FinancialService",
-          "name": "Ezeebit Wallets",
-          "url": "https://ezeebit.com/wallets",
-          "description": "Business wallets holding fiat and USDT balances, with conversion between them, payout funding, bank and on-chain withdrawals, and a full ledger.",
-          "serviceType": "Business wallet and settlement balances",
-          "areaServed": ["ZA", "KE", "NG"],
-          "currenciesAccepted": ["ZAR", "KES", "NGN", "USD", "USDT"],
-          "provider": {
-            "@type": "Organization",
-            "name": "Ezeebit",
-            "url": "https://ezeebit.com"
-          }
-        })}
-      </script>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

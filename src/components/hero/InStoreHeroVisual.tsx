@@ -1,4 +1,5 @@
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
+import { motion } from '../../lib/motion'
 import { Check, Clock, Store } from 'lucide-react'
 import {
   CARD, PORTAL_CARD, COIN, SWAP, arrive, money,

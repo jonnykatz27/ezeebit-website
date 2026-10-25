@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import { Link } from 'react-router-dom'
 import {
   Book, HelpCircle, FileText, Newspaper, Users,
@@ -92,9 +92,10 @@ const Resources = () => {
   return (
     <>
       <SEO
-        title="Resources"
-        description="Everything you need to get the most out of Ezeebit. Access user guides, FAQs, legal documents, the latest blog posts, and our full merchant directory — all in one place."
+        title="Guides and support"
+        description="Guides, FAQ, legal information and the blog for merchants using Ezeebit stablecoin and crypto payments."
         canonicalUrl="/resources"
+        crumbs={[{ name: 'Guides and support', path: '/resources' }]}
       />
       <motion.div
         initial={{ opacity: 0 }}

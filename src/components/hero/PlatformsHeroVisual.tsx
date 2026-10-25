@@ -57,11 +57,9 @@ const PlatformsHeroVisual = () => {
   const done = phase !== 'moving'
   const settled = phase === 'settled'
   const isDeposit = event.kind === 'deposit'
-  const completed = Math.floor((step + 1) / 3)
-  // The balance follows the event's currency: deposits in that currency add, payouts take away
-  const balance = BALANCE_START[event.fiat] + Array.from({ length: completed }, (_, i) => EVENTS[i % EVENTS.length])
-    .filter((e) => e.fiat === event.fiat)
-    .reduce((sum, e) => sum + (e.kind === 'deposit' ? e.amount : -e.amount), 0)
+  // Each currency appears once per loop, so its balance is the starting figure plus or minus that
+  // one event. Carrying totals across loops drained the payout-only currencies below zero.
+  const balance = BALANCE_START[event.fiat] + (settled ? (isDeposit ? event.amount : -event.amount) : 0)
 
   return (
     <HeroStage ref={ref} label="A platform's wallet taking a crypto deposit through the Ezeebit checkout and paying a withdrawal out in stablecoin, with a signed webhook to the platform for each.">

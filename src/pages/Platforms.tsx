@@ -54,7 +54,7 @@ const Platforms = () => {
     {
       icon: <ShieldCheck className="w-6 h-6" />,
       title: "We handle the rest",
-      description: "Compliance, volatility and the movement of funds are on us, as an FSCA-authorised CASP: KYC and AML, the Travel Rule, address screening, hedging and on-chain settlement."
+      description: "Compliance, volatility and the movement of funds are on us, as an FSCA-regulated CASP: KYC and AML, the Travel Rule, address screening, hedging and on-chain settlement."
     }
   ]
 

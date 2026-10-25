@@ -25,7 +25,7 @@ const Legal = () => {
 
   const complianceItems = [
     {
-      title: 'FSCA Registration',
+      title: 'FSCA Regulated',
       description: 'Operating under the exemption as a Crypto Assets Services Provider under the Financial Sector Conduct Authority',
       status: 'Active',
       number: 'FSP 53664',
@@ -39,7 +39,7 @@ const Legal = () => {
       icon: <Shield className="w-6 h-6" />
     },
     {
-      title: 'FAIS Licensed',
+      title: 'FAIS Regulated',
       description: 'Operating under the Financial Advisory and Intermediary Services Act',
       status: 'Regulated',
       number: '',
@@ -852,7 +852,7 @@ const Legal = () => {
     <>
       <SEO
         title="Legal — Terms, Privacy & Compliance"
-        description="Ezeebit's terms of service, privacy policy, and regulatory compliance information. FSCA registered, FIC compliant, and FAIS licensed crypto asset services provider. View our Trust Centre for security and compliance documentation."
+        description="Ezeebit's terms of service, privacy policy, and regulatory compliance information. FSCA-regulated, FIC-compliant crypto asset service provider. View our Trust Centre for security and compliance documentation."
         canonicalUrl="/resources/legal"
       />
       <motion.div
@@ -886,7 +886,7 @@ const Legal = () => {
               </div>
               <div className="flex items-center">
                 <Scale className="w-4 h-4 mr-2" />
-                <span>FAIS Registered</span>
+                <span>FAIS Regulated</span>
               </div>
             </div>
           </motion.div>

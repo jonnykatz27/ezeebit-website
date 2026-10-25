@@ -136,7 +136,7 @@ const Footer = () => {
             </div>
             <div className="flex items-center space-x-1.5 text-xs md:text-sm text-neutral-400">
               <Shield className="w-3.5 h-3.5 text-secondary-400" />
-              <span>FAIS Registered</span>
+              <span>FAIS Regulated</span>
             </div>
           </div>
         </div>

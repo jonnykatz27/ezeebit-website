@@ -37,7 +37,7 @@ const Wallets = () => {
     },
     {
       icon: <ShieldCheck className="w-6 h-6" />,
-      title: "Held under a CASP licence",
+      title: "Regulated by the FSCA",
       description: "Balances sit with an FSCA-regulated Crypto Asset Service Provider, FSP No. 53664, with FIC and POPIA obligations built in."
     }
   ]

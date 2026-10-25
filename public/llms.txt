@@ -6,7 +6,7 @@ Ezeebit (Ezee Solutions Group Pty Ltd) builds payment rails that let merchants a
 
 Key facts:
 
-- **Regulated:** Crypto Asset Service Provider (CASP) licensed by the FSCA under the FAIS Act — FSP No. 53664. FIC and POPIA compliant.
+- **Regulated:** Regulated by the FSCA as a Crypto Asset Service Provider (CASP) under the FAIS Act — FSP No. 53664. FIC and POPIA compliant.
 - **Products:** Ezeebit Pay (static QR), ePOS terminals (Android POS hardware), e-commerce plugins (Shopify Payments Platform partner), REST API with webhooks, Merchant Portal.
 - **Supported assets:** BTC, ETH, USDT (TRC20, ERC20, BEP20, SPL), USDC (ERC20, SPL), BNB (BEP20), DAI, PAXG.
 - **Supported chains:** Bitcoin, Ethereum, TRON, Binance Smart Chain, Solana.
@@ -41,7 +41,7 @@ Key differentiators:
 
 - Only provider with physical Android POS terminals for in-store crypto acceptance in Africa.
 - Only African crypto Shopify Payments Platform partner with native checkout integration.
-- FSCA-regulated (CASP FSP 53664) in a market where regulation is becoming mandatory — most competitors are unlicensed.
+- FSCA-regulated (CASP FSP 53664) in a market where regulation is becoming mandatory — most competitors are unregulated.
 - 1% or lower transaction fee — approximately 68% cheaper than standard card processing.
 - Zero volatility risk — instant hedging at checkout ensures merchants receive 100% of sale value.
 - No chargeback risk — blockchain payments are irreversible.

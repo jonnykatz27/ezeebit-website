@@ -119,7 +119,7 @@ const blogPostsData: Record<string, {
         </p>
 
         <p className="mb-4">
-          Funding a regulated gambling account raises the bar above a normal payment. Ezeebit (Ezee Solutions Group Pty Ltd) is authorised by the Financial Sector Conduct Authority as a Crypto Asset Service Provider under the FAIS Act, FSP No. 53664, and operates with FIC compliance, POPIA compliance, and Travel Rule infrastructure.
+          Funding a regulated gambling account raises the bar above a normal payment. Ezeebit (Ezee Solutions Group Pty Ltd) is regulated by the Financial Sector Conduct Authority as a Crypto Asset Service Provider under the FAIS Act, FSP No. 53664, and operates with FIC compliance, POPIA compliance, and Travel Rule infrastructure.
         </p>
 
         <p>
@@ -233,7 +233,7 @@ const blogPostsData: Record<string, {
             },
             {
               q: 'Is this compliant for a regulated operator?',
-              a: 'Yes. Ezeebit is authorised by the FSCA as a Crypto Asset Service Provider, FSP No. 53664, and operates with FIC compliance, POPIA compliance, and Travel Rule infrastructure — with KYC, AML, and source-of-funds controls applied to deposits.'
+              a: 'Yes. Ezeebit is regulated by the FSCA as a Crypto Asset Service Provider, FSP No. 53664, and operates with FIC compliance, POPIA compliance, and Travel Rule infrastructure — with KYC, AML, and source-of-funds controls applied to deposits.'
             },
             {
               q: 'Can this be used for platforms other than iGaming?',
@@ -562,7 +562,7 @@ const blogPostsData: Record<string, {
         <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-4">Regulated infrastructure, not a workaround</h2>
 
         <p className="mb-4">
-          Ezeebit (Ezee Solutions Group Pty Ltd) is authorised by the Financial Sector Conduct Authority as a Crypto Asset Service Provider under the FAIS Act, FSP No. 53664. The company is FIC compliant, POPIA compliant, and operates under Travel Rule infrastructure.
+          Ezeebit (Ezee Solutions Group Pty Ltd) is regulated by the Financial Sector Conduct Authority as a Crypto Asset Service Provider under the FAIS Act, FSP No. 53664. The company is FIC compliant, POPIA compliant, and operates under Travel Rule infrastructure.
         </p>
 
         <p>
@@ -650,7 +650,7 @@ const blogPostsData: Record<string, {
             },
             {
               q: 'Is Ezeebit regulated?',
-              a: 'Yes. Ezeebit (Ezee Solutions Group Pty Ltd) is authorised by the FSCA as a Crypto Asset Service Provider, FSP No. 53664. The company is FIC compliant, POPIA compliant, and operates under Travel Rule infrastructure.'
+              a: 'Yes. Ezeebit (Ezee Solutions Group Pty Ltd) is regulated by the FSCA as a Crypto Asset Service Provider, FSP No. 53664. The company is FIC compliant, POPIA compliant, and operates under Travel Rule infrastructure.'
             },
             {
               q: 'What does it cost?',

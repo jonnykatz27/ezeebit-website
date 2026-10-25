@@ -52,6 +52,7 @@ const Header = () => {
           items: [
             { name: 'In-Store', href: '/in-store', description: 'Accept payments at the point of sale' },
             { name: 'Online', href: '/online', description: 'Hosted checkout for your website' },
+            { name: 'Platforms', href: '/platforms', description: 'Crypto deposits for platforms and gateways' },
             { name: 'Payouts', href: '/payouts', description: 'Pay your customers out in stablecoin' },
           ],
         },

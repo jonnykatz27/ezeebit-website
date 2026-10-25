@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import {
   Code, ExternalLink, Copy,
   Terminal, Webhook, Key, Shield, Zap, CheckCircle,
@@ -606,6 +607,10 @@ app.post(
             </h2>
             <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
               Twenty-eight endpoints, one integration.
+            </p>
+            <p className="text-neutral-600 mt-3">
+              Taking deposits on a platform or a gateway?{' '}
+              <Link to="/platforms" className="text-primary-600 font-semibold hover:underline">See how it works for platforms</Link>
             </p>
           </div>
 

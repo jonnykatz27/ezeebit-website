@@ -283,6 +283,31 @@ const Online = () => {
         </div>
       </section>
 
+      {/* Platforms */}
+      <section className="pb-16 lg:pb-24 bg-neutral-50">
+        <div className="container-custom">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="card p-8 md:p-10 max-w-5xl mx-auto flex flex-col md:flex-row md:items-center gap-6 text-center md:text-left"
+          >
+            <div className="flex-1">
+              <h2 className="text-2xl lg:text-3xl font-display font-bold text-neutral-900 mb-2">
+                Running a platform or a gateway?
+              </h2>
+              <p className="text-neutral-600">
+                Let users fund their accounts in crypto, attributed to the right user and credited in seconds,
+                or offer crypto to your own merchants. Sunbet already takes its deposits this way.
+              </p>
+            </div>
+            <Link to="/platforms" className="btn-primary inline-flex items-center justify-center whitespace-nowrap">
+              Ezeebit for platforms
+              <ArrowRight className="w-5 h-5 ml-2" />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="section-padding bg-primary-600 text-white">
         <div className="container-custom text-center">

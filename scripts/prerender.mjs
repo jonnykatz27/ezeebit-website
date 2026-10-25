@@ -28,6 +28,7 @@ const staticRoutes = [
   '/',
   '/in-store',
   '/online',
+  '/platforms',
   '/payouts',
   '/wallets',
   '/otc',
@@ -73,6 +74,7 @@ const storeSlugs = [
 ]
 
 const blogSlugs = [
+  'crypto-deposits-igaming-sunbet',
   'most-comprehensive-crypto-payment-gateway-africa',
   'capital-flow-management-regulations',
   'ezeebit-raises-r35-million',

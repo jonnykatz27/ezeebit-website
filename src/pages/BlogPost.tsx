@@ -197,7 +197,7 @@ const blogPostsData: Record<string, {
 
         <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-4">Get started</h2>
 
-        <p className="mb-4">Ezeebit integrates deposit flows in days, not months, via a single API and signed callbacks:</p>
+        <p className="mb-4">Ezeebit integrates deposit flows in days, not months, via a single API and signed callbacks (<Link to="/platforms" className="text-primary-600 font-semibold hover:underline">see Ezeebit for platforms</Link>):</p>
 
         <ul className="list-disc pl-6 mb-6 space-y-2">
           <li><strong>Deposit API:</strong> per-user deposit requests, real-time crediting callbacks, and full reconciliation</li>

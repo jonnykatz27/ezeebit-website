@@ -11,6 +11,7 @@ const InStore = lazy(() => import('./pages/InStore'))
 const Online = lazy(() => import('./pages/Online'))
 const OTC = lazy(() => import('./pages/OTC'))
 const Payouts = lazy(() => import('./pages/Payouts'))
+const Platforms = lazy(() => import('./pages/Platforms'))
 const Wallets = lazy(() => import('./pages/Wallets'))
 const Pricing = lazy(() => import('./pages/Pricing'))
 const Developers = lazy(() => import('./pages/Developers'))
@@ -50,6 +51,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/in-store" element={<InStore />} />
             <Route path="/online" element={<Online />} />
+            <Route path="/platforms" element={<Platforms />} />
             <Route path="/payouts" element={<Payouts />} />
             <Route path="/wallets" element={<Wallets />} />
             <Route path="/otc" element={<OTC />} />

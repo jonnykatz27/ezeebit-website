@@ -11,6 +11,7 @@ import InStore from './pages/InStore'
 import Online from './pages/Online'
 import OTC from './pages/OTC'
 import Payouts from './pages/Payouts'
+import Platforms from './pages/Platforms'
 import Wallets from './pages/Wallets'
 import Pricing from './pages/Pricing'
 import Developers from './pages/Developers'
@@ -41,6 +42,7 @@ export function render(url: string) {
             <Route path="/" element={<Home />} />
             <Route path="/in-store" element={<InStore />} />
             <Route path="/online" element={<Online />} />
+            <Route path="/platforms" element={<Platforms />} />
             <Route path="/payouts" element={<Payouts />} />
             <Route path="/wallets" element={<Wallets />} />
             <Route path="/otc" element={<OTC />} />

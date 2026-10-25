@@ -102,9 +102,12 @@ const WalletsHeroVisual = () => {
     <HeroStage ref={ref} label="The Ezeebit Merchant Portal: a wallet balance card with a ZAR, KES, or NGN fiat wallet beside a USDT wallet, the Convert panel, and recent deposits and withdrawals.">
       <Rings x={260} y={300} still={still} />
 
+      {/* One flag for each settlement currency, in the gaps between the cards */}
       <FloatingCoin src="/ke-flag.svg" x={70} y={36} delay={0.2} still={still} />
+      <FloatingCoin src="/za-flag.svg" x={204} y={52} delay={0.4} still={still} />
       <FloatingCoin src="/ng-flag.svg" x={244} y={226} delay={0.6} still={still} />
       <FloatingCoin src="/usdt-logo.svg" x={498} y={330} delay={1} still={still} />
+      <FloatingCoin src="/us-flag.svg" x={468} y={432} delay={1.4} still={still} />
 
       {/* ── The Convert panel ── */}
       <motion.div className={`absolute ${PORTAL_CARD} overflow-hidden`} style={{ left: 325, top: 0 }} {...arrive(0.45, 'right')}>

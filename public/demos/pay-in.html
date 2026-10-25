@@ -679,7 +679,16 @@ function fit(){
    * page behind it.
    */
   const sheetUp = document.getElementById('veil').classList.contains('on');
-  const h = sheetUp ? viewport : Math.max(content, viewport);
+  /*
+   * Embedded, the page sizes the frame from the height we report, so filling
+   * the frame's current height can only ever grow it: a frame that starts
+   * taller than the screen keeps that height, and on a phone that left a band
+   * of empty grey under the method list. Report the screen's own height there,
+   * as the payout demo does, and keep filling the window only when this page
+   * is opened on its own.
+   */
+  const embedded = window.parent !== window;
+  const h = sheetUp ? viewport : embedded ? content : Math.max(content, viewport);
   stage.style.height = h+'px';
   frame.style.height = (h*k)+'px';
   // let the embedding page resize the iframe to fit

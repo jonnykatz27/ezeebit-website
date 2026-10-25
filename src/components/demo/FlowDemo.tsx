@@ -36,7 +36,9 @@ const FlowDemo = ({ src, flow, title, label, fill = false }: {
    * True where the panel is given a height by its layout and the frame should
    * fill it, as in the home page's flow grid. Left false the panel takes its
    * height from the frame instead, which is what a demo standing on its own
-   * in a section needs.
+   * in a section needs. The grid only stretches the panel from lg up, so below
+   * that the frame keeps its own height; filling an unstretched panel
+   * collapsed it to the browser's default 150px on phones.
    */
   fill?: boolean
 }) => {
@@ -65,7 +67,8 @@ const FlowDemo = ({ src, flow, title, label, fill = false }: {
         <button
           type="button"
           onClick={() => setRun((r) => r + 1)}
-          className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-primary-600 hover:text-primary-700"
+          // The negative margin keeps the label where it was while the padding gives a thumb-sized target
+          className="flex items-center gap-1.5 -my-2 py-2 -mr-1.5 pr-1.5 pl-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-primary-600 hover:text-primary-700"
         >
           <RotateCcw className="w-3.5 h-3.5" />
           Restart
@@ -82,7 +85,7 @@ const FlowDemo = ({ src, flow, title, label, fill = false }: {
         height={height}
         style={{ height }}
         className={`block w-full rounded-[20px] bg-[#F2F2F2] border-0 transition-[height] duration-300 !mx-0 ${
-          fill ? 'flex-1' : ''
+          fill ? 'lg:flex-1' : ''
         }`}
       />
     </DemoPanel>

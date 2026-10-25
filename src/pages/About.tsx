@@ -19,19 +19,19 @@ const About = () => {
     {
       name: "Daniel Katz",
       role: "Chief Executive Officer",
-      image: "/Daniel_pic - no bg.png",
+      image: "/team/daniel-katz.webp",
       linkedin: "https://www.linkedin.com/in/daniel-katz-090464145"
     },
     {
       name: "Jonathan Katz",
       role: "Chief Operating Officer",
-      image: "/Jonathan Katz - no bg.png",
+      image: "/team/jonathan-katz.webp",
       linkedin: "https://www.linkedin.com/in/jonathan-katz-b311b3225"
     },
     {
       name: "David Katz",
       role: "Head of Financial Operations",
-      image: "/David_pic - no bg.png",
+      image: "/team/david-katz.webp",
       linkedin: "https://www.linkedin.com/in/david-katz-227a00265"
     }
   ]

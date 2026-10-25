@@ -163,7 +163,7 @@ const Online = () => {
                       </div>
                     </div>
                     <img
-                      src="/online-checkout.png"
+                      src="/online-checkout.webp"
                       alt={`${platform.name} integration`}
                       className="w-full max-w-sm mx-auto my-4 lg:hidden"
                     />
@@ -210,7 +210,7 @@ const Online = () => {
                     </div>
                   </div>
                   <img
-                    src="/online-checkout.png"
+                    src="/online-checkout.webp"
                     alt={`${platform.name} integration`}
                     className="hidden lg:block lg:w-[120%] lg:max-w-none lg:-ml-16"
                   />

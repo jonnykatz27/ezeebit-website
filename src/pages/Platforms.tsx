@@ -17,7 +17,7 @@ const caseStudies = [
   {
     name: 'Sunbet',
     logo: '/sunbet-logo.png',
-    image: '/sunbet-launch-cover@2x.png',
+    image: '/blog/sunbet-launch-cover.webp',
     sector: 'iGaming',
     summary: 'Sunbet, part of JSE-listed Sun International, is one of the first online gaming platforms in South Africa to accept crypto deposits. Players fund their accounts straight from the wallet or exchange their money already sits in.',
     points: [

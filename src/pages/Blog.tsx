@@ -37,7 +37,7 @@ const Blog = () => {
       readTime: '6 min read',
       category: 'Product',
       categoryId: 'product',
-      image: '/sunbet-launch-cover@2x.png',
+      image: '/blog/sunbet-launch-cover.webp',
       views: '0',
       featured: false
     },
@@ -50,7 +50,7 @@ const Blog = () => {
       readTime: '5 min read',
       category: 'Product',
       categoryId: 'product',
-      image: '/checkout-launch-cover@2x.png',
+      image: '/blog/checkout-launch-cover.webp',
       views: '0',
       featured: false,
       hero: true
@@ -64,7 +64,7 @@ const Blog = () => {
       readTime: '1 min read',
       category: 'Policy & Regulation',
       categoryId: 'policy',
-      image: '/cfm-regulation-blog-cover copy.png',
+      image: '/blog/cfm-regulation-cover.webp',
       views: '0',
       featured: false
     },

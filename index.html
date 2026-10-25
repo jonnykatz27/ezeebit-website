@@ -2,6 +2,17 @@
 <html lang="en-ZA">
   <head>
     <meta charset="UTF-8" />
+    <!--
+      Marks a real browser before first paint. Pre-rendered HTML stays
+      visible for clients that do not run this script. The class lets
+      entrance elements start hidden only when JavaScript will animate them.
+    -->
+    <script>
+      document.documentElement.classList.add('js')
+    </script>
+    <style>
+      html.js [data-entrance]{opacity:0 !important}
+    </style>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-L4585555QD"></script>
     <script>

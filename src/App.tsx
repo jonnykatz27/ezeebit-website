@@ -1,34 +1,31 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
-import { useEffect, Suspense, lazy } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import PageLoader from './components/PageLoader'
 import Home from './pages/Home'
-
-const InStore = lazy(() => import('./pages/InStore'))
-const Online = lazy(() => import('./pages/Online'))
-const OTC = lazy(() => import('./pages/OTC'))
-const Payouts = lazy(() => import('./pages/Payouts'))
-const Platforms = lazy(() => import('./pages/Platforms'))
-const Wallets = lazy(() => import('./pages/Wallets'))
-const Pricing = lazy(() => import('./pages/Pricing'))
-const Developers = lazy(() => import('./pages/Developers'))
-const Resources = lazy(() => import('./pages/Resources'))
-const About = lazy(() => import('./pages/About'))
-const FAQ = lazy(() => import('./pages/FAQ'))
-const Legal = lazy(() => import('./pages/Legal'))
-const Blog = lazy(() => import('./pages/Blog'))
-const UserManual = lazy(() => import('./pages/UserManual'))
-const SignUp = lazy(() => import('./pages/SignUp'))
-const Contact = lazy(() => import('./pages/Contact'))
-const BlogPost = lazy(() => import('./pages/BlogPost'))
-const EzeebitResources = lazy(() => import('./pages/EzeebitResources'))
-const WhereToSpend = lazy(() => import('./pages/WhereToSpend'))
-const StoreDetail = lazy(() => import('./pages/StoreDetail'))
-const Careers = lazy(() => import('./pages/Careers'))
-const NotFound = lazy(() => import('./pages/NotFound'))
+import InStore from './pages/InStore'
+import Online from './pages/Online'
+import OTC from './pages/OTC'
+import Payouts from './pages/Payouts'
+import Platforms from './pages/Platforms'
+import Wallets from './pages/Wallets'
+import Pricing from './pages/Pricing'
+import Developers from './pages/Developers'
+import Resources from './pages/Resources'
+import About from './pages/About'
+import FAQ from './pages/FAQ'
+import Legal from './pages/Legal'
+import Blog from './pages/Blog'
+import UserManual from './pages/UserManual'
+import SignUp from './pages/SignUp'
+import Contact from './pages/Contact'
+import BlogPost from './pages/BlogPost'
+import EzeebitResources from './pages/EzeebitResources'
+import WhereToSpend from './pages/WhereToSpend'
+import StoreDetail from './pages/StoreDetail'
+import Careers from './pages/Careers'
+import NotFound from './pages/NotFound'
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation()
@@ -46,7 +43,6 @@ function App() {
       <Header />
       <ScrollToTop />
       <AnimatePresence mode="wait">
-        <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/in-store" element={<InStore />} />
@@ -72,7 +68,6 @@ function App() {
             <Route path="/careers" element={<Careers />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </Suspense>
       </AnimatePresence>
       <Footer />
     </div>

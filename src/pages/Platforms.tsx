@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import {
-  ArrowRight, UserCheck, Zap, RefreshCw, ShieldCheck,
-  Wallet, Lock, CheckCircle, Send
+  ArrowRight, ArrowDownLeft, ArrowUpRight, SlidersHorizontal, ShieldCheck,
+  UserCheck, Zap, RefreshCw, Wallet, Ban, Lock, CheckCircle
 } from 'lucide-react'
 import SEO from '../components/SEO'
 import FlowDemo from '../components/demo/FlowDemo'
@@ -10,8 +10,8 @@ import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageH
 import PlatformsHeroVisual from '../components/hero/PlatformsHeroVisual'
 
 /**
- * Platforms live on the deposit rail, each with a story we are allowed to
- * tell. Add one here as it is announced; the section lays out one or many.
+ * Platforms live on Ezeebit, each with a story we are allowed to tell. Add
+ * one here as it is announced; the section lays out one or many.
  */
 const caseStudies = [
   {
@@ -29,8 +29,36 @@ const caseStudies = [
   },
 ]
 
+/** Small caps line above a section heading, naming which way the money moves. */
+const Eyebrow = ({ children }: { children: React.ReactNode }) => (
+  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-600 mb-3">{children}</p>
+)
+
 const Platforms = () => {
-  const features = [
+  const pillars = [
+    {
+      icon: <ArrowDownLeft className="w-6 h-6" />,
+      title: "Accept crypto without holding it",
+      description: "Users pay in crypto or stablecoin. Every payment is hedged the moment it lands, so you are credited a fixed amount and never carry the asset."
+    },
+    {
+      icon: <ArrowUpRight className="w-6 h-6" />,
+      title: "Pay out in stablecoin without holding it",
+      description: "Fund payouts from your fiat balance. We reserve the amount, convert it and send the stablecoin to your user's wallet."
+    },
+    {
+      icon: <SlidersHorizontal className="w-6 h-6" />,
+      title: "Choose your exposure",
+      description: "Settle in stablecoin the same day, or in ZAR, KES, NGN or USD the next business day. How much crypto you hold is up to you."
+    },
+    {
+      icon: <ShieldCheck className="w-6 h-6" />,
+      title: "We handle the rest",
+      description: "Compliance, volatility and the movement of funds are on us, as an FSCA-authorised CASP: KYC and AML, the Travel Rule, address screening, hedging and on-chain settlement."
+    }
+  ]
+
+  const payinFeatures = [
     {
       icon: <UserCheck className="w-6 h-6" />,
       title: "Attributed to the right user",
@@ -47,23 +75,23 @@ const Platforms = () => {
       description: "Under-payments, over-payments, late confirmations and retries are handled the same way every time and reconciled to one ledger."
     },
     {
-      icon: <Lock className="w-6 h-6" />,
-      title: "No crypto price risk",
-      description: "The fiat value is locked when the user pays, so the amount you credit is fixed and crypto never sits on your balance sheet."
-    },
-    {
       icon: <Wallet className="w-6 h-6" />,
       title: "Any wallet, any exchange",
       description: "On-chain from any wallet, 700+ wallets through WalletConnect, and straight from Luno, VALR and Binance."
     },
     {
-      icon: <ShieldCheck className="w-6 h-6" />,
-      title: "Compliance in the rail",
-      description: "An FSCA-authorised CASP, with KYC, AML and source-of-funds controls, payer address screening and the Travel Rule handled for you."
+      icon: <Lock className="w-6 h-6" />,
+      title: "Rate locked when they pay",
+      description: "The fiat value is fixed the moment the user pays, so the amount you credit never moves with the market."
+    },
+    {
+      icon: <Ban className="w-6 h-6" />,
+      title: "Final, with no chargebacks",
+      description: "A confirmed crypto deposit cannot be reversed, so there is no chargeback or deposit-reversal fraud to fight."
     }
   ]
 
-  const steps = [
+  const payinSteps = [
     {
       title: "Request a deposit",
       description: "Your platform creates an order for the user through the API and sends them to the checkout link it returns."
@@ -82,31 +110,50 @@ const Platforms = () => {
     }
   ]
 
+  const payoutSteps = [
+    {
+      title: "Create the payout",
+      description: "Call the Payout Gateway with the amount in your currency. We reserve it against your fiat balance and return a link."
+    },
+    {
+      title: "Your user completes it",
+      description: "They pick the stablecoin and network and enter their own wallet address, so you never collect or check addresses."
+    },
+    {
+      title: "We convert and send",
+      description: "We screen the address, convert at the quoted rate and send the stablecoin on-chain, usually within minutes."
+    },
+    {
+      title: "You reconcile",
+      description: "A signed webhook confirms the final status and the transaction hash."
+    }
+  ]
+
   const audiences = [
     {
       title: "Gaming and betting",
-      description: "Players fund their accounts in seconds and get straight to playing. Deposits are final, so there are no chargebacks to dispute."
+      description: "Players deposit in seconds and withdraw winnings in stablecoin, with no chargebacks on the way in."
     },
     {
       title: "Trading and investment",
-      description: "Traders top up margin and investors fund accounts from stablecoins they already hold, instead of waiting on cards or wires."
+      description: "Traders top up margin from stablecoins they already hold and withdraw profits the same way, instead of waiting on cards or wires."
     },
     {
       title: "Payment gateways",
-      description: "Offer crypto and stablecoin to your own merchants. Onboard them as sub-merchants through the API, each with its own stores, fees and transaction history."
+      description: "Offer crypto pay-ins and stablecoin payouts to your own merchants. Onboard them as sub-merchants through the API, each with its own stores, fees and transaction history."
     },
     {
       title: "Wallets and neobanks",
-      description: "Make crypto a first-class top-up method and reach the users who keep their money on-chain rather than in a bank."
+      description: "Make crypto a first-class way to top up and to cash out, for the users who keep their money on-chain."
     }
   ]
 
   return (
     <>
       <SEO
-        title="Crypto Deposits for Platforms and Payment Gateways"
-        description="Let users fund their accounts in crypto and stablecoin from any wallet or exchange, credited in seconds through one API. Built for gaming, trading platforms, wallets and payment gateways. Hedged on arrival and settled in stablecoin or ZAR, KES, NGN or USD. FSCA regulated."
-        keywords="crypto deposit API, stablecoin deposits, crypto deposits for platforms, iGaming crypto deposits, crypto deposits for betting sites, accept USDT deposits, crypto payment gateway API, crypto payments for payment gateways, PSP crypto integration, sub-merchant crypto payments, crypto deposits Africa"
+        title="Crypto Pay-ins and Stablecoin Payouts for Platforms"
+        description="Accept crypto deposits and pay users out in stablecoin, without holding either. Ezeebit handles compliance, volatility and settlement, and you choose your exposure: stablecoin, or ZAR, KES, NGN or USD. For gaming, trading, wallets and payment gateways. FSCA regulated."
+        keywords="crypto pay-ins for platforms, stablecoin payouts for platforms, crypto deposit API, crypto payout API, accept crypto without holding it, stablecoin payouts without holding stablecoin, iGaming crypto deposits, pay out winnings in USDT, crypto withdrawals for betting sites, crypto payment gateway API, crypto payments for payment gateways, PSP crypto integration, crypto deposits Africa"
         canonicalUrl="/platforms"
         ogImage="/og-platforms.jpg"
       />
@@ -116,8 +163,8 @@ const Platforms = () => {
           "@type": "FinancialService",
           "name": "Ezeebit for Platforms",
           "url": "https://ezeebit.com/platforms",
-          "description": "Crypto and stablecoin deposits for platforms and payment gateways: per-user attribution, real-time crediting by signed webhook, and hedged settlement in stablecoin or fiat.",
-          "serviceType": "Crypto and stablecoin deposits",
+          "description": "Crypto pay-ins and stablecoin payouts for platforms and payment gateways, without the platform holding crypto. Ezeebit handles compliance, volatility hedging and settlement in stablecoin or fiat.",
+          "serviceType": "Crypto pay-ins and stablecoin payouts",
           "areaServed": ["ZA", "KE", "NG"],
           "currenciesAccepted": ["ZAR", "KES", "NGN", "USD", "USDT", "USDC", "BTC", "ETH"],
           "provider": {
@@ -135,9 +182,9 @@ const Platforms = () => {
       >
         {/* Hero Section */}
         <PageHero
-          title="Crypto deposits"
+          title="Pay-ins and payouts"
           accent="for your platform."
-          description="Let your users fund their accounts from any wallet or exchange, and credit them in seconds through one API. Every deposit is hedged on arrival and settled in stablecoin or in ZAR, KES, NGN or USD."
+          description="Take deposits in crypto and pay your users out in stablecoin, without holding either. Ezeebit handles the compliance, the volatility and the movement of funds, and you choose your exposure: settle in stablecoin, or in ZAR, KES, NGN or USD."
           actions={
             <>
             <Link to="/contact" className={HERO_PRIMARY}>
@@ -153,7 +200,7 @@ const Platforms = () => {
           itemProps
         />
 
-        {/* Features Section */}
+        {/* Without holding it */}
         <section className="section-padding bg-white">
           <div className="container-custom">
             <motion.div
@@ -161,6 +208,48 @@ const Platforms = () => {
               whileInView={{ opacity: 1, y: 0 }}
               className="text-center mb-16"
             >
+              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+                Crypto in and out, without having to hold it
+              </h2>
+              <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+                Ezeebit sits between your platform and the blockchain. Your users pay and get paid
+                in crypto; you keep a clean ledger in the currency you choose.
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {pillars.map((pillar, index) => (
+                <motion.div
+                  key={pillar.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="card p-6 h-full"
+                >
+                  <div className="w-12 h-12 bg-primary-50 rounded-xl flex items-center justify-center mb-4 text-primary-500">
+                    {pillar.icon}
+                  </div>
+                  <h3 className="text-lg font-semibold text-neutral-900 mb-2">
+                    {pillar.title}
+                  </h3>
+                  <p className="text-neutral-600 text-sm leading-relaxed">
+                    {pillar.description}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Pay-ins */}
+        <section className="section-padding bg-neutral-50">
+          <div className="container-custom">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="text-center mb-16"
+            >
+              <Eyebrow>Pay-ins</Eyebrow>
               <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
                 A deposit is not a checkout
               </h2>
@@ -171,7 +260,7 @@ const Platforms = () => {
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {features.map((feature, index) => (
+              {payinFeatures.map((feature, index) => (
                 <motion.div
                   key={feature.title}
                   initial={{ opacity: 0, y: 20 }}
@@ -194,8 +283,90 @@ const Platforms = () => {
           </div>
         </section>
 
-        {/* Case studies */}
+        {/* How a deposit works */}
+        <section className="section-padding bg-white">
+          <div className="container-custom">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+              >
+                <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+                  How a deposit works
+                </h2>
+                <p className="text-xl text-neutral-600 mb-8">
+                  One API call, one checkout link, one signed webhook back. Integrations take days, not months.
+                </p>
+                <Steps steps={payinSteps} />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                viewport={{ once: true }}
+                className="w-full max-w-[380px] mx-auto"
+              >
+                {/* The checkout itself, rather than a picture of it */}
+                <FlowDemo
+                  src="/demos/pay-in.html"
+                  flow="payin"
+                  label="Try a deposit"
+                  title="Interactive demo of the Ezeebit checkout a user deposits through"
+                />
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* Payouts */}
         <section className="section-padding bg-neutral-50">
+          <div className="container-custom">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+                className="order-2 lg:order-1 w-full max-w-[380px] mx-auto"
+              >
+                <FlowDemo
+                  src="/demos/pay-out.html"
+                  flow="payout"
+                  label="Try a payout"
+                  title="Interactive demo of an Ezeebit payout a user claims"
+                />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                viewport={{ once: true }}
+                className="order-1 lg:order-2"
+              >
+                <Eyebrow>Payouts</Eyebrow>
+                <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+                  Pay users out in stablecoin
+                </h2>
+                <p className="text-xl text-neutral-600 mb-8">
+                  Send winnings, withdrawals and seller balances as stablecoin, funded from your fiat
+                  balance. You never buy, hold or move the stablecoin yourself.
+                </p>
+                <Steps steps={payoutSteps} />
+                <Link to="/payouts" className="inline-flex items-center font-semibold text-primary-600 hover:text-primary-700 mt-8">
+                  More on Payouts
+                  <ArrowRight className="w-4 h-4 ml-1.5" />
+                </Link>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* Case studies */}
+        <section className="section-padding bg-white">
           <div className="container-custom">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -206,7 +377,7 @@ const Platforms = () => {
                 Live with leading platforms
               </h2>
               <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
-                Regulated operators already run their crypto deposits on Ezeebit.
+                Regulated operators already run their crypto on Ezeebit.
               </p>
             </motion.div>
 
@@ -256,57 +427,6 @@ const Platforms = () => {
           </div>
         </section>
 
-        {/* How it works */}
-        <section className="section-padding bg-white">
-          <div className="container-custom">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-              >
-                <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
-                  How a deposit works
-                </h2>
-                <p className="text-xl text-neutral-600 mb-8">
-                  One API call, one checkout link, one signed webhook back. Integrations take days, not months.
-                </p>
-
-                <ol className="space-y-6">
-                  {steps.map((step, index) => (
-                    <li key={step.title} className="flex gap-4">
-                      <span className="w-9 h-9 rounded-full bg-primary-50 text-primary-600 text-sm font-semibold flex items-center justify-center flex-shrink-0">
-                        {String(index + 1).padStart(2, '0')}
-                      </span>
-                      <div>
-                        <h3 className="font-semibold text-neutral-900 mb-1">{step.title}</h3>
-                        <p className="text-neutral-600">{step.description}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                viewport={{ once: true }}
-                className="w-full max-w-[380px] mx-auto"
-              >
-                {/* The checkout itself, rather than a picture of it */}
-                <FlowDemo
-                  src="/demos/pay-in.html"
-                  flow="payin"
-                  label="What your users see"
-                  title="Interactive demo of the Ezeebit checkout a user deposits through"
-                />
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
         {/* Who it's for */}
         <section className="section-padding bg-neutral-50">
           <div className="container-custom">
@@ -316,10 +436,10 @@ const Platforms = () => {
               className="text-center mb-16"
             >
               <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
-                For any platform that holds user balances
+                For any platform that moves user balances
               </h2>
               <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
-                Wherever users put money into an account, the same rail applies.
+                Wherever money goes into an account and comes back out, the same rails apply.
               </p>
             </motion.div>
 
@@ -341,28 +461,6 @@ const Platforms = () => {
                 </motion.div>
               ))}
             </div>
-
-            {/* Money back out */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              className="card p-6 md:p-8 mt-8 flex flex-col md:flex-row md:items-center gap-5"
-            >
-              <div className="w-12 h-12 bg-primary-50 rounded-xl flex items-center justify-center text-primary-500 flex-shrink-0 mx-auto md:mx-0">
-                <Send className="w-6 h-6" />
-              </div>
-              <div className="flex-1 text-center md:text-left">
-                <h3 className="text-lg font-semibold text-neutral-900 mb-1">Money back out, too</h3>
-                <p className="text-neutral-600">
-                  Pay winnings, withdrawals and seller balances out in stablecoin from the same account,
-                  without collecting a single wallet address.
-                </p>
-              </div>
-              <Link to="/payouts" className="inline-flex items-center justify-center font-semibold text-primary-600 hover:text-primary-700 whitespace-nowrap">
-                See Payouts
-                <ArrowRight className="w-4 h-4 ml-1.5" />
-              </Link>
-            </motion.div>
           </div>
         </section>
 
@@ -374,7 +472,7 @@ const Platforms = () => {
               whileInView={{ opacity: 1, y: 0 }}
             >
               <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">
-                Add crypto deposits to your platform
+                Add crypto pay-ins and payouts to your platform
               </h2>
               <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
                 Tell us about your platform and we will scope the integration with you.
@@ -401,5 +499,22 @@ const Platforms = () => {
     </>
   )
 }
+
+/** A numbered list of what happens, in order. */
+const Steps = ({ steps }: { steps: { title: string; description: string }[] }) => (
+  <ol className="space-y-6">
+    {steps.map((step, index) => (
+      <li key={step.title} className="flex gap-4">
+        <span className="w-9 h-9 rounded-full bg-primary-50 text-primary-600 text-sm font-semibold flex items-center justify-center flex-shrink-0">
+          {String(index + 1).padStart(2, '0')}
+        </span>
+        <div>
+          <h3 className="font-semibold text-neutral-900 mb-1">{step.title}</h3>
+          <p className="text-neutral-600">{step.description}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+)
 
 export default Platforms

@@ -609,7 +609,7 @@ app.post(
               Twenty-eight endpoints, one integration.
             </p>
             <p className="text-neutral-600 mt-3">
-              Taking deposits on a platform or a gateway?{' '}
+              Running pay-ins and payouts for a platform or a gateway?{' '}
               <Link to="/platforms" className="text-primary-600 font-semibold hover:underline">See how it works for platforms</Link>
             </p>
           </div>

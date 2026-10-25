@@ -296,8 +296,8 @@ const Online = () => {
                 Running a platform or a gateway?
               </h2>
               <p className="text-neutral-600">
-                Let users fund their accounts in crypto, attributed to the right user and credited in seconds,
-                or offer crypto to your own merchants. Sunbet already takes its deposits this way.
+                Take deposits in crypto and pay users out in stablecoin, without holding either. We handle
+                the compliance and the volatility. Sunbet already takes its deposits this way.
               </p>
             </div>
             <Link to="/platforms" className="btn-primary inline-flex items-center justify-center whitespace-nowrap">

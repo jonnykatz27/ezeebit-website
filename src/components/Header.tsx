@@ -42,6 +42,19 @@ const Header = () => {
     setActiveDropdown(null)
   }, [location.pathname])
 
+  // While the phone menu is open the page behind it holds still, and Escape closes it
+  useEffect(() => {
+    if (!isMenuOpen) return
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setIsMenuOpen(false) }
+    window.addEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = previous
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [isMenuOpen])
+
   const navigation: NavItem[] = [
     { name: 'Home', href: '/' },
     {
@@ -99,19 +112,23 @@ const Header = () => {
 
   return (
     <header
+      // Solid, unblurred white while the phone menu is open: a backdrop-filter would make
+      // the header the containing block for the fixed backdrop and shrink it to the header
       className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-white/95 backdrop-blur-xl shadow-md'
-          : 'bg-transparent'
+        isMenuOpen
+          ? 'bg-white shadow-md'
+          : isScrolled
+            ? 'bg-white/95 backdrop-blur-xl shadow-md'
+            : 'bg-transparent'
       }`}
     >
       <nav className="container-custom">
-        <div className="flex items-center justify-between h-16 lg:h-20 px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 lg:h-20 px-1 sm:px-6 lg:px-8">
           <Link to="/" className="flex items-center space-x-2">
             <img
               src="/ezeebit_black.png"
               alt="Ezeebit"
-              className="h-10 w-auto transition-transform duration-200 hover:-translate-y-0.5"
+              className="h-8 sm:h-9 lg:h-10 w-auto transition-transform duration-200 hover:-translate-y-0.5"
             />
           </Link>
 
@@ -220,8 +237,22 @@ const Header = () => {
         </div>
 
         <AnimatePresence>
+          {/* Dims the page under the menu; tapping it closes the menu. Behind the bar, above the page. */}
           {isMenuOpen && (
             <motion.div
+              key="backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="lg:hidden fixed inset-x-0 bottom-0 top-16 -z-10 bg-neutral-900/30"
+              onClick={() => setIsMenuOpen(false)}
+              aria-hidden="true"
+            />
+          )}
+          {isMenuOpen && (
+            <motion.div
+              key="menu"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}

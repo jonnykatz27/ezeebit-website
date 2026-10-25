@@ -66,12 +66,17 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
       variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
       className={`${align} ${split ? 'lg:col-span-6' : 'max-w-3xl mx-auto'}`}
     >
+      {/*
+        hero-title opts out of the site-wide phone rule that pins every h1 to
+        30px. On a phone the size follows the screen instead: about 38px on a
+        375px phone, where each line of every hero still fits on one line.
+      */}
       <h1
         itemProp={itemProps ? 'name' : undefined}
-        className={`font-display font-bold text-neutral-900 mb-6 !leading-[1.04] tracking-[-0.03em] ${
+        className={`hero-title font-display font-bold text-neutral-900 mb-5 sm:mb-6 !leading-[1.04] tracking-[-0.03em] ${
           split
-            ? 'text-[2.75rem] sm:text-6xl lg:text-[3rem] xl:text-[3.75rem]'
-            : 'text-[2.5rem] sm:text-[3.25rem] lg:text-[3.75rem]'
+            ? 'text-[clamp(2.125rem,10vw,2.5rem)] sm:text-6xl lg:text-[3rem] xl:text-[3.75rem]'
+            : 'text-[clamp(2.125rem,10vw,2.5rem)] sm:text-[3.25rem] lg:text-[3.75rem]'
         }`}
       >
         <motion.span variants={HERO_ITEM} className="block">{title}</motion.span>

@@ -351,7 +351,8 @@
     margin-top: 0 !important;
   }
 
-  h1 {
+  /* Page heroes size their own headline (see PageHero) */
+  h1:not(.hero-title) {
     font-size: 2.25rem !important;
     line-height: 1.15 !important;
     letter-spacing: -0.02em !important;
@@ -361,9 +362,11 @@
     line-height: 1.2 !important;
     letter-spacing: -0.015em !important;
   }
+  /* Not !important: an h3 that sets its own size (card titles, steps) keeps it,
+     instead of being blown up to 22px on phones, larger than on desktop. */
   h3 {
-    font-size: 1.375rem !important;
-    line-height: 1.25 !important;
+    font-size: 1.375rem;
+    line-height: 1.25;
   }
 
   .section-padding {
@@ -549,7 +552,7 @@
     padding-right: 0.75rem !important;
   }
 
-  h1 { font-size: 1.875rem !important; }
+  h1:not(.hero-title) { font-size: 1.875rem !important; }
   h2 { font-size: 1.625rem !important; }
 
   .section-padding {

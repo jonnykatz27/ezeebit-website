@@ -284,7 +284,7 @@ const FAQ = () => {
     <>
       <SEO
         title="FAQ"
-        description="Answers about Ezeebit payments, payouts, wallets, settlement and fees for merchants in South Africa."
+        description="Answers about Ezeebit payments, payouts, wallets, settlement and fees for merchants across Africa."
         canonicalUrl="/resources/faq"
         crumbs={[{ name: 'FAQ', path: '/resources/faq' }]}
         extraNodes={[{

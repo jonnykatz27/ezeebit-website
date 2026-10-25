@@ -147,7 +147,7 @@ const Blog = () => {
     <>
       <SEO
         title="Blog"
-        description="News and product notes from Ezeebit on stablecoin and crypto payments for merchants in South Africa."
+        description="News and product notes from Ezeebit on stablecoin and crypto payments for merchants across Africa."
         canonicalUrl="/resources/blog"
         crumbs={[{ name: 'Blog', path: '/resources/blog' }]}
       />

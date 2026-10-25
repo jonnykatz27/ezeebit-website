@@ -465,9 +465,9 @@ const Home = () => {
   return (
     <>
       <SEO
-        title="Ezeebit | Stablecoin and crypto payments in South Africa"
+        title="Ezeebit | Stablecoin and crypto payments for Africa"
         exactTitle
-        description="Accept stablecoin and crypto payments in South Africa, in-store and online. Settle in USDT or in ZAR, KES, NGN or USD."
+        description="Accept stablecoin and crypto payments across Africa, in-store and online. Settle in USDT or in ZAR, KES, NGN or USD."
         canonicalUrl="/"
       />
       <motion.div

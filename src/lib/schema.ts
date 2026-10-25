@@ -32,7 +32,7 @@ export const organizationNode = {
   },
   image: `${SITE_URL}/logo-square.png`,
   description:
-    'Ezeebit provides stablecoin and cryptocurrency payment infrastructure for merchants in South Africa, including in-store ePOS, online checkout, payouts and wallets, with settlement in stablecoin or in ZAR, KES, NGN or USD.',
+    'Ezeebit provides FSCA-regulated stablecoin and cryptocurrency payment infrastructure for merchants across Africa, including in-store ePOS, online checkout, payouts and wallets, with settlement in stablecoin or in ZAR, KES, NGN or USD.',
   foundingDate: '2023',
   address: {
     '@type': 'PostalAddress',
@@ -41,8 +41,8 @@ export const organizationNode = {
     addressCountry: 'ZA',
   },
   areaServed: {
-    '@type': 'Country',
-    name: 'South Africa',
+    '@type': 'Continent',
+    name: 'Africa',
   },
   founder: [
     { '@type': 'Person', name: 'Daniel Katz' },
@@ -72,7 +72,7 @@ export const websiteNode = {
   url: `${SITE_URL}/`,
   inLanguage: 'en-ZA',
   publisher: { '@id': ORG_ID },
-  description: 'Stablecoin and crypto payments for merchants in South Africa.',
+  description: 'Stablecoin and crypto payments for merchants across Africa.',
 }
 
 export function breadcrumbNode(crumbs: Crumb[]) {

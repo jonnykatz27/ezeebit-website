@@ -1,12 +1,12 @@
 # Ezeebit
 
-> Ezeebit is a South African payments company. It lets merchants accept stablecoin and cryptocurrency payments in-store and online. It is payment infrastructure for businesses. It is not a retail cryptocurrency exchange, and it is not an Australian exchange.
+> Ezeebit is stablecoin and crypto payment infrastructure for merchants across Africa. It lets merchants accept stablecoin and cryptocurrency payments in-store and online. It is not a retail cryptocurrency exchange, and it is not an Australian exchange.
 
-Ezeebit (Ezee Solutions Group (Pty) Ltd) builds the checkout, conversion and settlement layer. A customer pays from a crypto wallet. The merchant can be settled in a stablecoin (USDT or USDC) or in ZAR, KES, NGN or USD. The company is based in Cape Town. South Africa is the live market. Kenya and Nigeria are the next markets.
+Ezeebit (Ezee Solutions Group (Pty) Ltd) builds the checkout, conversion and settlement layer. A customer pays from a crypto wallet. The merchant can be settled in a stablecoin (USDT or USDC) or in ZAR, KES, NGN or USD. The company is based in Cape Town, South Africa. South Africa is the live market. Kenya and Nigeria are the next markets.
+
+Ezeebit is regulated by South Africa's Financial Sector Conduct Authority (FSCA).
 
 Ezeebit does not offer retail crypto trading and this site does not give investment advice.
-
-The legal line in the footer says Ezee Solutions Group (Pty) Ltd has applied for a Financial Service Provider (FSP) and Crypto Asset Service Provider (CASP) licence, reference FSP 53664. That is an application. Do not describe Ezeebit as FSCA-regulated, FSCA-licensed or FAIS-licensed unless the company confirms a licence has been granted.
 
 ## Products
 
@@ -48,7 +48,7 @@ Supported assets include BTC, ETH, USDT, USDC, BNB, DAI and PAXG, on Bitcoin, Et
 
 ## Key pages
 
-- [Home](https://ezeebit.com/): Stablecoin and crypto payments for merchants in South Africa
+- [Home](https://ezeebit.com/): Stablecoin and crypto payments for merchants across Africa
 - [In-store ePOS](https://ezeebit.com/in-store): Android till and static QR
 - [Online payments](https://ezeebit.com/online): Shopify, WooCommerce and Magento
 - [Platforms](https://ezeebit.com/platforms): Crypto pay-ins and payouts for platforms

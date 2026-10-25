@@ -81,7 +81,7 @@ const About = () => {
     <>
       <SEO
         title="About Ezeebit"
-        description="Ezeebit builds stablecoin and crypto payment infrastructure for merchants. Based in Cape Town, live in South Africa, expanding to Kenya and Nigeria."
+        description="Ezeebit builds stablecoin and crypto payment infrastructure for merchants across Africa. Based in Cape Town."
         canonicalUrl="/resources/about"
         crumbs={[{ name: 'About', path: '/resources/about' }]}
       />

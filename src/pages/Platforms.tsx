@@ -500,16 +500,20 @@ const Platforms = () => {
   )
 }
 
-/** A numbered list of what happens, in order. */
+/**
+ * A numbered list of what happens, in order. Always left-aligned: on phones
+ * the site centres two-column sections, which pulled the text away from its
+ * numbers.
+ */
 const Steps = ({ steps }: { steps: { title: string; description: string }[] }) => (
-  <ol className="space-y-6">
+  <ol className="space-y-6 text-left">
     {steps.map((step, index) => (
       <li key={step.title} className="flex gap-4">
         <span className="w-9 h-9 rounded-full bg-primary-50 text-primary-600 text-sm font-semibold flex items-center justify-center flex-shrink-0">
           {String(index + 1).padStart(2, '0')}
         </span>
         <div>
-          <h3 className="font-semibold text-neutral-900 mb-1">{step.title}</h3>
+          <h3 className="text-lg font-semibold text-neutral-900 mb-1">{step.title}</h3>
           <p className="text-neutral-600">{step.description}</p>
         </div>
       </li>

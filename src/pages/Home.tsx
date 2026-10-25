@@ -725,7 +725,7 @@ const Home = () => {
           <p className="mt-10 text-neutral-500">
             Moving large volumes?{' '}
             <Link to="/otc" className="font-semibold text-primary-600 hover:text-primary-700">
-              Talk to our OTC desk →
+              Talk to our OTC desk{' '}→
             </Link>
           </p>
 
@@ -828,8 +828,8 @@ const Home = () => {
               ))}
             </div>
 
-            <p className="mt-8 text-sm text-neutral-500">
-              <Link to="/resources/about" className="font-semibold text-primary-600 hover:text-primary-700">
+            <p className="mt-6 text-sm text-neutral-500">
+              <Link to="/resources/about" className="inline-block py-2 font-semibold text-primary-600 hover:text-primary-700">
                 Meet our investors and angels →
               </Link>
             </p>
@@ -898,16 +898,21 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="flex justify-center mt-8 space-x-2">
+          {/* The dots stay small; the padding around each one is what a thumb hits */}
+          <div className="flex justify-center mt-5">
             {testimonials.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentTestimonial(index)}
-                className={`w-2.5 h-2.5 rounded-full transition-all duration-200 ${
-                  index === currentTestimonial ? 'bg-primary-500 w-6' : 'bg-neutral-300 hover:bg-neutral-400'
-                }`}
+                className="group px-1.5 py-3"
                 aria-label={`Go to testimonial ${index + 1}`}
-              />
+              >
+                <span
+                  className={`block h-2.5 rounded-full transition-all duration-200 ${
+                    index === currentTestimonial ? 'bg-primary-500 w-6' : 'w-2.5 bg-neutral-300 group-hover:bg-neutral-400'
+                  }`}
+                />
+              </button>
             ))}
           </div>
         </div>

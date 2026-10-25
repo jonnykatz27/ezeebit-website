@@ -39,15 +39,15 @@ const EzeebitResources = () => {
           className="mb-6 md:mb-10 text-center"
         >
           <p className="text-xs md:text-sm text-primary-500 uppercase tracking-wider mb-4 md:mb-5">Pay With Crypto</p>
-          <div className="flex items-center justify-center gap-4 md:gap-5">
-            <img src="/btc-logo.svg" alt="Bitcoin" className="w-9 h-9 md:w-10 md:h-10" />
-            <img src="/eth-logo.svg" alt="Ethereum" className="w-9 h-9 md:w-10 md:h-10" />
-            <img src="/usdt-logo.svg" alt="USDT" className="w-9 h-9 md:w-10 md:h-10" />
-            <img src="/usdc-logo.svg" alt="USDC" className="w-9 h-9 md:w-10 md:h-10" />
-            <img src="/bnb-logo.svg" alt="BNB" className="w-9 h-9 md:w-10 md:h-10" />
-            <img src="/paxg-logo.svg" alt="PAXG" className="w-9 h-9 md:w-10 md:h-10" />
-            <img src="/zarp-logo.png" alt="ZARP" className="w-9 h-9 md:w-10 md:h-10 rounded-full" />
-            <img src="/zaru-logo.png" alt="ZARU" className="w-9 h-9 md:w-10 md:h-10 rounded-full" />
+          <div className="flex items-center justify-center gap-2.5 md:gap-5">
+            <img src="/btc-logo.svg" alt="Bitcoin" className="w-8 h-8 md:w-10 md:h-10" />
+            <img src="/eth-logo.svg" alt="Ethereum" className="w-8 h-8 md:w-10 md:h-10" />
+            <img src="/usdt-logo.svg" alt="USDT" className="w-8 h-8 md:w-10 md:h-10" />
+            <img src="/usdc-logo.svg" alt="USDC" className="w-8 h-8 md:w-10 md:h-10" />
+            <img src="/bnb-logo.svg" alt="BNB" className="w-8 h-8 md:w-10 md:h-10" />
+            <img src="/paxg-logo.svg" alt="PAXG" className="w-8 h-8 md:w-10 md:h-10" />
+            <img src="/zarp-logo.png" alt="ZARP" className="w-8 h-8 md:w-10 md:h-10 rounded-full" />
+            <img src="/zaru-logo.png" alt="ZARU" className="w-8 h-8 md:w-10 md:h-10 rounded-full" />
           </div>
           <p className="text-xs md:text-sm text-primary-500 uppercase tracking-widest mt-5 md:mt-7 mb-4 md:mb-5">Direct Integrations</p>
           <div className="grid grid-cols-4 gap-3 md:gap-4 max-w-sm md:max-w-xl mx-auto">

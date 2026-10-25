@@ -889,8 +889,9 @@ app.post(
                 </div>
                 <div className="text-center w-full overflow-hidden">
                   <div className="font-semibold text-neutral-900 text-xs leading-tight">{asset.asset}</div>
-                  <div className="text-[10px] text-neutral-500 leading-tight truncate max-w-full">{asset.network}</div>
-                  <div className="text-[10px] text-neutral-400 truncate max-w-full">{asset.description}</div>
+                  {/* Wraps rather than truncates: two cards to a row on a phone leaves no room for "ERC20 | TRC20 | BEP20 | SPL" on one line */}
+                  <div className="text-[11px] sm:text-[10px] text-neutral-500 leading-snug">{asset.network}</div>
+                  <div className="text-[11px] sm:text-[10px] text-neutral-400 leading-snug">{asset.description}</div>
                 </div>
               </div>
             ))}

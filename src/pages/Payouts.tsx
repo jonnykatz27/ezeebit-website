@@ -260,7 +260,8 @@ const Payouts = () => {
                   account to create, and nothing for your support team to talk anyone through.
                 </p>
 
-                <ul className="space-y-5">
+                {/* Left-aligned even where phones centre the section, so each line stays beside its tick */}
+                <ul className="space-y-5 text-left">
                   {customerExperience.map((point) => (
                     <li key={point.title} className="flex gap-4">
                       <CheckCircle className="w-5 h-5 text-primary-500 flex-shrink-0 mt-1" />

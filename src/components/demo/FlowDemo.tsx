@@ -84,7 +84,7 @@ const FlowDemo = ({ src, flow, title, label, fill = false }: {
         // real dimensions whether or not the demo reports back.
         height={height}
         style={{ height }}
-        className={`block w-full rounded-[20px] bg-[#F2F2F2] border-0 transition-[height] duration-300 !mx-0 ${
+        className={`block w-full rounded-[20px] bg-neutral-100 border-0 transition-[height] duration-300 !mx-0 ${
           fill ? 'lg:flex-1' : ''
         }`}
       />

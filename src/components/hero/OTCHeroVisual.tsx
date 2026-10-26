@@ -142,7 +142,7 @@ const OTCHeroVisual = () => {
           <motion.path
             key={trade.asset}
             d={SPARK}
-            stroke="#0074E4"
+            className="stroke-primary-500"
             strokeWidth={2}
             strokeLinecap="round"
             initial={{ pathLength: still ? 1 : 0 }}

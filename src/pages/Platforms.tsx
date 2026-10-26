@@ -389,37 +389,47 @@ const Platforms = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}
                   viewport={{ once: true }}
-                  className="card overflow-hidden grid grid-cols-1 lg:grid-cols-5"
+                  className="card overflow-hidden"
                 >
-                  {/* The cover carries its own headline, so it is shown whole on its navy, never cropped */}
-                  <Link to={study.href} className="lg:col-span-3 flex items-center bg-[#091221]">
+                  {/*
+                    The cover carries its own headline, so it runs full width at its
+                    own shape: never cropped, and with no backing colour around it
+                    to show a seam against the banner's navy.
+                  */}
+                  <Link to={study.href} className="block">
                     <img
                       src={study.image}
                       alt={`${study.name} accepting crypto deposits through Ezeebit`}
+                      width={3200}
+                      height={1800}
                       className="w-full h-auto !mx-0"
                       loading="lazy"
                     />
                   </Link>
-                  <div className="lg:col-span-2 p-8 lg:p-10 flex flex-col justify-center">
-                    <div className="flex items-center gap-3 mb-5">
-                      <img src={study.logo} alt={study.name} className="h-10 w-auto !mx-0" />
-                      <span className="text-xs font-semibold uppercase tracking-[0.12em] text-primary-600 bg-primary-50 rounded-full px-3 py-1">
-                        {study.sector}
-                      </span>
+                  <div className="p-8 lg:p-10 grid gap-8 lg:grid-cols-2 text-left">
+                    <div>
+                      <div className="flex items-center gap-3 mb-5">
+                        <img src={study.logo} alt={study.name} className="h-10 w-auto !mx-0" />
+                        <span className="text-xs font-semibold uppercase tracking-[0.12em] text-primary-600 bg-primary-50 rounded-full px-3 py-1">
+                          {study.sector}
+                        </span>
+                      </div>
+                      <p className="text-lg text-neutral-700">{study.summary}</p>
                     </div>
-                    <p className="text-lg text-neutral-700 mb-6">{study.summary}</p>
-                    <ul className="space-y-3 mb-8">
-                      {study.points.map((point) => (
-                        <li key={point} className="flex gap-3 text-neutral-600">
-                          <CheckCircle className="w-5 h-5 text-primary-500 flex-shrink-0 mt-0.5" />
-                          {point}
-                        </li>
-                      ))}
-                    </ul>
-                    <Link to={study.href} className="inline-flex items-center font-semibold text-primary-600 hover:text-primary-700">
-                      Read how it was built
-                      <ArrowRight className="w-4 h-4 ml-1.5" />
-                    </Link>
+                    <div className="flex flex-col justify-center">
+                      <ul className="space-y-3 mb-8">
+                        {study.points.map((point) => (
+                          <li key={point} className="flex gap-3 text-neutral-600">
+                            <CheckCircle className="w-5 h-5 text-primary-500 flex-shrink-0 mt-0.5" />
+                            {point}
+                          </li>
+                        ))}
+                      </ul>
+                      <Link to={study.href} className="inline-flex items-center font-semibold text-primary-600 hover:text-primary-700">
+                        Read how it was built
+                        <ArrowRight className="w-4 h-4 ml-1.5" />
+                      </Link>
+                    </div>
                   </div>
                 </motion.article>
               ))}

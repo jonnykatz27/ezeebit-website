@@ -85,7 +85,7 @@ const QR_PATH = QR_ROWS.map((row, y) =>
 const QR = ({ size, coin }: { size: number; coin?: string }) => (
   <div className="relative" style={{ width: size, height: size }}>
     <svg viewBox={`0 0 ${QR_N + QUIET * 2} ${QR_N + QUIET * 2}`} width={size} height={size} shapeRendering="crispEdges">
-      <path d={QR_PATH} fill="#111" />
+      <path d={QR_PATH} className="fill-neutral-950" />
     </svg>
     {coin && (
       <span

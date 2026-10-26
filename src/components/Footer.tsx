@@ -39,10 +39,13 @@ const Footer = () => {
       <div className="container-custom pt-8 pb-4 md:pt-16 md:pb-6 lg:pt-20 lg:pb-8">
         <div className="mb-6 md:mb-10 text-center">
           <Link to="/" className="flex items-center justify-center space-x-2 mb-4 md:mb-5">
+            {/* The brand's own white-wordmark logo, not the black one recoloured: the logo takes no effects */}
             <img
-              src="/ezeebit_black.png"
+              src="/ezeebit-logo-white.svg"
               alt="Ezeebit"
-              className="h-7 md:h-9 w-auto filter brightness-0 invert"
+              width={348}
+              height={87}
+              className="h-7 md:h-9 w-auto"
             />
           </Link>
           <p className="font-accent font-bold text-2xl md:text-3xl text-primary-300 mb-3 md:mb-4">

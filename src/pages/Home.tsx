@@ -12,7 +12,7 @@ import SEO from '../components/SEO'
 import FlowDemo, { DemoPanel } from '../components/demo/FlowDemo'
 import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import HomeHeroVisual from '../components/hero/HomeHeroVisual'
-import { PortalBalanceCard, PortalConvertCard } from '../components/portal/PortalUI'
+import { PortalBalanceCard, PortalConvertCard, PORTAL_PAGE_BG } from '../components/portal/PortalUI'
 
 const FLOWS = [
   { id: 'pay-in', label: 'Pay in' },
@@ -78,7 +78,7 @@ const StepConnector = ({ still, index }: { still: boolean; index: number }) => (
       {!still && (
         <motion.div
           className="absolute left-0 right-0"
-          style={{ height: 16, background: 'linear-gradient(to bottom, transparent, #0074E3)' }}
+          style={{ height: 16, background: 'linear-gradient(to bottom, transparent, var(--color-primary-500))' }}
           animate={{ y: [-16, 28] }}
           transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 1.4, delay: index * 0.75, ease: 'linear' }}
         />
@@ -276,7 +276,7 @@ const FLOW_DEMOS: Record<FlowId, FlowDemoSpec> = {
     node: (
       <DemoPanel label="Merchant Portal">
       <ScaleToFit design={430}>
-      <div className="rounded-[20px] bg-[#f8f9fb] p-3 space-y-3">
+      <div className={`rounded-[20px] ${PORTAL_PAGE_BG} p-3 space-y-3`}>
         <div className="rounded-[12px] border border-neutral-200/70 overflow-hidden">
           <PortalBalanceCard
             total="R 1,637,102.25"

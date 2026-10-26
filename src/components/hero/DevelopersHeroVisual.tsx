@@ -58,7 +58,7 @@ const DevelopersHeroVisual = ({ environment, baseUrl, checkoutHost }: { environm
 
       {/* ── The terminal ── */}
       <motion.div
-        className="absolute rounded-2xl bg-[#0B1220] border border-white/5 shadow-[0_24px_60px_-20px_rgba(0,26,54,0.55)] overflow-hidden"
+        className="absolute rounded-2xl bg-neutral-950 border border-white/5 shadow-[0_24px_60px_-20px_rgba(0,26,54,0.55)] overflow-hidden"
         style={{ left: 16, top: 34, width: 420, height: 372 }}
         {...arrive(0.2, 'left')}
       >

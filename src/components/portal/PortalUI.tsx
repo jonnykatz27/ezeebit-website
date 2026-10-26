@@ -28,6 +28,13 @@ const C = {
 }
 
 /**
+ * The portal's page background, as a class. It belongs to the product's own UI,
+ * so it lives here with the rest of the portal's colours rather than as a
+ * stray value in the pages that show portal cards.
+ */
+export const PORTAL_PAGE_BG = 'bg-[#f8f9fb]'
+
+/**
  * Renders a portal component at its design width, scaled to fit a smaller
  * space. A transform does not shrink the room an element takes up, so the
  * scaled height is measured and applied to the outer box.

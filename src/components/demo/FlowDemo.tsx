@@ -13,7 +13,8 @@ export const DemoPanel = ({ label, action, children }: {
   action?: React.ReactNode
   children: React.ReactNode
 }) => (
-  <div className="h-full flex flex-col rounded-[28px] bg-white p-2 ring-1 ring-neutral-200/80 shadow-[0_24px_60px_-24px_rgba(0,46,92,0.35)]">
+  // A Near Black bezel, like a device's: the product sits in the same dark as the page's opening and close
+  <div className="h-full flex flex-col rounded-[28px] bg-neutral-950 p-2 shadow-[0_24px_60px_-24px_rgba(0,26,54,0.55)]">
     <div className="flex items-center justify-between gap-3 px-3 pt-1.5 pb-2">
       <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-400">{label}</p>
       {action}
@@ -68,7 +69,7 @@ const FlowDemo = ({ src, flow, title, label, fill = false }: {
           type="button"
           onClick={() => setRun((r) => r + 1)}
           // The negative margin keeps the label where it was while the padding gives a thumb-sized target
-          className="flex items-center gap-1.5 -my-2 py-2 -mr-1.5 pr-1.5 pl-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-primary-600 hover:text-primary-700"
+          className="flex items-center gap-1.5 -my-2 py-2 -mr-1.5 pr-1.5 pl-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-primary-400 hover:text-white"
         >
           <RotateCcw className="w-3.5 h-3.5" />
           Restart

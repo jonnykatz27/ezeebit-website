@@ -5,6 +5,7 @@ import {
   Shield, FileText, Eye, Scale, Award
 } from 'lucide-react'
 import SEO from '../components/SEO'
+import DarkBackdrop from '../components/DarkBackdrop'
 
 const Legal = () => {
   const location = useLocation()
@@ -930,8 +931,9 @@ const Legal = () => {
       </section>
 
       {/* Contact Section */}
-      <section className="section-padding bg-primary-600 text-white">
-        <div className="container-custom text-center">
+      <section className="section-padding relative overflow-hidden bg-neutral-950 text-white">
+        <DarkBackdrop glow="left" />
+        <div className="relative container-custom text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -939,15 +941,15 @@ const Legal = () => {
             <h2 className="text-3xl font-display font-bold text-white mb-4">
               Questions about our legal terms?
             </h2>
-            <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
+            <p className="text-xl mb-8 max-w-2xl mx-auto text-neutral-300">
               Our legal team is available to answer any questions about our terms,
               privacy policy, or compliance requirements.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/contact" className="bg-white text-primary-600 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center">
+              <Link to="/contact" className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center">
                 Contact Legal Team
               </Link>
-              <a href="mailto:legal@ezeebit.com" className="border-2 border-white text-white hover:bg-white hover:text-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center">
+              <a href="mailto:legal@ezeebit.com" className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center">
                 Email: legal@ezeebit.com
               </a>
             </div>

@@ -10,6 +10,7 @@ import {
 import SEO from '../components/SEO'
 import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import DevelopersHeroVisual from '../components/hero/DevelopersHeroVisual'
+import DarkBackdrop from '../components/DarkBackdrop'
 
 const DOCS = 'https://docs.ezeebit.com'
 
@@ -580,7 +581,7 @@ app.post(
                 key={step.title}
                 className="text-center"
               >
-                <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4 text-primary-500">
+                <div className="w-16 h-16 bg-neutral-950 rounded-full flex items-center justify-center mx-auto mb-4 text-primary-400">
                   {step.icon}
                 </div>
                 <div className="text-sm font-semibold text-primary-500 mb-2">STEP {index + 1}</div>
@@ -624,7 +625,7 @@ app.post(
                 className="card p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 will-change-transform group"
               >
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center text-primary-500">
+                  <div className="w-12 h-12 bg-neutral-950 rounded-lg flex items-center justify-center text-primary-400">
                     {product.icon}
                   </div>
                   <span className="text-xs font-medium text-neutral-500 bg-neutral-100 px-2 py-1 rounded">
@@ -908,14 +909,15 @@ app.post(
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding bg-primary-600 text-white">
-        <div className="container-custom text-center">
+      <section className="section-padding relative overflow-hidden bg-neutral-950 text-white">
+        <DarkBackdrop glow="left" />
+        <div className="relative container-custom text-center">
           <div
           >
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">
               Ready to start building?
             </h2>
-            <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
+            <p className="text-xl mb-8 max-w-2xl mx-auto text-neutral-300">
               Create a UAT account, generate a key, and make your first signed call.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -923,7 +925,7 @@ app.post(
                 href="https://merchant.ezeebit.com/#/signup"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white text-primary-600 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+                className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
               >
                 Get API Keys
                 <Key className="w-5 h-5 ml-2 inline" />
@@ -932,7 +934,7 @@ app.post(
                 href={DOCS}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border-2 border-white text-white hover:bg-white hover:text-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
+                className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
               >
                 Full Documentation
                 <ExternalLink className="w-5 h-5 ml-2 inline" />

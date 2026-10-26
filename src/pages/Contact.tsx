@@ -6,6 +6,7 @@ import {
 } from 'lucide-react'
 import SEO from '../components/SEO'
 import PageHero from '../components/hero/PageHero'
+import DarkBackdrop from '../components/DarkBackdrop'
 
 const Contact = () => {
   useEffect(() => {
@@ -147,8 +148,9 @@ const Contact = () => {
 
 
       {/* CTA Section */}
-      <section className="section-padding bg-primary-600 text-white">
-        <div className="container-custom text-center">
+      <section className="section-padding relative overflow-hidden bg-neutral-950 text-white">
+        <DarkBackdrop glow="left" />
+        <div className="relative container-custom text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -156,7 +158,7 @@ const Contact = () => {
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">
               Ready to get started?
             </h2>
-            <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
+            <p className="text-xl mb-8 max-w-2xl mx-auto text-neutral-300">
               Don't wait to transform your payment system. Join hundreds of merchants already accepting stablecoin and crypto payments.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -164,14 +166,14 @@ const Contact = () => {
                 href="https://merchant.ezeebit.com/#/signup"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white text-primary-600 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+                className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
               >
                 Start Free Trial
                 <ArrowRight className="w-5 h-5 ml-2 inline" />
               </a>
               <a
                 href="mailto:support@ezeebit.com?subject=Schedule%20Demo"
-                className="border-2 border-white text-white hover:bg-white hover:text-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
+                className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
               >
                 Schedule Demo
               </a>

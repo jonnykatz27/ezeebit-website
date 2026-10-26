@@ -7,6 +7,7 @@ import {
 import { stores, categories } from '../lib/stores'
 import SEO from '../components/SEO'
 import PageHero, { HeroSearch } from '../components/hero/PageHero'
+import DarkBackdrop from '../components/DarkBackdrop'
 
 const WhereToSpend = () => {
   const [selectedCategory, setSelectedCategory] = useState('All')
@@ -164,8 +165,9 @@ const WhereToSpend = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-12 md:py-16 bg-primary-600 text-white">
-        <div className="container-custom text-center px-4">
+      <section className="py-12 md:py-16 relative overflow-hidden bg-neutral-950 text-white">
+        <DarkBackdrop glow="left" />
+        <div className="relative container-custom text-center px-4">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -175,7 +177,7 @@ const WhereToSpend = () => {
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold text-white mb-3 md:mb-4">
               Want to accept stablecoin and crypto payments?
             </h2>
-            <p className="text-base md:text-xl mb-6 md:mb-8 max-w-2xl mx-auto opacity-90">
+            <p className="text-base md:text-xl mb-6 md:mb-8 max-w-2xl mx-auto text-neutral-300">
               Join these trusted merchants and start accepting stablecoin and cryptocurrency payments today.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
@@ -183,12 +185,12 @@ const WhereToSpend = () => {
                 href="https://merchant.ezeebit.com/#/signup"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white text-primary-600 hover:bg-neutral-100 font-medium px-6 md:px-8 py-3 md:py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center text-sm md:text-base"
+                className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-6 md:px-8 py-3 md:py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center text-sm md:text-base"
               >
                 Become a Partner
                 <ArrowRight className="w-4 h-4 md:w-5 md:h-5 ml-2 inline" />
               </a>
-              <Link to="/contact" className="border-2 border-white text-white hover:bg-white hover:text-primary-600 font-medium px-6 md:px-8 py-3 md:py-4 rounded-lg transition-all duration-200 flex items-center justify-center text-sm md:text-base">
+              <Link to="/contact" className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-6 md:px-8 py-3 md:py-4 rounded-lg transition-all duration-200 flex items-center justify-center text-sm md:text-base">
                 Contact Sales
               </Link>
             </div>

@@ -7,6 +7,7 @@ import {
 import SEO from '../components/SEO'
 import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import OTCHeroVisual from '../components/hero/OTCHeroVisual'
+import DarkBackdrop from '../components/DarkBackdrop'
 
 const OTC = () => {
   const features = [
@@ -137,7 +138,7 @@ const OTC = () => {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="card p-6 hover:scale-105 transition-transform"
                 >
-                  <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4 text-primary-500">
+                  <div className="w-12 h-12 bg-neutral-950 rounded-lg flex items-center justify-center mb-4 text-primary-400">
                     {feature.icon}
                   </div>
                   <h3 className="text-xl font-semibold text-neutral-900 mb-3">
@@ -196,8 +197,9 @@ const OTC = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="section-padding bg-primary-600 text-white">
-          <div className="container-custom text-center">
+        <section className="section-padding relative overflow-hidden bg-neutral-950 text-white">
+          <DarkBackdrop glow="left" />
+          <div className="relative container-custom text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -205,7 +207,7 @@ const OTC = () => {
               <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">
                 Ready to trade at scale?
               </h2>
-              <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
+              <p className="text-xl mb-8 max-w-2xl mx-auto text-neutral-300">
                 Speak to our OTC desk about your next trade. We'll get you onboarded and quoting in no time.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -213,7 +215,7 @@ const OTC = () => {
                   href="https://merchant.ezeebit.com/#/signup"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-white text-primary-600 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+                  className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
                 >
                   Sign Up
                   <ArrowRight className="w-5 h-5 ml-2 inline" />

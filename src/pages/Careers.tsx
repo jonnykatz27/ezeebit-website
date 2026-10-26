@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { MapPin, Clock, Briefcase, ExternalLink, Zap, Compass, ShieldCheck, Sparkles, Coffee } from 'lucide-react'
 import SEO from '../components/SEO'
 import PageHero from '../components/hero/PageHero'
+import DarkBackdrop from '../components/DarkBackdrop'
 
 const jobPostings = [
   {
@@ -208,8 +209,9 @@ const Careers = () => {
         </section>
 
         {/* CTA */}
-        <section className="py-16 md:py-24 bg-primary-600 text-white">
-          <div className="container-custom text-center">
+        <section className="py-16 md:py-24 relative overflow-hidden bg-neutral-950 text-white">
+          <DarkBackdrop glow="left" />
+          <div className="relative container-custom text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -218,12 +220,12 @@ const Careers = () => {
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
                 Don't see your role?
               </h2>
-              <p className="mb-8 opacity-90">
+              <p className="mb-8 text-neutral-300">
                 We're always interested in exceptional people. If you're passionate about payments, fintech, or building for emerging markets, reach out.
               </p>
               <a
                 href="mailto:careers@ezeebit.com"
-                className="bg-white text-primary-600 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl inline-flex items-center gap-2"
+                className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl inline-flex items-center gap-2"
               >
                 Get in Touch
               </a>

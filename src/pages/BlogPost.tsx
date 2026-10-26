@@ -5,6 +5,7 @@ import {
   Mail, Tag
 } from 'lucide-react'
 import SEO from '../components/SEO'
+import DarkBackdrop from '../components/DarkBackdrop'
 
 const blogPostsData: Record<string, {
   title: string
@@ -980,13 +981,14 @@ const BlogPost = () => {
         </div>
       </section>
 
-      <section className="section-padding bg-primary-600 text-white">
-        <div className="container-custom">
+      <section className="section-padding relative overflow-hidden bg-neutral-950 text-white">
+        <DarkBackdrop glow="left" />
+        <div className="relative container-custom">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-2xl font-bold text-white mb-6">
               Ready to experience Ezeebit?
             </h2>
-            <p className="mb-8 opacity-90">
+            <p className="mb-8 text-neutral-300">
               Join the future of stablecoin and cryptocurrency payments and start accepting stablecoin and crypto today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -994,11 +996,11 @@ const BlogPost = () => {
                 href="https://merchant.ezeebit.com/#/signup"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white text-primary-600 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+                className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
               >
                 Get Started Today
               </a>
-              <Link to="/contact" className="border-2 border-white text-white hover:bg-white hover:text-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center">
+              <Link to="/contact" className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center">
                 Contact Our Team
               </Link>
             </div>

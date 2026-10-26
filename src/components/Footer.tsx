@@ -35,7 +35,7 @@ const Footer = () => {
   }
 
   return (
-    <footer className="bg-neutral-950 text-white">
+    <footer className="bg-neutral-950 text-white border-t border-white/10">
       <div className="container-custom pt-8 pb-4 md:pt-16 md:pb-6 lg:pt-20 lg:pb-8">
         <div className="mb-6 md:mb-10 text-center">
           <Link to="/" className="flex items-center justify-center space-x-2 mb-4 md:mb-5">

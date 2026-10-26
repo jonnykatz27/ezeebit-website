@@ -133,7 +133,7 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
       body: 'Your customer opens a link and enters their own wallet address.',
       visual: (
         <div className="flex items-center gap-2">
-          <span className="w-10 h-10 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center shrink-0">
+          <span className="w-10 h-10 rounded-xl bg-neutral-950 text-primary-400 flex items-center justify-center shrink-0">
             <Link2 className="w-5 h-5" />
           </span>
           <span className="font-mono text-xs text-neutral-500 bg-white border border-neutral-200 rounded-lg px-2 py-1">
@@ -195,10 +195,10 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
       body: 'Fund payouts, or withdraw to your bank account or your own wallet.',
       visual: (
         <div className="flex items-center gap-2">
-          <span className="w-10 h-10 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center">
+          <span className="w-10 h-10 rounded-xl bg-neutral-950 text-primary-400 flex items-center justify-center">
             <Landmark className="w-5 h-5" />
           </span>
-          <span className="w-10 h-10 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center">
+          <span className="w-10 h-10 rounded-xl bg-neutral-950 text-primary-400 flex items-center justify-center">
             <Wallet className="w-5 h-5" />
           </span>
         </div>
@@ -370,7 +370,7 @@ const FlowCards = ({ flow, isActive }: { flow: FlowId; isActive: boolean }) => {
           <Link
             key={l.to}
             to={l.to}
-            className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm font-semibold text-primary-600 shadow-xs hover:border-primary-200 hover:text-primary-700 transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-full bg-neutral-950 px-4 py-2 text-sm font-semibold text-white hover:bg-neutral-950/85 transition-colors"
           >
             {l.label}
             <ArrowRight className="w-4 h-4" />
@@ -634,7 +634,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-10 lg:py-20 bg-neutral-50">
+      <section className="py-10 lg:py-20 bg-white">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -656,7 +656,7 @@ const Home = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="card px-5 py-4 text-center hover:scale-[1.03] transition-transform"
               >
-                <div className="w-12 h-12 bg-primary-50 rounded-xl flex items-center justify-center mx-auto mb-2 text-primary-500">
+                <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center mx-auto mb-2 text-primary-400">
                   {feature.icon}
                 </div>
                 <h3 className="text-lg font-semibold text-neutral-900 mb-1">
@@ -693,7 +693,7 @@ const Home = () => {
             <div
               role="tablist"
               aria-label="How money moves through Ezeebit"
-              className="inline-flex items-center gap-1 p-1 rounded-full bg-white border border-neutral-200/80 shadow-sm max-w-full overflow-x-auto"
+              className="inline-flex items-center gap-1 p-1 rounded-full bg-neutral-950 max-w-full overflow-x-auto"
             >
               {FLOWS.map((flow, index) => (
                 <button
@@ -708,7 +708,7 @@ const Home = () => {
                   className={`whitespace-nowrap rounded-full px-4 sm:px-6 py-2.5 text-sm font-semibold transition-colors ${
                     activeFlow === flow.id
                       ? 'bg-primary-500 text-white'
-                      : 'text-neutral-600 hover:text-primary-600'
+                      : 'text-neutral-300 hover:text-white'
                   }`}
                 >
                   {flow.label}
@@ -745,69 +745,6 @@ const Home = () => {
         </div>
       </section>
 
-
-      {/* A dark moment for the technical depth, between two light sections */}
-      <section className="relative overflow-hidden bg-neutral-950 py-14 lg:py-24">
-        <DarkBackdrop glow="left" />
-        <div className="container-custom relative">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-8 lg:mb-12"
-          >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">Enterprise-grade security</h2>
-            <p className="text-lg text-neutral-400 max-w-3xl mx-auto">
-              Built with the highest security standards to protect your business and your customers.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {[
-              {
-                icon: <Shield className="w-8 h-8 text-primary-400" />,
-                title: "FSCA regulated",
-                description: "FSCA regulated and FIC compliant, with full KYC/KYB, AML/CFT, and POPIA processes handled end to end by Ezeebit."
-              },
-              {
-                icon: <Lock className="w-8 h-8 text-primary-400" />,
-                title: "MPC wallet technology",
-                description: "Multi-party computation (MPC) eliminates single points of failure by distributing key management across multiple parties, keeping funds secure.",
-                badge: "SOC 2 Certified"
-              },
-              {
-                icon: <Zap className="w-8 h-8 text-primary-400" />,
-                title: "No chargebacks",
-                description: "Blockchain payments are final and irreversible — every sale stays settled, with rates locked and hedged at the point of payment."
-              }
-            ].map((item, index) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 + index * 0.05 }}
-                // Hairline panels rather than white cards: a white card would be a light patch in the dark moment
-                className="relative rounded-2xl border border-white/10 bg-white/[0.04] p-6 text-center"
-              >
-                {item.badge && (
-                  <div className="absolute -top-3 -right-3 bg-primary-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md flex items-center gap-1.5">
-                    <Star className="w-3.5 h-3.5 fill-current" />
-                    {item.badge}
-                  </div>
-                )}
-                <div className="w-16 h-16 bg-primary-500/15 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  {item.icon}
-                </div>
-                <h3 className="text-lg font-semibold text-white mb-3">
-                  {item.title}
-                </h3>
-                <p className="text-neutral-400 text-sm leading-relaxed">
-                  {item.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       <section className="py-10 lg:py-16 bg-white">
         <div className="container-custom">
@@ -853,7 +790,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-10 lg:py-20 bg-neutral-50">
+      <section className="py-10 lg:py-20 bg-white">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -935,42 +872,102 @@ const Home = () => {
       </section>
 
       {/*
-        The closing dark moment, as a panel on white rather than a full-width band:
-        the footer below is already Near Black, and a dark band against it
-        would read as one block, two dark sections in a row.
+        The dark close, the bookend to the dark opening: security, the call to
+        action and the footer run on as one Near Black block. Trust comes right
+        before the ask.
       */}
-      <section className="py-10 lg:py-20 bg-white">
-        <div className="container-custom">
+      <section className="relative overflow-hidden bg-neutral-950 py-14 lg:py-24">
+        <DarkBackdrop glow="left" />
+        <div className="container-custom relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="relative overflow-hidden rounded-3xl bg-neutral-950 px-6 py-12 sm:px-12 lg:px-16 lg:py-20 text-center"
+            className="text-center mb-8 lg:mb-12"
           >
-            <DarkBackdrop glow="left" />
-            <div className="relative">
-              <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">
-                Ready to accept stablecoin and crypto payments?
-              </h2>
-              <p className="text-xl text-neutral-300 mb-8 max-w-2xl mx-auto">
-                Join the future of payments today. Get started in minutes with no setup fees and full regulatory compliance.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a
-                  href="https://merchant.ezeebit.com/#/signup"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
-                >
-                  Start Free Trial
-                  <ArrowRight className="w-5 h-5 ml-2 inline" />
-                </a>
-                <Link
-                  to="/contact"
-                  className="border border-neutral-600 text-white hover:border-neutral-400 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
-                >
-                  Talk to Sales
-                </Link>
-              </div>
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">Enterprise-grade security</h2>
+            <p className="text-lg text-neutral-400 max-w-3xl mx-auto">
+              Built with the highest security standards to protect your business and your customers.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {[
+              {
+                icon: <Shield className="w-8 h-8 text-primary-400" />,
+                title: "FSCA regulated",
+                description: "FSCA regulated and FIC compliant, with full KYC/KYB, AML/CFT, and POPIA processes handled end to end by Ezeebit."
+              },
+              {
+                icon: <Lock className="w-8 h-8 text-primary-400" />,
+                title: "MPC wallet technology",
+                description: "Multi-party computation (MPC) eliminates single points of failure by distributing key management across multiple parties, keeping funds secure.",
+                badge: "SOC 2 Certified"
+              },
+              {
+                icon: <Zap className="w-8 h-8 text-primary-400" />,
+                title: "No chargebacks",
+                description: "Blockchain payments are final and irreversible — every sale stays settled, with rates locked and hedged at the point of payment."
+              }
+            ].map((item, index) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 + index * 0.05 }}
+                // Hairline panels rather than white cards: a white card would be a light patch in the dark moment
+                className="relative rounded-2xl border border-white/10 bg-white/[0.04] p-6 text-center"
+              >
+                {item.badge && (
+                  <div className="absolute -top-3 -right-3 bg-primary-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md flex items-center gap-1.5">
+                    <Star className="w-3.5 h-3.5 fill-current" />
+                    {item.badge}
+                  </div>
+                )}
+                <div className="w-16 h-16 bg-primary-500/15 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  {item.icon}
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-3">
+                  {item.title}
+                </h3>
+                <p className="text-neutral-400 text-sm leading-relaxed">
+                  {item.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative overflow-hidden bg-neutral-950 pb-14 lg:pb-24">
+        <DarkBackdrop glow="right" />
+        <div className="container-custom relative">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="border-t border-white/10 pt-12 lg:pt-16 text-center"
+          >
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">
+              Ready to accept stablecoin and crypto payments?
+            </h2>
+            <p className="text-xl text-neutral-300 mb-8 max-w-2xl mx-auto">
+              Join the future of payments today. Get started in minutes with no setup fees and full regulatory compliance.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href="https://merchant.ezeebit.com/#/signup"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+              >
+                Start Free Trial
+                <ArrowRight className="w-5 h-5 ml-2 inline" />
+              </a>
+              <Link
+                to="/contact"
+                className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
+              >
+                Talk to Sales
+              </Link>
             </div>
           </motion.div>
         </div>

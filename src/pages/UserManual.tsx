@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 import SEO from '../components/SEO'
 import PageHero, { HeroSearch } from '../components/hero/PageHero'
+import DarkBackdrop from '../components/DarkBackdrop'
 
 type TabId = 'getting-started' | 'payments' | 'basics' | 'faq' | 'downloads'
 
@@ -672,24 +673,25 @@ const UserManual = () => {
         </section>
 
         {/* Need More Help */}
-        <section className="section-padding bg-primary-600 text-white">
-          <div className="container-custom text-center">
+        <section className="section-padding relative overflow-hidden bg-neutral-950 text-white">
+          <DarkBackdrop glow="left" />
+          <div className="relative container-custom text-center">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}>
               <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">Still need a hand?</h2>
-              <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
+              <p className="text-xl mb-8 max-w-2xl mx-auto text-neutral-300">
                 When in doubt, it's always better to ask than to guess. Our support team is here to help.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
                 <Link
                   to="/contact"
-                  className="bg-white text-primary-600 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center flex-1"
+                  className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center flex-1"
                 >
                   Contact Support
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Link>
                 <Link
                   to="/resources/faq"
-                  className="border-2 border-white text-white hover:bg-white hover:text-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center flex-1"
+                  className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center flex-1"
                 >
                   View FAQ
                 </Link>

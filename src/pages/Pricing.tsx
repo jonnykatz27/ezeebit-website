@@ -7,6 +7,7 @@ import {
 } from 'lucide-react'
 import SEO from '../components/SEO'
 import PageHero from '../components/hero/PageHero'
+import DarkBackdrop from '../components/DarkBackdrop'
 
 const Pricing = () => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('monthly')
@@ -141,7 +142,7 @@ const Pricing = () => {
                 )}
                 
                 <div className="text-center mb-6">
-                  <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-3 text-primary-500">
+                  <div className="w-12 h-12 bg-neutral-950 rounded-lg flex items-center justify-center mx-auto mb-3 text-primary-400">
                     {plan.icon}
                   </div>
                   <h3 className="text-2xl font-bold text-neutral-900 mb-2">{plan.name}</h3>
@@ -227,8 +228,9 @@ const Pricing = () => {
       {/* FAQ Section */}
 
       {/* CTA Section */}
-      <section className="section-padding bg-primary-600 text-white">
-        <div className="container-custom text-center">
+      <section className="section-padding relative overflow-hidden bg-neutral-950 text-white">
+        <DarkBackdrop glow="left" />
+        <div className="relative container-custom text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -236,7 +238,7 @@ const Pricing = () => {
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">
               Ready to get started?
             </h2>
-            <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
+            <p className="text-xl mb-8 max-w-2xl mx-auto text-neutral-300">
               Join thousands of merchants already accepting stablecoin and crypto payments. Start with our free plan today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -244,14 +246,14 @@ const Pricing = () => {
                 href="https://merchant.ezeebit.com/#/signup" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="bg-white text-primary-600 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+                className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
               >
                 Start Free Trial
                 <ArrowRight className="w-5 h-5 ml-2 inline" />
               </a>
               <a 
                 href="mailto:sales@ezeebit.com" 
-                className="border-2 border-white text-white hover:bg-white hover:text-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
+                className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
               >
                 Contact Sales
               </a>

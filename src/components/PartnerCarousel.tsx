@@ -12,15 +12,9 @@ interface PartnerCarouselProps {
   partners: Partner[]
   direction: 'left' | 'right'
   speed?: number
-  /**
-   * The section behind it. On dark, each logo sits on its own white tile: the
-   * logos are the merchants' dark artwork, and are never recoloured.
-   */
-  tone?: 'light' | 'dark'
 }
 
-const PartnerCarousel = ({ partners, direction, speed = 30, tone = 'light' }: PartnerCarouselProps) => {
-  const edge = tone === 'dark' ? 'from-neutral-950' : 'from-white'
+const PartnerCarousel = ({ partners, direction, speed = 30 }: PartnerCarouselProps) => {
   const [isInitialized, setIsInitialized] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const wrapperRef = useRef<HTMLDivElement>(null)
@@ -145,8 +139,8 @@ const PartnerCarousel = ({ partners, direction, speed = 30, tone = 'light' }: Pa
   if (!isInitialized) {
     return (
       <div className="relative overflow-hidden w-full h-[77px] md:h-24">
-        <div className={`absolute left-0 top-0 w-4 md:w-8 h-full bg-gradient-to-r ${edge} to-transparent z-10 pointer-events-none`}></div>
-        <div className={`absolute right-0 top-0 w-4 md:w-8 h-full bg-gradient-to-l ${edge} to-transparent z-10 pointer-events-none`}></div>
+        <div className="absolute left-0 top-0 w-4 md:w-8 h-full bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute right-0 top-0 w-4 md:w-8 h-full bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
       </div>
     )
   }
@@ -163,8 +157,8 @@ const PartnerCarousel = ({ partners, direction, speed = 30, tone = 'light' }: Pa
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div className={`absolute left-0 top-0 w-4 md:w-8 h-full bg-gradient-to-r ${edge} to-transparent z-10 pointer-events-none`}></div>
-      <div className={`absolute right-0 top-0 w-4 md:w-8 h-full bg-gradient-to-l ${edge} to-transparent z-10 pointer-events-none`}></div>
+      <div className="absolute left-0 top-0 w-4 md:w-8 h-full bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+      <div className="absolute right-0 top-0 w-4 md:w-8 h-full bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
 
       <motion.div
         ref={containerRef}
@@ -174,7 +168,7 @@ const PartnerCarousel = ({ partners, direction, speed = 30, tone = 'light' }: Pa
         {seamlessPartners.map((partner, index) => (
           <div
             key={`${partner.name}-${index}`}
-            className={`flex-shrink-0 flex items-center justify-center transition-all duration-300 p-2 md:p-3 ${tone === 'dark' ? 'bg-white rounded-2xl' : ''}`}
+            className="flex-shrink-0 flex items-center justify-center transition-all duration-300 p-2 md:p-3"
             style={{ width: `${ITEM_WIDTH}px`, height: isMobile ? '77px' : '96px' }}
           >
             <img

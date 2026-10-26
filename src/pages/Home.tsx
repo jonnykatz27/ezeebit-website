@@ -13,6 +13,7 @@ import FlowDemo, { DemoPanel } from '../components/demo/FlowDemo'
 import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import HomeHeroVisual from '../components/hero/HomeHeroVisual'
 import { PortalBalanceCard, PortalConvertCard, PORTAL_PAGE_BG } from '../components/portal/PortalUI'
+import DarkBackdrop from '../components/DarkBackdrop'
 
 const FLOWS = [
   { id: 'pay-in', label: 'Pay in' },
@@ -547,8 +548,10 @@ const Home = () => {
         visual={<HomeHeroVisual />}
       />
 
-      <section className="py-10 lg:py-20 bg-neutral-50">
-        <div className="container-custom">
+      {/* Dark moment 1 of 3: the proof of scale, straight after the light hero */}
+      <section className="relative overflow-hidden bg-neutral-950 py-14 lg:py-24">
+        <DarkBackdrop glow="right" />
+        <div className="container-custom relative">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-6 lg:gap-8">
             {stats.map((stat, index) => (
               <motion.div
@@ -558,10 +561,10 @@ const Home = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="text-center px-2 py-4"
               >
-                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary-500 mb-1 lg:mb-2">
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary-400 mb-1 lg:mb-2">
                   {stat.number}
                 </div>
-                <div className="text-neutral-600 text-xs sm:text-sm">{stat.label}</div>
+                <div className="text-neutral-400 text-xs sm:text-sm">{stat.label}</div>
               </motion.div>
             ))}
           </div>
@@ -733,15 +736,17 @@ const Home = () => {
       </section>
 
 
-      <section className="py-10 lg:py-20 bg-neutral-50">
-        <div className="container-custom">
+      {/* Dark moment 2 of 3: the technical depth, between two light sections */}
+      <section className="relative overflow-hidden bg-neutral-950 py-14 lg:py-24">
+        <DarkBackdrop glow="left" />
+        <div className="container-custom relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center mb-8 lg:mb-12"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Enterprise-grade security</h2>
-            <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">Enterprise-grade security</h2>
+            <p className="text-lg text-neutral-400 max-w-3xl mx-auto">
               Built with the highest security standards to protect your business and your customers.
             </p>
           </motion.div>
@@ -749,18 +754,18 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {[
               {
-                icon: <Shield className="w-8 h-8 text-primary-500" />,
+                icon: <Shield className="w-8 h-8 text-primary-400" />,
                 title: "FSCA regulated",
                 description: "FSCA regulated and FIC compliant, with full KYC/KYB, AML/CFT, and POPIA processes handled end to end by Ezeebit."
               },
               {
-                icon: <Lock className="w-8 h-8 text-primary-500" />,
+                icon: <Lock className="w-8 h-8 text-primary-400" />,
                 title: "MPC wallet technology",
                 description: "Multi-party computation (MPC) eliminates single points of failure by distributing key management across multiple parties, keeping funds secure.",
                 badge: "SOC 2 Certified"
               },
               {
-                icon: <Zap className="w-8 h-8 text-primary-500" />,
+                icon: <Zap className="w-8 h-8 text-primary-400" />,
                 title: "No chargebacks",
                 description: "Blockchain payments are final and irreversible — every sale stays settled, with rates locked and hedged at the point of payment."
               }
@@ -770,7 +775,8 @@ const Home = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 + index * 0.05 }}
-                className="card p-6 text-center relative"
+                // Hairline panels rather than white cards: a white card would be a light patch in the dark moment
+                className="relative rounded-2xl border border-white/10 bg-white/[0.04] p-6 text-center"
               >
                 {item.badge && (
                   <div className="absolute -top-3 -right-3 bg-primary-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md flex items-center gap-1.5">
@@ -778,13 +784,13 @@ const Home = () => {
                     {item.badge}
                   </div>
                 )}
-                <div className="w-16 h-16 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <div className="w-16 h-16 bg-primary-500/15 rounded-2xl flex items-center justify-center mx-auto mb-6">
                   {item.icon}
                 </div>
-                <h3 className="text-lg font-semibold text-neutral-900 mb-3">
+                <h3 className="text-lg font-semibold text-white mb-3">
                   {item.title}
                 </h3>
-                <p className="text-neutral-600 text-sm leading-relaxed">
+                <p className="text-neutral-400 text-sm leading-relaxed">
                   {item.description}
                 </p>
               </motion.div>
@@ -918,34 +924,43 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-10 lg:py-20 bg-primary-600 text-white">
-        <div className="container-custom text-center">
+      {/*
+        Dark moment 3 of 3, as a panel on white rather than a full-width band:
+        the footer below is already Near Black, and a dark band against it
+        would read as one block, two dark sections in a row.
+      */}
+      <section className="py-10 lg:py-20 bg-white">
+        <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            className="relative overflow-hidden rounded-3xl bg-neutral-950 px-6 py-12 sm:px-12 lg:px-16 lg:py-20 text-center"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">
-              Ready to accept stablecoin and crypto payments?
-            </h2>
-            <p className="text-xl text-white mb-8 max-w-2xl mx-auto opacity-90">
-              Join the future of payments today. Get started in minutes with no setup fees and full regulatory compliance.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="https://merchant.ezeebit.com/#/signup"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-white text-primary-600 hover:bg-neutral-100 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
-              >
-                Start Free Trial
-                <ArrowRight className="w-5 h-5 ml-2 inline" />
-              </a>
-              <Link
-                to="/contact"
-                className="border-2 border-white text-white hover:bg-white hover:text-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
-              >
-                Talk to Sales
-              </Link>
+            <DarkBackdrop glow="left" />
+            <div className="relative">
+              <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">
+                Ready to accept stablecoin and crypto payments?
+              </h2>
+              <p className="text-xl text-neutral-300 mb-8 max-w-2xl mx-auto">
+                Join the future of payments today. Get started in minutes with no setup fees and full regulatory compliance.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a
+                  href="https://merchant.ezeebit.com/#/signup"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+                >
+                  Start Free Trial
+                  <ArrowRight className="w-5 h-5 ml-2 inline" />
+                </a>
+                <Link
+                  to="/contact"
+                  className="border border-neutral-600 text-white hover:border-neutral-400 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
+                >
+                  Talk to Sales
+                </Link>
+              </div>
             </div>
           </motion.div>
         </div>

@@ -53,6 +53,11 @@ type PageHeroProps = {
    * allows: into the container padding at xl, and the wider gutter at 2xl.
    */
   bleedVisual?: boolean
+  /**
+   * What the section after the hero is. Into a dark one, the hero's bottom
+   * deepens into Near Black and gains room for that fade below the content.
+   */
+  into?: 'light' | 'dark'
 }
 
 /**
@@ -60,7 +65,7 @@ type PageHeroProps = {
  * scale, entrance, and spacing everywhere. Pages with an illustration get
  * text on the left and the visual on the right; the rest are centred.
  */
-const PageHero = ({ title, accent, description, actions, trust, visual, children, itemProps, bleedVisual }: PageHeroProps) => {
+const PageHero = ({ title, accent, description, actions, trust, visual, children, itemProps, bleedVisual, into = 'light' }: PageHeroProps) => {
   const split = Boolean(visual)
   const align = split ? 'text-center lg:text-left' : 'text-center'
   const justify = split ? 'justify-center lg:justify-start' : 'justify-center'
@@ -121,8 +126,13 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
   )
 
   return (
-    <section className={`relative overflow-hidden pt-40 lg:pt-48 ${split ? 'pb-14 lg:pb-24' : 'pb-12 lg:pb-20'}`}>
-      <HeroBackdrop />
+    <section
+      className={`relative overflow-hidden pt-40 lg:pt-48 ${
+        // Into a dark section the fade needs its own room, below the content, so it never sits behind text
+        into === 'dark' ? 'pb-32 lg:pb-44' : split ? 'pb-14 lg:pb-24' : 'pb-12 lg:pb-20'
+      }`}
+    >
+      <HeroBackdrop into={into} />
       <div className="container-custom relative z-10">
         {split ? (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">

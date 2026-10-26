@@ -547,6 +547,7 @@ const Home = () => {
         ]}
         visual={<HomeHeroVisual />}
         bleedVisual
+        into="dark"
       />
 
       {/* Dark moment 1 of 3: the proof of scale, straight after the light hero */}

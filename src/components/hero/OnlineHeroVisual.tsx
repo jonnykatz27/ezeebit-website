@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Check, Lock, Loader2, ChevronRight, ShoppingBag } from 'lucide-react'
 import {
   CARD, COIN, LABEL, SWAP, arrive, rands,
-  useHeroLoop, HeroStage, Rings, FloatingCoin,
+  useHeroLoop, HeroStage, Halo, FloatingCoin,
 } from './heroKit'
 
 const METHODS = [
@@ -37,7 +37,7 @@ const OnlineHeroVisual = () => {
 
   return (
     <HeroStage ref={ref} label="An online store handing off to the Ezeebit checkout, where the customer pays with VALR Pay, Luno Pay, Binance Pay, or WalletConnect.">
-      <Rings x={300} y={250} still={still} />
+      <Halo x={300} y={250} />
 
       <FloatingCoin src="/btc-logo.svg" x={24} y={20} delay={0} still={still} />
       <FloatingCoin src="/usdt-logo.svg" x={512} y={410} delay={0.5} still={still} />

@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Check, Loader2, Lock, ArrowDownLeft, ArrowUpRight, ShieldCheck, ChevronRight } from 'lucide-react'
 import {
   CARD, COIN, LABEL, SWAP, arrive, money,
-  useHeroLoop, HeroStage, Rings, FloatingCoin, Counter,
+  useHeroLoop, HeroStage, Halo, FloatingCoin, Counter,
 } from './heroKit'
 
 type Fiat = 'ZAR' | 'KES' | 'NGN' | 'USD'
@@ -63,7 +63,7 @@ const PlatformsHeroVisual = () => {
 
   return (
     <HeroStage ref={ref} label="A platform's wallet taking a crypto deposit through the Ezeebit checkout and paying a withdrawal out in stablecoin, with a signed webhook to the platform for each.">
-      <Rings x={300} y={260} still={still} />
+      <Halo x={300} y={260} />
 
       <FloatingCoin src="/usdt-logo.svg" x={470} y={40} delay={0} still={still} />
       <FloatingCoin src="/usdc-logo.svg" x={372} y={420} delay={0.5} still={still} />

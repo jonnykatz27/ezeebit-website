@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Check, Clock, Store } from 'lucide-react'
 import {
   CARD, PORTAL_CARD, COIN, SWAP, arrive, money,
-  useHeroLoop, HeroStage, Rings, FloatingCoin, Counter,
+  useHeroLoop, HeroStage, Halo, FloatingCoin, Counter,
 } from './heroKit'
 import { PortalScale, PortalStatCard } from '../portal/PortalUI'
 
@@ -118,7 +118,7 @@ const InStoreHeroVisual = () => {
 
   return (
     <HeroStage ref={ref} label="An Ezeebit ePOS terminal taking a payment: the amount is entered, the customer scans a QR code, and the payment is confirmed.">
-      <Rings x={280} y={250} still={still} />
+      <Halo x={280} y={250} />
 
       <FloatingCoin src="/usdt-logo.svg" x={470} y={96} delay={0} still={still} />
       <FloatingCoin src="/btc-logo.svg" x={48} y={300} delay={0.4} still={still} />

@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowDown, Check, Headphones, Lock } from 'lucide-react'
 import {
   CARD, COIN, LABEL, SWAP, EASE, arrive, money, rands,
-  useHeroLoop, HeroStage, Rings, FloatingCoin, Counter, LiveTag,
+  useHeroLoop, HeroStage, Halo, FloatingCoin, Counter, LiveTag,
 } from './heroKit'
 
 /** Illustrative trades the desk quotes, one after another. */
@@ -51,7 +51,7 @@ const OTCHeroVisual = () => {
 
   return (
     <HeroStage ref={ref} label="An OTC quote with a live price, locked for 30 seconds, then executed and settled the same day, with a dealer handling the trade.">
-      <Rings x={280} y={220} still={still} />
+      <Halo x={280} y={220} />
 
       <FloatingCoin src="/btc-logo.svg" x={42} y={90} delay={0} still={still} />
       <FloatingCoin src="/usdt-logo.svg" x={494} y={70} delay={0.5} still={still} />

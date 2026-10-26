@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   PORTAL_CARD, SWAP, arrive, money,
-  useHeroLoop, HeroStage, Rings, FloatingCoin, Counter, Flash,
+  useHeroLoop, HeroStage, Halo, FloatingCoin, Counter, Flash,
 } from './heroKit'
 import { PortalScale, PortalBalanceCard, PortalActivityRow } from '../portal/PortalUI'
 
@@ -105,7 +105,7 @@ const HomeHeroVisual = () => {
       maxWidth={680}
       label="The Ezeebit Merchant Portal: payments arriving in-store and online, landing in the fiat and stablecoin wallets, and going back out as payouts."
     >
-      <Rings x={280} y={262} still={still} />
+      <Halo x={280} y={262} />
 
       <FloatingCoin src="/usdt-logo.svg" x={488} y={70} delay={0} still={still} />
       <FloatingCoin src="/btc-logo.svg" x={20} y={300} delay={0.4} still={still} />

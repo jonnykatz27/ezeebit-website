@@ -148,22 +148,28 @@ export const HeroStage = forwardRef<HTMLDivElement, {
 )
 HeroStage.displayName = 'HeroStage'
 
-/** Rings spreading out from a point, like a live signal, over a soft glow. */
-export const Rings = ({ x, y, still, size = 460 }: { x: number; y: number; still: boolean; size?: number }) => (
-  <div className="absolute" style={{ left: x, top: y }}>
-    {[0, 1, 2].map((r) => (
-      <motion.span
-        key={r}
-        className="absolute rounded-full border border-primary-300/50"
-        style={{ width: size, height: size, left: -size / 2, top: -size / 2 }}
-        initial={{ scale: 0.55, opacity: 0 }}
-        animate={still ? { scale: 0.6 + r * 0.2, opacity: 0.5 - r * 0.12 } : { scale: [0.55, 1.15], opacity: [0, 0.7, 0] }}
-        transition={still ? { duration: 0 } : { duration: 6, repeat: Infinity, delay: r * 2, ease: 'easeOut' }}
+/**
+ * The quiet light behind an illustration: a soft, still halo in Blue Dark and
+ * two hairline circles framing the cards. It gives them depth on the dark
+ * hero without anything pulsing or spreading.
+ */
+export const Halo = ({ x, y, size = 520 }: { x: number; y: number; size?: number }) => {
+  /** A circle of the given diameter, centred on the halo's point. */
+  const circle = (d: number) => ({ width: d, height: d, left: -d / 2, top: -d / 2 })
+  return (
+    <div aria-hidden="true" className="absolute pointer-events-none" style={{ left: x, top: y }}>
+      <span
+        className="absolute rounded-full"
+        style={{
+          ...circle(size),
+          background: 'radial-gradient(closest-side, color-mix(in srgb, var(--color-primary-600) 30%, transparent), transparent)',
+        }}
       />
-    ))}
-    <span className="absolute rounded-full bg-primary-300/30 blur-3xl" style={{ width: 360, height: 280, left: -180, top: -140 }} />
-  </div>
-)
+      <span className="absolute rounded-full border border-white/[0.07]" style={circle(size * 0.78)} />
+      <span className="absolute rounded-full border border-white/[0.04]" style={circle(size * 1.04)} />
+    </div>
+  )
+}
 
 /** A coin, or any small logo, bobbing gently in place. */
 export const FloatingCoin = memo(({ src, x, y, delay, still, size = 44 }: { src: string; x: number; y: number; delay: number; still: boolean; size?: number }) => (

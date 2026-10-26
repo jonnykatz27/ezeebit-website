@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   PORTAL_CARD, SWAP, arrive, money,
-  useHeroLoop, HeroStage, Rings, FloatingCoin, Counter, Flash,
+  useHeroLoop, HeroStage, Halo, FloatingCoin, Counter, Flash,
 } from './heroKit'
 import { PortalScale, PortalBalanceCard, PortalConvertCard, PortalActivityRow } from '../portal/PortalUI'
 
@@ -100,7 +100,7 @@ const WalletsHeroVisual = () => {
 
   return (
     <HeroStage ref={ref} label="The Ezeebit Merchant Portal: a wallet balance card with a ZAR, KES, or NGN fiat wallet beside a USDT wallet, the Convert panel, and recent deposits and withdrawals.">
-      <Rings x={260} y={300} still={still} />
+      <Halo x={260} y={300} />
 
       {/* One flag for each settlement currency, in the gaps between the cards */}
       <FloatingCoin src="/ke-flag.svg" x={70} y={36} delay={0.2} still={still} />

@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Check, Link2, Loader2, Webhook } from 'lucide-react'
 import {
   CARD, COIN, LABEL, SWAP, arrive, money, rands,
-  useHeroLoop, HeroStage, Rings, FloatingCoin,
+  useHeroLoop, HeroStage, Halo, FloatingCoin,
 } from './heroKit'
 
 /** Illustrative payouts, one after another. */
@@ -30,7 +30,7 @@ const PayoutsHeroVisual = () => {
 
   return (
     <HeroStage ref={ref} label="A stablecoin payout moving from a payout link, through quote, transfer, and confirmation, to funds transferred, with a webhook sent to the merchant.">
-      <Rings x={320} y={240} still={still} />
+      <Halo x={320} y={240} />
 
       <FloatingCoin src="/usdt-logo.svg" x={500} y={56} delay={0} still={still} />
       <FloatingCoin src="/usdc-logo.svg" x={512} y={338} delay={0.5} still={still} />

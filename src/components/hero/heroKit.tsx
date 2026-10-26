@@ -92,8 +92,15 @@ export function useHeroLoop(ms: number) {
  * A fixed-size canvas that scales down to fit its column, so an illustration
  * keeps exactly the same composition from a phone to a wide screen.
  */
-export const HeroStage = forwardRef<HTMLDivElement, { width?: number; height?: number; label: string; children: ReactNode }>(
-  ({ width = 560, height = 500, label, children }, ref) => {
+export const HeroStage = forwardRef<HTMLDivElement, {
+  width?: number
+  height?: number
+  /** How wide the stage may grow on screen; by default its design width. */
+  maxWidth?: number
+  label: string
+  children: ReactNode
+}>(
+  ({ width = 560, height = 500, maxWidth = width, label, children }, ref) => {
     const innerRef = useRef<HTMLDivElement | null>(null)
     const [scale, setScale] = useState<number | null>(null)
 
@@ -117,7 +124,7 @@ export const HeroStage = forwardRef<HTMLDivElement, { width?: number; height?: n
         role="img"
         aria-label={label}
         className="relative w-full mx-auto select-none"
-        style={{ maxWidth: width, aspectRatio: `${width} / ${height}` }}
+        style={{ maxWidth, aspectRatio: `${width} / ${height}` }}
       >
         <div
           // [&_img]:!mx-0 undoes the site-wide phone rule that centres every image

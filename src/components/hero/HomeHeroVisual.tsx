@@ -101,6 +101,8 @@ const HomeHeroVisual = () => {
   return (
     <HeroStage
       ref={ref}
+      // The real product is the homepage's focal point, so it may grow past its design width on wide screens
+      maxWidth={680}
       label="The Ezeebit Merchant Portal: payments arriving in-store and online, landing in the fiat and stablecoin wallets, and going back out as payouts."
     >
       <Rings x={280} y={262} still={still} />

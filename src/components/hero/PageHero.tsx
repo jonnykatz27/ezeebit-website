@@ -47,6 +47,12 @@ type PageHeroProps = {
   children?: ReactNode
   /** Adds schema.org itemProps to the headline and description. */
   itemProps?: boolean
+  /**
+   * Lets the visual run into the page margin on wide screens, for a hero
+   * whose product visual is the focal point. Only as far as the margin
+   * allows: into the container padding at xl, and the wider gutter at 2xl.
+   */
+  bleedVisual?: boolean
 }
 
 /**
@@ -54,7 +60,7 @@ type PageHeroProps = {
  * scale, entrance, and spacing everywhere. Pages with an illustration get
  * text on the left and the visual on the right; the rest are centred.
  */
-const PageHero = ({ title, accent, description, actions, trust, visual, children, itemProps }: PageHeroProps) => {
+const PageHero = ({ title, accent, description, actions, trust, visual, children, itemProps, bleedVisual }: PageHeroProps) => {
   const split = Boolean(visual)
   const align = split ? 'text-center lg:text-left' : 'text-center'
   const justify = split ? 'justify-center lg:justify-start' : 'justify-center'
@@ -121,7 +127,7 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
         {split ? (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
             {text}
-            <div className="lg:col-span-6">{visual}</div>
+            <div className={`lg:col-span-6 ${bleedVisual ? 'xl:-mr-6 2xl:-mr-20' : ''}`}>{visual}</div>
           </div>
         ) : (
           text

@@ -546,6 +546,7 @@ const Home = () => {
           { icon: <Headphones />, label: '24/7 support' },
         ]}
         visual={<HomeHeroVisual />}
+        bleedVisual
       />
 
       {/* Dark moment 1 of 3: the proof of scale, straight after the light hero */}
@@ -561,7 +562,12 @@ const Home = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="text-center px-2 py-4"
               >
-                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary-400 mb-1 lg:mb-2">
+                {/*
+                  The page's one oversized number. Sized so the longest,
+                  "$ Millions", still fits its column: two up on phones and
+                  tablets, four up from lg, full size only from xl.
+                */}
+                <div className="text-4xl sm:text-5xl xl:text-6xl font-display font-bold tracking-[-0.03em] leading-none text-primary-400 mb-3">
                   {stat.number}
                 </div>
                 <div className="text-neutral-400 text-xs sm:text-sm">{stat.label}</div>

@@ -12,7 +12,12 @@ export const HERO_ITEM = {
 
 /** Button sizes shared by every hero, on top of the site's btn-* styles. */
 export const HERO_PRIMARY = 'btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 flex items-center justify-center'
-export const HERO_SECONDARY = 'btn-secondary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 flex items-center justify-center'
+/**
+ * The secondary hero button is an outline on the dark hero, so Ezeebit Blue
+ * stays the one filled button the eye goes to.
+ */
+export const HERO_SECONDARY =
+  'rounded-xl font-medium text-white border border-white/20 hover:border-white/40 hover:bg-white/5 transition-all duration-200 text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 min-h-[48px] flex items-center justify-center'
 
 /** The search field some heroes carry, styled the same on every page. */
 export const HeroSearch = ({ placeholder, value, onChange }: { placeholder: string; value?: string; onChange?: (value: string) => void }) => (
@@ -25,7 +30,7 @@ export const HeroSearch = ({ placeholder, value, onChange }: { placeholder: stri
         placeholder={placeholder}
         value={value}
         onChange={onChange && ((e) => onChange(e.target.value))}
-        className="w-full pl-12 pr-4 py-3.5 md:py-4 rounded-xl border border-neutral-200 bg-white/90 backdrop-blur shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-base md:text-lg"
+        className="w-full pl-12 pr-4 py-3.5 md:py-4 rounded-xl border border-white/10 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent text-base md:text-lg"
       />
     </div>
   </div>
@@ -34,7 +39,7 @@ export const HeroSearch = ({ placeholder, value, onChange }: { placeholder: stri
 type PageHeroProps = {
   /** The first line of the headline. */
   title: ReactNode
-  /** The second line, in Ezeebit Blue. */
+  /** The second line, in Blue Mid. */
   accent?: ReactNode
   description?: ReactNode
   /** Buttons, laid out in a row. */
@@ -53,19 +58,16 @@ type PageHeroProps = {
    * allows: into the container padding at xl, and the wider gutter at 2xl.
    */
   bleedVisual?: boolean
-  /**
-   * What the section after the hero is. Into a dark one, the hero's bottom
-   * deepens into Near Black and gains room for that fade below the content.
-   */
-  into?: 'light' | 'dark'
 }
 
 /**
- * The hero at the top of every page: the same drifting backdrop, headline
- * scale, entrance, and spacing everywhere. Pages with an illustration get
- * text on the left and the visual on the right; the rest are centred.
+ * The hero at the top of every page, on Near Black: the same backdrop,
+ * headline scale, entrance, and spacing everywhere. Pages with an
+ * illustration get text on the left and the visual on the right; the rest
+ * are centred. The real product UI in the illustrations reads as white
+ * cards against the dark.
  */
-const PageHero = ({ title, accent, description, actions, trust, visual, children, itemProps, bleedVisual, into = 'light' }: PageHeroProps) => {
+const PageHero = ({ title, accent, description, actions, trust, visual, children, itemProps, bleedVisual }: PageHeroProps) => {
   const split = Boolean(visual)
   const align = split ? 'text-center lg:text-left' : 'text-center'
   const justify = split ? 'justify-center lg:justify-start' : 'justify-center'
@@ -84,21 +86,21 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
       */}
       <h1
         itemProp={itemProps ? 'name' : undefined}
-        className={`hero-title font-display font-bold text-neutral-900 mb-5 sm:mb-6 !leading-[1.04] tracking-[-0.03em] ${
+        className={`hero-title font-display font-bold text-white mb-5 sm:mb-6 !leading-[1.04] tracking-[-0.03em] ${
           split
             ? 'text-[clamp(2.125rem,10vw,2.5rem)] sm:text-6xl lg:text-[3rem] xl:text-[3.75rem]'
             : 'text-[clamp(2.125rem,10vw,2.5rem)] sm:text-[3.25rem] lg:text-[3.75rem]'
         }`}
       >
         <motion.span variants={HERO_ITEM} className="block">{title}</motion.span>
-        {accent && <motion.span variants={HERO_ITEM} className="block text-primary-500">{accent}</motion.span>}
+        {accent && <motion.span variants={HERO_ITEM} className="block text-primary-400">{accent}</motion.span>}
       </h1>
 
       {description && (
         <motion.p
           variants={HERO_ITEM}
           itemProp={itemProps ? 'description' : undefined}
-          className={`text-lg lg:text-xl text-neutral-600 leading-relaxed mb-8 ${split ? 'max-w-xl mx-auto lg:mx-0' : 'max-w-2xl mx-auto'}`}
+          className={`text-lg lg:text-xl text-neutral-300 leading-relaxed mb-8 ${split ? 'max-w-xl mx-auto lg:mx-0' : 'max-w-2xl mx-auto'}`}
         >
           {description}
         </motion.p>
@@ -113,9 +115,9 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
       {children && <motion.div variants={HERO_ITEM}>{children}</motion.div>}
 
       {trust && (
-        <motion.div variants={HERO_ITEM} className={`flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-neutral-500 ${justify}`}>
+        <motion.div variants={HERO_ITEM} className={`flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-neutral-400 ${justify}`}>
           {trust.map((t) => (
-            <div key={t.label} className="flex items-center gap-1.5 [&>svg]:w-4 [&>svg]:h-4 [&>svg]:text-secondary-500">
+            <div key={t.label} className="flex items-center gap-1.5 [&>svg]:w-4 [&>svg]:h-4 [&>svg]:text-primary-400">
               {t.icon}
               {t.label}
             </div>
@@ -126,13 +128,8 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
   )
 
   return (
-    <section
-      className={`relative overflow-hidden pt-40 lg:pt-48 ${
-        // Into a dark section the fade needs its own room, below the content, so it never sits behind text
-        into === 'dark' ? 'pb-32 lg:pb-44' : split ? 'pb-14 lg:pb-24' : 'pb-12 lg:pb-20'
-      }`}
-    >
-      <HeroBackdrop into={into} />
+    <section className={`relative overflow-hidden pt-40 lg:pt-48 ${split ? 'pb-14 lg:pb-24' : 'pb-12 lg:pb-20'}`}>
+      <HeroBackdrop />
       <div className="container-custom relative z-10">
         {split ? (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">

@@ -93,12 +93,12 @@ const Pricing = () => {
         description="Choose the perfect plan for your business. No hidden fees, no surprises. Start with our free plan and scale as you grow."
       >
         <div className="flex items-center justify-center">
-          <span className={`mr-3 ${billingCycle === 'monthly' ? 'text-neutral-900 font-medium' : 'text-neutral-500'}`}>
+          <span className={`mr-3 ${billingCycle === 'monthly' ? 'text-white font-medium' : 'text-neutral-400'}`}>
             Monthly
           </span>
           <button
             onClick={() => setBillingCycle(billingCycle === 'monthly' ? 'annual' : 'monthly')}
-            className="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+            className="relative inline-flex h-6 w-11 items-center rounded-full bg-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-neutral-950"
           >
             <span
               className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
@@ -106,7 +106,7 @@ const Pricing = () => {
               }`}
             />
           </button>
-          <span className={`ml-3 ${billingCycle === 'annual' ? 'text-neutral-900 font-medium' : 'text-neutral-500'}`}>
+          <span className={`ml-3 ${billingCycle === 'annual' ? 'text-white font-medium' : 'text-neutral-400'}`}>
             Annual
           </span>
           {billingCycle === 'annual' && (

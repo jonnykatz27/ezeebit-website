@@ -534,14 +534,14 @@ app.post(
         visual={<DevelopersHeroVisual environment={environment} baseUrl={baseUrls[environment]} checkoutHost={checkoutHosts[environment]} />}
       >
         <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mb-8">
-          <span className="text-sm font-medium text-neutral-700">Environment:</span>
-          <div className="flex bg-white/80 border border-neutral-200 rounded-lg p-1 shadow-xs">
+          <span className="text-sm font-medium text-neutral-300">Environment:</span>
+          <div className="flex bg-white/5 border border-white/10 rounded-lg p-1">
             <button
               onClick={() => setEnvironment('uat')}
               className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
                 environment === 'uat'
                   ? 'bg-orange-500 text-white shadow-sm'
-                  : 'text-neutral-600 hover:text-neutral-900'
+                  : 'text-neutral-300 hover:text-white'
               }`}
             >
               UAT (Testing)
@@ -551,7 +551,7 @@ app.post(
               className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
                 environment === 'live'
                   ? 'bg-green-500 text-white shadow-sm'
-                  : 'text-neutral-600 hover:text-neutral-900'
+                  : 'text-neutral-300 hover:text-white'
               }`}
             >
               Live (Production)

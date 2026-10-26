@@ -26,11 +26,12 @@ const DarkBackdrop = ({ glow = 'right', texture }: {
       />
     )}
     {/*
-      A radial gradient fades to nothing on its own. A blurred circle at this
-      size kept a visible edge across wide, short sections like the stats band.
+      A radial gradient fades to nothing on its own. Its box spans exactly the
+      section's height, so it has faded out by the top and bottom edges: a box
+      running past them left a straight seam where the section ended.
     */}
     <div
-      className={`absolute w-[75%] h-[180%] ${glow === 'right' ? '-right-[20%] -top-[40%]' : '-left-[20%] -bottom-[40%]'}`}
+      className={`absolute inset-y-0 w-[70%] ${glow === 'right' ? '-right-[15%]' : '-left-[15%]'}`}
       style={{
         background: 'radial-gradient(closest-side, color-mix(in srgb, var(--color-primary-800) 55%, transparent), transparent)',
       }}

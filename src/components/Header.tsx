@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, ChevronDown } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { hasDarkHero } from '../lib/darkHero'
 
 type NavLink = {
   name: string
@@ -110,6 +111,15 @@ const Header = () => {
     (item.href ? isActive(item.href) : false) ||
     (item.dropdown?.some((group) => group.items.some((sub) => isActive(sub.href))) ?? false)
 
+  // Light-on-dark over a dark hero (transparent, then Near Black once scrolled); the open phone menu is always the light one
+  const onDark = hasDarkHero(location.pathname) && !isMenuOpen
+  const navLink = (active: boolean) =>
+    active
+      ? onDark ? 'text-primary-400' : 'text-primary-600'
+      : onDark
+        ? 'text-neutral-300 hover:text-white hover:bg-white/5'
+        : 'text-neutral-700 hover:text-primary-600 hover:bg-neutral-50'
+
   return (
     <header
       // Solid, unblurred white while the phone menu is open: a backdrop-filter would make
@@ -117,16 +127,19 @@ const Header = () => {
       className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 ${
         isMenuOpen
           ? 'bg-white shadow-md'
-          : isScrolled
-            ? 'bg-white/95 backdrop-blur-xl shadow-md'
-            : 'bg-transparent'
+          : !isScrolled
+            ? 'bg-transparent'
+            : onDark
+              ? 'bg-neutral-950/95 backdrop-blur-xl border-b border-white/10'
+              : 'bg-white/95 backdrop-blur-xl shadow-md'
       }`}
     >
       <nav className="container-custom">
         <div className="flex items-center justify-between h-16 lg:h-20 px-1 sm:px-6 lg:px-8">
           <Link to="/" className="flex items-center space-x-2">
+            {/* The brand's own white-wordmark logo on dark, the black one on light; never one recoloured */}
             <img
-              src="/ezeebit_black.png"
+              src={onDark ? '/ezeebit-logo-white.svg' : '/ezeebit_black.png'}
               alt="Ezeebit"
               className="h-8 sm:h-9 lg:h-10 w-auto transition-transform duration-200 hover:-translate-y-0.5"
             />
@@ -142,11 +155,7 @@ const Header = () => {
                     onMouseLeave={() => setActiveDropdown(null)}
                   >
                     <button
-                      className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-base font-medium transition-colors ${
-                        isItemActive(item)
-                          ? 'text-primary-600'
-                          : 'text-neutral-700 hover:text-primary-600 hover:bg-neutral-50'
-                      }`}
+                      className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-base font-medium transition-colors ${navLink(isItemActive(item))}`}
                     >
                       <span>{item.name}</span>
                       <ChevronDown
@@ -195,11 +204,7 @@ const Header = () => {
                 ) : (
                   <Link
                     to={item.href}
-                    className={`px-3 py-2 rounded-lg text-base font-medium transition-colors ${
-                      isActive(item.href)
-                        ? 'text-primary-600'
-                        : 'text-neutral-700 hover:text-primary-600 hover:bg-neutral-50'
-                    }`}
+                    className={`px-3 py-2 rounded-lg text-base font-medium transition-colors ${navLink(isActive(item.href))}`}
                   >
                     {item.name}
                   </Link>
@@ -213,7 +218,7 @@ const Header = () => {
               href="https://merchant.ezeebit.com/#/login"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-base text-neutral-700 hover:text-primary-600 font-medium transition-colors px-3 py-2 rounded-lg hover:bg-neutral-50"
+              className={`text-base font-medium transition-colors px-3 py-2 rounded-lg ${navLink(false)}`}
             >
               Login
             </a>
@@ -229,7 +234,7 @@ const Header = () => {
 
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden p-2 text-neutral-700 hover:text-primary-600 transition-colors rounded-lg hover:bg-neutral-50"
+            className={`lg:hidden p-2 transition-colors rounded-lg ${onDark ? 'text-neutral-200 hover:text-white hover:bg-white/5' : 'text-neutral-700 hover:text-primary-600 hover:bg-neutral-50'}`}
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           >
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}

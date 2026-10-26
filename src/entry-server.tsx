@@ -4,6 +4,7 @@ import { HelmetProvider } from 'react-helmet-async'
 import { Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import { hasDarkHero } from './lib/darkHero'
 
 // Eagerly import all pages so Suspense fallbacks don't swallow content during SSR
 import Home from './pages/Home'
@@ -36,7 +37,7 @@ export function render(url: string) {
   const html = renderToString(
     <HelmetProvider context={helmetContext}>
       <StaticRouter location={url}>
-        <div className="min-h-screen bg-white">
+        <div className={`min-h-screen ${hasDarkHero(url.split(/[?#]/)[0]) ? 'bg-neutral-950' : 'bg-white'}`}>
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />

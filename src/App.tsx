@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import PageLoader from './components/PageLoader'
+import { hasDarkHero } from './lib/darkHero'
 import Home from './pages/Home'
 
 const InStore = lazy(() => import('./pages/InStore'))
@@ -41,8 +42,11 @@ function ScrollToTop() {
 }
 
 function App() {
+  const { pathname } = useLocation()
+
   return (
-    <div className="min-h-screen bg-white">
+    // Near Black behind a dark-hero page, so its fade-in doesn't flash white first
+    <div className={`min-h-screen ${hasDarkHero(pathname) ? 'bg-neutral-950' : 'bg-white'}`}>
       <Header />
       <ScrollToTop />
       <AnimatePresence mode="wait">

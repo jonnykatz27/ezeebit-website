@@ -75,7 +75,7 @@ const FlagStack = () => (
  */
 const StepConnector = ({ still, index }: { still: boolean; index: number }) => (
   <div aria-hidden="true" className="flex justify-center sm:justify-start sm:pl-[115px] lg:pl-[139px] py-2">
-    <div className="relative overflow-hidden rounded-full bg-neutral-200/60 w-[3px] h-7">
+    <div className="relative overflow-hidden rounded-full bg-white/15 w-[3px] h-7">
       {!still && (
         <motion.div
           className="absolute left-0 right-0"
@@ -334,16 +334,16 @@ const FlowCards = ({ flow, isActive }: { flow: FlowId; isActive: boolean }) => {
             <Fragment key={step.title}>
               <motion.li
                 variants={rise}
-                className="lg:flex-1 bg-white border border-neutral-200/80 rounded-2xl shadow-sm p-5 lg:p-7 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 lg:gap-6 text-center sm:text-left"
+                className="lg:flex-1 bg-white/[0.04] border border-white/10 rounded-2xl p-5 lg:p-7 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 lg:gap-6 text-center sm:text-left"
               >
                 <div className="sm:w-48 lg:w-56 shrink-0 h-12 flex items-center justify-center lg:scale-[1.15]">{step.visual}</div>
                 <div className="min-w-0">
                   {/* The same large number as the steps on the Wallets page */}
-                  <div className="text-3xl lg:text-4xl font-display font-bold text-gradient leading-none mb-3">
+                  <div className="text-3xl lg:text-4xl font-display font-bold text-primary-400 leading-none mb-3">
                     <span className="sr-only">Step </span>0{index + 1}
                   </div>
-                  <h3 className="text-lg lg:text-xl font-semibold text-neutral-900 mb-1 lg:mb-1.5">{step.title}</h3>
-                  <p className="text-sm lg:text-[15px] text-neutral-500 leading-relaxed">{step.body}</p>
+                  <h3 className="text-lg lg:text-xl font-semibold text-white mb-1 lg:mb-1.5">{step.title}</h3>
+                  <p className="text-sm lg:text-[15px] text-neutral-400 leading-relaxed">{step.body}</p>
                 </div>
               </motion.li>
               {index < steps.length - 1 && <StepConnector still={still} index={index} />}
@@ -365,12 +365,12 @@ const FlowCards = ({ flow, isActive }: { flow: FlowId; isActive: boolean }) => {
         finish level with the demo.
       */}
       <motion.div variants={rise} className="mt-6 flex flex-wrap items-center justify-center sm:justify-start gap-3">
-        <span className="text-sm text-neutral-500">Read more:</span>
+        <span className="text-sm text-neutral-400">Read more:</span>
         {demo.links.map((l) => (
           <Link
             key={l.to}
             to={l.to}
-            className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm font-semibold text-primary-600 shadow-xs hover:border-primary-200 hover:text-primary-700 transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-primary-400 hover:border-white/30 hover:text-white transition-colors"
           >
             {l.label}
             <ArrowRight className="w-4 h-4" />
@@ -547,14 +547,12 @@ const Home = () => {
         ]}
         visual={<HomeHeroVisual />}
         bleedVisual
-        into="dark"
       />
 
-      {/* Dark moment 1 of 3: the proof of scale, straight after the light hero */}
-      <section className="relative overflow-hidden bg-neutral-950 py-14 lg:py-24">
-        <DarkBackdrop glow="right" />
+      {/* The proof of scale, on the hero's own Near Black, so the page runs straight on from it */}
+      <section className="relative bg-neutral-950 pb-14 lg:pb-24">
         <div className="container-custom relative">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-6 lg:gap-8">
+          <div className="border-t border-white/10 pt-12 lg:pt-16 grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-6 lg:gap-8">
             {stats.map((stat, index) => (
               <motion.div
                 key={stat.label}
@@ -578,15 +576,15 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-10 lg:py-20 bg-white overflow-hidden">
+      <section className="py-10 lg:py-20 bg-neutral-950 overflow-hidden">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center mb-8 md:mb-12"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Our partners</h2>
-            <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">Our partners</h2>
+            <p className="text-lg text-neutral-400 max-w-3xl mx-auto">
               Trusted by leading brands across Africa.
             </p>
           </motion.div>
@@ -606,6 +604,7 @@ const Home = () => {
                 { name: 'Sunbet', logo: '/sunbet-logo.png' }
               ]}
               direction="left"
+              tone="dark"
               speed={40}
             />
           </div>
@@ -625,21 +624,22 @@ const Home = () => {
                 { name: 'BHH', logo: '/bhh-logo.png' }
               ]}
               direction="right"
+              tone="dark"
               speed={40}
             />
           </div>
         </div>
       </section>
 
-      <section className="py-10 lg:py-20 bg-neutral-50">
+      <section className="py-10 lg:py-20 bg-neutral-950">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center mb-10 lg:mb-16"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Why choose Ezeebit?</h2>
-            <p className="text-lg text-neutral-600 max-w-3xl mx-auto leading-relaxed">
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">Why choose Ezeebit?</h2>
+            <p className="text-lg text-neutral-400 max-w-3xl mx-auto leading-relaxed">
               One regulated account for money in, money held and money out — with the volatility hedged the moment it lands.
             </p>
           </motion.div>
@@ -651,15 +651,15 @@ const Home = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="card px-5 py-4 text-center hover:scale-[1.03] transition-transform"
+                className="rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-5 text-center hover:border-white/20 transition-colors"
               >
-                <div className="w-12 h-12 bg-primary-50 rounded-xl flex items-center justify-center mx-auto mb-2 text-primary-500">
+                <div className="w-12 h-12 bg-primary-500/15 rounded-xl flex items-center justify-center mx-auto mb-2 text-primary-400">
                   {feature.icon}
                 </div>
-                <h3 className="text-lg font-semibold text-neutral-900 mb-1">
+                <h3 className="text-lg font-semibold text-white mb-1">
                   {feature.title}
                 </h3>
-                <p className="text-neutral-600 text-sm leading-relaxed">
+                <p className="text-neutral-400 text-sm leading-relaxed">
                   {feature.description}
                 </p>
               </motion.div>
@@ -669,7 +669,7 @@ const Home = () => {
       </section>
 
       {/* ── How it works — one flow per product area ── */}
-      <section id="how-it-works" className="scroll-mt-20 pt-8 pb-16 lg:pt-12 lg:pb-24 bg-white">
+      <section id="how-it-works" className="scroll-mt-20 pt-8 pb-16 lg:pt-12 lg:pb-24 bg-neutral-950">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 text-center">
 
           <motion.div
@@ -677,10 +677,10 @@ const Home = () => {
             whileInView={{ opacity: 1, y: 0 }}
             className="mb-8 lg:mb-10"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">
               How it works
             </h2>
-            <p className="text-neutral-500 text-lg leading-relaxed">
+            <p className="text-neutral-400 text-lg leading-relaxed">
               Money in, money held, money out. Pick a flow to see the steps.
             </p>
           </motion.div>
@@ -690,7 +690,7 @@ const Home = () => {
             <div
               role="tablist"
               aria-label="How money moves through Ezeebit"
-              className="inline-flex items-center gap-1 p-1 rounded-full bg-white border border-neutral-200/80 shadow-sm max-w-full overflow-x-auto"
+              className="inline-flex items-center gap-1 p-1 rounded-full bg-white/5 border border-white/10 max-w-full overflow-x-auto"
             >
               {FLOWS.map((flow, index) => (
                 <button
@@ -705,7 +705,7 @@ const Home = () => {
                   className={`whitespace-nowrap rounded-full px-4 sm:px-6 py-2.5 text-sm font-semibold transition-colors ${
                     activeFlow === flow.id
                       ? 'bg-primary-500 text-white'
-                      : 'text-neutral-600 hover:text-primary-600'
+                      : 'text-neutral-300 hover:text-white'
                   }`}
                 >
                   {flow.label}
@@ -732,9 +732,9 @@ const Home = () => {
           ))}
 
           {/* OTC is a desk, not a self-serve flow, so it sits beside the tabs */}
-          <p className="mt-10 text-neutral-500">
+          <p className="mt-10 text-neutral-400">
             Moving large volumes?{' '}
-            <Link to="/otc" className="font-semibold text-primary-600 hover:text-primary-700">
+            <Link to="/otc" className="font-semibold text-primary-400 hover:text-white">
               Talk to our OTC desk{' '}→
             </Link>
           </p>
@@ -743,7 +743,6 @@ const Home = () => {
       </section>
 
 
-      {/* Dark moment 2 of 3: the technical depth, between two light sections */}
       <section className="relative overflow-hidden bg-neutral-950 py-14 lg:py-24">
         <DarkBackdrop glow="left" />
         <div className="container-custom relative">
@@ -806,7 +805,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-10 lg:py-16 bg-white">
+      <section className="py-10 lg:py-16 bg-neutral-950">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -818,7 +817,7 @@ const Home = () => {
               Backed by
             </p>
 
-            <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-8 lg:gap-x-20">
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-4 lg:gap-x-6">
               {/*
                 Heights are per logo. Two things pull against each other: DCG
                 fills only 863x226 of its 900x500 canvas so it needs the most
@@ -831,18 +830,20 @@ const Home = () => {
                 { name: 'Raba Partnership', logo: '/Raba_logo.webp', size: 'h-6 lg:h-7' },
                 { name: 'Digital Currency Group', logo: '/digital-currency-group-logo-nobg.png', size: 'h-10 lg:h-12' },
               ].map((backer) => (
-                <img
-                  key={backer.name}
-                  src={backer.logo}
-                  alt={backer.name}
-                  loading="lazy"
-                  className={`${backer.size} w-auto object-contain`}
-                />
+                // Each investor's own dark logo, on a white tile rather than recoloured
+                <span key={backer.name} className="inline-flex h-16 lg:h-20 items-center rounded-2xl bg-white px-6 lg:px-8">
+                  <img
+                    src={backer.logo}
+                    alt={backer.name}
+                    loading="lazy"
+                    className={`${backer.size} w-auto object-contain !mx-0`}
+                  />
+                </span>
               ))}
             </div>
 
             <p className="mt-6 text-sm text-neutral-500">
-              <Link to="/resources/about" className="inline-block py-2 font-semibold text-primary-600 hover:text-primary-700">
+              <Link to="/resources/about" className="inline-block py-2 font-semibold text-primary-400 hover:text-white">
                 Meet our investors and angels →
               </Link>
             </p>
@@ -850,15 +851,15 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-10 lg:py-20 bg-neutral-50">
+      <section className="py-10 lg:py-20 bg-neutral-950">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center mb-8 lg:mb-12"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Trusted by businesses across Africa</h2>
-            <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">Trusted by businesses across Africa</h2>
+            <p className="text-lg text-neutral-400 max-w-3xl mx-auto">
               Join hundreds of businesses already moving money with stablecoin, in and out, with confidence.
             </p>
           </motion.div>
@@ -922,7 +923,7 @@ const Home = () => {
               >
                 <span
                   className={`block h-2.5 rounded-full transition-all duration-200 ${
-                    index === currentTestimonial ? 'bg-primary-500 w-6' : 'w-2.5 bg-neutral-300 group-hover:bg-neutral-400'
+                    index === currentTestimonial ? 'bg-primary-500 w-6' : 'w-2.5 bg-white/25 group-hover:bg-white/40'
                   }`}
                 />
               </button>
@@ -931,17 +932,13 @@ const Home = () => {
         </div>
       </section>
 
-      {/*
-        Dark moment 3 of 3, as a panel on white rather than a full-width band:
-        the footer below is already Near Black, and a dark band against it
-        would read as one block, two dark sections in a row.
-      */}
-      <section className="py-10 lg:py-20 bg-white">
+      {/* The closing call to action, as a panel on the dark page, with the footer below */}
+      <section className="py-10 lg:py-20 bg-neutral-950">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="relative overflow-hidden rounded-3xl bg-neutral-950 px-6 py-12 sm:px-12 lg:px-16 lg:py-20 text-center"
+            className="relative overflow-hidden rounded-3xl border border-white/10 bg-neutral-950 px-6 py-12 sm:px-12 lg:px-16 lg:py-20 text-center"
           >
             <DarkBackdrop glow="left" />
             <div className="relative">

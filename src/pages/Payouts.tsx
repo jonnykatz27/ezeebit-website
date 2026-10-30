@@ -5,9 +5,26 @@ import {
   Webhook, Link2, CheckCircle
 } from 'lucide-react'
 import SEO from '../components/SEO'
+import FaqBlock from '../components/FaqBlock'
 import FlowDemo from '../components/demo/FlowDemo'
+import { faqPageNode } from '../lib/faqSchema'
 import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import PayoutsHeroVisual from '../components/hero/PayoutsHeroVisual'
+
+const payoutFaqs = [
+  {
+    question: 'What is a stablecoin payout?',
+    answer: 'A payment from your platform to a user in a US-dollar stablecoin, sent to the user\'s own crypto wallet. You create the payout through the API from your fiat balance. The user opens a payout link carrying your brand, chooses the asset and network, and enters their wallet address. Ezeebit screens the address, converts the funds and sends them on-chain.',
+  },
+  {
+    question: 'How fast do payouts arrive?',
+    answer: 'Usually within minutes of the recipient submitting their wallet address. Ezeebit sends payouts 24/7, with no banking cut-offs on weekends or public holidays, although confirmation times vary by network. You receive an RSA-signed webhook on every status change, including the final status and transaction hash.',
+  },
+  {
+    question: 'Do recipients need an Ezeebit account?',
+    answer: 'No. Recipients don\'t need an Ezeebit account or app. They open the payout link in any mobile browser, choose the asset and network, and enter their own wallet address. They do need a crypto wallet that supports the asset and network they choose. The widget carries your brand.',
+  },
+]
 
 const Payouts = () => {
   const features = [
@@ -98,6 +115,7 @@ const Payouts = () => {
         description="Pay customers from an Ezeebit balance in USDT or other crypto. Recipients choose the asset and network."
         canonicalUrl="/payouts"
         crumbs={[{ name: 'Payouts', path: '/payouts' }]}
+        extraNodes={[faqPageNode('https://ezeebit.com/payouts#faq', payoutFaqs)]}
       />
       <motion.div
         initial={{ opacity: 0 }}
@@ -296,6 +314,8 @@ const Payouts = () => {
             </div>
           </div>
         </section>
+
+        <FaqBlock heading="Payouts: frequently asked questions" items={payoutFaqs} tone="white" />
 
         {/* CTA Section */}
         <section className="section-padding bg-primary-600 text-white">

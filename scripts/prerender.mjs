@@ -253,6 +253,18 @@ for (const url of routes) {
     if (!/<title[\s>]/.test(page) || !page.includes('rel="canonical"') || !page.includes('name="description"')) {
       problems.push('missing title, description or canonical')
     }
+    const visibleCopy = page
+      .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+      .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+      .replace(/<[^>]+>/g, ' ')
+    const brackets = visibleCopy.match(/\[[^\]\n]{0,180}\]/g) || []
+    const placeholders = brackets.filter((token) =>
+      /confirm|placeholder|\bdate\b|\bmarkets\b|\bdocuments\b|approved|todo|tbd/i.test(token)
+      || /^\[[a-z][a-z'’ -]{1,60}\]$/.test(token)
+    )
+    if (placeholders.length) {
+      problems.push(`bracketed placeholder: ${placeholders.slice(0, 3).join(' ')}`)
+    }
     if (problems.length) {
       throw new Error(problems.join('; '))
     }

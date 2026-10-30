@@ -2,18 +2,50 @@ import { motion } from '../lib/motion'
 import { Link } from 'react-router-dom'
 import {
   Smartphone, Wifi, QrCode, FileText,
-  CheckCircle, ArrowRight, Zap
+  CheckCircle, ArrowRight
 } from 'lucide-react'
 import SEO from '../components/SEO'
+import FaqBlock from '../components/FaqBlock'
 import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import InStoreHeroVisual from '../components/hero/InStoreHeroVisual'
+import { faqPageNode } from '../lib/faqSchema'
+
+const eposSteps = [
+  'The cashier enters the amount in local currency.',
+  'They select the coin and network the customer wants to use.',
+  'They accept the locked rate and show the QR code.',
+  'The customer scans and pays from their wallet.',
+  'The receipt prints, and settlement follows at T+0 (stablecoin) or T+1 (local currency).',
+]
+
+const staticQrSteps = [
+  'The customer scans the QR code displayed in your store.',
+  'They enter the amount.',
+  'They choose a coin.',
+  'They confirm on their phone.',
+]
+
+const inStoreFaqs = [
+  {
+    question: 'What is a crypto POS?',
+    answer: 'A crypto POS is a point-of-sale device that lets a store accept cryptocurrency and stablecoin payments: the cashier enters the price in local currency and the customer pays by scanning a QR code with their wallet. Ezeebit\'s ePOS is an Android device that prints receipts and connects over WiFi, 4G or SIM, so it works wherever you have WiFi or mobile signal.',
+  },
+  {
+    question: 'How do refunds work?',
+    answer: 'Your store handles refunds directly. Confirmed crypto payments can\'t be reversed by the payer, so there are no chargebacks. If a customer returns an item, refund them in local currency or store credit under your own returns policy.',
+  },
+  {
+    question: 'What does in-store crypto acceptance cost?',
+    answer: '1% per successful transaction, excluding VAT, or lower on higher volumes. The Starter plan is R0 a month, Professional is R150 a month, and Enterprise pricing is custom. There are no setup fees for the ePOS or Ezeebit Pay.',
+  },
+]
 
 const InStore = () => {
   const features = [
     {
-      icon: <Zap className="w-6 h-6" />,
-      title: "Lightning-fast ePOS",
-      description: "Process transactions in as quick as 0.5 seconds with our advanced point-of-sale technology"
+      icon: <Smartphone className="w-6 h-6" />,
+      title: "Android ePOS",
+      description: "An Android point-of-sale device that prints receipts and connects over WiFi, 4G or SIM."
     },
     {
       icon: <FileText className="w-6 h-6" />,
@@ -33,7 +65,6 @@ const InStore = () => {
   ]
 
   const deviceSpecs = [
-    { label: "Transaction Speed", value: "As quick as 0.5 seconds" },
     { label: "Network Support", value: "WiFi, 4G, SIM Card ports" },
     { label: "Payment Methods", value: "QR Scan" },
     { label: "Supported Currencies", value: "7+ Cryptocurrencies" },
@@ -48,6 +79,7 @@ const InStore = () => {
         description="Accept stablecoin and crypto at the till with an Android ePOS or a static QR code. Settle in USDT or in ZAR, KES, NGN or USD."
         canonicalUrl="/in-store"
         crumbs={[{ name: 'In-store ePOS', path: '/in-store' }]}
+        extraNodes={[faqPageNode('https://ezeebit.com/in-store#faq', inStoreFaqs)]}
       />
       <motion.div
       initial={{ opacity: 0 }}
@@ -97,7 +129,7 @@ const InStore = () => {
               />
             </div>
             <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
-              Our cutting-edge point-of-sale devices are designed for the modern merchant who wants to offer customers the latest in payment technology.
+              Our Android ePOS devices are designed for the modern merchant who wants to offer customers the latest in payment technology.
             </p>
           </motion.div>
 
@@ -281,7 +313,7 @@ const InStore = () => {
         </div>
       </section>
 
-      {/* How It Works */}
+      {/* How it works */}
       <section className="section-padding bg-white">
         <div className="container-custom">
           <motion.div
@@ -290,62 +322,44 @@ const InStore = () => {
             className="text-center mb-16"
           >
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
-              Simple payment flow
+              How in-store crypto payments work
             </h2>
             <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
-              From customer selection to settlement, every step is optimized for speed and security.
+              Take payment with an Android ePOS, or with a static QR code.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {[
-              {
-                step: "1",
-                title: "Select crypto",
-                description: "Customer chooses cryptocurrency payment option at checkout",
-                icon: <Smartphone className="w-8 h-8" />
-              },
-              {
-                step: "2",
-                title: "Scan & pay",
-                description: "Customer scans QR code or connects their wallet to pay",
-                icon: <QrCode className="w-8 h-8" />
-              },
-              {
-                step: "3",
-                title: "Instant conversion",
-                description: "Crypto is automatically converted to stablecoins in real-time",
-                icon: <Zap className="w-8 h-8" />
-              },
-              {
-                step: "4",
-                title: "Fiat settlement",
-                description: "Funds settled to your bank account in ZAR, KES, NGN or USD the next business day",
-                icon: <CheckCircle className="w-8 h-8" />
-              }
-            ].map((step, index) => (
-              <motion.div
-                key={step.step}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="text-center"
-              >
-                <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4 text-primary-500">
-                  {step.icon}
-                </div>
-                <div className="text-sm font-semibold text-primary-500 mb-2">STEP {step.step}</div>
-                <h3 className="text-xl font-semibold text-neutral-900 mb-3">
-                  {step.title}
-                </h3>
-                <p className="text-neutral-600">
-                  {step.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
+          {([
+            { title: 'With the ePOS', steps: eposSteps },
+            { title: 'With a static QR (Ezeebit Pay)', steps: staticQrSteps },
+          ] as const).map((group) => (
+            <div key={group.title} className="mb-16 last:mb-0">
+              <h3 className="text-2xl font-display font-bold text-neutral-900 text-center mb-10">
+                {group.title}
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {group.steps.map((step, index) => (
+                  <motion.div
+                    key={step}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="text-center"
+                  >
+                    <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4 text-primary-500 text-xl font-semibold">
+                      {index + 1}
+                    </div>
+                    <div className="text-sm font-semibold text-primary-500 mb-2">STEP {index + 1}</div>
+                    <p className="text-neutral-600">{step}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </section>
+
+      <FaqBlock heading="In-store: frequently asked questions" items={inStoreFaqs} />
 
 
       {/* CTA Section */}
@@ -359,7 +373,7 @@ const InStore = () => {
               Ready to accept stablecoin and crypto payments?
             </h2>
             <p className="text-xl text-white mb-8 max-w-2xl mx-auto opacity-90">
-              Join the future of payments today. Get started in minutes with no setup fees and full regulatory compliance.
+              Get started with no setup fees. Ezeebit is authorised and regulated by the FSCA, and has applied for its CASP licence (FSP 53664).
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a

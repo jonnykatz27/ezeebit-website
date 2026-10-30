@@ -10,7 +10,7 @@ const METHODS = [
   { name: 'VALR Pay', logo: '/valr_logo%20(clean).png' },
   { name: 'Luno Pay', logo: '/luno_logo%20(clean).png' },
   { name: 'Binance Pay', logo: '/Binance-Logo%20(clean).png' },
-  { name: 'WalletConnect', logo: '/walletconnect-logo.svg' },
+  { name: 'WalletConnect Pay', logo: '/walletconnect-pay.svg' },
 ]
 
 /** Illustrative orders, each paid a different way. */

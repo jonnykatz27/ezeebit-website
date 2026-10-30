@@ -187,7 +187,7 @@ const paymentMethods: PaymentMethod[] = [
   { name: 'Luno', logo: '/luno_logo (clean).png' },
   { name: 'VALR', logo: '/valr_logo (clean).png' },
   { name: 'Binance', logo: '/Binance-Logo (clean).png' },
-  { name: 'WalletConnect', tags: ['700+ Wallets'], logo: '/walletconnect-logo.svg' }
+  { name: 'WalletConnect Pay', tags: ['700+ Wallets'], logo: '/walletconnect-pay.svg' }
 ]
 
 const goldenRules = [

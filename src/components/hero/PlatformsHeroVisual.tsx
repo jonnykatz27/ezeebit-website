@@ -20,7 +20,7 @@ const FIAT: Record<Fiat, (v: number) => string> = {
 const METHODS = [
   { name: 'Binance Pay', logo: '/Binance-Logo%20(clean).png' },
   { name: 'VALR Pay', logo: '/valr_logo%20(clean).png' },
-  { name: 'WalletConnect', logo: '/walletconnect-logo.svg' },
+  { name: 'WalletConnect Pay', logo: '/walletconnect-pay.svg' },
   { name: 'USDT on Tron', logo: '/usdt-round.svg' },
 ]
 

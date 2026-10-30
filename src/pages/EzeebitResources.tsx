@@ -68,8 +68,8 @@ const EzeebitResources = () => {
               <div className="absolute -top-1.5 -right-1.5 md:-top-2 md:-right-2 bg-primary-500 text-white text-[8px] md:text-[9px] font-bold px-1.5 md:px-2 py-0.5 rounded-full shadow-md whitespace-nowrap">
                 700+ Wallets
               </div>
-              <img src="/walletconnect-logo.svg" alt="WalletConnect" className="w-9 h-9 md:w-10 md:h-10 rounded-full object-cover mb-1.5 md:mb-2 flex-shrink-0" />
-              <span className="font-semibold text-neutral-900 text-[10px] md:text-xs leading-tight text-center">WalletConnect</span>
+              <img src="/walletconnect-pay.svg" alt="WalletConnect Pay" className="w-9 h-9 md:w-10 md:h-10 rounded-full object-cover mb-1.5 md:mb-2 flex-shrink-0" />
+              <span className="font-semibold text-neutral-900 text-[10px] md:text-xs leading-tight text-center">WalletConnect Pay</span>
             </div>
           </div>
         </motion.div>

@@ -64,7 +64,7 @@ const Wallets = () => {
     <>
       <SEO
         title="Business wallets for fiat and stablecoin"
-        description="Hold fiat and USDT, convert between them, fund payouts, and withdraw to a bank or a wallet. Balances in ZAR, KES, NGN or USD."
+        description="Business wallets for fiat and stablecoin. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
         canonicalUrl="/wallets"
         crumbs={[{ name: 'Wallets', path: '/wallets' }]}
       />
@@ -78,7 +78,7 @@ const Wallets = () => {
         <PageHero
           title="Your money,"
           accent="in fiat or stablecoin."
-          description="Hold fiat and USDT in one place, convert between them when it suits you, fund your customer payouts from the same balance, and withdraw to your bank or your own wallet."
+          description="Hold fiat and USDT in one place, convert between them when it suits you, fund your customer payouts from the same balance, and withdraw to your bank or your own wallet. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
           actions={
             <>
             <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>

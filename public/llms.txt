@@ -2,7 +2,7 @@
 
 > Ezeebit is stablecoin and crypto payment infrastructure for merchants across Africa. It lets merchants accept stablecoin and cryptocurrency payments in-store and online. It is not a retail cryptocurrency exchange, and it is not an Australian exchange.
 
-Ezeebit (Ezee Solutions Group (Pty) Ltd) builds the checkout, conversion and settlement layer. A customer pays from a crypto wallet. The merchant can be settled in a stablecoin (USDT or USDC) or in ZAR, KES, NGN or USD. The company is based in Cape Town, South Africa. South Africa is the live market. Kenya and Nigeria are the next markets.
+Ezeebit (Ezee Solutions Group (Pty) Ltd) builds the checkout, conversion and settlement layer. A customer pays from a crypto wallet. The merchant can be settled in a stablecoin (USDT or USDC) the same day, on every plan, or in ZAR, KES, NGN or USD the next business day. The company is based in Cape Town, South Africa. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow.
 
 Ezeebit is regulated by South Africa's Financial Sector Conduct Authority (FSCA).
 
@@ -16,7 +16,7 @@ Ezeebit does not offer retail crypto trading and this site does not give investm
 - **Payouts** — pay customers from an Ezeebit balance in USDT or other crypto. Recipients choose the asset and network. <https://ezeebit.com/payouts>
 - **Wallets** — hold fiat and USDT, convert between them, fund payouts, and withdraw to a bank or a wallet. <https://ezeebit.com/wallets>
 - **Developer API** — signed REST endpoints for payments, payouts and wallets, with webhooks. <https://ezeebit.com/developers>
-- **Pricing** — 1% per successful transaction, excluding VAT, or lower depending on volume. No setup fee on the Starter plan. <https://ezeebit.com/pricing>
+- **Pricing** — 1% or lower per transaction, excluding VAT. No setup fee on the Starter plan. <https://ezeebit.com/pricing>
 - **OTC desk** — large crypto-to-fiat trades quoted by a dealer, settled in ZAR, KES, NGN or USD. <https://ezeebit.com/otc>
 
 ## Who it is for
@@ -33,8 +33,8 @@ Supported assets include BTC, ETH, USDT, USDC, BNB, DAI and PAXG, on Bitcoin, Et
 
 ## Markets
 
-- South Africa is live, with settlement in ZAR.
-- Kenya and Nigeria are the next markets, with settlement in KES and NGN.
+- Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow.
+- Local-currency settlement is in ZAR, KES or NGN, the next business day. USD is also available. Stablecoin settlement is the same day on every plan.
 
 ## Company
 

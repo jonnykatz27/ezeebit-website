@@ -66,7 +66,7 @@ const Online = () => {
     <>
       <SEO
         title="Online payments for Shopify, WooCommerce and Magento"
-        description="Add stablecoin and crypto checkout to Shopify, WooCommerce or Magento, or use the API. Settle in USDT or in ZAR, KES, NGN or USD."
+        description="Online stablecoin and crypto checkout. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
         canonicalUrl="/online"
         crumbs={[{ name: 'Online payments', path: '/online' }]}
       />
@@ -80,7 +80,7 @@ const Online = () => {
       <PageHero
         title="Stablecoin checkout"
         accent="for your online store."
-        description="Add stablecoin and crypto payments to your store with zero-code plugins, or build on our API. Customers pay with Bitcoin, Ethereum, stablecoins, and more, and you're settled in ZAR, KES, NGN or USD."
+        description="Add stablecoin and crypto payments to your store with zero-code plugins, or build on our API. Customers pay with Bitcoin, Ethereum, stablecoins, and more, and you're settled in ZAR, KES, NGN or USD. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
         actions={
           <>
           <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>

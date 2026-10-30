@@ -152,7 +152,7 @@ const Platforms = () => {
     <>
       <SEO
         title="Crypto pay-ins and payouts for platforms"
-        description="Accept crypto deposits and pay users in stablecoin. Settlement can be in stablecoin or in ZAR, KES, NGN or USD."
+        description="Accept crypto deposits and pay users in stablecoin. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
         canonicalUrl="/platforms"
         ogImage="/og-platforms.jpg"
         crumbs={[{ name: 'Platforms', path: '/platforms' }]}
@@ -167,7 +167,7 @@ const Platforms = () => {
         <PageHero
           title="Pay-ins and payouts"
           accent="for your platform."
-          description="Take deposits in crypto and pay your users out in stablecoin, without holding either. Ezeebit handles the compliance, the volatility and the movement of funds, and you choose your exposure: settle in stablecoin, or in ZAR, KES, NGN or USD."
+          description="Take deposits in crypto and pay your users out in stablecoin, without holding either. Ezeebit handles the compliance, the volatility and the movement of funds, and you choose your exposure: settle in stablecoin, or in ZAR, KES, NGN or USD. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
           actions={
             <>
             <Link to="/contact" className={HERO_PRIMARY}>

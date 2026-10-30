@@ -64,7 +64,7 @@ const OTC = () => {
     <>
       <SEO
         title="OTC desk for large trades"
-        description="Large crypto-to-fiat trades with firm pricing and same-day settlement in ZAR, KES, NGN or USD. A dealer works the trade with you."
+        description="An OTC desk for large crypto trades. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
         canonicalUrl="/otc"
         crumbs={[{ name: 'OTC desk', path: '/otc' }]}
       />
@@ -78,7 +78,7 @@ const OTC = () => {
         <PageHero
           title="Move large volumes"
           accent="of crypto."
-          description="Buy or sell crypto at scale without moving the market. Get a firm quote, lock the rate, and settle the same day in ZAR, KES, NGN or USD, with a dedicated dealer handling every trade."
+          description="Buy or sell crypto at scale without moving the market. Get a firm quote, lock the rate, and settle the same day in ZAR, KES, NGN or USD, with a dedicated dealer handling every trade. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
           actions={
             <>
             <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>

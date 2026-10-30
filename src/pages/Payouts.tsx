@@ -112,7 +112,7 @@ const Payouts = () => {
     <>
       <SEO
         title="Stablecoin payouts"
-        description="Pay customers from an Ezeebit balance in USDT or other crypto. Recipients choose the asset and network."
+        description="Pay customers from an Ezeebit balance in USDT or other crypto. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
         canonicalUrl="/payouts"
         crumbs={[{ name: 'Payouts', path: '/payouts' }]}
         extraNodes={[faqPageNode('https://ezeebit.com/payouts#faq', payoutFaqs)]}
@@ -127,7 +127,7 @@ const Payouts = () => {
         <PageHero
           title="Pay your customers"
           accent="in stablecoin."
-          description="Send payouts from your fiat balance without collecting a single wallet address. Your customer picks the asset and network, completes the payout themselves, and the funds settle on-chain in minutes."
+          description="Send payouts from your fiat balance without collecting a single wallet address. Your customer picks the asset and network, completes the payout themselves, and the funds settle on-chain in minutes. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
           actions={
             <>
             <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>

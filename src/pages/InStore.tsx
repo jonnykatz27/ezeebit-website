@@ -36,7 +36,7 @@ const inStoreFaqs = [
   },
   {
     question: 'What does in-store crypto acceptance cost?',
-    answer: '1% per successful transaction, excluding VAT, or lower on higher volumes. The Starter plan is R0 a month, Professional is R150 a month, and Enterprise pricing is custom. There are no setup fees for the ePOS or Ezeebit Pay.',
+    answer: '1% or lower per transaction, excluding VAT. The Starter plan is R0 a month, Professional is R150 a month, and Enterprise pricing is custom. There are no setup fees for the ePOS or Ezeebit Pay.',
   },
 ]
 
@@ -68,7 +68,7 @@ const InStore = () => {
     { label: "Network Support", value: "WiFi, 4G, SIM Card ports" },
     { label: "Payment Methods", value: "QR Scan" },
     { label: "Supported Currencies", value: "7+ Cryptocurrencies" },
-    { label: "Settlement", value: "Instant stablecoin, T+1 ZAR/KES/NGN/USD" },
+    { label: "Settlement", value: "Stablecoin same day, local currency next business day" },
     { label: "Receipt", value: "Printed receipts" }
   ]
 
@@ -76,7 +76,7 @@ const InStore = () => {
     <>
       <SEO
         title="In-store ePOS and static QR"
-        description="Accept stablecoin and crypto at the till with an Android ePOS or a static QR code. Settle in USDT or in ZAR, KES, NGN or USD."
+        description="In-store stablecoin and crypto payments. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
         canonicalUrl="/in-store"
         crumbs={[{ name: 'In-store ePOS', path: '/in-store' }]}
         extraNodes={[faqPageNode('https://ezeebit.com/in-store#faq', inStoreFaqs)]}
@@ -91,7 +91,7 @@ const InStore = () => {
       <PageHero
         title="Accept stablecoins"
         accent="at the counter."
-        description="Take stablecoin and crypto payments in your store with an ePOS device or an Ezeebit Pay QR code. Every payment is hedged on the spot and settled in ZAR, KES, NGN or USD."
+        description="Take stablecoin and crypto payments in your store with an ePOS device or an Ezeebit Pay QR code. Every payment is hedged on the spot and settled in ZAR, KES, NGN or USD. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
         actions={
           <>
           <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>

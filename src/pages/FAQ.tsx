@@ -41,14 +41,14 @@ const FAQ = () => {
       id: '4',
       category: 'payments',
       question: 'How fast are payments processed?',
-      answer: 'The rate is locked at checkout and the payment is confirmed on-chain. Settlement is the next business day in local currency, or the same day in stablecoin, depending on the plan.',
+      answer: 'The rate is locked at checkout and the payment is confirmed on-chain. Settlement is the next business day in local currency, or the same day in stablecoin.',
       popular: true
     },
     {
       id: '5',
       category: 'payments',
       question: 'How does settlement work?',
-      answer: 'Funds convert instantly to USD-pegged stablecoins at checkout to shield from any crypto-price volatility, then settle to your South African bank account automatically by the next business day.',
+      answer: 'The rate is locked at checkout and the payment is hedged on the spot. Local currency settles the next business day. Stablecoin settles the same day.',
       popular: false
     },
     {
@@ -118,7 +118,7 @@ const FAQ = () => {
       id: '15',
       category: 'payments',
       question: 'What are your transaction fees?',
-      answer: 'Our fees are 1% or lower per transaction (excluding VAT). No surprises, no fine print. You keep more of every sale.',
+      answer: '1% or lower per transaction, excluding VAT. No surprises, no fine print. You keep more of every sale.',
       popular: true
     },
     {
@@ -222,6 +222,13 @@ const FAQ = () => {
     {
       id: '31',
       category: 'about',
+      question: 'Which countries does Ezeebit operate in?',
+      answer: 'Ezeebit provides stablecoin and crypto payment infrastructure for merchants and platforms across Africa. It is live in South Africa, Kenya and Nigeria, with more African markets to follow.',
+      popular: true
+    },
+    {
+      id: '33',
+      category: 'about',
       question: 'Is Ezeebit a crypto exchange?',
       answer: 'No. Ezeebit is payment infrastructure for businesses, not a consumer crypto exchange. It provides in-store and online checkout, settlement in local currency or stablecoins, business wallets, crypto pay-ins and stablecoin payouts for platforms, and an OTC desk for large crypto-to-fiat trades quoted by a dealer. Customers pay from their own wallet or exchange account.',
       popular: false
@@ -293,7 +300,7 @@ const FAQ = () => {
     <>
       <SEO
         title="FAQ"
-        description="Answers about Ezeebit payments, payouts, wallets, settlement and fees for merchants across Africa."
+        description="Answers about Ezeebit payments, payouts, wallets, settlement and fees. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
         canonicalUrl="/resources/faq"
         crumbs={[{ name: 'FAQ', path: '/resources/faq' }]}
         extraNodes={[faqPageNode('https://ezeebit.com/resources/faq#faq', faqItems)]}

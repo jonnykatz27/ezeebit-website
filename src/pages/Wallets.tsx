@@ -79,11 +79,11 @@ const Wallets = () => {
         <PageHero
           title="Your money,"
           accent="in fiat or stablecoin."
-          description="Hold fiat and USDT in one place, convert between them when it suits you, fund your customer payouts from the same balance, and withdraw to your bank or your own wallet. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+          description="Hold fiat and USDT in one place, convert between them when it suits you, fund your customer payouts from the same balance, and withdraw to your bank or your own wallet."
           actions={
             <>
             <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
-              Get started free
+              Open a merchant account
               <ArrowRight className="w-5 h-5 ml-2" />
             </a>
             <Link to="/developers" className={HERO_SECONDARY}>
@@ -96,17 +96,17 @@ const Wallets = () => {
         />
 
         {/* Features Section */}
-        <section className="section-padding bg-white">
+        <section className="story">
           <div className="container-custom">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               className="text-center mb-16"
             >
-              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+              <h2 className="story-title">
                 The account underneath everything
               </h2>
-              <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+              <p className="story-lead">
                 Wallets are where your pay-ins land and where your payouts are funded from,
                 in the currency you choose to hold.
               </p>
@@ -119,15 +119,15 @@ const Wallets = () => {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="card px-5 py-4 text-center hover:scale-[1.03] transition-transform"
+                  className="panel"
                 >
-                  <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center mx-auto mb-2 text-primary-400">
+                  <div className="panel-icon">
                     {feature.icon}
                   </div>
-                  <h3 className="text-lg font-semibold text-neutral-900 mb-1">
+                  <h3 className="text-lg font-semibold text-white mb-1">
                     {feature.title}
                   </h3>
-                  <p className="text-neutral-600 text-sm leading-relaxed">
+                  <p className="text-neutral-400 text-sm leading-relaxed">
                     {feature.description}
                   </p>
                 </motion.div>
@@ -137,17 +137,17 @@ const Wallets = () => {
         </section>
 
         {/* How It Works */}
-        <section className="section-padding bg-neutral-50">
+        <section className="story">
           <div className="container-custom">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               className="text-center mb-16"
             >
-              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+              <h2 className="story-title">
                 How it works
               </h2>
-              <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+              <p className="story-lead">
                 Money in, held how you want it, money out.
               </p>
             </motion.div>
@@ -161,14 +161,14 @@ const Wallets = () => {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="relative"
                 >
-                  <div className="card p-8 h-full">
+                  <div className="panel h-full">
                     <div className="text-4xl font-display font-bold text-gradient mb-4">
                       {step.number}
                     </div>
-                    <h3 className="text-xl font-semibold text-neutral-900 mb-3">
+                    <h3 className="text-xl font-semibold text-white mb-3">
                       {step.title}
                     </h3>
-                    <p className="text-neutral-600">
+                    <p className="text-neutral-400">
                       {step.description}
                     </p>
                   </div>
@@ -199,7 +199,7 @@ const Wallets = () => {
                   rel="noopener noreferrer"
                   className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
                 >
-                  Sign Up
+                  Open a merchant account
                   <ArrowRight className="w-5 h-5 ml-2 inline" />
                 </a>
               </div>

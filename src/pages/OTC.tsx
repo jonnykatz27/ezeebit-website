@@ -79,11 +79,11 @@ const OTC = () => {
         <PageHero
           title="Move large volumes"
           accent="of crypto."
-          description="Buy or sell crypto at scale without moving the market. Get a firm quote, lock the rate, and settle the same day in ZAR, KES, NGN or USD, with a dedicated dealer handling every trade. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+          description="Buy or sell crypto at scale without moving the market. Get a firm quote, lock the rate, and settle the same day in ZAR, KES, NGN or USD, with a dedicated dealer handling every trade."
           actions={
             <>
             <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
-              Get started free
+              Open a merchant account
               <ArrowRight className="w-5 h-5 ml-2" />
             </a>
             <Link to="/contact" className={HERO_SECONDARY}>
@@ -96,17 +96,17 @@ const OTC = () => {
         />
 
         {/* Features Section */}
-        <section className="section-padding bg-white">
+        <section className="story">
           <div className="container-custom">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               className="text-center mb-16"
             >
-              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+              <h2 className="story-title">
                 A desk built for size
               </h2>
-              <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+              <p className="story-lead">
                 When the amounts get large, exchanges fall short. Our OTC desk gives you pricing,
                 liquidity, and settlement designed for serious volume.
               </p>
@@ -119,15 +119,15 @@ const OTC = () => {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="card p-6 hover:scale-105 transition-transform"
+                  className="panel"
                 >
-                  <div className="w-12 h-12 bg-neutral-950 rounded-lg flex items-center justify-center mb-4 text-primary-400">
+                  <div className="panel-icon">
                     {feature.icon}
                   </div>
-                  <h3 className="text-xl font-semibold text-neutral-900 mb-3">
+                  <h3 className="text-xl font-semibold text-white mb-3">
                     {feature.title}
                   </h3>
-                  <p className="text-neutral-600">
+                  <p className="text-neutral-400">
                     {feature.description}
                   </p>
                 </motion.div>
@@ -137,17 +137,17 @@ const OTC = () => {
         </section>
 
         {/* How It Works */}
-        <section className="section-padding bg-neutral-50">
+        <section className="story">
           <div className="container-custom">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               className="text-center mb-16"
             >
-              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+              <h2 className="story-title">
                 How it works
               </h2>
-              <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+              <p className="story-lead">
                 Three steps from quote to settled funds, with a dealer alongside you the whole way.
               </p>
             </motion.div>
@@ -161,14 +161,14 @@ const OTC = () => {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="relative"
                 >
-                  <div className="card p-8 h-full">
+                  <div className="panel h-full">
                     <div className="text-4xl font-display font-bold text-gradient mb-4">
                       {step.number}
                     </div>
-                    <h3 className="text-xl font-semibold text-neutral-900 mb-3">
+                    <h3 className="text-xl font-semibold text-white mb-3">
                       {step.title}
                     </h3>
-                    <p className="text-neutral-600">
+                    <p className="text-neutral-400">
                       {step.description}
                     </p>
                   </div>
@@ -200,7 +200,7 @@ const OTC = () => {
                   rel="noopener noreferrer"
                   className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
                 >
-                  Sign Up
+                  Open a merchant account
                   <ArrowRight className="w-5 h-5 ml-2 inline" />
                 </a>
               </div>

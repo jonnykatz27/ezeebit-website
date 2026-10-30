@@ -224,7 +224,7 @@ const Header = () => {
               rel="noopener noreferrer"
               className="btn-primary !py-2.5 !px-5 text-base"
             >
-              Get Started
+              Open account
             </a>
           </div>
 
@@ -347,7 +347,7 @@ const Header = () => {
                     className="block w-full text-center btn-primary"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    Get Started
+                    Open account
                   </a>
                 </div>
               </div>

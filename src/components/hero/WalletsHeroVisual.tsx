@@ -2,7 +2,7 @@ import { AnimatePresence } from 'framer-motion'
 import { motion } from '../../lib/motion'
 import {
   PORTAL_CARD, SWAP, arrive, money,
-  useHeroLoop, HeroStage, Halo, FloatingCoin, Counter, Flash,
+  useHeroLoop, HeroStage, Halo, Counter, Flash,
 } from './heroKit'
 import { PortalScale, PortalBalanceCard, PortalConvertCard, PortalActivityRow } from '../portal/PortalUI'
 
@@ -104,11 +104,6 @@ const WalletsHeroVisual = () => {
       <Halo x={260} y={300} />
 
       {/* One flag for each settlement currency, in the gaps between the cards */}
-      <FloatingCoin src="/ke-flag.svg" x={70} y={36} delay={0.2} still={still} />
-      <FloatingCoin src="/za-flag.svg" x={204} y={52} delay={0.4} still={still} />
-      <FloatingCoin src="/ng-flag.svg" x={244} y={226} delay={0.6} still={still} />
-      <FloatingCoin src="/usdt-logo.svg" x={498} y={330} delay={1} still={still} />
-      <FloatingCoin src="/us-flag.svg" x={468} y={432} delay={1.4} still={still} />
 
       {/* ── The Convert panel ── */}
       <motion.div className={`absolute ${PORTAL_CARD} overflow-hidden`} style={{ left: 325, top: 0 }} {...arrive(0.45, 'right')}>

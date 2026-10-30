@@ -108,6 +108,7 @@ const Resources = () => {
       <PageHero
         title="Resources"
         accent="and support"
+        accentPlain
         description="Everything you need to succeed with Ezeebit. From getting started guides to legal documentation, we've got you covered."
       >
         <HeroSearch placeholder="Search resources, guides, and FAQs..." />
@@ -270,7 +271,7 @@ const Resources = () => {
                 rel="noopener noreferrer" 
                 className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
               >
-                Get Started
+                Open a merchant account
                 <ArrowRight className="w-5 h-5 ml-2 inline" />
               </a>
               <Link to="/contact" className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center">

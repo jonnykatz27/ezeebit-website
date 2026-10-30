@@ -4,11 +4,10 @@ import { useReducedMotion } from 'framer-motion'
 import { motion } from '../lib/motion'
 import {
   Zap, Shield, Globe, TrendingUp,
-  ArrowRight, Star, ChevronLeft, ChevronRight,
+  ArrowRight,
   ThumbsUp, Headphones, Lock, Landmark, Link2, Wallet, Send, Store, ArrowLeftRight,
   ArrowDownToLine
 } from 'lucide-react'
-import PartnerCarousel from '../components/PartnerCarousel'
 import SEO from '../components/SEO'
 import FlowDemo, { DemoPanel } from '../components/demo/FlowDemo'
 import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
@@ -366,12 +365,12 @@ const FlowCards = ({ flow, isActive }: { flow: FlowId; isActive: boolean }) => {
         finish level with the demo.
       */}
       <motion.div variants={rise} className="mt-6 flex flex-wrap items-center justify-center sm:justify-start gap-3">
-        <span className="text-sm text-neutral-500">Read more:</span>
+        <span className="text-sm text-neutral-400">Read more:</span>
         {demo.links.map((l) => (
           <Link
             key={l.to}
             to={l.to}
-            className="inline-flex items-center gap-1.5 rounded-full bg-neutral-950 px-4 py-2 text-sm font-semibold text-white hover:bg-neutral-950/85 transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-white hover:bg-white/5 transition-colors"
           >
             {l.label}
             <ArrowRight className="w-4 h-4" />
@@ -382,8 +381,22 @@ const FlowCards = ({ flow, isActive }: { flow: FlowId; isActive: boolean }) => {
   )
 }
 
+const PARTNERS = [
+  { name: 'iStore', logo: '/istore-logo(final).png' },
+  { name: 'Sunbet', logo: '/sunbet-logo.png' },
+  { name: 'Le Creuset', logo: '/le-creuset-logo(final).png' },
+  { name: 'Diesel', logo: '/diesel-logo(final).png' },
+  { name: 'Spar', logo: '/spar-logo(latest).png' },
+  { name: 'Amiri', logo: '/amiri-logo(latest).png' },
+]
+
+const BACKERS = [
+  { name: 'Founder Collective', logo: '/founder_collective_logo.png', size: 'h-6' },
+  { name: 'Raba Partnership', logo: '/Raba_logo.webp', size: 'h-6' },
+  { name: 'Digital Currency Group', logo: '/digital-currency-group-logo-nobg.png', size: 'h-8' },
+]
+
 const Home = () => {
-  const [currentTestimonial, setCurrentTestimonial] = useState(0)
   const [activeFlow, setActiveFlow] = useState<FlowId>('pay-in')
 
   // Left/right arrows move between tabs, which is what a tablist is expected to do.
@@ -421,13 +434,6 @@ const Home = () => {
     }
   ]
 
-  const stats = [
-    { number: "100,000+", label: "Transactions processed" },
-    { number: "$ Millions", label: "Volume processed (since 2024)" },
-    { number: "99.99%", label: "Uptime" },
-    { number: "24/7", label: "Customer support" }
-  ]
-
   const testimonials = [
     {
       name: "Rael Demby",
@@ -455,14 +461,6 @@ const Home = () => {
     }
   ]
 
-  const nextTestimonial = () => {
-    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
-  }
-
-  const prevTestimonial = () => {
-    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)
-  }
-
   return (
     <>
       <SEO
@@ -481,11 +479,11 @@ const Home = () => {
       <PageHero
         title="Stablecoin payments,"
         accent="in and out."
-        description="Accept crypto and stablecoins in-store and online, pay your customers out in minutes, and hold your balance in fiat or stablecoin. One regulated account, settled in ZAR, KES, NGN or USD. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+        description="Accept crypto and stablecoins in-store and online, pay your customers out in minutes, and hold your balance in fiat or stablecoin. One regulated account, settled in ZAR, KES, NGN or USD."
         actions={
           <>
             <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
-              Get started free
+              Open a merchant account
               <ArrowRight className="w-5 h-5 ml-2" />
             </a>
             {/* A button, not a #hash link: the router scrolls to the top on hash changes */}
@@ -500,167 +498,69 @@ const Home = () => {
         }
         trust={[
           { icon: <ThumbsUp />, label: 'No setup fees' },
-          { icon: <Shield />, label: 'FSCA regulated' },
           { icon: <Headphones />, label: '24/7 support' },
         ]}
+        note="Ezeebit is authorised and regulated by the FSCA, and has applied for its CASP licence (FSP 53664)."
         visual={<HomeHeroVisual />}
         bleedVisual
       />
 
       {/*
-        The dark opening: the proof of scale on the hero's own Near Black, set
-        off by a hairline, so hero and stats read as one block. The product
-        links close it, quiet, so the menu's pages are plain links on the
-        homepage too.
+        The page stays on Near Black through the proof, the flow and the ask.
+        White is reserved for pages that are there to be read.
       */}
-      <section className="relative bg-neutral-950 pb-14 lg:pb-24">
-        <div className="container-custom relative">
-          <div className="border-t border-white/10 pt-12 lg:pt-16 grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-6 lg:gap-8">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="text-center px-2 py-4"
-              >
-                {/*
-                  The page's one oversized number. Sized so the longest,
-                  "$ Millions", still fits its column: two up on phones and
-                  tablets, four up from lg, full size only from xl.
-                */}
-                <div className="text-4xl sm:text-5xl xl:text-6xl font-display font-bold tracking-[-0.03em] leading-none text-primary-400 mb-3">
-                  {stat.number}
-                </div>
-                <div className="text-neutral-400 text-xs sm:text-sm">{stat.label}</div>
-              </motion.div>
-            ))}
-          </div>
-          <nav aria-label="Products" className="mt-10 lg:mt-14 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm font-medium">
-            <Link to="/in-store" className="text-neutral-400 hover:text-white transition-colors">In-store ePOS</Link>
-            <Link to="/online" className="text-neutral-400 hover:text-white transition-colors">Online payments</Link>
-            <Link to="/platforms" className="text-neutral-400 hover:text-white transition-colors">Platforms</Link>
-            <Link to="/payouts" className="text-neutral-400 hover:text-white transition-colors">Payouts</Link>
-            <Link to="/wallets" className="text-neutral-400 hover:text-white transition-colors">Wallets</Link>
-            <Link to="/pricing" className="text-neutral-400 hover:text-white transition-colors">Pricing</Link>
-            <Link to="/developers" className="text-neutral-400 hover:text-white transition-colors">Developer API</Link>
-          </nav>
-        </div>
-      </section>
-
-      <section className="py-10 lg:py-20 bg-white overflow-hidden">
+      <section className="relative bg-neutral-950 pb-16 lg:pb-20">
         <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-8 md:mb-12"
-          >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Our partners</h2>
-            <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
-              Trusted by leading brands across Africa.
+          <div className="border-t border-white/10 pt-12 lg:pt-16 text-center">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-500 mb-3">Our partners</p>
+            <p className="text-lg text-neutral-300 mb-3">Trusted by leading brands across Africa.</p>
+            <p className="text-sm text-neutral-400 max-w-xl mx-auto mb-10">
+              Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow.
             </p>
-          </motion.div>
+            <ul className="flex flex-wrap items-center justify-center gap-3 mb-10">
+              {PARTNERS.map((partner) => (
+                <li key={partner.name} className="h-16 px-5 bg-white rounded-xl flex items-center justify-center">
+                  <img src={partner.logo} alt={partner.name} className="h-8 w-auto max-w-[128px] object-contain" />
+                </li>
+              ))}
+            </ul>
+            <p className="text-sm text-neutral-500">
+              100,000+ transactions processed
+              <span className="mx-3 text-neutral-700" aria-hidden="true">·</span>
+              99.99% uptime
+            </p>
 
-          <div className="mb-2 md:mb-8 partner-carousel-container">
-            <PartnerCarousel
-              partners={[
-                { name: 'iStore', logo: '/istore-logo(final).png', scale: 1.06 },
-                { name: 'Skins', logo: '/skins-logo.png' },
-                { name: 'Le Creuset', logo: '/le-creuset-logo(final).png', scale: 1.475 },
-                { name: 'Amiri', logo: '/amiri-logo(latest).png', mobileScale: 0.95 },
-                { name: 'Ritual', logo: '/ritual-logo(latest).png', scale: 1.15 },
-                { name: 'Hydraulics', logo: '/hydraulics-logo(latest).png', scale: 1.15 },
-                { name: 'Al Capone', logo: '/alcapone-logo(final).png', scale: 1.15 },
-                { name: 'Scoin', logo: '/scoin-logo(latest).png' },
-                { name: 'Soul Gallery', logo: '/soul-gallery-logo(final).png', scale: 0.8, mobileScale: 0.69 },
-                { name: 'Sunbet', logo: '/sunbet-logo.png' }
-              ]}
-              direction="left"
-              speed={40}
-            />
-          </div>
-
-          <div className="partner-carousel-container">
-            <PartnerCarousel
-              partners={[
-                { name: 'Yawa', logo: '/yawa-logo(final).png', scale: 0.9, mobileScale: 1.089 },
-                { name: 'Tintswalo Lodge', logo: '/tintswalo-logo(latest).png', scale: 1.32, mobileScale: 1.2245 },
-                { name: 'Luxity', logo: '/luxity-logo(latest).png', mobileScale: 0.8 },
-                { name: 'The Capital', logo: '/thecapital-logo.png', scale: 1.25 },
-                { name: 'Spar', logo: '/spar-logo(latest).png', mobileScale: 0.8 },
-                { name: 'Cultish', logo: '/cultish-logo(latest).png', scale: 1.6, mobileScale: 1.32 },
-                { name: 'Watch Channel', logo: '/watch-channel-logo(final).png', mobileScale: 1.05 },
-                { name: 'Diesel', logo: '/diesel-logo(final).png', scale: 0.806, mobileScale: 0.772 },
-                { name: 'Sumptuous Tours', logo: '/sumptuous-tours-logo.png', scale: 1.5 },
-                { name: 'BHH', logo: '/bhh-logo.png' }
-              ]}
-              direction="right"
-              speed={40}
-            />
+            <p className="mt-12 text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-500 mb-6">Backed by</p>
+            <ul className="flex flex-wrap items-center justify-center gap-3">
+              {BACKERS.map((backer) => (
+                <li key={backer.name} className="h-14 px-5 bg-white rounded-xl flex items-center justify-center">
+                  <img src={backer.logo} alt={backer.name} className={`${backer.size} w-auto max-w-[160px] object-contain`} />
+                </li>
+              ))}
+            </ul>
+            <p className="mt-5 text-sm">
+              <Link to="/resources/about" className="font-semibold text-primary-400 hover:text-primary-300">
+                Meet our investors and angels →
+              </Link>
+            </p>
           </div>
         </div>
       </section>
 
-      <section className="py-10 lg:py-20 bg-white">
-        <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-10 lg:mb-16"
-          >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Why choose Ezeebit?</h2>
-            <p className="text-lg text-neutral-600 max-w-3xl mx-auto leading-relaxed">
-              One regulated account for money in, money held and money out — with the volatility hedged the moment it lands.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="card px-5 py-4 text-center hover:scale-[1.03] transition-transform"
-              >
-                <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center mx-auto mb-2 text-primary-400">
-                  {feature.icon}
-                </div>
-                <h3 className="text-lg font-semibold text-neutral-900 mb-1">
-                  {feature.title}
-                </h3>
-                <p className="text-neutral-600 text-sm leading-relaxed">
-                  {feature.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── How it works — one flow per product area ── */}
-      <section id="how-it-works" className="scroll-mt-20 pt-8 pb-16 lg:pt-12 lg:pb-24 bg-white">
+      <section id="how-it-works" className="scroll-mt-20 relative bg-neutral-950 border-t border-white/10 pt-16 lg:pt-24 pb-16 lg:pb-24">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 text-center">
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="mb-8 lg:mb-10"
-          >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
-              How it works
-            </h2>
-            <p className="text-neutral-500 text-lg leading-relaxed">
+          <div className="mb-8 lg:mb-10">
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">How it works</h2>
+            <p className="text-neutral-400 text-lg leading-relaxed">
               Money in, money held, money out. Pick a flow to see the steps.
             </p>
-          </motion.div>
+          </div>
 
-          {/* ── Flow switcher ── */}
           <div className="mb-8 lg:mb-10 flex justify-center">
             <div
               role="tablist"
               aria-label="How money moves through Ezeebit"
-              className="inline-flex items-center gap-1 p-1 rounded-full bg-neutral-950 max-w-full overflow-x-auto"
+              className="inline-flex items-center gap-1 p-1 rounded-full bg-white/5 ring-1 ring-white/10 max-w-full overflow-x-auto"
             >
               {FLOWS.map((flow, index) => (
                 <button
@@ -684,11 +584,6 @@ const Home = () => {
             </div>
           </div>
 
-          {/*
-            Every panel stays mounted and toggles with `hidden`, so the
-            pre-render writes all three flows into the static HTML rather than
-            only whichever one happens to be selected.
-          */}
           {FLOWS.map((flow) => (
             <div
               key={flow.id}
@@ -701,138 +596,55 @@ const Home = () => {
             </div>
           ))}
 
-          {/* OTC is a desk, not a self-serve flow, so it sits beside the tabs */}
-          <p className="mt-10 text-neutral-500">
+          <p className="mt-10 text-neutral-400">
             Moving large volumes?{' '}
-            <Link to="/otc" className="font-semibold text-primary-600 hover:text-primary-700">
+            <Link to="/otc" className="font-semibold text-primary-400 hover:text-primary-300">
               Talk to our OTC desk{' '}→
             </Link>
           </p>
-
         </div>
       </section>
 
-
-      <section className="py-10 lg:py-16 bg-white">
+      <section className="relative bg-neutral-950 border-t border-white/10 pt-16 lg:pt-24 pb-16 lg:pb-24">
         <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center"
-          >
-            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-400 mb-8">
-              Backed by
+          <div className="text-center mb-10 lg:mb-14">
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">Why choose Ezeebit?</h2>
+            <p className="text-lg text-neutral-400 max-w-3xl mx-auto leading-relaxed">
+              One regulated account for money in, money held and money out — with the volatility hedged the moment it lands.
             </p>
-
-            <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-8 lg:gap-x-20">
-              {/*
-                Heights are per logo. Two things pull against each other: DCG
-                fills only 863x226 of its 900x500 canvas so it needs the most
-                height, while Founder Collective is a long two-line lockup that
-                grows wide fast, so it needs the least. Matched by eye on how
-                large each reads, not on artwork height or cap height alone.
-              */}
-              {[
-                { name: 'Founder Collective', logo: '/founder_collective_logo.png', size: 'h-6 lg:h-8' },
-                { name: 'Raba Partnership', logo: '/Raba_logo.webp', size: 'h-6 lg:h-7' },
-                { name: 'Digital Currency Group', logo: '/digital-currency-group-logo-nobg.png', size: 'h-10 lg:h-12' },
-              ].map((backer) => (
-                <img
-                  key={backer.name}
-                  src={backer.logo}
-                  alt={backer.name}
-                  loading="lazy"
-                  className={`${backer.size} w-auto object-contain`}
-                />
-              ))}
-            </div>
-
-            <p className="mt-6 text-sm text-neutral-500">
-              <Link to="/resources/about" className="inline-block py-2 font-semibold text-primary-600 hover:text-primary-700">
-                Meet our investors and angels →
-              </Link>
-            </p>
-          </motion.div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {features.map((feature) => (
+              <div key={feature.title} className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 text-left">
+                <div className="text-primary-400 mb-4">{feature.icon}</div>
+                <h3 className="text-lg font-semibold text-white mb-2">{feature.title}</h3>
+                <p className="text-neutral-400 text-sm leading-relaxed">{feature.description}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="py-10 lg:py-20 bg-white">
+      <section className="relative bg-neutral-950 border-t border-white/10 pt-16 lg:pt-24 pb-16 lg:pb-24">
         <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-8 lg:mb-12"
-          >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Trusted by businesses across Africa</h2>
-            <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
+          <div className="text-center mb-8 lg:mb-12">
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">Trusted by businesses across Africa</h2>
+            <p className="text-lg text-neutral-400 max-w-3xl mx-auto">
               Join hundreds of businesses already moving money with stablecoin, in and out, with confidence.
             </p>
-          </motion.div>
-
-          <div className="max-w-2xl mx-auto">
-            <div className="relative overflow-hidden group">
-              <button
-                onClick={prevTestimonial}
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-md flex items-center justify-center text-neutral-600 hover:text-primary-500 transition-all duration-200 opacity-0 group-hover:opacity-100"
-                aria-label="Previous testimonial"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button
-                onClick={nextTestimonial}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-md flex items-center justify-center text-neutral-600 hover:text-primary-500 transition-all duration-200 opacity-0 group-hover:opacity-100"
-                aria-label="Next testimonial"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-
-              <motion.div
-                key={currentTestimonial}
-                exit={{ x: '-100%' }}
-                transition={{ duration: 0.5, ease: 'easeInOut' }}
-                className="card p-8 text-center min-h-[400px] flex flex-col justify-between shadow-xl"
-              >
-                <div className="flex items-center justify-center mb-6 flex-shrink-0">
-                  {[...Array(testimonials[currentTestimonial].rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-warning-400 fill-current" />
-                  ))}
-                </div>
-                <p className="text-lg text-neutral-600 mb-8 italic flex-grow flex items-center justify-center leading-relaxed">
-                  "{testimonials[currentTestimonial].content}"
-                </p>
-                <div className="flex items-center justify-center flex-shrink-0">
-                  <div className="w-32 h-32 mr-4">
-                    <img
-                      src={testimonials[currentTestimonial].logo}
-                      alt={testimonials[currentTestimonial].company}
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-neutral-900 text-lg">{testimonials[currentTestimonial].name}</div>
-                    <div className="text-neutral-500">{testimonials[currentTestimonial].role}, {testimonials[currentTestimonial].company}</div>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
           </div>
-
-          {/* The dots stay small; the padding around each one is what a thumb hits */}
-          <div className="flex justify-center mt-5">
-            {testimonials.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentTestimonial(index)}
-                className="group px-1.5 py-3"
-                aria-label={`Go to testimonial ${index + 1}`}
-              >
-                <span
-                  className={`block h-2.5 rounded-full transition-all duration-200 ${
-                    index === currentTestimonial ? 'bg-primary-500 w-6' : 'w-2.5 bg-neutral-300 group-hover:bg-neutral-400'
-                  }`}
-                />
-              </button>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            {testimonials.map((item) => (
+              <figure key={item.name} className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 flex flex-col">
+                <blockquote className="text-neutral-300 text-sm leading-relaxed flex-1">“{item.content}”</blockquote>
+                <figcaption className="mt-6 flex items-center gap-3">
+                  <img src={item.logo} alt="" className="h-10 w-16 object-contain bg-white rounded-md px-1.5" />
+                  <div className="min-w-0 text-left">
+                    <div className="font-semibold text-white text-sm">{item.name}</div>
+                    <div className="text-neutral-500 text-sm">{item.role}, {item.company}</div>
+                  </div>
+                </figcaption>
+              </figure>
             ))}
           </div>
         </div>
@@ -868,7 +680,7 @@ const Home = () => {
                 icon: <Lock className="w-8 h-8 text-primary-400" />,
                 title: "MPC wallet technology",
                 description: "Multi-party computation (MPC) eliminates single points of failure by distributing key management across multiple parties, keeping funds secure.",
-                badge: "SOC 2 Certified"
+                note: "SOC 2 certified"
               },
               {
                 icon: <Zap className="w-8 h-8 text-primary-400" />,
@@ -884,18 +696,13 @@ const Home = () => {
                 // Hairline panels rather than white cards: a white card would be a light patch in the dark moment
                 className="relative rounded-2xl border border-white/10 bg-white/[0.04] p-6 text-center"
               >
-                {item.badge && (
-                  <div className="absolute -top-3 -right-3 bg-primary-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md flex items-center gap-1.5">
-                    <Star className="w-3.5 h-3.5 fill-current" />
-                    {item.badge}
-                  </div>
-                )}
                 <div className="w-16 h-16 bg-primary-500/15 rounded-2xl flex items-center justify-center mx-auto mb-6">
                   {item.icon}
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-3">
+                <h3 className={`text-lg font-semibold text-white ${'note' in item && item.note ? 'mb-1' : 'mb-3'}`}>
                   {item.title}
                 </h3>
+                {'note' in item && item.note && <p className="text-xs text-neutral-500 mb-3">{item.note}</p>}
                 <p className="text-neutral-400 text-sm leading-relaxed">
                   {item.description}
                 </p>
@@ -917,7 +724,7 @@ const Home = () => {
               Ready to accept stablecoin and crypto payments?
             </h2>
             <p className="text-xl text-neutral-300 mb-8 max-w-2xl mx-auto">
-              Join the future of payments today. Get started in minutes with no setup fees and full regulatory compliance.
+              Get started with no setup fees.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
@@ -926,7 +733,7 @@ const Home = () => {
                 rel="noopener noreferrer"
                 className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
               >
-                Start Free Trial
+                Open a merchant account
                 <ArrowRight className="w-5 h-5 ml-2 inline" />
               </a>
               <Link

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Linkedin, Mail, Phone, MapPin, Shield, Award } from 'lucide-react'
+import { Linkedin, Mail, Phone, MapPin } from 'lucide-react'
 
 const Footer = () => {
   const footerLinks = {
@@ -127,22 +127,6 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-5 pt-5 border-t border-neutral-800">
-          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 mb-4">
-            <div className="flex items-center space-x-1.5 text-xs md:text-sm text-neutral-400">
-              <Shield className="w-3.5 h-3.5 text-secondary-400" />
-              <span>FSCA Regulated</span>
-            </div>
-            <div className="flex items-center space-x-1.5 text-xs md:text-sm text-neutral-400">
-              <Award className="w-3.5 h-3.5 text-secondary-400" />
-              <span>FIC Compliant</span>
-            </div>
-            <div className="flex items-center space-x-1.5 text-xs md:text-sm text-neutral-400">
-              <Shield className="w-3.5 h-3.5 text-secondary-400" />
-              <span>FAIS Regulated</span>
-            </div>
-          </div>
-        </div>
       </div>
 
       <div className="border-t border-neutral-800">

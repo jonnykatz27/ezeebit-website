@@ -1,7 +1,7 @@
 import { motion } from '../lib/motion'
 import { Link } from 'react-router-dom'
 import {
-  Users, Award, Globe, TrendingUp, Shield, Zap,
+  Users, Globe, TrendingUp, Shield, Zap,
   ArrowRight, Heart
 } from 'lucide-react'
 import SEO from '../components/SEO'
@@ -96,16 +96,16 @@ const About = () => {
       <PageHero
         title="Pioneering stablecoin"
         accent="payments in Africa"
+        accentPlain
         description="We're on a mission to make stablecoin payments as simple and secure as traditional ones — money in, money held and money out — so African businesses can move value as easily as information."
         trust={[
-          { icon: <Award />, label: 'FSCA regulated' },
           { icon: <Shield />, label: 'Bank-grade security' },
           { icon: <Users />, label: '150+ stores' },
         ]}
       />
 
       {/* Stats Section */}
-      <section className="section-padding bg-white">
+      <section className="story">
         <div className="container-custom">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
@@ -116,13 +116,13 @@ const About = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="text-center"
               >
-                <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4 text-primary-500">
+                <div className="panel-icon mx-auto">
                   {stat.icon}
                 </div>
                 <div className="text-3xl lg:text-4xl font-bold text-gradient mb-2">
                   {stat.number}
                 </div>
-                <div className="text-neutral-600">{stat.label}</div>
+                <div className="text-neutral-400">{stat.label}</div>
               </motion.div>
             ))}
           </div>
@@ -130,7 +130,7 @@ const About = () => {
       </section>
 
       {/* Mission & Vision */}
-      <section className="section-padding bg-neutral-50 mt-8 lg:mt-0">
+      <section className="story mt-8 lg:mt-0">
         <div className="container-custom">
           <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:items-center">
             <motion.div
@@ -150,10 +150,10 @@ const About = () => {
               whileInView={{ opacity: 1, x: 0 }}
               className="order-last lg:order-first text-center lg:text-left"
             >
-              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-6">
+              <h2 className="story-title">
                 Our mission
               </h2>
-              <p className="text-base lg:text-lg text-neutral-600">
+              <p className="text-base lg:text-lg text-neutral-400">
                 To transform how businesses in Africa move money — by building the trusted stablecoin infrastructure layer beneath it. We give them one place to take payments in, hold a balance in fiat or stablecoin, and pay customers out, with the hedging and compliance handled underneath.
               </p>
             </motion.div>
@@ -162,17 +162,17 @@ const About = () => {
       </section>
 
       {/* Values */}
-      <section className="section-padding bg-white">
+      <section className="story">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+            <h2 className="story-title">
               Our core values
             </h2>
-            <p className="text-base lg:text-xl text-neutral-600 max-w-3xl mx-auto">
+            <p className="story-lead">
               The principles that guide everything we do and every decision we make.
             </p>
           </motion.div>
@@ -184,15 +184,15 @@ const About = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="card p-6 text-center hover:scale-105 transition-transform"
+                className="panel"
               >
-                <div className="w-16 h-16 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4 text-primary-500">
+                <div className="panel-icon">
                   {value.icon}
                 </div>
-                <h3 className="text-xl font-semibold text-neutral-900 mb-3">
+                <h3 className="text-xl font-semibold text-white mb-3">
                   {value.title}
                 </h3>
-                <p className="text-neutral-600">
+                <p className="text-neutral-400">
                   {value.description}
                 </p>
               </motion.div>
@@ -201,15 +201,15 @@ const About = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="card p-6 text-center hover:scale-105 transition-transform"
+              className="panel"
             >
-              <div className="w-16 h-16 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4 text-primary-500">
-                <Globe className="w-8 h-8" />
+              <div className="panel-icon">
+                <Globe className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-semibold text-neutral-900 mb-3">
+              <h3 className="text-xl font-semibold text-white mb-3">
                 Access for all
               </h3>
-              <p className="text-neutral-600">
+              <p className="text-neutral-400">
                 We're here to democratise stablecoin payments — not just for the privileged few, but for every business and customer across Africa and beyond.
               </p>
             </motion.div>
@@ -218,24 +218,24 @@ const About = () => {
       </section>
 
       {/* Timeline */}
-      <section className="section-padding bg-neutral-50">
+      <section className="story">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+            <h2 className="story-title">
               Our journey
             </h2>
-            <p className="text-base lg:text-xl text-neutral-600 max-w-3xl mx-auto">
+            <p className="story-lead">
               Key milestones in our mission to transform stablecoin and crypto payments in Africa.
             </p>
           </motion.div>
 
           <div className="max-w-4xl mx-auto">
             <div className="relative">
-              <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-primary-200"></div>
+              <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-white/15"></div>
               <div className="space-y-8">
                 {milestones.map((milestone, index) => (
                   <motion.div
@@ -248,12 +248,12 @@ const About = () => {
                     <div className="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center text-white font-bold text-sm relative z-10">
                       {index + 1}
                     </div>
-                    <div className="ml-6 card p-6 flex-1">
+                    <div className="ml-6 panel flex-1">
                       <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-xl font-semibold text-neutral-900">{milestone.title}</h3>
-                        <span className="text-primary-500 font-bold">{milestone.year}</span>
+                        <h3 className="text-xl font-semibold text-white">{milestone.title}</h3>
+                        <span className="text-primary-400 font-bold">{milestone.year}</span>
                       </div>
-                      <p className="text-neutral-600">{milestone.description}</p>
+                      <p className="text-neutral-400">{milestone.description}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -517,7 +517,7 @@ const About = () => {
               Join our mission
             </h2>
             <p className="text-base lg:text-xl mb-8 max-w-2xl mx-auto text-neutral-300">
-              Be part of the stablecoin and crypto payment revolution in Africa. Start accepting stablecoin and cryptocurrency payments today.
+              Start accepting stablecoin and cryptocurrency payments today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
@@ -526,7 +526,7 @@ const About = () => {
                 rel="noopener noreferrer"
                 className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
               >
-                Get Started Today
+                Open a merchant account
                 <ArrowRight className="w-5 h-5 ml-2" />
               </a>
               <Link to="/contact" className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center">

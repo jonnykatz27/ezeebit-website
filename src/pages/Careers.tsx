@@ -61,6 +61,7 @@ const Careers = () => {
         <PageHero
           title="Build the future of"
           accent="African payments"
+          accentPlain
           description="We're a small team in Cape Town building the rails that let merchants across Africa accept stablecoins and crypto — instantly hedged, settled the next business day. 150+ stores already run on Ezeebit. We're just getting started."
         />
 

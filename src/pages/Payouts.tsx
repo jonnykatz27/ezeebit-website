@@ -128,11 +128,11 @@ const Payouts = () => {
         <PageHero
           title="Pay your customers"
           accent="in stablecoin."
-          description="Send payouts from your fiat balance without collecting a single wallet address. Your customer picks the asset and network, completes the payout themselves, and the funds settle on-chain in minutes. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+          description="Send payouts from your fiat balance without collecting a single wallet address. Your customer picks the asset and network, completes the payout themselves, and the funds settle on-chain in minutes."
           actions={
             <>
             <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
-              Get started free
+              Open a merchant account
               <ArrowRight className="w-5 h-5 ml-2" />
             </a>
             <Link to="/developers" className={HERO_SECONDARY}>
@@ -145,17 +145,17 @@ const Payouts = () => {
         />
 
         {/* Features Section */}
-        <section className="section-padding bg-white">
+        <section className="story">
           <div className="container-custom">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               className="text-center mb-16"
             >
-              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+              <h2 className="story-title">
                 Payouts without the bank rails
               </h2>
-              <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+              <p className="story-lead">
                 Bank transfers are slow, expensive across borders, and closed on weekends.
                 Stablecoin payouts are none of those things.
               </p>
@@ -168,15 +168,15 @@ const Payouts = () => {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="card px-5 py-4 text-center hover:scale-[1.03] transition-transform"
+                  className="panel"
                 >
-                  <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center mx-auto mb-2 text-primary-400">
+                  <div className="panel-icon">
                     {feature.icon}
                   </div>
-                  <h3 className="text-lg font-semibold text-neutral-900 mb-1">
+                  <h3 className="text-lg font-semibold text-white mb-1">
                     {feature.title}
                   </h3>
-                  <p className="text-neutral-600 text-sm leading-relaxed">
+                  <p className="text-neutral-400 text-sm leading-relaxed">
                     {feature.description}
                   </p>
                 </motion.div>
@@ -186,17 +186,17 @@ const Payouts = () => {
         </section>
 
         {/* How It Works */}
-        <section className="section-padding bg-neutral-50">
+        <section className="story">
           <div className="container-custom">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               className="text-center mb-16"
             >
-              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+              <h2 className="story-title">
                 How it works
               </h2>
-              <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+              <p className="story-lead">
                 One API call, one link, one signed webhook back.
               </p>
             </motion.div>
@@ -210,14 +210,14 @@ const Payouts = () => {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="relative"
                 >
-                  <div className="card p-8 h-full">
+                  <div className="panel h-full">
                     <div className="text-4xl font-display font-bold text-gradient mb-4">
                       {step.number}
                     </div>
-                    <h3 className="text-xl font-semibold text-neutral-900 mb-3">
+                    <h3 className="text-xl font-semibold text-white mb-3">
                       {step.title}
                     </h3>
-                    <p className="text-neutral-600">
+                    <p className="text-neutral-400">
                       {step.description}
                     </p>
                   </div>
@@ -228,7 +228,7 @@ const Payouts = () => {
         </section>
 
         {/* What your customer sees */}
-        <section className="section-padding bg-white">
+        <section className="story">
           <div className="container-custom">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               <motion.div
@@ -254,10 +254,10 @@ const Payouts = () => {
                 viewport={{ once: true }}
                 className="order-1 lg:order-2"
               >
-                <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+                <h2 className="story-title">
                   What your customer sees
                 </h2>
-                <p className="text-xl text-neutral-600 mb-8">
+                <p className="text-xl text-neutral-400 mb-8">
                   The payout link opens in any mobile browser. No app to install, no Ezeebit
                   account to create, and nothing for your support team to talk anyone through.
                 </p>
@@ -266,10 +266,10 @@ const Payouts = () => {
                 <ul className="space-y-5 text-left">
                   {customerExperience.map((point) => (
                     <li key={point.title} className="flex gap-4">
-                      <CheckCircle className="w-5 h-5 text-primary-500 flex-shrink-0 mt-1" />
+                      <CheckCircle className="w-5 h-5 text-primary-400 flex-shrink-0 mt-1" />
                       <div>
-                        <h3 className="font-semibold text-neutral-900 mb-1">{point.title}</h3>
-                        <p className="text-neutral-600">{point.description}</p>
+                        <h3 className="font-semibold text-white mb-1">{point.title}</h3>
+                        <p className="text-neutral-400">{point.description}</p>
                       </div>
                     </li>
                   ))}
@@ -280,17 +280,17 @@ const Payouts = () => {
         </section>
 
         {/* Use Cases */}
-        <section className="section-padding bg-neutral-50">
+        <section className="story">
           <div className="container-custom">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               className="text-center mb-16"
             >
-              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+              <h2 className="story-title">
                 Built for businesses that owe people money
               </h2>
-              <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+              <p className="story-lead">
                 Wherever payouts are high in volume, time sensitive, or hard to route through a bank.
               </p>
             </motion.div>
@@ -302,12 +302,12 @@ const Payouts = () => {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="card p-8 h-full"
+                  className="panel h-full"
                 >
-                  <h3 className="text-xl font-semibold text-neutral-900 mb-3">
+                  <h3 className="text-xl font-semibold text-white mb-3">
                     {useCase.title}
                   </h3>
-                  <p className="text-neutral-600">
+                  <p className="text-neutral-400">
                     {useCase.description}
                   </p>
                 </motion.div>
@@ -339,7 +339,7 @@ const Payouts = () => {
                   rel="noopener noreferrer"
                   className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
                 >
-                  Sign Up
+                  Open a merchant account
                   <ArrowRight className="w-5 h-5 ml-2 inline" />
                 </a>
               </div>

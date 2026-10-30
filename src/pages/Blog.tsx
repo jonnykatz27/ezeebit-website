@@ -162,6 +162,7 @@ const Blog = () => {
       <PageHero
         title="News and insights"
         accent="from Ezeebit"
+        accentPlain
         description="Stay updated with the latest news, insights, and tutorials from the world of stablecoin and cryptocurrency payments and African fintech."
       >
         <HeroSearch placeholder="Search articles..." value={searchTerm} onChange={setSearchTerm} />
@@ -407,7 +408,7 @@ const Blog = () => {
                 rel="noopener noreferrer"
                 className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
               >
-                Get Started
+                Open a merchant account
                 <ArrowRight className="w-5 h-5 ml-2" />
               </a>
               <Link to="/contact" className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center">

@@ -39,13 +39,17 @@ export const HeroSearch = ({ placeholder, value, onChange }: { placeholder: stri
 type PageHeroProps = {
   /** The first line of the headline. */
   title: ReactNode
-  /** The second line, in Blue Mid. */
+  /** The second line. Blue when it is the offer; white on informational pages. */
   accent?: ReactNode
+  /** Keep the second line in white. Blue is reserved for the offer itself. */
+  accentPlain?: boolean
   description?: ReactNode
   /** Buttons, laid out in a row. */
   actions?: ReactNode
   /** Short reassurance points under the buttons. */
   trust?: { icon: ReactNode; label: string }[]
+  /** One quiet line under the buttons, for a fact that should not be a chip. */
+  note?: ReactNode
   /** An illustration. With one, the hero splits into two columns. */
   visual?: ReactNode
   /** Anything else under the description, such as a search field. */
@@ -67,7 +71,7 @@ type PageHeroProps = {
  * are centred. The real product UI in the illustrations reads as white
  * cards against the dark.
  */
-const PageHero = ({ title, accent, description, actions, trust, visual, children, itemProps, bleedVisual }: PageHeroProps) => {
+const PageHero = ({ title, accent, accentPlain, description, actions, trust, note, visual, children, itemProps, bleedVisual }: PageHeroProps) => {
   const split = Boolean(visual)
   const align = split ? 'text-center lg:text-left' : 'text-center'
   const justify = split ? 'justify-center lg:justify-start' : 'justify-center'
@@ -93,7 +97,11 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
         }`}
       >
         <motion.span variants={HERO_ITEM} className="block">{title}</motion.span>
-        {accent && <motion.span variants={HERO_ITEM} className="block text-primary-400">{accent}</motion.span>}
+        {accent && (
+          <motion.span variants={HERO_ITEM} className={`block ${accentPlain ? 'text-white' : 'text-primary-400'}`}>
+            {accent}
+          </motion.span>
+        )}
       </h1>
 
       {description && (
@@ -123,6 +131,12 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
             </div>
           ))}
         </motion.div>
+      )}
+
+      {note && (
+        <motion.p variants={HERO_ITEM} className={`mt-4 text-sm text-neutral-500 leading-relaxed max-w-xl ${split ? 'mx-auto lg:mx-0' : 'mx-auto'}`}>
+          {note}
+        </motion.p>
       )}
     </motion.div>
   )

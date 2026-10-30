@@ -3,7 +3,7 @@ import { motion } from '../../lib/motion'
 import { Check, ShieldCheck, Webhook } from 'lucide-react'
 import {
   CARD, COIN, LABEL, SWAP, arrive,
-  useHeroLoop, HeroStage, Halo, FloatingCoin,
+  useHeroLoop, HeroStage, Halo,
 } from './heroKit'
 
 type Token = [string, string?]
@@ -54,8 +54,6 @@ const DevelopersHeroVisual = ({ environment, baseUrl, checkoutHost }: { environm
     <HeroStage ref={ref} label="A New Order request sent to the Ezeebit API, the response with a payment link, and a signed webhook confirming payment.">
       <Halo x={260} y={230} />
 
-      <FloatingCoin src="/usdt-logo.svg" x={500} y={40} delay={0} still={still} />
-      <FloatingCoin src="/btc-logo.svg" x={24} y={410} delay={0.6} still={still} />
 
       {/* ── The terminal ── */}
       <motion.div

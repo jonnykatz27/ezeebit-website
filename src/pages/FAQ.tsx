@@ -41,7 +41,7 @@ const FAQ = () => {
       id: '4',
       category: 'payments',
       question: 'How fast are payments processed?',
-      answer: 'In-store ePOS payments can complete in as quick as 0.5 seconds. BTC transactions can take longer. Online transactions confirm within a minute on most networks, and fiat settlement (ZAR, KES, NGN or USD) lands in your bank by the next business day.',
+      answer: 'The rate is locked at checkout and the payment is confirmed on-chain. Settlement is the next business day in local currency, or the same day in stablecoin, depending on the plan.',
       popular: true
     },
     {

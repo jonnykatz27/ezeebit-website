@@ -482,7 +482,7 @@ const Home = () => {
       <PageHero
         title="Stablecoin payments,"
         accent="in and out."
-        description="Accept crypto and stablecoins in-store and online, pay out in minutes, and settle in ZAR, KES, NGN or USD. One regulated account, live in South Africa, Kenya and Nigeria."
+        description="Accept crypto and stablecoins in-store, online or in your app, and pay out in minutes. Settle in ZAR, KES, NGN, USD or stablecoin, through one regulated account and one API. Live in South Africa, Kenya and Nigeria."
         actions={
           <>
             <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
@@ -505,7 +505,7 @@ const Home = () => {
           { icon: <Headphones />, label: '24/7 support' },
         ]}
         visual={<HomeHeroVisual />}
-        bleedVisual
+        stacked
       />
 
       {/*

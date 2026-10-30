@@ -58,6 +58,11 @@ type PageHeroProps = {
    * allows: into the container padding at xl, and the wider gutter at 2xl.
    */
   bleedVisual?: boolean
+  /**
+   * Centres a larger headline over the visual instead of beside it, with the
+   * glow coming from the top, for the homepage, where the headline leads.
+   */
+  stacked?: boolean
 }
 
 /**
@@ -67,8 +72,8 @@ type PageHeroProps = {
  * are centred. The real product UI in the illustrations reads as white
  * cards against the dark.
  */
-const PageHero = ({ title, accent, description, actions, trust, visual, children, itemProps, bleedVisual }: PageHeroProps) => {
-  const split = Boolean(visual)
+const PageHero = ({ title, accent, description, actions, trust, visual, children, itemProps, bleedVisual, stacked }: PageHeroProps) => {
+  const split = Boolean(visual) && !stacked
   const align = split ? 'text-center lg:text-left' : 'text-center'
   const justify = split ? 'justify-center lg:justify-start' : 'justify-center'
 
@@ -77,7 +82,7 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
       initial="hidden"
       animate="visible"
       variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
-      className={`${align} ${split ? 'lg:col-span-6' : 'max-w-3xl mx-auto'}`}
+      className={`${align} ${split ? 'lg:col-span-6' : stacked ? 'max-w-5xl mx-auto' : 'max-w-3xl mx-auto'}`}
     >
       {/*
         hero-title opts out of the site-wide phone rule that pins every h1 to
@@ -89,7 +94,9 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
         className={`hero-title font-display font-bold text-white mb-5 sm:mb-6 !leading-[1.04] tracking-[-0.03em] ${
           split
             ? 'text-[clamp(2.125rem,10vw,2.5rem)] sm:text-6xl lg:text-[3rem] xl:text-[3.75rem]'
-            : 'text-[clamp(2.125rem,10vw,2.5rem)] sm:text-[3.25rem] lg:text-[3.75rem]'
+            : stacked
+              ? 'text-[clamp(2.125rem,10vw,2.5rem)] sm:text-6xl lg:text-7xl xl:text-[5.5rem]'
+              : 'text-[clamp(2.125rem,10vw,2.5rem)] sm:text-[3.25rem] lg:text-[3.75rem]'
         }`}
       >
         <motion.span variants={HERO_ITEM} className="block">{title}</motion.span>
@@ -129,7 +136,7 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
 
   return (
     <section className={`relative overflow-hidden pt-40 lg:pt-48 ${split ? 'pb-14 lg:pb-24' : 'pb-12 lg:pb-20'}`}>
-      <HeroBackdrop />
+      <HeroBackdrop glow={stacked ? 'top' : 'side'} />
       <div className="container-custom relative z-10">
         {split ? (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
@@ -137,7 +144,10 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
             <div className={`lg:col-span-6 ${bleedVisual ? 'xl:-mr-6 2xl:-mr-20' : ''}`}>{visual}</div>
           </div>
         ) : (
-          text
+          <>
+            {text}
+            {visual && <div className="mt-12 lg:mt-16 mx-auto max-w-[620px]">{visual}</div>}
+          </>
         )}
       </div>
     </section>

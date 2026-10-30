@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import { Link } from 'react-router-dom'
 import {
   Calendar, Clock, ArrowRight
@@ -38,7 +38,7 @@ const Blog = () => {
       readTime: '6 min read',
       category: 'Product',
       categoryId: 'product',
-      image: '/sunbet-launch-cover@2x.png',
+      image: '/blog/sunbet-launch-cover.webp',
       views: '0',
       featured: false
     },
@@ -51,7 +51,7 @@ const Blog = () => {
       readTime: '5 min read',
       category: 'Product',
       categoryId: 'product',
-      image: '/checkout-launch-cover@2x.png',
+      image: '/blog/checkout-launch-cover.webp',
       views: '0',
       featured: false,
       hero: true
@@ -65,7 +65,7 @@ const Blog = () => {
       readTime: '1 min read',
       category: 'Policy & Regulation',
       categoryId: 'policy',
-      image: '/cfm-regulation-blog-cover copy.png',
+      image: '/blog/cfm-regulation-cover.webp',
       views: '0',
       featured: false
     },
@@ -148,8 +148,9 @@ const Blog = () => {
     <>
       <SEO
         title="Blog"
-        description="Latest news, insights, and updates from Ezeebit. Read about our funding rounds, product launches, and the future of stablecoin and crypto payments in Africa."
+        description="News and product notes from Ezeebit on stablecoin and crypto payments for merchants across Africa."
         canonicalUrl="/resources/blog"
+        crumbs={[{ name: 'Blog', path: '/resources/blog' }]}
       />
       <motion.div
         initial={{ opacity: 0 }}

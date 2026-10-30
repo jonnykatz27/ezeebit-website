@@ -1,4 +1,5 @@
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
+import { motion } from '../../lib/motion'
 import { Check, Lock, Loader2, ChevronRight, ShoppingBag } from 'lucide-react'
 import {
   CARD, COIN, LABEL, SWAP, arrive, rands,

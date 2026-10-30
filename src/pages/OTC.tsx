@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import { Link } from 'react-router-dom'
 import {
   ArrowRight, ShieldCheck, Banknote, Clock, UserCheck,
@@ -64,28 +64,11 @@ const OTC = () => {
   return (
     <>
       <SEO
-        title="Crypto OTC Desk for Large Trades"
-        description="Ezeebit's OTC desk handles large-volume crypto-to-fiat trades with deep liquidity, firm locked pricing, and same-day settlement in ZAR, KES, NGN or USD. Work with a dedicated dealer for Bitcoin, Ethereum, USDT, USDC and more."
-        keywords="crypto OTC desk, over the counter crypto trading, large crypto trades, bulk bitcoin sale, crypto to fiat settlement, OTC bitcoin, institutional crypto desk, ZAR crypto settlement, African crypto OTC, USDT OTC, stablecoin OTC"
+        title="OTC desk for large trades"
+        description="An OTC desk for large crypto trades. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
         canonicalUrl="/otc"
+        crumbs={[{ name: 'OTC desk', path: '/otc' }]}
       />
-      <script type="application/ld+json">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "FinancialService",
-          "name": "Ezeebit OTC Desk",
-          "url": "https://ezeebit.com/otc",
-          "description": "Over-the-counter desk for large-volume crypto-to-fiat trades with deep liquidity, firm pricing, and same-day settlement.",
-          "serviceType": "Over-the-counter cryptocurrency trading",
-          "areaServed": ["ZA", "KE", "NG"],
-          "currenciesAccepted": ["ZAR", "KES", "NGN", "USD", "USDT", "USDC", "BTC", "ETH"],
-          "provider": {
-            "@type": "Organization",
-            "name": "Ezeebit",
-            "url": "https://ezeebit.com"
-          }
-        })}
-      </script>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -96,7 +79,7 @@ const OTC = () => {
         <PageHero
           title="Move large volumes"
           accent="of crypto."
-          description="Buy or sell crypto at scale without moving the market. Get a firm quote, lock the rate, and settle the same day in ZAR, KES, NGN or USD, with a dedicated dealer handling every trade."
+          description="Buy or sell crypto at scale without moving the market. Get a firm quote, lock the rate, and settle the same day in ZAR, KES, NGN or USD, with a dedicated dealer handling every trade. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
           actions={
             <>
             <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>

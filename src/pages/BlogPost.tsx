@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import { Link, useParams } from 'react-router-dom'
 import {
   Calendar, Clock, ArrowLeft, Twitter, Linkedin,
@@ -6,6 +6,7 @@ import {
 } from 'lucide-react'
 import SEO from '../components/SEO'
 import DarkBackdrop from '../components/DarkBackdrop'
+import { ORG_ID, absoluteUrl, canonicalUrl } from '../lib/schema'
 
 const blogPostsData: Record<string, {
   title: string
@@ -27,7 +28,7 @@ const blogPostsData: Record<string, {
     date: '2026-07-03',
     readTime: '6 min read',
     category: 'Product',
-    image: '/sunbet-launch-cover@2x.png',
+    image: '/blog/sunbet-launch-cover.webp',
     views: '0',
     content: (
       <>
@@ -391,7 +392,7 @@ const blogPostsData: Record<string, {
     date: '2026-04-29',
     readTime: '1 min read',
     category: 'Policy & Regulation',
-    image: '/cfm-regulation-blog-cover copy.png',
+    image: '/blog/cfm-regulation-cover.webp',
     views: '0',
     content: (
       <>
@@ -445,7 +446,7 @@ const blogPostsData: Record<string, {
     date: '2026-05-13',
     readTime: '5 min read',
     category: 'Product',
-    image: '/checkout-launch-cover@2x.png',
+    image: '/blog/checkout-launch-cover.webp',
     views: '0',
     content: (
       <>
@@ -805,13 +806,34 @@ const blogPostsData: Record<string, {
   }
 }
 
+const articleDescriptions: Record<string, string> = {
+  'crypto-deposits-igaming-sunbet':
+    'How a South African iGaming platform takes crypto deposits through Ezeebit, and how the same flow applies to other platforms.',
+  'ezeebit-raises-r35-million':
+    'A note from the Ezeebit CEO on the seed round and stablecoin payment infrastructure in Africa.',
+  'capital-flow-management-regulations':
+    "Ezeebit's position on South Africa's draft Capital Flow Management Regulations and crypto assets.",
+  'most-comprehensive-crypto-payment-gateway-africa':
+    'How Ezeebit checkout takes wallet and exchange payments, with settlement in local currency or stablecoin.',
+  'pundi-x-rebrand':
+    'How Pundi X South Africa rebranded to Ezeebit and what the company does for merchants.',
+}
+
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>()
   const post = slug ? blogPostsData[slug] : null
+  const articleDescription = (slug && articleDescriptions[slug]) || post?.subtitle || ''
 
 
   if (!post) {
     return (
+      <>
+      <SEO
+        title="Post not found"
+        description="This article does not exist. Read the Ezeebit blog for product and company notes."
+        canonicalUrl="/resources/blog"
+        noindex
+      />
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -825,7 +847,8 @@ const BlogPost = () => {
             Back to Blog
           </Link>
         </div>
-      </motion.div>
+        </motion.div>
+      </>
     )
   }
 
@@ -855,9 +878,29 @@ const BlogPost = () => {
     <>
       <SEO
         title={post.title}
-        description={post.subtitle}
+        description={articleDescription}
         canonicalUrl={`/blog/${slug}`}
         ogImage={post.image}
+        ogType="article"
+        publishedTime={post.date}
+        modifiedTime={post.date}
+        crumbs={[
+          { name: 'Blog', path: '/resources/blog' },
+          { name: post.title, path: `/blog/${slug}` },
+        ]}
+        extraNodes={[{
+          '@type': 'BlogPosting',
+          '@id': `${canonicalUrl(`/blog/${slug}`)}#article`,
+          headline: post.title,
+          description: articleDescription,
+          datePublished: post.date,
+          dateModified: post.date,
+          author: { '@type': 'Person', name: post.author },
+          image: absoluteUrl(post.image),
+          mainEntityOfPage: canonicalUrl(`/blog/${slug}`),
+          publisher: { '@id': ORG_ID },
+          inLanguage: 'en-ZA',
+        }]}
       />
       <motion.div
         initial={{ opacity: 0 }}

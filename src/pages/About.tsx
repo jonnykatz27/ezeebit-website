@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import { Link } from 'react-router-dom'
 import {
   Users, Award, Globe, TrendingUp, Shield, Zap,
@@ -20,19 +20,19 @@ const About = () => {
     {
       name: "Daniel Katz",
       role: "Chief Executive Officer",
-      image: "/Daniel_pic - no bg.png",
+      image: "/team/daniel-katz.webp",
       linkedin: "https://www.linkedin.com/in/daniel-katz-090464145"
     },
     {
       name: "Jonathan Katz",
       role: "Chief Operating Officer",
-      image: "/Jonathan Katz - no bg.png",
+      image: "/team/jonathan-katz.webp",
       linkedin: "https://www.linkedin.com/in/jonathan-katz-b311b3225"
     },
     {
       name: "David Katz",
       role: "Head of Financial Operations",
-      image: "/David_pic - no bg.png",
+      image: "/team/david-katz.webp",
       linkedin: "https://www.linkedin.com/in/david-katz-227a00265"
     }
   ]
@@ -81,9 +81,10 @@ const About = () => {
   return (
     <>
       <SEO
-        title="About Us"
-        description="Learn about Ezeebit's mission to build stablecoin payment infrastructure across Africa — payments in, balances held in fiat or stablecoin, and payouts. FSCA regulated, 100,000+ transactions processed, backed by Founder Collective, Raba and DCG."
+        title="About Ezeebit"
+        description="Ezeebit builds stablecoin and crypto payment infrastructure for merchants across Africa. Based in Cape Town."
         canonicalUrl="/resources/about"
+        crumbs={[{ name: 'About', path: '/resources/about' }]}
       />
       <motion.div
         initial={{ opacity: 0 }}

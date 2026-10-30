@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import { Link } from 'react-router-dom'
 import {
   Download, ArrowRight, Book, FileText,
@@ -344,8 +344,9 @@ const UserManual = () => {
   return (
     <>
       <SEO
-        title="User Manual"
-        description="Step-by-step guides for Ezeebit merchants: set up your Merchant Portal, accept crypto payments in-store, understand crypto basics, and find answers fast."
+        title="Merchant user manual"
+        description="Guides for Ezeebit merchants: Merchant Portal setup, in-store ePOS, ezeebit Pay QR and online checkout."
+        crumbs={[{ name: 'User manual', path: '/resources/user-manual' }]}
         canonicalUrl="/resources/user-manual"
       />
       <motion.div

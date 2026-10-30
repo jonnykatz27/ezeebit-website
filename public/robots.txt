@@ -1,20 +1,59 @@
+# Ezeebit — https://ezeebit.com/
+# Production hosting is AWS CloudFront + S3. This file is served as a static object.
+# Canonical host is https://ezeebit.com (no www). See infra/cloudfront/README.md.
+
 User-agent: *
 Allow: /
 
-# AI Crawlers — Welcome
+# AI answer engines and their fetchers. Explicit groups so a later
+# Disallow on the wildcard does not silently opt these bots out.
 User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
 Allow: /
 
 User-agent: ClaudeBot
 Allow: /
 
-User-agent: Google-Extended
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: anthropic-ai
 Allow: /
 
 User-agent: PerplexityBot
 Allow: /
 
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GoogleOther
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
 User-agent: Amazonbot
 Allow: /
 
+User-agent: Bytespider
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
 Sitemap: https://ezeebit.com/sitemap.xml
+# https://ezeebit.com/llms.txt

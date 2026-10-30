@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
-import { motion } from 'framer-motion'
+import { motion } from '../../lib/motion'
 
 /**
  * Pieces of the Merchant Portal, rebuilt from its Figma file

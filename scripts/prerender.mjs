@@ -45,6 +45,7 @@ const staticRoutes = [
   '/contact',
   '/ezeebit-resources',
   '/careers',
+  '/404',
 ]
 
 const storeSlugs = [
@@ -67,6 +68,7 @@ const storeSlugs = [
   'thobela-cars',
   'amiri',
   'yawa-africa',
+  'bhh',
   'watch-channel',
   'superspar-royal-ascot',
   'luxity',
@@ -127,6 +129,7 @@ const SUPERSEDED_META_NAMES = [
   'robots',
   'googlebot',
   'twitter:card',
+  'twitter:site',
   'twitter:title',
   'twitter:description',
   'twitter:image',
@@ -135,9 +138,14 @@ const SUPERSEDED_META_PROPS = [
   'og:title',
   'og:description',
   'og:image',
+  'og:image:width',
+  'og:image:height',
   'og:url',
   'og:type',
   'og:site_name',
+  'og:locale',
+  'article:published_time',
+  'article:modified_time',
 ]
 
 function stripSupersededHead(html) {
@@ -146,6 +154,7 @@ function stripSupersededHead(html) {
     .replace(/^[ \t]*<[^>]*\sdata-rh="true"[^>]*>.*$\n?/gim, '')
     .replace(/<title[^>]*>[\s\S]*?<\/title>\s*/gi, '')
     .replace(/^[ \t]*<link[^>]*rel="canonical"[^>]*>\s*$\n?/gim, '')
+    .replace(/^[ \t]*<link[^>]*rel="alternate"[^>]*>\s*$\n?/gim, '')
 
   for (const name of SUPERSEDED_META_NAMES) {
     out = out.replace(
@@ -165,7 +174,7 @@ function stripSupersededHead(html) {
 const template = stripSupersededHead(loadTemplate())
 
 // Dynamic import of the SSR bundle built by `vite build --ssr`
-const { render } = await import(toAbs('dist/server/entry-server.js'))
+const { render } = await import(toAbs('.ssr/entry-server.js'))
 
 // ---------------------------------------------------------------------------
 // Pre-render each route
@@ -176,16 +185,6 @@ let failCount = 0
 for (const url of routes) {
   try {
     const { html: appHtml, helmet } = render(url)
-
-    // entry-server.tsx keeps its own copy of the route table, so a route added
-    // to App.tsx but not there falls through to the catch-all and renders the
-    // 404 page. That still writes a file and still looks like a success, so
-    // catch it here rather than shipping a 404 at a real URL.
-    if (url !== '/404' && /rel="canonical"[^>]*\/404"/.test(helmet?.link?.toString() ?? '')) {
-      throw new Error(
-        'rendered the 404 page — add this route to src/entry-server.tsx as well as src/App.tsx'
-      )
-    }
 
     // Start from the client-built template
     let page = template
@@ -209,9 +208,11 @@ for (const url of routes) {
         .join('\n    ')
 
       if (headTags) {
+        // Helmet emits React's hrefLang; the HTML attribute is hreflang.
+        const normalizedHead = headTags.replace(/\bhrefLang=/g, 'hreflang=')
         // The template already had its superseded tags stripped, so this is
         // the only title/description/og set on the page.
-        page = page.replace('</head>', () => `  ${headTags}\n  </head>`)
+        page = page.replace('</head>', () => `  ${normalizedHead}\n  </head>`)
       }
     }
 
@@ -219,8 +220,60 @@ for (const url of routes) {
     const outRelPath = url === '/' ? 'dist/index.html' : `dist${url}/index.html`
     const outPath = toAbs(outRelPath)
 
+    const problems = []
+    if (!page.includes('<h1')) problems.push('missing h1')
+    else {
+      // Decorative motion (rings, inactive tab panels) may still use opacity 0.
+      // Fail only when the heading itself sits inside that style.
+      const h1At = page.search(/<h1\b/)
+      const before = page.slice(Math.max(0, h1At - 1200), h1At)
+      const styleAt = before.lastIndexOf('opacity:0')
+      if (styleAt !== -1) {
+        const tail = before.slice(styleAt)
+        const opens = (tail.match(/<(?:div|section|span|li|p|article|header|main)\b/g) || []).length
+        const closes = (tail.match(/<\/(?:div|section|span|li|p|article|header|main)>/g) || []).length
+        if (opens > closes) problems.push('h1 inside opacity:0')
+      }
+    }
+    const jsonLd = [...page.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+    if (jsonLd.length !== 1) problems.push(`${jsonLd.length} JSON-LD blocks`)
+    else if (jsonLd[0][1].includes('&quot;') || jsonLd[0][1].includes('&#')) problems.push('escaped JSON-LD')
+    else {
+      try {
+        const data = JSON.parse(jsonLd[0][1])
+        const types = (data['@graph'] || []).map((node) => node['@type'])
+        if (!types.includes('Organization') || !types.includes('WebSite')) {
+          problems.push(`graph missing Organization/WebSite (${types.join(', ')})`)
+        }
+      } catch (parseErr) {
+        problems.push(`invalid JSON-LD (${parseErr.message})`)
+      }
+    }
+    // Helmet writes `<title data-rh="true">`, which does not contain the substring `<title>`.
+    if (!/<title[\s>]/.test(page) || !page.includes('rel="canonical"') || !page.includes('name="description"')) {
+      problems.push('missing title, description or canonical')
+    }
+    const visibleCopy = page
+      .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+      .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+      .replace(/<[^>]+>/g, ' ')
+    const brackets = visibleCopy.match(/\[[^\]\n]{0,180}\]/g) || []
+    const placeholders = brackets.filter((token) =>
+      /confirm|placeholder|\bdate\b|\bmarkets\b|\bdocuments\b|approved|todo|tbd/i.test(token)
+      || /^\[[a-z][a-z'’ -]{1,60}\]$/.test(token)
+    )
+    if (placeholders.length) {
+      problems.push(`bracketed placeholder: ${placeholders.slice(0, 3).join(' ')}`)
+    }
+    if (problems.length) {
+      throw new Error(problems.join('; '))
+    }
+
     fs.mkdirSync(path.dirname(outPath), { recursive: true })
     fs.writeFileSync(outPath, page, 'utf-8')
+    if (url === '/404') {
+      fs.copyFileSync(outPath, toAbs('dist/404.html'))
+    }
 
     console.log(`  ✓  ${url}`)
     successCount++

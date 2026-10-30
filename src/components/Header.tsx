@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, ChevronDown } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
+import { motion } from '../lib/motion'
 import { hasDarkHero } from '../lib/darkHero'
 
 type NavLink = {
@@ -164,15 +165,12 @@ const Header = () => {
                         }`}
                       />
                     </button>
-                    <AnimatePresence>
-                      {activeDropdown === item.name && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 8, scale: 0.98 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: 8, scale: 0.98 }}
-                          transition={{ duration: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
-                          className="absolute top-full left-0 mt-1 w-72 bg-white rounded-xl shadow-xl border border-neutral-100 py-1.5 overflow-hidden"
-                        >
+                    {/* Always in the DOM so crawlers can follow the product links; CSS gives it the same quick fade and lift it had */}
+                    <div
+                      className={`absolute top-full left-0 mt-1 w-72 bg-white rounded-xl shadow-xl border border-neutral-100 py-1.5 overflow-hidden origin-top transition-[opacity,transform,visibility] duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1)] ${
+                        activeDropdown === item.name ? 'visible opacity-100 translate-y-0 scale-100' : 'invisible opacity-0 translate-y-2 scale-[0.98]'
+                      }`}
+                    >
                           {item.dropdown.map((group, groupIndex) => (
                             <div
                               key={group.group ?? `group-${groupIndex}`}
@@ -197,9 +195,7 @@ const Header = () => {
                               ))}
                             </div>
                           ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                    </div>
                   </div>
                 ) : (
                   <Link

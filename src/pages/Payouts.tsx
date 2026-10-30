@@ -1,14 +1,31 @@
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import { Link } from 'react-router-dom'
 import {
   ArrowRight, Send, Globe, Clock, ShieldCheck,
   Webhook, Link2, CheckCircle
 } from 'lucide-react'
 import SEO from '../components/SEO'
+import FaqBlock from '../components/FaqBlock'
 import FlowDemo from '../components/demo/FlowDemo'
+import { faqPageNode } from '../lib/faqSchema'
 import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import PayoutsHeroVisual from '../components/hero/PayoutsHeroVisual'
 import DarkBackdrop from '../components/DarkBackdrop'
+
+const payoutFaqs = [
+  {
+    question: 'What is a stablecoin payout?',
+    answer: 'A payment from your platform to a user in a US-dollar stablecoin, sent to the user\'s own crypto wallet. You create the payout through the API from your fiat balance. The user opens a payout link carrying your brand, chooses the asset and network, and enters their wallet address. Ezeebit screens the address, converts the funds and sends them on-chain.',
+  },
+  {
+    question: 'How fast do payouts arrive?',
+    answer: 'Usually within minutes of the recipient submitting their wallet address. Ezeebit sends payouts 24/7, with no banking cut-offs on weekends or public holidays, although confirmation times vary by network. You receive an RSA-signed webhook on every status change, including the final status and transaction hash.',
+  },
+  {
+    question: 'Do recipients need an Ezeebit account?',
+    answer: 'No. Recipients don\'t need an Ezeebit account or app. They open the payout link in any mobile browser, choose the asset and network, and enter their own wallet address. They do need a crypto wallet that supports the asset and network they choose. The widget carries your brand.',
+  },
+]
 
 const Payouts = () => {
   const features = [
@@ -95,28 +112,12 @@ const Payouts = () => {
   return (
     <>
       <SEO
-        title="Stablecoin Payouts for Businesses"
-        description="Pay your customers out in stablecoin and crypto from your Ezeebit fiat balance. Send a link, let recipients choose their asset and network, and settle on-chain in minutes. FSCA-regulated, with address screening and signed webhooks."
-        keywords="stablecoin payouts, crypto payouts, business payouts Africa, USDT payout, mass payouts, disbursements, payout API, betting winnings payout, marketplace seller payouts, cross-border payouts"
+        title="Stablecoin payouts"
+        description="Pay customers from an Ezeebit balance in USDT or other crypto. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
         canonicalUrl="/payouts"
+        crumbs={[{ name: 'Payouts', path: '/payouts' }]}
+        extraNodes={[faqPageNode('https://ezeebit.com/payouts#faq', payoutFaqs)]}
       />
-      <script type="application/ld+json">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "FinancialService",
-          "name": "Ezeebit Payout Gateway",
-          "url": "https://ezeebit.com/payouts",
-          "description": "Pay customers out in stablecoin and crypto from a fiat balance, with recipient-completed payout links, address screening, and signed webhooks.",
-          "serviceType": "Stablecoin and cryptocurrency payouts",
-          "areaServed": ["ZA", "KE", "NG"],
-          "currenciesAccepted": ["ZAR", "KES", "NGN", "USD", "USDT", "USDC", "BTC", "ETH"],
-          "provider": {
-            "@type": "Organization",
-            "name": "Ezeebit",
-            "url": "https://ezeebit.com"
-          }
-        })}
-      </script>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -127,7 +128,7 @@ const Payouts = () => {
         <PageHero
           title="Pay your customers"
           accent="in stablecoin."
-          description="Send payouts from your fiat balance without collecting a single wallet address. Your customer picks the asset and network, completes the payout themselves, and the funds settle on-chain in minutes."
+          description="Send payouts from your fiat balance without collecting a single wallet address. Your customer picks the asset and network, completes the payout themselves, and the funds settle on-chain in minutes. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
           actions={
             <>
             <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
@@ -314,6 +315,8 @@ const Payouts = () => {
             </div>
           </div>
         </section>
+
+        <FaqBlock heading="Payouts: frequently asked questions" items={payoutFaqs} tone="white" />
 
         {/* CTA Section */}
         <section className="section-padding relative overflow-hidden bg-neutral-950 text-white">

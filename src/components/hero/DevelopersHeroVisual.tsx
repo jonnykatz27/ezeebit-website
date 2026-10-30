@@ -1,4 +1,5 @@
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
+import { motion } from '../../lib/motion'
 import { Check, ShieldCheck, Webhook } from 'lucide-react'
 import {
   CARD, COIN, LABEL, SWAP, arrive,

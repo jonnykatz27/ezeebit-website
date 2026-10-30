@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "build:skip-check": "vite build",
-    "build:ssr": "VITE_SSR_BUILD=true vite build --ssr src/entry-server.tsx --outDir dist/server",
+    "build:ssr": "VITE_SSR_BUILD=true vite build --ssr src/entry-server.tsx --outDir .ssr && rm -rf dist/server",
     "prerender": "node scripts/prerender.mjs",
     "build:all": "npm run build && npm run build:ssr && npm run prerender",
     "type-check": "tsc --noEmit",

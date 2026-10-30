@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import { Link } from 'react-router-dom'
 import {
   Plug, Zap, Shield, BarChart3,
@@ -66,32 +66,11 @@ const Online = () => {
   return (
     <>
       <SEO
-        title="Online Stablecoin and Crypto Payments for E-Commerce"
-        description="Accept stablecoin and cryptocurrency payments in your online store with Ezeebit. Shopify, WooCommerce, and Magento plugins available. Zero-code integration, instant settlement in ZAR, KES, NGN or USD. Support for Bitcoin, Ethereum, USDT, USDC and more."
-        keywords="online stablecoin and crypto payments, e-commerce cryptocurrency, Shopify crypto plugin, WooCommerce bitcoin payments, accept crypto online, cryptocurrency checkout, bitcoin e-commerce, ethereum payments, stablecoin checkout, crypto payment gateway, online crypto merchant"
+        title="Online payments for Shopify, WooCommerce and Magento"
+        description="Online stablecoin and crypto checkout. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
         canonicalUrl="/online"
+        crumbs={[{ name: 'Online payments', path: '/online' }]}
       />
-      <script type="application/ld+json">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "SoftwareApplication",
-          "name": "Ezeebit Online Payment Plugin",
-          "applicationCategory": "FinanceApplication",
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "ZAR"
-          },
-          "description": "Accept stablecoin and cryptocurrency payments in your online store with zero-code integration",
-          "operatingSystem": "Web",
-          "featureList": "Bitcoin payments, Ethereum payments, Stablecoin payments, Shopify integration, WooCommerce integration, Instant settlement",
-          "provider": {
-            "@type": "Organization",
-            "name": "Ezeebit",
-            "url": "https://ezeebit.com"
-          }
-        })}
-      </script>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -102,7 +81,7 @@ const Online = () => {
       <PageHero
         title="Stablecoin checkout"
         accent="for your online store."
-        description="Add stablecoin and crypto payments to your store with zero-code plugins, or build on our API. Customers pay with Bitcoin, Ethereum, stablecoins, and more, and you're settled in ZAR, KES, NGN or USD."
+        description="Add stablecoin and crypto payments to your store with zero-code plugins, or build on our API. Customers pay with Bitcoin, Ethereum, stablecoins, and more, and you're settled in ZAR, KES, NGN or USD. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
         actions={
           <>
           <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
@@ -185,7 +164,7 @@ const Online = () => {
                       </div>
                     </div>
                     <img
-                      src="/online-checkout.png"
+                      src="/online-checkout.webp"
                       alt={`${platform.name} integration`}
                       className="w-full max-w-sm mx-auto my-4 lg:hidden"
                     />
@@ -232,7 +211,7 @@ const Online = () => {
                     </div>
                   </div>
                   <img
-                    src="/online-checkout.png"
+                    src="/online-checkout.webp"
                     alt={`${platform.name} integration`}
                     className="hidden lg:block lg:w-[120%] lg:max-w-none lg:-ml-16"
                   />

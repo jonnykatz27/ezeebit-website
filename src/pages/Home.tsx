@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, Fragment } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, useReducedMotion } from 'framer-motion'
+import { useReducedMotion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import {
   Zap, Shield, Globe, TrendingUp,
   ArrowRight, Star, ChevronLeft, ChevronRight,
@@ -465,54 +466,11 @@ const Home = () => {
   return (
     <>
       <SEO
-        title="Crypto Payment Solutions for African Businesses"
-        description="Accept crypto and stablecoins in-store and online, pay your customers out in minutes, and hold your balance in fiat or stablecoin. FSCA regulated, with settlement in ZAR, KES, NGN or USD."
+        title="Ezeebit | Stablecoin and crypto payments for Africa"
+        exactTitle
+        description="Stablecoin and crypto payments across Africa. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
         canonicalUrl="/"
       />
-      <script type="application/ld+json">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          "name": "Ezeebit",
-          "url": "https://ezeebit.com",
-          "logo": "https://ezeebit.com/ezeebit_black.png",
-          "description": "Leading crypto payment solutions for African businesses. Accept Bitcoin, Ethereum, and stablecoins with instant settlement in ZAR, KES, NGN or USD.",
-          "foundingDate": "2023",
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Cape Town",
-            "addressCountry": "ZA"
-          },
-          "contactPoint": {
-            "@type": "ContactPoint",
-            "telephone": "+27-21-879-5074",
-            "contactType": "customer service",
-            "email": "support@ezeebit.com",
-            "availableLanguage": "English"
-          },
-          "sameAs": [
-            "https://www.linkedin.com/company/ezeebit"
-          ]
-        })}
-      </script>
-      <script type="application/ld+json">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "LocalBusiness",
-          "name": "Ezeebit",
-          "image": "https://ezeebit.com/ezeebit_black.png",
-          "telephone": "+27-21-879-5074",
-          "email": "support@ezeebit.com",
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Cape Town",
-            "addressRegion": "Western Cape",
-            "addressCountry": "ZA"
-          },
-          "priceRange": "$$",
-          "openingHours": "Mo-Fr 08:00-18:00"
-        })}
-      </script>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -523,7 +481,7 @@ const Home = () => {
       <PageHero
         title="Stablecoin payments,"
         accent="in and out."
-        description="Accept crypto and stablecoins in-store and online, pay your customers out in minutes, and hold your balance in fiat or stablecoin. One regulated account, settled in ZAR, KES, NGN or USD."
+        description="Accept crypto and stablecoins in-store and online, pay your customers out in minutes, and hold your balance in fiat or stablecoin. One regulated account, settled in ZAR, KES, NGN or USD. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
         actions={
           <>
             <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
@@ -551,9 +509,9 @@ const Home = () => {
 
       {/*
         The dark opening: the proof of scale on the hero's own Near Black, set
-        off by a hairline, so hero and stats read as one block. Everything
-        after it is light, apart from the security section and the closing
-        panel.
+        off by a hairline, so hero and stats read as one block. The product
+        links close it, quiet, so the menu's pages are plain links on the
+        homepage too.
       */}
       <section className="relative bg-neutral-950 pb-14 lg:pb-24">
         <div className="container-custom relative">
@@ -578,6 +536,15 @@ const Home = () => {
               </motion.div>
             ))}
           </div>
+          <nav aria-label="Products" className="mt-10 lg:mt-14 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm font-medium">
+            <Link to="/in-store" className="text-neutral-400 hover:text-white transition-colors">In-store ePOS</Link>
+            <Link to="/online" className="text-neutral-400 hover:text-white transition-colors">Online payments</Link>
+            <Link to="/platforms" className="text-neutral-400 hover:text-white transition-colors">Platforms</Link>
+            <Link to="/payouts" className="text-neutral-400 hover:text-white transition-colors">Payouts</Link>
+            <Link to="/wallets" className="text-neutral-400 hover:text-white transition-colors">Wallets</Link>
+            <Link to="/pricing" className="text-neutral-400 hover:text-white transition-colors">Pricing</Link>
+            <Link to="/developers" className="text-neutral-400 hover:text-white transition-colors">Developer API</Link>
+          </nav>
         </div>
       </section>
 

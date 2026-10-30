@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import { Link } from 'react-router-dom'
 import { BookOpen, UserPlus, MapPin } from 'lucide-react'
 import SEO from '../components/SEO'
@@ -7,8 +7,9 @@ const EzeebitResources = () => {
   return (
     <>
       <SEO
-        title="Ezeebit Resources"
-        description="Quick access to Ezeebit's user manual, merchant sign-up, and the full directory of South African stores accepting crypto payments."
+        title="Quick links"
+        description="Jump to the Ezeebit user manual, merchant sign-up, and stores in South Africa that accept crypto payments."
+        crumbs={[{ name: 'Quick links', path: '/ezeebit-resources' }]}
         canonicalUrl="/ezeebit-resources"
       />
       <motion.div

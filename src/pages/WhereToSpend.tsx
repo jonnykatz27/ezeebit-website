@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import { Link } from 'react-router-dom'
 import {
   Search, ExternalLink, ArrowRight
@@ -27,8 +27,9 @@ const WhereToSpend = () => {
   return (
     <>
       <SEO
-        title="Where to Spend Crypto in South Africa"
-        description="Discover 150+ stores accepting stablecoin and cryptocurrency payments across South Africa. Shop at leading retailers using Bitcoin, Ethereum, and stablecoins."
+        title="Where to spend crypto in South Africa"
+        description="Stores in South Africa where you can pay with stablecoins and cryptocurrency through Ezeebit."
+        crumbs={[{ name: 'Where to spend', path: '/resources/where-to-spend' }]}
         canonicalUrl="/resources/where-to-spend"
       />
       <motion.div

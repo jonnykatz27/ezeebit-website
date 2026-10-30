@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import { MapPin, Clock, Briefcase, ExternalLink, Zap, Compass, ShieldCheck, Sparkles, Coffee } from 'lucide-react'
 import SEO from '../components/SEO'
 import PageHero from '../components/hero/PageHero'
@@ -47,7 +47,8 @@ const Careers = () => {
     <>
       <SEO
         title="Careers"
-        description="Join the team building Africa's stablecoin payment infrastructure. View open roles at Ezeebit and apply today."
+        description="Open roles at Ezeebit in Cape Town. The team builds stablecoin and crypto payment infrastructure for merchants."
+        crumbs={[{ name: 'Careers', path: '/careers' }]}
         canonicalUrl="/careers"
       />
       <motion.div

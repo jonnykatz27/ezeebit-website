@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 
 interface Partner {
   name: string
@@ -135,15 +135,6 @@ const PartnerCarousel = ({ partners, direction, speed = 30 }: PartnerCarouselPro
   const handleMouseLeave = useCallback(() => {
     isHoveredRef.current = false
   }, [])
-
-  if (!isInitialized) {
-    return (
-      <div className="relative overflow-hidden w-full h-[77px] md:h-24">
-        <div className="absolute left-0 top-0 w-4 md:w-8 h-full bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-        <div className="absolute right-0 top-0 w-4 md:w-8 h-full bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
-      </div>
-    )
-  }
 
   return (
     <div

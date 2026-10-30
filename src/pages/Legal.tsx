@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import { Link, useLocation } from 'react-router-dom'
 import {
   Shield, FileText, Eye, Scale, Award
@@ -852,9 +852,10 @@ const Legal = () => {
   return (
     <>
       <SEO
-        title="Legal — Terms, Privacy & Compliance"
-        description="Ezeebit's terms of service, privacy policy, and regulatory compliance information. FSCA-regulated, FIC-compliant crypto asset service provider. View our Trust Centre for security and compliance documentation."
+        title="Legal"
+        description="Terms of service, privacy policy and compliance information for Ezeebit, operated by Ezee Solutions Group (Pty) Ltd."
         canonicalUrl="/resources/legal"
+        crumbs={[{ name: 'Legal', path: '/resources/legal' }]}
       />
       <motion.div
         initial={{ opacity: 0 }}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import { Link } from 'react-router-dom'
 import {
   Eye, EyeOff, Mail, Lock, User, Building, Phone,
@@ -367,8 +367,8 @@ const SignUp = () => {
   return (
     <>
       <SEO
-        title="Sign Up for Merchant Account"
-        description="Join 150+ merchants accepting stablecoin and crypto payments with Ezeebit. Quick KYC process, no setup fees, and start accepting Bitcoin, Ethereum, and stablecoins today."
+        title="Open a merchant account"
+        description="Open an Ezeebit merchant account to accept stablecoin and crypto payments in-store or online."
         canonicalUrl="/signup"
       />
       <motion.div
@@ -379,6 +379,9 @@ const SignUp = () => {
       >
       <div className="container-custom">
         <div className="max-w-2xl mx-auto">
+          <h1 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 text-center mb-8">
+            Open a merchant account
+          </h1>
           {/* Progress Bar */}
           <div className="mb-8">
             <div className="flex items-center justify-between mb-4">

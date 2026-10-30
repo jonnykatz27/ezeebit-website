@@ -1,5 +1,6 @@
 import { forwardRef, memo, useEffect, useRef, useState, type ReactNode } from 'react'
-import { motion, animate, useInView, useReducedMotion } from 'framer-motion'
+import { animate, useInView, useReducedMotion } from 'framer-motion'
+import { motion } from '../../lib/motion'
 
 /**
  * The shared parts every hero illustration is built from, so each page's
@@ -129,6 +130,10 @@ export const HeroStage = forwardRef<HTMLDivElement, {
         <div
           // [&_img]:!mx-0 undoes the site-wide phone rule that centres every image
           className="absolute top-0 left-0 origin-top-left transition-opacity duration-500 [&_img]:!mx-0"
+          // Until the column is measured the canvas is at full size, so a browser
+          // running JavaScript keeps it hidden (index.html hides [data-entrance]);
+          // clients that never run the effect still see it.
+          data-entrance={scale === null ? '' : undefined}
           style={{
             width,
             height,
@@ -137,7 +142,9 @@ export const HeroStage = forwardRef<HTMLDivElement, {
             // illustration at a fractional scale every frame.
             transform: `scale(${scale ?? 1}) translateZ(0)`,
             willChange: 'transform',
-            opacity: scale ? 1 : 0,
+            // Stay visible before the client measures the column. Opacity 0 here
+            // would hide the illustration from crawlers, which never run that effect.
+            opacity: 1,
           }}
         >
           {children}

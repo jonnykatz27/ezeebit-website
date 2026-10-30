@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import {
   Mail, Phone, Clock,
   Headphones, Users, ArrowRight, CheckCircle
@@ -50,9 +50,10 @@ const Contact = () => {
   return (
     <>
       <SEO
-        title="Contact Us"
-        description="Get in touch with Ezeebit. Our team is available 24/7 to help with sales inquiries, technical support, and partnership opportunities."
+        title="Contact"
+        description="Talk to Ezeebit about in-store ePOS, online payments, payouts or the API. Cape Town, with support by phone and email."
         canonicalUrl="/contact"
+        crumbs={[{ name: 'Contact', path: '/contact' }]}
       />
       <motion.div
       initial={{ opacity: 0 }}

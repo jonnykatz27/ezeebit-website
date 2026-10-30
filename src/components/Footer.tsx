@@ -151,7 +151,7 @@ const Footer = () => {
             &copy; 2026 Ezeebit. All rights reserved.
           </p>
           <p className="mt-2 text-[10px] md:text-xs text-neutral-600 max-w-2xl mx-auto leading-relaxed">
-            Ezee Solutions Group (Pty) Ltd has applied for a Financial Service Provider (FSP) & Crypto Asset Service Provider (CASP) FSP 53664.
+            Ezeebit is authorised and regulated by the FSCA, and has applied for its CASP licence (FSP 53664).
           </p>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import { Link } from 'react-router-dom'
 import {
   Check, X, ArrowRight, Zap,
@@ -18,11 +18,10 @@ const Pricing = () => {
       icon: <Zap className="w-6 h-6" />,
       description: 'Perfect for small businesses getting started with stablecoin and crypto payments',
       price: { monthly: 0, annual: 0 },
-      transactionFee: 1,
       features: [
         'Ezeebit Pay',
         '24/7 support',
-        'Standard settlement (T+1)',
+        'Local currency next business day, stablecoin same day',
         'QR code payments',
         'Merchant Portal',
         'E-commerce plugins',
@@ -39,7 +38,6 @@ const Pricing = () => {
       icon: <Users className="w-6 h-6" />,
       description: 'Ideal for growing businesses with higher transaction volumes',
       price: { monthly: 150, annual: 1500 },
-      transactionFee: 1.0,
       features: [
         'Everything in Starter plan',
         'Advanced ePOS device',
@@ -56,10 +54,9 @@ const Pricing = () => {
       icon: <Building className="w-6 h-6" />,
       description: 'For large businesses requiring custom solutions and dedicated support',
       price: { monthly: 'Custom', annual: 'Custom' },
-      transactionFee: 'Negotiable',
       features: [
         'Dedicated account manager',
-        'Instant settlement',
+        'Local currency next business day, stablecoin same day',
         'Custom analytics & reporting',
         'White-label solutions',
         'Custom integrations',
@@ -77,9 +74,10 @@ const Pricing = () => {
   return (
     <>
       <SEO
-        title="Pricing & Plans"
-        description="Transparent crypto payment pricing. No setup fees, just 1% transaction fees. Choose from Starter, Professional, or Enterprise plans for your business."
+        title="Pricing"
+        description="1% or lower per transaction, excluding VAT. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
         canonicalUrl="/pricing"
+        crumbs={[{ name: 'Pricing', path: '/pricing' }]}
       />
       <motion.div
       initial={{ opacity: 0 }}
@@ -91,7 +89,7 @@ const Pricing = () => {
       <PageHero
         title="Simple, transparent"
         accent="pricing"
-        description="Choose the perfect plan for your business. No hidden fees, no surprises. Start with our free plan and scale as you grow."
+        description="Choose the perfect plan for your business. No hidden fees, no surprises. Start with our free plan and scale as you grow. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
       >
         <div className="flex items-center justify-center">
           <span className={`mr-3 ${billingCycle === 'monthly' ? 'text-white font-medium' : 'text-neutral-400'}`}>
@@ -167,10 +165,7 @@ const Pricing = () => {
                   <div className="text-center mb-4">
                     <span className="text-sm text-neutral-500">Transaction fee: </span>
                     <span className="font-semibold text-neutral-900">
-                      {typeof plan.transactionFee === 'number'
-                        ? `1%`
-                        : plan.transactionFee
-                      }
+                      1% or lower
                     </span>
                   </div>
                 </div>

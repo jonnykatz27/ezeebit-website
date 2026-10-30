@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion } from '../lib/motion'
 import {
   ChevronDown, HelpCircle,
   Phone, Mail, Star,
@@ -9,6 +9,7 @@ import {
 import SEO from '../components/SEO'
 import PageHero, { HeroSearch } from '../components/hero/PageHero'
 import DarkBackdrop from '../components/DarkBackdrop'
+import { faqPageNode } from '../lib/faqSchema'
 
 const FAQ = () => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -41,21 +42,21 @@ const FAQ = () => {
       id: '4',
       category: 'payments',
       question: 'How fast are payments processed?',
-      answer: 'In-store ePOS payments can complete in as quick as 0.5 seconds. BTC transactions can take longer. Online transactions confirm within a minute on most networks, and fiat settlement (ZAR, KES, NGN or USD) lands in your bank by the next business day.',
+      answer: 'The rate is locked at checkout and the payment is confirmed on-chain. Settlement is the next business day in local currency, or the same day in stablecoin.',
       popular: true
     },
     {
       id: '5',
       category: 'payments',
       question: 'How does settlement work?',
-      answer: 'Funds convert instantly to USD-pegged stablecoins at checkout to shield from any crypto-price volatility, then settle to your South African bank account automatically by the next business day.',
+      answer: 'The rate is locked at checkout and the payment is hedged on the spot. Local currency settles the next business day. Stablecoin settles the same day.',
       popular: false
     },
     {
       id: '6',
       category: 'security',
-      question: 'Is Ezeebit regulated and secure?',
-      answer: 'Ezeebit is FSCA-regulated and FIC-compliant. We use end-to-end encryption, cold-storage reserves, and partner with SumSub for ongoing transaction monitoring.',
+      question: 'Is Ezeebit regulated?',
+      answer: 'Yes. Ezeebit is authorised and regulated by the FSCA, and has applied for its CASP licence (FSP 53664). The FSCA is South Africa\'s Financial Sector Conduct Authority.',
       popular: true
     },
     {
@@ -97,7 +98,7 @@ const FAQ = () => {
       id: '12',
       category: 'technical',
       question: 'Do you provide customer support?',
-      answer: 'Yes! We offer 24/7 support for all plans. Our average response time is under 1 hours.',
+      answer: 'Yes! We offer 24/7 support for all plans. Our average response time is under an hour.',
       popular: true
     },
     {
@@ -111,14 +112,14 @@ const FAQ = () => {
       id: '14',
       category: 'technical',
       question: 'Can I integrate with my existing e-commerce platform?',
-      answer: 'Absolutely! We have plugins for Shopify, and soon to be WooCommerce, Magento, and other major platforms. For custom integrations, our API makes it easy to add stablecoin and crypto payments to any website or application.',
+      answer: 'We have plugins for Shopify, and soon to be WooCommerce, Magento, and other major platforms. For custom integrations, our API makes it easy to add stablecoin and crypto payments to any website or application.',
       popular: true
     },
     {
       id: '15',
       category: 'payments',
       question: 'What are your transaction fees?',
-      answer: 'Our fees are 1% or lower per transaction (excluding VAT)—up to 68% cheaper than traditional card processors. No surprises, no fine print. You keep more of every sale.',
+      answer: '1% or lower per transaction, excluding VAT. No surprises, no fine print. You keep more of every sale.',
       popular: true
     },
     {
@@ -129,17 +130,10 @@ const FAQ = () => {
       popular: true
     },
     {
-      id: '17',
-      category: 'payments',
-      question: 'How do your fees compare to card payments?',
-      answer: 'Traditional card processors typically charge 2–3.5%, plus interchange fees, gateway costs, and chargeback penalties. With Ezeebit, you\'re looking at roughly half the cost—or less—with none of the chargeback risk.',
-      popular: false
-    },
-    {
       id: '18',
       category: 'payments',
       question: 'How do you protect me from crypto price swings?',
-      answer: 'The moment your customer initiates payment, our system locks in the exchange rate instantly. Our AI-driven hedging converts the crypto to your chosen settlement currency in real time—so you receive exactly what you quoted, regardless of what the market does next.',
+      answer: 'The rate is locked at checkout and the payment is hedged on the spot, so you receive exactly what you quoted.',
       popular: true
     },
     {
@@ -226,6 +220,27 @@ const FAQ = () => {
       answer: 'Our OTC desk does. It is for volumes that would move the market on an exchange: you get a firm quote from a named dealer, the rate is locked when you accept it, and settlement is same day in ZAR, KES, NGN or USD. It is a desk rather than a self-serve product, so it starts with a conversation.',
       popular: false
     },
+    {
+      id: '31',
+      category: 'about',
+      question: 'Which countries does Ezeebit operate in?',
+      answer: 'Ezeebit provides stablecoin and crypto payment infrastructure for merchants and platforms across Africa. It is live in South Africa, Kenya and Nigeria, with more African markets to follow.',
+      popular: true
+    },
+    {
+      id: '33',
+      category: 'about',
+      question: 'Is Ezeebit a crypto exchange?',
+      answer: 'No. Ezeebit is payment infrastructure for businesses, not a consumer crypto exchange. It provides in-store and online checkout, settlement in local currency or stablecoins, business wallets, crypto pay-ins and stablecoin payouts for platforms, and an OTC desk for large crypto-to-fiat trades quoted by a dealer. Customers pay from their own wallet or exchange account.',
+      popular: false
+    },
+    {
+      id: '32',
+      category: 'about',
+      question: 'Do customers need an Ezeebit account or app?',
+      answer: 'No. In store, customers scan a QR code and pay from a wallet that supports their chosen coin and network, through WalletConnect, or directly from Luno, VALR or Binance where the merchant has switched these on.',
+      popular: false
+    },
   ]
 
   // Counted from the list rather than written down beside it, so the numbers
@@ -241,7 +256,8 @@ const FAQ = () => {
     { id: 'getting-started', name: 'Getting Started', icon: <Users className="w-4 h-4" />, count: countIn('getting-started') },
     { id: 'payments', name: 'Payments', icon: <CreditCard className="w-4 h-4" />, count: countIn('payments') },
     { id: 'security', name: 'Security', icon: <Shield className="w-4 h-4" />, count: countIn('security') },
-    { id: 'technical', name: 'Technical', icon: <Zap className="w-4 h-4" />, count: countIn('technical') }
+    { id: 'technical', name: 'Technical', icon: <Zap className="w-4 h-4" />, count: countIn('technical') },
+    { id: 'about', name: 'About Ezeebit', icon: <HelpCircle className="w-4 h-4" />, count: countIn('about') }
   ]
 
 
@@ -284,24 +300,12 @@ const FAQ = () => {
   return (
     <>
       <SEO
-        title="Frequently Asked Questions"
-        description="Answers to common questions about Ezeebit — taking payments in, paying customers out in stablecoin, holding a fiat or USDT balance, fees, settlement, security and integration."
+        title="FAQ"
+        description="Answers about Ezeebit payments, payouts, wallets, settlement and fees. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
         canonicalUrl="/resources/faq"
+        crumbs={[{ name: 'FAQ', path: '/resources/faq' }]}
+        extraNodes={[faqPageNode('https://ezeebit.com/resources/faq#faq', faqItems)]}
       />
-      <script type="application/ld+json">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          "mainEntity": faqItems.slice(0, 10).map(item => ({
-            "@type": "Question",
-            "name": item.question,
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": item.answer
-            }
-          }))
-        })}
-      </script>
       <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -371,18 +375,11 @@ const FAQ = () => {
                       openItems.includes(item.id) ? 'rotate-180' : ''
                     }`} />
                   </button>
-                  {openItems.includes(item.id) && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="px-3 md:px-4 pb-2.5 border-t border-neutral-100"
-                    >
-                      <p className="text-neutral-600 pt-2.5 text-sm text-left leading-relaxed whitespace-pre-line">
-                        {highlightText(item.answer, searchTerm)}
-                      </p>
-                    </motion.div>
-                  )}
+                  <div className={openItems.includes(item.id) ? 'px-3 md:px-4 pb-2.5 border-t border-neutral-100' : 'hidden'}>
+                    <p className="text-neutral-600 pt-2.5 text-sm text-left leading-relaxed whitespace-pre-line">
+                      {highlightText(item.answer, searchTerm)}
+                    </p>
+                  </div>
                 </motion.div>
               ))}
             </div>

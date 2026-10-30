@@ -55,7 +55,7 @@ export const stores: Store[] = [
     excerpt: "South Africa's leading sports betting and online casino platform, powered by Sun International. Deposit instantly using stablecoins and crypto via Ezeebit — one of the first online gaming platforms in South Africa to accept crypto deposits.",
     about: "Sunbet is South Africa's premier sports betting and online gaming platform, offering a comprehensive range of sports markets, live in-play betting, casino games, and slots — all backed by Sun International, one of South Africa's most trusted gaming groups. Ezeebit is integrated directly as a deposit method, enabling players to fund their accounts instantly using stablecoins and crypto assets. This makes Sunbet one of the first online gaming platforms in South Africa to offer a fully integrated crypto deposit experience.",
     websiteUrl: "https://www.sunbet.co.za",
-    image: "/sunbet_banner_upscaled.png",
+    image: "/stores/sunbet-banner.webp",
     imagePosition: "88%",
     detailImageHeight: "h-56",
     partnerCopy: "By partnering with Ezeebit, Sunbet offers users the convenience and security of stablecoin and cryptocurrency payments. This forward-thinking approach reflects their commitment to embracing new technologies that enhance the checkout experience.",
@@ -169,7 +169,7 @@ export const stores: Store[] = [
     excerpt: "One of South Africa's leading retailers for exclusive sneakers and streetwear, both online and via a concept store in Cape Town. Emphasises authenticity, limited drops and culture-driven design—from night-outs to street fashion.",
     about: "Established leader in South Africa's exclusive sneaker and streetwear culture with both comprehensive online platform and physical Cape Town concept store. Focuses on authentic limited drops, underground designer collaborations, and cultural programming that bridges street fashion with high-end collectible sneaker investment—celebrating sneaker culture, music, and community.",
     websiteUrl: "https://swestkicks.co.za/",
-    image: "/swestkicks-store.webp",
+    image: "/stores/swestkicks-store.webp",
     order: 13,
     moreInfoRoute: "/resources/stores/swest-kicks"
   },
@@ -202,7 +202,7 @@ export const stores: Store[] = [
     excerpt: "A South African fashion brand and boutique (Cape Town and Johannesburg) known for bold, gender-neutral designs rooted in street culture. Pieces emphasise craftsmanship, statement silhouettes and a rebellious aesthetic merging luxury with attitude.",
     about: "Distinctly South African fashion brand and boutique (with locations in Cape Town and Johannesburg) celebrating bold, gender-neutral design rooted in street culture and creative rebellion. Each piece emphasizes artistic craftsmanship, striking silhouettes, and personal expression—merging rebellious aesthetics with accessible luxury for individuals who embrace fashion as identity statement.",
     websiteUrl: "https://cultish.com/",
-    image: "/cultish-store.webp",
+    image: "/stores/cultish-store.webp",
     order: 16,
     moreInfoRoute: "/resources/stores/cultish"
   },

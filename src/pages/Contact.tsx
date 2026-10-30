@@ -65,6 +65,7 @@ const Contact = () => {
       <PageHero
         title="Get in touch"
         accent="with our team"
+        accentPlain
         description="Have questions about our crypto payment solutions? Our team is here to help you get started and support your business every step of the way."
         trust={[
           { icon: <Clock />, label: '24/7 support' },
@@ -169,7 +170,7 @@ const Contact = () => {
                 rel="noopener noreferrer"
                 className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
               >
-                Start Free Trial
+                Open a merchant account
                 <ArrowRight className="w-5 h-5 ml-2 inline" />
               </a>
               <a

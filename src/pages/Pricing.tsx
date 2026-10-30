@@ -31,7 +31,7 @@ const Pricing = () => {
         'No ePOS device',
       ],
       popular: false,
-      cta: 'Start Free'
+      cta: 'Open account'
     },
     {
       name: 'Professional',
@@ -47,7 +47,7 @@ const Pricing = () => {
       limitations: [
       ],
       popular: true,
-      cta: 'Sign Up'
+      cta: 'Open account'
     },
     {
       name: 'Enterprise',
@@ -89,7 +89,8 @@ const Pricing = () => {
       <PageHero
         title="Simple, transparent"
         accent="pricing"
-        description="Choose the perfect plan for your business. No hidden fees, no surprises. Start with our free plan and scale as you grow. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+        accentPlain
+        description="Choose the perfect plan for your business. No hidden fees, no surprises. Start with our free plan and scale as you grow."
       >
         <div className="flex items-center justify-center">
           <span className={`mr-3 ${billingCycle === 'monthly' ? 'text-white font-medium' : 'text-neutral-400'}`}>
@@ -234,7 +235,7 @@ const Pricing = () => {
               Ready to get started?
             </h2>
             <p className="text-xl mb-8 max-w-2xl mx-auto text-neutral-300">
-              Join thousands of merchants already accepting stablecoin and crypto payments. Start with our free plan today.
+              Get started with no setup fees. Start with our free plan today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a 
@@ -243,7 +244,7 @@ const Pricing = () => {
                 rel="noopener noreferrer" 
                 className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
               >
-                Start Free Trial
+                Open a merchant account
                 <ArrowRight className="w-5 h-5 ml-2 inline" />
               </a>
               <a 

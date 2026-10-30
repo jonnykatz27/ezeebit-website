@@ -3,7 +3,7 @@ import { motion } from '../../lib/motion'
 import { Check, Loader2, Lock, ArrowDownLeft, ArrowUpRight, ShieldCheck, ChevronRight } from 'lucide-react'
 import {
   CARD, COIN, LABEL, SWAP, arrive, money,
-  useHeroLoop, HeroStage, Halo, FloatingCoin, Counter,
+  useHeroLoop, HeroStage, Halo, Counter,
 } from './heroKit'
 
 type Fiat = 'ZAR' | 'KES' | 'NGN' | 'USD'
@@ -66,9 +66,6 @@ const PlatformsHeroVisual = () => {
     <HeroStage ref={ref} label="A platform's wallet taking a crypto deposit through the Ezeebit checkout and paying a withdrawal out in stablecoin, with a signed webhook to the platform for each.">
       <Halo x={300} y={260} />
 
-      <FloatingCoin src="/usdt-logo.svg" x={470} y={40} delay={0} still={still} />
-      <FloatingCoin src="/usdc-logo.svg" x={372} y={420} delay={0.5} still={still} />
-      <FloatingCoin src="/btc-logo.svg" x={484} y={404} delay={1} still={still} />
 
       {/* ── The user's wallet on the platform ── */}
       <motion.div className={`absolute ${CARD} overflow-hidden`} style={{ left: 0, top: 24, width: 264 }} {...arrive(0.2, 'left')}>

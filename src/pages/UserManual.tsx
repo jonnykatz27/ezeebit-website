@@ -359,6 +359,7 @@ const UserManual = () => {
         <PageHero
           title="The Ezeebit"
           accent="user manual"
+          accentPlain
           description="Everything you need to set up Ezeebit and accept crypto payments with confidence — no technical background required."
         >
           <HeroSearch placeholder="Search the manual… e.g. 'network', 'VAT', 'QR code'" value={searchTerm} onChange={setSearchTerm} />

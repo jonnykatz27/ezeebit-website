@@ -42,6 +42,7 @@ const WhereToSpend = () => {
       <PageHero
         title="Where to"
         accent="spend crypto"
+        accentPlain
         description="Discover verified merchants across South Africa where you can pay with cryptocurrency using Ezeebit."
       >
         <HeroSearch placeholder="Search stores..." value={searchTerm} onChange={setSearchTerm} />

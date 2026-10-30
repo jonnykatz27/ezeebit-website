@@ -1,7 +1,7 @@
 import { motion } from '../lib/motion'
 import { Link } from 'react-router-dom'
 import {
-  Users, Award, Globe, TrendingUp, Shield, Zap,
+  Users, Globe, TrendingUp, Shield, Zap,
   ArrowRight, Heart
 } from 'lucide-react'
 import SEO from '../components/SEO'
@@ -96,9 +96,9 @@ const About = () => {
       <PageHero
         title="Pioneering stablecoin"
         accent="payments in Africa"
+        accentPlain
         description="We're on a mission to make stablecoin payments as simple and secure as traditional ones — money in, money held and money out — so African businesses can move value as easily as information."
         trust={[
-          { icon: <Award />, label: 'FSCA regulated' },
           { icon: <Shield />, label: 'Bank-grade security' },
           { icon: <Users />, label: '150+ stores' },
         ]}
@@ -517,7 +517,7 @@ const About = () => {
               Join our mission
             </h2>
             <p className="text-base lg:text-xl mb-8 max-w-2xl mx-auto text-neutral-300">
-              Be part of the stablecoin and crypto payment revolution in Africa. Start accepting stablecoin and cryptocurrency payments today.
+              Start accepting stablecoin and cryptocurrency payments today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
@@ -526,7 +526,7 @@ const About = () => {
                 rel="noopener noreferrer"
                 className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
               >
-                Get Started Today
+                Open a merchant account
                 <ArrowRight className="w-5 h-5 ml-2" />
               </a>
               <Link to="/contact" className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center">

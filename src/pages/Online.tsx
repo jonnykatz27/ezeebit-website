@@ -81,7 +81,7 @@ const Online = () => {
       <PageHero
         title="Stablecoin checkout"
         accent="for your online store."
-        description="Add stablecoin and crypto payments to your store with zero-code plugins, or build on our API. Customers pay with Bitcoin, Ethereum, stablecoins, and more, and you're settled in ZAR, KES, NGN or USD. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+        description="Add stablecoin and crypto payments to your store with zero-code plugins, or build on our API. Customers pay with Bitcoin, Ethereum, stablecoins, and more, and you're settled in ZAR, KES, NGN or USD."
         actions={
           <>
           <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
@@ -185,7 +185,7 @@ const Online = () => {
                           rel="noopener noreferrer"
                           className="btn-primary flex items-center justify-center w-full sm:w-auto"
                         >
-                          Get Started
+                          Open a merchant account
                         </a>
                       ) : (
                         <button className="btn-primary flex items-center justify-center opacity-50 cursor-not-allowed w-full sm:w-auto" disabled>

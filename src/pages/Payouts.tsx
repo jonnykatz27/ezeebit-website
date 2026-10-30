@@ -128,11 +128,11 @@ const Payouts = () => {
         <PageHero
           title="Pay your customers"
           accent="in stablecoin."
-          description="Send payouts from your fiat balance without collecting a single wallet address. Your customer picks the asset and network, completes the payout themselves, and the funds settle on-chain in minutes. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+          description="Send payouts from your fiat balance without collecting a single wallet address. Your customer picks the asset and network, completes the payout themselves, and the funds settle on-chain in minutes."
           actions={
             <>
             <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
-              Get started free
+              Open a merchant account
               <ArrowRight className="w-5 h-5 ml-2" />
             </a>
             <Link to="/developers" className={HERO_SECONDARY}>
@@ -339,7 +339,7 @@ const Payouts = () => {
                   rel="noopener noreferrer"
                   className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
                 >
-                  Sign Up
+                  Open a merchant account
                   <ArrowRight className="w-5 h-5 ml-2 inline" />
                 </a>
               </div>

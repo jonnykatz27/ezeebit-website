@@ -3,7 +3,7 @@ import { motion } from '../../lib/motion'
 import { Check, Clock, Store } from 'lucide-react'
 import {
   CARD, PORTAL_CARD, COIN, SWAP, arrive, money,
-  useHeroLoop, HeroStage, Halo, FloatingCoin, Counter,
+  useHeroLoop, HeroStage, Halo, Counter,
 } from './heroKit'
 import { PortalScale, PortalStatCard } from '../portal/PortalUI'
 
@@ -121,10 +121,6 @@ const InStoreHeroVisual = () => {
     <HeroStage ref={ref} label="An Ezeebit ePOS terminal taking a payment: the amount is entered, the customer scans a QR code, and the payment is confirmed.">
       <Halo x={280} y={250} />
 
-      <FloatingCoin src="/usdt-logo.svg" x={470} y={96} delay={0} still={still} />
-      <FloatingCoin src="/btc-logo.svg" x={48} y={300} delay={0.4} still={still} />
-      <FloatingCoin src="/usdc-logo.svg" x={500} y={214} delay={0.8} still={still} />
-      <FloatingCoin src="/eth-logo.svg" x={118} y={432} delay={1.2} still={still} />
 
       {/* ── The terminal ── */}
       <motion.div

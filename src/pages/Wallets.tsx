@@ -79,11 +79,11 @@ const Wallets = () => {
         <PageHero
           title="Your money,"
           accent="in fiat or stablecoin."
-          description="Hold fiat and USDT in one place, convert between them when it suits you, fund your customer payouts from the same balance, and withdraw to your bank or your own wallet. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+          description="Hold fiat and USDT in one place, convert between them when it suits you, fund your customer payouts from the same balance, and withdraw to your bank or your own wallet."
           actions={
             <>
             <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
-              Get started free
+              Open a merchant account
               <ArrowRight className="w-5 h-5 ml-2" />
             </a>
             <Link to="/developers" className={HERO_SECONDARY}>
@@ -199,7 +199,7 @@ const Wallets = () => {
                   rel="noopener noreferrer"
                   className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
                 >
-                  Sign Up
+                  Open a merchant account
                   <ArrowRight className="w-5 h-5 ml-2 inline" />
                 </a>
               </div>

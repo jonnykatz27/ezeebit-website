@@ -316,6 +316,7 @@ const FAQ = () => {
       <PageHero
         title="Frequently asked"
         accent="questions"
+        accentPlain
         description="Find answers to common questions about Ezeebit's cryptocurrency payment solutions. Can't find what you're looking for? Our support team is here to help."
       >
         <HeroSearch placeholder="Search frequently asked questions..." value={searchTerm} onChange={setSearchTerm} />
@@ -518,7 +519,7 @@ const FAQ = () => {
                 rel="noopener noreferrer"
                 className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
               >
-                Get Started
+                Open a merchant account
                 <ArrowRight className="w-5 h-5 ml-2" />
               </a>
               <Link to="/contact" className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center">

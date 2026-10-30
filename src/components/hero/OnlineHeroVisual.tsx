@@ -3,7 +3,7 @@ import { motion } from '../../lib/motion'
 import { Check, Lock, Loader2, ChevronRight, ShoppingBag } from 'lucide-react'
 import {
   CARD, COIN, LABEL, SWAP, arrive, rands,
-  useHeroLoop, HeroStage, Halo, FloatingCoin,
+  useHeroLoop, HeroStage, Halo,
 } from './heroKit'
 
 const METHODS = [
@@ -40,9 +40,6 @@ const OnlineHeroVisual = () => {
     <HeroStage ref={ref} label="An online store handing off to the Ezeebit checkout, where the customer pays with VALR Pay, Luno Pay, Binance Pay, or WalletConnect.">
       <Halo x={300} y={250} />
 
-      <FloatingCoin src="/btc-logo.svg" x={24} y={20} delay={0} still={still} />
-      <FloatingCoin src="/usdt-logo.svg" x={512} y={410} delay={0.5} still={still} />
-      <FloatingCoin src="/eth-logo.svg" x={290} y={456} delay={1} still={still} />
 
       {/* ── The merchant's store, in a browser ── */}
       <motion.div className={`absolute ${CARD} overflow-hidden`} style={{ left: 0, top: 70, width: 380, height: 320 }} {...arrive(0.2, 'left')}>

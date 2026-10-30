@@ -79,11 +79,11 @@ const OTC = () => {
         <PageHero
           title="Move large volumes"
           accent="of crypto."
-          description="Buy or sell crypto at scale without moving the market. Get a firm quote, lock the rate, and settle the same day in ZAR, KES, NGN or USD, with a dedicated dealer handling every trade. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+          description="Buy or sell crypto at scale without moving the market. Get a firm quote, lock the rate, and settle the same day in ZAR, KES, NGN or USD, with a dedicated dealer handling every trade."
           actions={
             <>
             <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
-              Get started free
+              Open a merchant account
               <ArrowRight className="w-5 h-5 ml-2" />
             </a>
             <Link to="/contact" className={HERO_SECONDARY}>
@@ -200,7 +200,7 @@ const OTC = () => {
                   rel="noopener noreferrer"
                   className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
                 >
-                  Sign Up
+                  Open a merchant account
                   <ArrowRight className="w-5 h-5 ml-2 inline" />
                 </a>
               </div>

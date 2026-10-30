@@ -92,7 +92,7 @@ const InStore = () => {
       <PageHero
         title="Accept stablecoins"
         accent="at the counter."
-        description="Take stablecoin and crypto payments in your store with an ePOS device or an Ezeebit Pay QR code. Every payment is hedged on the spot and settled in ZAR, KES, NGN or USD. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+        description="Take stablecoin and crypto payments in your store with an ePOS device or an Ezeebit Pay QR code. Every payment is hedged on the spot and settled in ZAR, KES, NGN or USD."
         actions={
           <>
           <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
@@ -385,7 +385,7 @@ const InStore = () => {
                 rel="noopener noreferrer"
                 className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
               >
-                Start Free Trial
+                Open a merchant account
                 <ArrowRight className="w-5 h-5 ml-2 inline" />
               </a>
               <Link

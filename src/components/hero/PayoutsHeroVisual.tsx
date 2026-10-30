@@ -3,7 +3,7 @@ import { motion } from '../../lib/motion'
 import { Check, Link2, Loader2, Webhook } from 'lucide-react'
 import {
   CARD, COIN, LABEL, SWAP, arrive, money, rands,
-  useHeroLoop, HeroStage, Halo, FloatingCoin,
+  useHeroLoop, HeroStage, Halo,
 } from './heroKit'
 
 /** Illustrative payouts, one after another. */
@@ -33,9 +33,6 @@ const PayoutsHeroVisual = () => {
     <HeroStage ref={ref} label="A stablecoin payout moving from a payout link, through quote, transfer, and confirmation, to funds transferred, with a webhook sent to the merchant.">
       <Halo x={320} y={240} />
 
-      <FloatingCoin src="/usdt-logo.svg" x={500} y={56} delay={0} still={still} />
-      <FloatingCoin src="/usdc-logo.svg" x={512} y={338} delay={0.5} still={still} />
-      <FloatingCoin src="/eth-logo.svg" x={92} y={236} delay={1} still={still} />
 
       {/* ── The payout widget your customer sees ── */}
       <motion.div className={`absolute ${CARD} overflow-hidden`} style={{ left: 196, top: 36, width: 296 }} {...arrive(0.25)}>

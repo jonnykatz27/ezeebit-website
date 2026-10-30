@@ -510,9 +510,7 @@ const Home = () => {
 
       {/*
         The dark opening: the proof of scale on the hero's own Near Black, set
-        off by a hairline, so hero and stats read as one block. The product
-        links close it, quiet, so the menu's pages are plain links on the
-        homepage too.
+        off by a hairline, so hero and stats read as one block.
       */}
       <section className="relative bg-neutral-950 pb-14 lg:pb-24">
         <div className="container-custom relative">
@@ -537,15 +535,6 @@ const Home = () => {
               </motion.div>
             ))}
           </div>
-          <nav aria-label="Products" className="mt-10 lg:mt-14 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm font-medium">
-            <Link to="/in-store" className="text-neutral-400 hover:text-white transition-colors">In-store ePOS</Link>
-            <Link to="/online" className="text-neutral-400 hover:text-white transition-colors">Online payments</Link>
-            <Link to="/platforms" className="text-neutral-400 hover:text-white transition-colors">Platforms</Link>
-            <Link to="/payouts" className="text-neutral-400 hover:text-white transition-colors">Payouts</Link>
-            <Link to="/wallets" className="text-neutral-400 hover:text-white transition-colors">Wallets</Link>
-            <Link to="/pricing" className="text-neutral-400 hover:text-white transition-colors">Pricing</Link>
-            <Link to="/developers" className="text-neutral-400 hover:text-white transition-colors">Developer API</Link>
-          </nav>
         </div>
       </section>
 

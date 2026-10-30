@@ -108,19 +108,21 @@ const InStore = () => {
       />
 
       {/* Features Section */}
-      <section className="section-padding bg-white">
+      <section className="story">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center mb-16"
           >
-            <div className="flex justify-center mb-4">
-              <img
-                src="/epos-logo.png"
-                alt="EPOS"
-                className="h-16 w-auto"
-              />
+            <div className="flex justify-center mb-6">
+              <div className="inline-flex items-center justify-center h-16 px-5 bg-white rounded-xl">
+                <img
+                  src="/epos-logo.png"
+                  alt="EPOS"
+                  className="h-9 w-auto"
+                />
+              </div>
             </div>
             <div className="flex justify-center mb-8">
               <img
@@ -129,7 +131,7 @@ const InStore = () => {
                 className="h-48 w-auto object-contain lg:hidden"
               />
             </div>
-            <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+            <p className="story-lead">
               Our Android ePOS devices are designed for the modern merchant who wants to offer customers the latest in payment technology.
             </p>
           </motion.div>
@@ -141,15 +143,15 @@ const InStore = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="card p-6 text-center hover:scale-105 transition-transform"
+                className="panel"
               >
-                <div className="w-12 h-12 bg-neutral-950 rounded-lg flex items-center justify-center mx-auto mb-4 text-primary-400">
+                <div className="panel-icon">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-semibold text-neutral-900 mb-3">
+                <h3 className="text-xl font-semibold text-white mb-3">
                   {feature.title}
                 </h3>
-                <p className="text-neutral-600">
+                <p className="text-neutral-400">
                   {feature.description}
                 </p>
               </motion.div>
@@ -159,7 +161,7 @@ const InStore = () => {
       </section>
 
       {/* Device Specifications */}
-      <section className="section-padding bg-neutral-50">
+      <section className="story">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center lg:ml-10">
             <motion.div
@@ -167,10 +169,10 @@ const InStore = () => {
               whileInView={{ opacity: 1, x: 0 }}
               className="text-center lg:text-left"
             >
-              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-6">
+              <h2 className="story-title">
                 Enterprise-grade specifications
               </h2>
-              <p className="text-lg text-neutral-600 mb-8">
+              <p className="text-lg text-neutral-400 mb-8">
                 Built for reliability and performance, our ePOS devices meet the demanding needs of busy retail environments.
               </p>
               <div className="space-y-4">
@@ -180,10 +182,10 @@ const InStore = () => {
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-3 border-b border-neutral-200 gap-1 sm:gap-0"
+                    className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-3 border-b border-white/10 gap-1 sm:gap-0"
                   >
-                    <span className="font-medium text-neutral-700 text-left">{spec.label}</span>
-                    <span className="text-primary-500 font-semibold text-left sm:text-right">{spec.value}</span>
+                    <span className="font-medium text-neutral-300 text-left">{spec.label}</span>
+                    <span className="text-primary-400 font-semibold text-left sm:text-right">{spec.value}</span>
                   </motion.div>
                 ))}
               </div>
@@ -205,7 +207,7 @@ const InStore = () => {
       </section>
 
       {/* Ezeebit Pay Section */}
-      <section className="section-padding bg-neutral-50">
+      <section className="story">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -213,11 +215,13 @@ const InStore = () => {
             className="text-center mb-16"
           >
             <div className="flex justify-center mb-6">
-              <img
-                src="/ezeebitpay-logo.png"
-                alt="Ezeebit Pay logo"
-                className="h-24 w-auto max-w-[384px]"
-              />
+              <div className="inline-flex items-center justify-center h-20 px-6 bg-white rounded-xl">
+                <img
+                  src="/ezeebitpay-logo.png"
+                  alt="Ezeebit Pay logo"
+                  className="h-12 w-auto max-w-[280px]"
+                />
+              </div>
             </div>
             
             {/* Mobile Images - positioned under logo */}
@@ -238,7 +242,7 @@ const InStore = () => {
               </div>
             </div>
             
-            <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+            <p className="story-lead">
               Simple QR code payments that work with any crypto wallet. No device required - just print and display.
             </p>
           </motion.div>
@@ -249,10 +253,10 @@ const InStore = () => {
               whileInView={{ opacity: 1, x: 0 }}
               className="text-center lg:text-left"
             >
-              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-6">
+              <h2 className="story-title">
                 Seamless QR code crypto checkout
               </h2>
-              <p className="text-lg text-neutral-600 mb-8">
+              <p className="text-lg text-neutral-400 mb-8">
                 Transform any location into a crypto payment point with our static QR code solution.
                 Perfect for small businesses, market stalls, or anywhere you need simple crypto acceptance.
               </p>
@@ -266,10 +270,10 @@ const InStore = () => {
                   { icon: <CheckCircle className="w-5 h-5" />, text: '7+ cryptocurrencies' }
                 ].map((feature, index) => (
                   <div key={index} className="flex items-center">
-                    <div className="text-primary-500 mr-3">
+                    <div className="text-primary-400 mr-3">
                       {feature.icon}
                     </div>
-                    <span className="text-neutral-700">
+                    <span className="text-neutral-300">
                       {feature.text}
                     </span>
                   </div>
@@ -282,7 +286,7 @@ const InStore = () => {
                 className="btn-primary flex md:inline-flex items-center justify-center mx-auto md:mx-0"
               >
                 <span className="inline-flex items-center">
-                  GET STARTED
+                  Open a merchant account
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </span>
               </a>
@@ -315,17 +319,17 @@ const InStore = () => {
       </section>
 
       {/* How it works */}
-      <section className="section-padding bg-white">
+      <section className="story">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+            <h2 className="story-title">
               How in-store crypto payments work
             </h2>
-            <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+            <p className="story-lead">
               Take payment with an Android ePOS, or with a static QR code.
             </p>
           </motion.div>
@@ -335,7 +339,7 @@ const InStore = () => {
             { title: 'With a static QR (Ezeebit Pay)', steps: staticQrSteps },
           ] as const).map((group) => (
             <div key={group.title} className="mb-16 last:mb-0">
-              <h3 className="text-2xl font-display font-bold text-neutral-900 text-center mb-10">
+              <h3 className="text-2xl font-display font-bold text-white text-center mb-10">
                 {group.title}
               </h3>
               {/* One row per flow on large screens, so the ePOS's fifth step doesn't sit alone */}
@@ -348,11 +352,10 @@ const InStore = () => {
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                     className="text-center"
                   >
-                    <div className="w-16 h-16 bg-neutral-950 rounded-full flex items-center justify-center mx-auto mb-4 text-primary-400 text-xl font-semibold">
+                    <div className="w-12 h-12 rounded-full bg-primary-500/15 text-primary-400 flex items-center justify-center mx-auto mb-4 text-xl font-semibold">
                       {index + 1}
                     </div>
-                    <div className="text-sm font-semibold text-primary-500 mb-2">STEP {index + 1}</div>
-                    <p className="text-neutral-600">{step}</p>
+                    <p className="text-neutral-400">{step}</p>
                   </motion.div>
                 ))}
               </div>

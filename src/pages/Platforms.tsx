@@ -32,7 +32,7 @@ const caseStudies = [
 
 /** Small caps line above a section heading, naming which way the money moves. */
 const Eyebrow = ({ children }: { children: React.ReactNode }) => (
-  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-600 mb-3">{children}</p>
+  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-400 mb-3">{children}</p>
 )
 
 const Platforms = () => {
@@ -185,17 +185,17 @@ const Platforms = () => {
         />
 
         {/* Without holding it */}
-        <section className="section-padding bg-white">
+        <section className="story">
           <div className="container-custom">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               className="text-center mb-16"
             >
-              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+              <h2 className="story-title">
                 Crypto in and out, without having to hold it
               </h2>
-              <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+              <p className="story-lead">
                 Ezeebit sits between your platform and the blockchain. Your users pay and get paid
                 in crypto; you keep a clean ledger in the currency you choose.
               </p>
@@ -208,15 +208,15 @@ const Platforms = () => {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="card p-6 h-full"
+                  className="panel h-full"
                 >
-                  <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center mb-4 text-primary-400">
+                  <div className="panel-icon">
                     {pillar.icon}
                   </div>
-                  <h3 className="text-lg font-semibold text-neutral-900 mb-2">
+                  <h3 className="text-lg font-semibold text-white mb-2">
                     {pillar.title}
                   </h3>
-                  <p className="text-neutral-600 text-sm leading-relaxed">
+                  <p className="text-neutral-400 text-sm leading-relaxed">
                     {pillar.description}
                   </p>
                 </motion.div>
@@ -226,7 +226,7 @@ const Platforms = () => {
         </section>
 
         {/* Pay-ins */}
-        <section className="section-padding bg-neutral-50">
+        <section className="story">
           <div className="container-custom">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -234,10 +234,10 @@ const Platforms = () => {
               className="text-center mb-16"
             >
               <Eyebrow>Pay-ins</Eyebrow>
-              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+              <h2 className="story-title">
                 A deposit is not a checkout
               </h2>
-              <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+              <p className="story-lead">
                 The person paying is the account holder, so every deposit has to reach the right
                 balance, in real time, against a ledger you and your regulator can audit.
               </p>
@@ -250,15 +250,15 @@ const Platforms = () => {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="card px-5 py-4 text-center hover:scale-[1.03] transition-transform"
+                  className="panel"
                 >
-                  <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center mx-auto mb-2 text-primary-400">
+                  <div className="panel-icon">
                     {feature.icon}
                   </div>
-                  <h3 className="text-lg font-semibold text-neutral-900 mb-1">
+                  <h3 className="text-lg font-semibold text-white mb-1">
                     {feature.title}
                   </h3>
-                  <p className="text-neutral-600 text-sm leading-relaxed">
+                  <p className="text-neutral-400 text-sm leading-relaxed">
                     {feature.description}
                   </p>
                 </motion.div>
@@ -268,7 +268,7 @@ const Platforms = () => {
         </section>
 
         {/* How a deposit works */}
-        <section className="section-padding bg-white">
+        <section className="story">
           <div className="container-custom">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               <motion.div
@@ -277,10 +277,10 @@ const Platforms = () => {
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+                <h2 className="story-title">
                   How a deposit works
                 </h2>
-                <p className="text-xl text-neutral-600 mb-8">
+                <p className="text-xl text-neutral-400 mb-8">
                   One API call, one checkout link, one signed webhook back. Integrations take days, not months.
                 </p>
                 <Steps steps={payinSteps} />
@@ -306,7 +306,7 @@ const Platforms = () => {
         </section>
 
         {/* Payouts */}
-        <section className="section-padding bg-neutral-50">
+        <section className="story">
           <div className="container-custom">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               <motion.div
@@ -332,15 +332,15 @@ const Platforms = () => {
                 className="order-1 lg:order-2"
               >
                 <Eyebrow>Payouts</Eyebrow>
-                <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+                <h2 className="story-title">
                   Pay users out in stablecoin
                 </h2>
-                <p className="text-xl text-neutral-600 mb-8">
+                <p className="text-xl text-neutral-400 mb-8">
                   Send winnings, withdrawals and seller balances as stablecoin, funded from your fiat
                   balance. You never buy, hold or move the stablecoin yourself.
                 </p>
                 <Steps steps={payoutSteps} />
-                <Link to="/payouts" className="inline-flex items-center font-semibold text-primary-600 hover:text-primary-700 mt-8">
+                <Link to="/payouts" className="inline-flex items-center font-semibold text-primary-400 hover:text-primary-300 mt-8">
                   More on Payouts
                   <ArrowRight className="w-4 h-4 ml-1.5" />
                 </Link>
@@ -350,17 +350,17 @@ const Platforms = () => {
         </section>
 
         {/* Case studies */}
-        <section className="section-padding bg-white">
+        <section className="story">
           <div className="container-custom">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               className="text-center mb-12"
             >
-              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+              <h2 className="story-title">
                 Live with leading platforms
               </h2>
-              <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+              <p className="story-lead">
                 Regulated operators already run their crypto on Ezeebit.
               </p>
             </motion.div>
@@ -422,17 +422,17 @@ const Platforms = () => {
         </section>
 
         {/* Who it's for */}
-        <section className="section-padding bg-neutral-50">
+        <section className="story">
           <div className="container-custom">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               className="text-center mb-16"
             >
-              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+              <h2 className="story-title">
                 For any platform that moves user balances
               </h2>
-              <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+              <p className="story-lead">
                 Wherever money goes into an account and comes back out, the same rails apply.
               </p>
             </motion.div>
@@ -444,12 +444,12 @@ const Platforms = () => {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="card p-8 h-full"
+                  className="panel h-full"
                 >
-                  <h3 className="text-xl font-semibold text-neutral-900 mb-3">
+                  <h3 className="text-xl font-semibold text-white mb-3">
                     {audience.title}
                   </h3>
-                  <p className="text-neutral-600">
+                  <p className="text-neutral-400">
                     {audience.description}
                   </p>
                 </motion.div>
@@ -504,12 +504,12 @@ const Steps = ({ steps }: { steps: { title: string; description: string }[] }) =
   <ol className="space-y-6 text-left">
     {steps.map((step, index) => (
       <li key={step.title} className="flex gap-4">
-        <span className="w-9 h-9 rounded-full bg-neutral-950 text-primary-400 text-sm font-semibold flex items-center justify-center flex-shrink-0">
+        <span className="w-9 h-9 rounded-full bg-primary-500/15 text-primary-400 text-sm font-semibold flex items-center justify-center flex-shrink-0">
           {String(index + 1).padStart(2, '0')}
         </span>
         <div>
-          <h3 className="text-lg font-semibold text-neutral-900 mb-1">{step.title}</h3>
-          <p className="text-neutral-600">{step.description}</p>
+          <h3 className="text-lg font-semibold text-white mb-1">{step.title}</h3>
+          <p className="text-neutral-400">{step.description}</p>
         </div>
       </li>
     ))}

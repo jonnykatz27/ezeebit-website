@@ -265,6 +265,23 @@
       transition-all duration-300;
     box-shadow: var(--shadow-sm);
   }
+
+  /* Product-page story: Near Black and hairline panels, same tokens as the homepage. */
+  .story {
+    @apply section-padding bg-neutral-950 border-t border-white/10;
+  }
+  .story-title {
+    @apply text-3xl lg:text-4xl font-display font-bold text-white mb-4;
+  }
+  .story-lead {
+    @apply text-lg lg:text-xl text-neutral-400 max-w-3xl mx-auto;
+  }
+  .panel {
+    @apply rounded-2xl border border-white/10 bg-white/[0.04] p-6 text-left;
+  }
+  .panel-icon {
+    @apply w-12 h-12 rounded-xl bg-primary-500/15 text-primary-400 flex items-center justify-center mb-4;
+  }
   .card:hover {
     box-shadow: var(--shadow-md);
   }
@@ -425,7 +442,8 @@
     text-align: left;
   }
 
-  .card {
+  .card,
+  .panel {
     margin-left: auto !important;
     margin-right: auto !important;
     width: 100% !important;

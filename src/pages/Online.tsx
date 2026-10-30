@@ -98,32 +98,32 @@ const Online = () => {
       />
 
       {/* Platform Integration */}
-      <section className="section-padding bg-white">
+      <section className="story">
         <div className="container-custom px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center mb-8 md:mb-16"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+            <h2 className="story-title">
               Seamless platform integration
             </h2>
-            <p className="text-lg md:text-xl text-neutral-600 max-w-3xl mx-auto px-4">
+            <p className="story-lead px-4">
               Install our plugins on your favorite e-commerce platform in minutes. No coding required.
             </p>
           </motion.div>
 
           {/* Platform Tabs */}
           <div className="flex justify-center mb-6 md:mb-8 px-4">
-            <div className="flex bg-neutral-100 rounded-lg p-1 w-full max-w-md md:max-w-none md:w-auto overflow-x-auto">
+            <div className="inline-flex bg-white/5 ring-1 ring-white/10 rounded-full p-1 w-full max-w-md md:max-w-none md:w-auto overflow-x-auto">
               {platforms.map((platform) => (
                 <button
                   key={platform.id}
                   onClick={() => setActiveTab(platform.id)}
-                  className={`px-3 md:px-6 py-2 md:py-3 rounded-md font-medium transition-all text-sm md:text-base whitespace-nowrap flex-shrink-0 ${
+                  className={`px-3 md:px-6 py-2 md:py-3 rounded-full font-medium transition-all text-sm md:text-base whitespace-nowrap flex-shrink-0 ${
                     activeTab === platform.id
-                      ? 'bg-white text-primary-500 shadow-sm'
-                      : 'text-neutral-600 hover:text-neutral-900'
+                      ? 'bg-primary-500 text-white'
+                      : 'text-neutral-300 hover:text-white'
                   }`}
                 >
                   {platform.name}
@@ -137,7 +137,7 @@ const Online = () => {
             key={activeTab}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="card p-4 md:p-8 max-w-4xl mx-auto"
+            className="panel md:p-8 max-w-4xl mx-auto"
           >
             {platforms.map((platform) => (
               activeTab === platform.id && (
@@ -145,8 +145,8 @@ const Online = () => {
                   {platform.id !== 'shopify' && (
                     <div className="absolute inset-0 flex items-center justify-center z-10 rounded-lg">
                       <div className="text-center">
-                        <div className="text-xl md:text-3xl font-bold text-neutral-900 mb-2">Coming Soon</div>
-                        <div className="text-sm md:text-base text-neutral-600">This integration is currently in development</div>
+                        <div className="text-xl md:text-3xl font-bold text-white mb-2">Coming Soon</div>
+                        <div className="text-sm md:text-base text-neutral-400">This integration is currently in development</div>
                       </div>
                     </div>
                   )}
@@ -159,7 +159,7 @@ const Online = () => {
                         <img src={platform.logo} alt={platform.name} className="w-8 h-8 object-contain" />
                       </div>
                       <div>
-                        <h3 className="text-xl md:text-2xl font-bold text-neutral-900">{platform.name}</h3>
+                        <h3 className="text-xl md:text-2xl font-bold text-white">{platform.name}</h3>
                         <p className="text-xs md:text-sm text-neutral-500">Install time: {platform.installTime}</p>
                       </div>
                     </div>
@@ -168,27 +168,27 @@ const Online = () => {
                       alt={`${platform.name} integration`}
                       className="w-full max-w-sm mx-auto my-4 lg:hidden"
                     />
-                    <p className="text-sm md:text-base text-neutral-600 mb-4 md:mb-6 text-center lg:text-left">{platform.description}</p>
+                    <p className="text-sm md:text-base text-neutral-400 mb-4 md:mb-6 text-center lg:text-left">{platform.description}</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-4 mb-4 md:mb-6">
                       {platform.features.map((feature) => (
                         <div key={feature} className="flex items-center">
-                          <CheckCircle className="w-4 h-4 text-primary-500 mr-2" />
-                          <span className="text-xs md:text-sm text-neutral-600">{feature}</span>
+                          <CheckCircle className="w-4 h-4 text-primary-400 mr-2" />
+                          <span className="text-xs md:text-sm text-neutral-400">{feature}</span>
                         </div>
                       ))}
                     </div>
-                    <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
+                    <div className="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-4">
                       {platform.id === 'shopify' ? (
                         <a
                           href="https://merchant.ezeebit.com/#/signup"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="btn-primary flex items-center justify-center w-full sm:w-auto"
+                          className="btn-primary flex items-center justify-center w-full sm:w-auto whitespace-nowrap"
                         >
                           Open a merchant account
                         </a>
                       ) : (
-                        <button className="btn-primary flex items-center justify-center opacity-50 cursor-not-allowed w-full sm:w-auto" disabled>
+                        <button className="btn-primary flex items-center justify-center opacity-50 cursor-not-allowed w-full sm:w-auto whitespace-nowrap" disabled>
                           Coming Soon
                         </button>
                       )}
@@ -197,13 +197,13 @@ const Online = () => {
                           href="https://youtu.be/nsju8wPu5oY?si=QTJfvOeNf8nV4b-l"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="btn-outline flex items-center justify-center w-full sm:w-auto"
+                          className="rounded-xl font-medium text-white border border-white/20 hover:border-white/40 hover:bg-white/5 transition-all duration-200 px-6 py-3 flex items-center justify-center w-full sm:w-auto whitespace-nowrap"
                         >
                           <ExternalLink className="w-4 h-4 mr-2" />
                           View Guide
                         </a>
                       ) : (
-                        <button className="btn-outline flex items-center justify-center w-full sm:w-auto opacity-50 cursor-not-allowed" disabled>
+                        <button className="rounded-xl font-medium text-white border border-white/20 px-6 py-3 flex items-center justify-center w-full sm:w-auto opacity-50 cursor-not-allowed whitespace-nowrap" disabled>
                           <ExternalLink className="w-4 h-4 mr-2" />
                           View Guide
                         </button>
@@ -224,17 +224,17 @@ const Online = () => {
       </section>
 
       {/* Features Section */}
-      <section className="section-padding bg-neutral-50">
+      <section className="story">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+            <h2 className="story-title">
               Everything you need for online payments
             </h2>
-            <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+            <p className="story-lead">
               Our comprehensive solution includes all the tools and features you need to accept stablecoin and crypto payments online.
             </p>
           </motion.div>
@@ -246,15 +246,15 @@ const Online = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="card p-6 text-center hover:scale-105 transition-transform"
+                className="panel"
               >
-                <div className="w-12 h-12 bg-neutral-950 rounded-lg flex items-center justify-center mx-auto mb-4 text-primary-400">
+                <div className="panel-icon">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-semibold text-neutral-900 mb-3">
+                <h3 className="text-xl font-semibold text-white mb-3">
                   {feature.title}
                 </h3>
-                <p className="text-neutral-600">
+                <p className="text-neutral-400">
                   {feature.description}
                 </p>
               </motion.div>
@@ -264,18 +264,18 @@ const Online = () => {
       </section>
 
       {/* Platforms */}
-      <section className="pb-16 lg:pb-24 bg-neutral-50">
+      <section className="story">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="card p-8 md:p-10 max-w-5xl mx-auto flex flex-col md:flex-row md:items-center gap-6 text-center md:text-left"
+            className="panel md:p-10 max-w-5xl mx-auto flex flex-col md:flex-row md:items-center gap-6"
           >
             <div className="flex-1">
-              <h2 className="text-2xl lg:text-3xl font-display font-bold text-neutral-900 mb-2">
+              <h2 className="text-2xl lg:text-3xl font-display font-bold text-white mb-2">
                 Running a platform or a gateway?
               </h2>
-              <p className="text-neutral-600">
+              <p className="text-neutral-400">
                 Take deposits in crypto and pay users out in stablecoin, without holding either. We handle
                 the compliance and the volatility. Sunbet already takes its deposits this way.
               </p>

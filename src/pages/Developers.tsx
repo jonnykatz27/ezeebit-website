@@ -563,33 +563,32 @@ app.post(
       </PageHero>
 
       {/* Quick Start */}
-      <section className="section-padding bg-white">
+      <section className="story">
         <div className="container-custom">
           <div
             className="text-center mb-16"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+            <h2 className="story-title">
               Quick start guide
             </h2>
-            <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+            <p className="story-lead">
               From an empty portal account to a verified payment notification.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
-            {quickStartSteps.map((step, index) => (
+            {quickStartSteps.map((step) => (
               <div
                 key={step.title}
                 className="text-center"
               >
-                <div className="w-16 h-16 bg-neutral-950 rounded-full flex items-center justify-center mx-auto mb-4 text-primary-400">
+                <div className="panel-icon mx-auto">
                   {step.icon}
                 </div>
-                <div className="text-sm font-semibold text-primary-500 mb-2">STEP {index + 1}</div>
-                <h3 className="text-lg font-semibold text-neutral-900 mb-3">
+                <h3 className="text-lg font-semibold text-white mb-3">
                   {step.title}
                 </h3>
-                <p className="text-neutral-600 text-sm">
+                <p className="text-neutral-400 text-sm">
                   {step.description}
                 </p>
               </div>
@@ -599,20 +598,20 @@ app.post(
       </section>
 
       {/* Products */}
-      <section className="section-padding bg-neutral-50">
+      <section className="story">
         <div className="container-custom">
           <div
             className="text-center mb-16"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+            <h2 className="story-title">
               One API, five surfaces
             </h2>
-            <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+            <p className="story-lead">
               Twenty-eight endpoints, one integration.
             </p>
-            <p className="text-neutral-600 mt-3">
+            <p className="text-neutral-400 mt-3">
               Running pay-ins and payouts for a platform or a gateway?{' '}
-              <Link to="/platforms" className="text-primary-600 font-semibold hover:underline">See how it works for platforms</Link>
+              <Link to="/platforms" className="text-primary-400 font-semibold hover:underline">See how it works for platforms</Link>
             </p>
           </div>
 
@@ -623,32 +622,32 @@ app.post(
                 href={product.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="card p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 will-change-transform group"
+                className="panel hover:bg-white/[0.07] transition-colors group"
               >
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-neutral-950 rounded-lg flex items-center justify-center text-primary-400">
+                  <div className="w-12 h-12 rounded-xl bg-primary-500/15 text-primary-400 flex items-center justify-center shrink-0">
                     {product.icon}
                   </div>
-                  <span className="text-xs font-medium text-neutral-500 bg-neutral-100 px-2 py-1 rounded">
+                  <span className="text-xs font-medium text-neutral-300 bg-white/10 px-2 py-1 rounded">
                     {product.count}
                   </span>
                 </div>
-                <h3 className="text-xl font-semibold text-neutral-900 mb-3 flex items-center">
+                <h3 className="text-xl font-semibold text-white mb-3 flex items-center">
                   {product.title}
                   <ExternalLink className="w-4 h-4 ml-2 text-neutral-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </h3>
-                <p className="text-neutral-600">
+                <p className="text-neutral-400">
                   {product.description}
                 </p>
               </a>
             ))}
 
-            <div className="card p-6 border-dashed border-neutral-200 bg-transparent shadow-none">
+            <div className="panel border-dashed bg-transparent">
               <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-neutral-100 rounded-lg flex items-center justify-center text-neutral-400">
+                <div className="w-12 h-12 rounded-xl bg-white/5 text-neutral-500 flex items-center justify-center shrink-0">
                   <Wrench className="w-6 h-6" />
                 </div>
-                <span className="text-xs font-medium text-neutral-400 bg-neutral-100 px-2 py-1 rounded">
+                <span className="text-xs font-medium text-neutral-400 bg-white/10 px-2 py-1 rounded">
                   In build
                 </span>
               </div>

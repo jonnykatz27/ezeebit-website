@@ -482,7 +482,7 @@ const Home = () => {
       <PageHero
         title="Stablecoin payments,"
         accent="in and out."
-        description="Accept crypto and stablecoins in-store and online, pay your customers out in minutes, and hold your balance in fiat or stablecoin. One regulated account, settled in ZAR, KES, NGN or USD. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+        description="Accept crypto and stablecoins in-store and online, pay out in minutes, and settle in ZAR, KES, NGN or USD. One regulated account, live in South Africa, Kenya and Nigeria."
         actions={
           <>
             <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>

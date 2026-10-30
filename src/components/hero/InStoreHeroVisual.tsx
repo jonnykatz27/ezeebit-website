@@ -121,9 +121,9 @@ const InStoreHeroVisual = () => {
     <HeroStage ref={ref} label="An Ezeebit ePOS terminal taking a payment: the amount is entered, the customer scans a QR code, and the payment is confirmed.">
       <Halo x={280} y={250} />
 
-      <FloatingCoin src="/usdt-round.svg" x={470} y={96} delay={0} still={still} />
+      <FloatingCoin src="/usdt-round.svg" x={476} y={40} delay={0} still={still} />
       <FloatingCoin src="/btc-logo.svg" x={48} y={300} delay={0.4} still={still} />
-      <FloatingCoin src="/usdc-logo.svg" x={500} y={214} delay={0.8} still={still} />
+      <FloatingCoin src="/usdc-logo.svg" x={512} y={236} delay={0.8} still={still} />
       <FloatingCoin src="/eth-logo.svg" x={118} y={432} delay={1.2} still={still} />
 
       {/* ── The terminal ── */}
@@ -211,6 +211,15 @@ const InStoreHeroVisual = () => {
         {...arrive(0.45, 'left')}
       >
         <img src="/portal/ezeebit-pay-poster.png" alt="" className="block w-full h-auto" />
+      </motion.div>
+
+      {/* ── The device itself, tilted the other way to the poster, behind the takings card ── */}
+      <motion.div
+        className="absolute [&_img]:!mx-0"
+        style={{ left: 404, top: 112, width: 96, rotate: 5 }}
+        {...arrive(0.5, 'right')}
+      >
+        <img src="/epos-device-hero.webp" alt="" className="block w-full h-auto drop-shadow-[0_18px_28px_rgba(0,0,0,0.45)]" />
       </motion.div>
 
       {/* ── The day's takings, as the portal's Total volume card ── */}

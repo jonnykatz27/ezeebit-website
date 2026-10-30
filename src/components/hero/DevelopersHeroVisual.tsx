@@ -54,7 +54,7 @@ const DevelopersHeroVisual = ({ environment, baseUrl, checkoutHost }: { environm
     <HeroStage ref={ref} label="A New Order request sent to the Ezeebit API, the response with a payment link, and a signed webhook confirming payment.">
       <Halo x={260} y={230} />
 
-      <FloatingCoin src="/usdt-logo.svg" x={500} y={40} delay={0} still={still} />
+      <FloatingCoin src="/usdt-round.svg" x={500} y={40} delay={0} still={still} />
       <FloatingCoin src="/btc-logo.svg" x={24} y={410} delay={0.6} still={still} />
 
       {/* ── The terminal ── */}
@@ -104,7 +104,7 @@ const DevelopersHeroVisual = ({ environment, baseUrl, checkoutHost }: { environm
             </div>
           ))}
           <div className="h-7 rounded-lg border border-neutral-200 flex items-center gap-2 px-2">
-            <img src="/usdt-logo.svg" alt="" className={`w-4 h-4 ${COIN}`} />
+            <img src="/usdt-round.svg" alt="" className={`w-4 h-4 ${COIN}`} />
             <span className="h-1.5 w-12 rounded-full bg-neutral-100" />
           </div>
         </div>

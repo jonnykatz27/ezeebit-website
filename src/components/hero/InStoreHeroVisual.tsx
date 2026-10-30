@@ -2,7 +2,7 @@ import { AnimatePresence } from 'framer-motion'
 import { motion } from '../../lib/motion'
 import { Check, Clock, Store } from 'lucide-react'
 import {
-  CARD, PORTAL_CARD, COIN, SWAP, arrive, money,
+  CARD, PORTAL_CARD, COIN, SWAP, arrive, money, coinLogo,
   useHeroLoop, HeroStage, Halo, FloatingCoin, Counter,
 } from './heroKit'
 import { PortalScale, PortalStatCard } from '../portal/PortalUI'
@@ -121,7 +121,7 @@ const InStoreHeroVisual = () => {
     <HeroStage ref={ref} label="An Ezeebit ePOS terminal taking a payment: the amount is entered, the customer scans a QR code, and the payment is confirmed.">
       <Halo x={280} y={250} />
 
-      <FloatingCoin src="/usdt-logo.svg" x={470} y={96} delay={0} still={still} />
+      <FloatingCoin src="/usdt-round.svg" x={470} y={96} delay={0} still={still} />
       <FloatingCoin src="/btc-logo.svg" x={48} y={300} delay={0.4} still={still} />
       <FloatingCoin src="/usdc-logo.svg" x={500} y={214} delay={0.8} still={still} />
       <FloatingCoin src="/eth-logo.svg" x={118} y={432} delay={1.2} still={still} />
@@ -173,7 +173,7 @@ const InStoreHeroVisual = () => {
                 </p>
                 <p className="text-[10px] text-neutral-500 mb-3">≈ {fmt(sale.amount)} · {sale.network}</p>
                 <div className="p-1 rounded-2xl bg-white border border-neutral-200 shadow-sm mb-3">
-                  <QR size={152} coin={`/${sale.asset}-logo.svg`} />
+                  <QR size={152} coin={coinLogo(sale.asset)} />
                 </div>
                 <p className="flex items-center gap-1 text-[10px] text-neutral-500 mb-3">
                   <Clock className="w-3 h-3" /> 14:52
@@ -195,7 +195,7 @@ const InStoreHeroVisual = () => {
                 <p className="text-lg font-semibold text-neutral-900 mb-1">Payment received</p>
                 <p className="text-[22px] font-bold text-neutral-900 tracking-tight mb-1">{fmt(sale.amount)}</p>
                 <p className="text-[11px] text-neutral-500 flex items-center gap-1.5">
-                  <img src={`/${sale.asset}-logo.svg`} alt="" className={`w-4 h-4 ${COIN}`} />
+                  <img src={coinLogo(sale.asset)} alt="" className={`w-4 h-4 ${COIN}`} />
                   Paid in {sale.asset.toUpperCase()} on {sale.network}
                 </p>
               </motion.div>

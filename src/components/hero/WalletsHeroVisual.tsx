@@ -107,7 +107,7 @@ const WalletsHeroVisual = () => {
       <FloatingCoin src="/ke-flag.svg" x={70} y={36} delay={0.2} still={still} />
       <FloatingCoin src="/za-flag.svg" x={204} y={52} delay={0.4} still={still} />
       <FloatingCoin src="/ng-flag.svg" x={244} y={226} delay={0.6} still={still} />
-      <FloatingCoin src="/usdt-logo.svg" x={498} y={330} delay={1} still={still} />
+      <FloatingCoin src="/usdt-round.svg" x={498} y={330} delay={1} still={still} />
       <FloatingCoin src="/us-flag.svg" x={468} y={432} delay={1.4} still={still} />
 
       {/* ── The Convert panel ── */}

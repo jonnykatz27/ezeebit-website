@@ -108,7 +108,7 @@ const HomeHeroVisual = () => {
     >
       <Halo x={280} y={262} />
 
-      <FloatingCoin src="/usdt-logo.svg" x={488} y={70} delay={0} still={still} />
+      <FloatingCoin src="/usdt-round.svg" x={488} y={70} delay={0} still={still} />
       <FloatingCoin src="/btc-logo.svg" x={20} y={300} delay={0.4} still={still} />
       <FloatingCoin src="/eth-logo.svg" x={508} y={250} delay={0.8} still={still} />
       <FloatingCoin src="/usdc-logo.svg" x={150} y={446} delay={1.2} still={still} />

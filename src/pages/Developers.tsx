@@ -461,7 +461,7 @@ app.post(
   const supportedAssets = [
     { name: 'Bitcoin', symbol: 'BTC', network: 'Mainnet', asset: 'BTC', description: 'Bitcoin network', logo: '/btc-logo.svg' },
     { name: 'Ethereum', symbol: 'ETH', network: 'ERC20', asset: 'ETH', description: 'Ethereum network', logo: '/eth-logo.svg' },
-    { name: 'Tether', symbol: 'USDT', network: 'ERC20 | TRC20 | BEP20 | SPL', asset: 'USDT', description: 'USD-backed stablecoin', logo: '/usdt-logo.svg' },
+    { name: 'Tether', symbol: 'USDT', network: 'ERC20 | TRC20 | BEP20 | SPL', asset: 'USDT', description: 'USD-backed stablecoin', logo: '/usdt-round.svg' },
     { name: 'Binance Coin', symbol: 'BNB', network: 'BEP20', asset: 'BNB', description: 'Binance Smart Chain', logo: '/bnb-logo.svg' },
     { name: 'USD Coin', symbol: 'USDC', network: 'ERC20 | SPL', asset: 'USDC', description: 'USD-backed stablecoin', logo: '/usdc-logo.svg' },
     { name: 'PAX Gold', symbol: 'PAXG', network: 'ERC20', asset: 'PAXG', description: 'Gold-backed token', logo: '/paxg-logo.svg' },

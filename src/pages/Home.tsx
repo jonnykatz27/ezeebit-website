@@ -13,6 +13,7 @@ import SEO from '../components/SEO'
 import FlowDemo, { DemoPanel } from '../components/demo/FlowDemo'
 import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import HomeHeroVisual from '../components/hero/HomeHeroVisual'
+import { coinLogo } from '../components/hero/heroKit'
 import { PortalBalanceCard, PortalConvertCard, PORTAL_PAGE_BG } from '../components/portal/PortalUI'
 import DarkBackdrop from '../components/DarkBackdrop'
 
@@ -43,7 +44,7 @@ const CoinStack = ({ coins }: { coins: string[] }) => (
     {coins.map((coin, i) => (
       <motion.img
         key={coin}
-        src={`/${coin}-logo.svg`}
+        src={coinLogo(coin)}
         alt={coin.toUpperCase()}
         variants={{ hidden: { opacity: 0, scale: 0.5 }, visible: { opacity: 1, scale: 1 } }}
         className={`${ASSET_CHIP} ${i > 0 ? OVERLAP : ''}`}
@@ -109,7 +110,7 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
           <FlagStack />
           <span className="text-xs font-medium text-neutral-400">or</span>
           <div className="flex items-center">
-            <img src="/usdt-logo.svg" alt="USDT" className={ASSET_CHIP} />
+            <img src="/usdt-round.svg" alt="USDT" className={ASSET_CHIP} />
             <img src="/usdc-logo.svg" alt="USDC" className={`${ASSET_CHIP} ${OVERLAP}`} />
           </div>
         </div>
@@ -147,7 +148,7 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
       title: 'It lands in minutes',
       body: 'Stablecoin arrives, and you get a confirmation to match against your records.',
       visual: (
-        <img src="/usdt-logo.svg" alt="USDT" className={ASSET_CHIP} />
+        <img src="/usdt-round.svg" alt="USDT" className={ASSET_CHIP} />
       ),
     },
   ],
@@ -187,7 +188,7 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
           >
             <ArrowLeftRight className="w-4 h-4" />
           </motion.span>
-          <img src="/usdt-logo.svg" alt="USDT" className={ASSET_CHIP} />
+          <img src="/usdt-round.svg" alt="USDT" className={ASSET_CHIP} />
         </div>
       ),
     },

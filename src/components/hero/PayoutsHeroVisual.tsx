@@ -2,7 +2,7 @@ import { AnimatePresence } from 'framer-motion'
 import { motion } from '../../lib/motion'
 import { Check, Link2, Loader2, Webhook } from 'lucide-react'
 import {
-  CARD, COIN, LABEL, SWAP, arrive, money, rands,
+  CARD, COIN, LABEL, SWAP, arrive, money, rands, coinLogo,
   useHeroLoop, HeroStage, Halo, FloatingCoin,
 } from './heroKit'
 
@@ -33,7 +33,7 @@ const PayoutsHeroVisual = () => {
     <HeroStage ref={ref} label="A stablecoin payout moving from a payout link, through quote, transfer, and confirmation, to funds transferred, with a webhook sent to the merchant.">
       <Halo x={320} y={240} />
 
-      <FloatingCoin src="/usdt-logo.svg" x={500} y={56} delay={0} still={still} />
+      <FloatingCoin src="/usdt-round.svg" x={500} y={56} delay={0} still={still} />
       <FloatingCoin src="/usdc-logo.svg" x={512} y={338} delay={0.5} still={still} />
       <FloatingCoin src="/eth-logo.svg" x={92} y={236} delay={1} still={still} />
 
@@ -56,7 +56,7 @@ const PayoutsHeroVisual = () => {
               </p>
               <p className="text-[11px] text-neutral-500 mb-3">≈ {rands(p.zar)}</p>
               <div className="flex items-center gap-2 rounded-xl bg-neutral-50 px-2.5 py-2 mb-4">
-                <img src={`/${p.asset}-logo.svg`} alt="" className={`w-6 h-6 ${COIN}`} />
+                <img src={coinLogo(p.asset)} alt="" className={`w-6 h-6 ${COIN}`} />
                 <span className="text-xs font-medium text-neutral-800">{p.asset.toUpperCase()}</span>
                 <span className="text-xs text-neutral-400">on</span>
                 <span className="text-xs font-medium text-neutral-800">{p.network}</span>

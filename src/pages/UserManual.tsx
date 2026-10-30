@@ -181,7 +181,7 @@ type PaymentMethod = { ticker?: string; name: string; tags?: string[]; logo?: st
 const paymentMethods: PaymentMethod[] = [
   { ticker: 'BTC', name: 'Bitcoin', tags: ['Mainnet'], logo: '/btc-logo.svg' },
   { ticker: 'ETH', name: 'Ethereum', tags: ['ERC20'], logo: '/eth-logo.svg' },
-  { ticker: 'USDT', name: 'Tether', tags: ['TRC20', 'BSC-BEP20', 'ERC20', 'SPL'], logo: '/usdt-logo.svg' },
+  { ticker: 'USDT', name: 'Tether', tags: ['TRC20', 'BSC-BEP20', 'ERC20', 'SPL'], logo: '/usdt-round.svg' },
   { ticker: 'BNB', name: 'BNB', tags: ['BSC-BEP20'], logo: '/bnb-logo.svg' },
   { ticker: 'USDC', name: 'USD Coin', tags: ['ERC20', 'SPL'], logo: '/usdc-logo.svg' },
   { name: 'Luno', logo: '/luno_logo (clean).png' },

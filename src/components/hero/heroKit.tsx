@@ -27,6 +27,14 @@ export const PORTAL_CARD =
 /** A digital-asset mark in its white disc. */
 export const COIN = 'rounded-full bg-white shadow-sm object-contain'
 
+/**
+ * The coin icon file for a ticker, for FloatingCoin, COIN-wrapped icons and
+ * QR markers. Every other ticker's own `-logo.svg` is already a full round
+ * coin mark, but USDT's is its diamond brand mark, which doesn't fill a
+ * circular badge the way the others do — so USDT gets its round mark instead.
+ */
+export const coinLogo = (ticker: string) => (ticker === 'usdt' ? '/usdt-round.svg' : `/${ticker}-logo.svg`)
+
 /** Small caps label at the top of a floating card. */
 export const LABEL = 'text-[11px] font-semibold uppercase tracking-[0.1em] text-neutral-400'
 

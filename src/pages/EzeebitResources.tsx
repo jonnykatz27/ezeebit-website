@@ -43,7 +43,7 @@ const EzeebitResources = () => {
           <div className="flex items-center justify-center gap-2.5 md:gap-5">
             <img src="/btc-logo.svg" alt="Bitcoin" className="w-8 h-8 md:w-10 md:h-10" />
             <img src="/eth-logo.svg" alt="Ethereum" className="w-8 h-8 md:w-10 md:h-10" />
-            <img src="/usdt-logo.svg" alt="USDT" className="w-8 h-8 md:w-10 md:h-10" />
+            <img src="/usdt-round.svg" alt="USDT" className="w-8 h-8 md:w-10 md:h-10" />
             <img src="/usdc-logo.svg" alt="USDC" className="w-8 h-8 md:w-10 md:h-10" />
             <img src="/bnb-logo.svg" alt="BNB" className="w-8 h-8 md:w-10 md:h-10" />
             <img src="/paxg-logo.svg" alt="PAXG" className="w-8 h-8 md:w-10 md:h-10" />

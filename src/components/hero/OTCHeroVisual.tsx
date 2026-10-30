@@ -2,7 +2,7 @@ import { AnimatePresence } from 'framer-motion'
 import { motion } from '../../lib/motion'
 import { ArrowDown, Check, Headphones, Lock } from 'lucide-react'
 import {
-  CARD, COIN, LABEL, SWAP, EASE, arrive, money, rands,
+  CARD, COIN, LABEL, SWAP, EASE, arrive, money, rands, coinLogo,
   useHeroLoop, HeroStage, Halo, FloatingCoin, Counter, LiveTag,
 } from './heroKit'
 
@@ -34,11 +34,11 @@ const OTCHeroVisual = () => {
   const sym = trade.asset.toUpperCase()
 
   const give = trade.side === 'sell'
-    ? { label: 'You sell', value: `${money(trade.qty, trade.qtyDp)} ${sym}`, coin: `/${trade.asset}-logo.svg` }
+    ? { label: 'You sell', value: `${money(trade.qty, trade.qtyDp)} ${sym}`, coin: coinLogo(trade.asset) }
     : { label: 'You pay', value: null, coin: '/za-flag.svg' }
   const get = trade.side === 'sell'
     ? { label: 'You receive', value: null, coin: '/za-flag.svg' }
-    : { label: 'You receive', value: `${money(trade.qty, trade.qtyDp)} ${sym}`, coin: `/${trade.asset}-logo.svg` }
+    : { label: 'You receive', value: `${money(trade.qty, trade.qtyDp)} ${sym}`, coin: coinLogo(trade.asset) }
 
   const dealer = {
     live: `Here’s a firm price for ${money(trade.qty, trade.qtyDp)} ${sym}.`,
@@ -55,7 +55,7 @@ const OTCHeroVisual = () => {
       <Halo x={280} y={220} />
 
       <FloatingCoin src="/btc-logo.svg" x={42} y={90} delay={0} still={still} />
-      <FloatingCoin src="/usdt-logo.svg" x={494} y={70} delay={0.5} still={still} />
+      <FloatingCoin src="/usdt-round.svg" x={494} y={70} delay={0.5} still={still} />
       <FloatingCoin src="/eth-logo.svg" x={500} y={250} delay={1} still={still} />
 
       {/* ── The quote ── */}

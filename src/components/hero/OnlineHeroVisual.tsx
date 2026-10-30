@@ -2,7 +2,7 @@ import { AnimatePresence } from 'framer-motion'
 import { motion } from '../../lib/motion'
 import { Check, Lock, Loader2, ChevronRight, ShoppingBag } from 'lucide-react'
 import {
-  CARD, COIN, LABEL, SWAP, arrive, rands,
+  CARD, COIN, LABEL, SWAP, arrive, rands, coinLogo,
   useHeroLoop, HeroStage, Halo, FloatingCoin,
 } from './heroKit'
 
@@ -41,7 +41,7 @@ const OnlineHeroVisual = () => {
       <Halo x={300} y={250} />
 
       <FloatingCoin src="/btc-logo.svg" x={24} y={20} delay={0} still={still} />
-      <FloatingCoin src="/usdt-logo.svg" x={512} y={410} delay={0.5} still={still} />
+      <FloatingCoin src="/usdt-round.svg" x={512} y={410} delay={0.5} still={still} />
       <FloatingCoin src="/eth-logo.svg" x={290} y={456} delay={1} still={still} />
 
       {/* ── The merchant's store, in a browser ── */}
@@ -116,7 +116,7 @@ const OnlineHeroVisual = () => {
                 <div className="h-11 rounded-xl border border-neutral-200 bg-white flex items-center gap-2.5 px-2.5">
                   <span className="flex items-center">
                     {['btc', 'eth', 'usdt'].map((c, i) => (
-                      <img key={c} src={`/${c}-logo.svg`} alt="" className={`w-6 h-6 ${COIN} ${i ? '-ml-2.5' : ''}`} style={{ zIndex: 3 - i }} />
+                      <img key={c} src={coinLogo(c)} alt="" className={`w-6 h-6 ${COIN} ${i ? '-ml-2.5' : ''}`} style={{ zIndex: 3 - i }} />
                     ))}
                   </span>
                   <span className="flex-1 text-[13px] font-medium text-neutral-800">On-chain crypto</span>

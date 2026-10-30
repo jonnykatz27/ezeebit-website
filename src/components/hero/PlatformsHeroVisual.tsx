@@ -2,7 +2,7 @@ import { AnimatePresence } from 'framer-motion'
 import { motion } from '../../lib/motion'
 import { Check, Loader2, Lock, ArrowDownLeft, ArrowUpRight, ShieldCheck, ChevronRight } from 'lucide-react'
 import {
-  CARD, COIN, LABEL, SWAP, arrive, money,
+  CARD, COIN, LABEL, SWAP, arrive, money, coinLogo,
   useHeroLoop, HeroStage, Halo, FloatingCoin, Counter,
 } from './heroKit'
 
@@ -21,7 +21,7 @@ const METHODS = [
   { name: 'Binance Pay', logo: '/Binance-Logo%20(clean).png' },
   { name: 'VALR Pay', logo: '/valr_logo%20(clean).png' },
   { name: 'WalletConnect', logo: '/walletconnect-logo.svg' },
-  { name: 'USDT on Tron', logo: '/usdt-logo.svg' },
+  { name: 'USDT on Tron', logo: '/usdt-round.svg' },
 ]
 
 type Deposit = { kind: 'deposit'; ref: string; amount: number; fiat: Fiat; method: number }
@@ -66,7 +66,7 @@ const PlatformsHeroVisual = () => {
     <HeroStage ref={ref} label="A platform's wallet taking a crypto deposit through the Ezeebit checkout and paying a withdrawal out in stablecoin, with a signed webhook to the platform for each.">
       <Halo x={300} y={260} />
 
-      <FloatingCoin src="/usdt-logo.svg" x={470} y={40} delay={0} still={still} />
+      <FloatingCoin src="/usdt-round.svg" x={470} y={40} delay={0} still={still} />
       <FloatingCoin src="/usdc-logo.svg" x={372} y={420} delay={0.5} still={still} />
       <FloatingCoin src="/btc-logo.svg" x={484} y={404} delay={1} still={still} />
 
@@ -167,7 +167,7 @@ const PlatformsHeroVisual = () => {
                   {money(event.amount / event.perCoin)} <span className="text-sm text-primary-600">{event.asset.toUpperCase()}</span>
                 </p>
                 <div className="flex items-center gap-2 rounded-xl bg-neutral-50 px-2.5 py-2 mb-2">
-                  <img src={`/${event.asset}-logo.svg`} alt="" className={`w-6 h-6 ${COIN}`} />
+                  <img src={coinLogo(event.asset)} alt="" className={`w-6 h-6 ${COIN}`} />
                   <span className="text-xs font-medium text-neutral-800">{event.asset.toUpperCase()}</span>
                   <span className="text-xs text-neutral-400">on</span>
                   <span className="text-xs font-medium text-neutral-800">{event.network}</span>
@@ -204,7 +204,7 @@ const PlatformsHeroVisual = () => {
                   <>
                     <p className="text-[15px] font-semibold text-neutral-900">Payout sent</p>
                     <p className="text-[11px] text-neutral-500 mt-0.5 flex items-center gap-1.5">
-                      <img src={`/${event.asset}-logo.svg`} alt="" className={`w-4 h-4 ${COIN}`} />
+                      <img src={coinLogo(event.asset)} alt="" className={`w-4 h-4 ${COIN}`} />
                       {money(event.amount / event.perCoin)} {event.asset.toUpperCase()} on {event.network}
                     </p>
                   </>

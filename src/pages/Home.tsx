@@ -16,6 +16,7 @@ import HomeHeroVisual from '../components/hero/HomeHeroVisual'
 import { coinLogo } from '../components/hero/heroKit'
 import { PortalBalanceCard, PortalConvertCard, PORTAL_PAGE_BG } from '../components/portal/PortalUI'
 import DarkBackdrop from '../components/DarkBackdrop'
+import ProductTour from '../components/ProductTour'
 
 const FLOWS = [
   { id: 'pay-in', label: 'Pay in' },
@@ -627,6 +628,8 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      <ProductTour />
 
       {/* ── How it works — one flow per product area ── */}
       <section id="how-it-works" className="scroll-mt-20 pt-8 pb-16 lg:pt-12 lg:pb-24 bg-white">

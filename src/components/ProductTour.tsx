@@ -1,90 +1,17 @@
-import { useState, useEffect, useRef, type ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { Check, ArrowRight } from 'lucide-react'
 import { motion } from '../lib/motion'
-import FlowDemo, { DemoPanel } from './demo/FlowDemo'
-import { CARD } from './hero/heroKit'
-import { PortalBalanceCard, PortalConvertCard, PORTAL_PAGE_BG } from './portal/PortalUI'
-
-/**
- * Renders its children at a fixed design width and scales them down to whatever
- * width it actually gets, reporting the scaled height so the box does not keep
- * the unscaled one. The same trick the demo iframes use on themselves, so the
- * portal view can sit at the same size as they do without the shared portal
- * components being resized for every other page that uses them.
- */
-const ScaleToFit = ({ design, children }: { design: number; children: React.ReactNode }) => {
-  const box = useRef<HTMLDivElement>(null)
-  const inner = useRef<HTMLDivElement>(null)
-  const [fit, setFit] = useState<{ scale: number; height?: number }>({ scale: 1 })
-
-  useEffect(() => {
-    const b = box.current
-    const i = inner.current
-    if (!b || !i) return
-    const measure = () => {
-      const scale = Math.min(1, b.clientWidth / design)
-      setFit({ scale, height: i.offsetHeight * scale })
-    }
-    measure()
-    const ro = new ResizeObserver(measure)
-    ro.observe(b)
-    ro.observe(i)
-    return () => ro.disconnect()
-  }, [design])
-
-  return (
-    <div ref={box} style={{ height: fit.height }}>
-      <div
-        ref={inner}
-        style={{ width: design, transform: `scale(${fit.scale})`, transformOrigin: 'top left' }}
-      >
-        {children}
-      </div>
-    </div>
-  )
-}
-
-/** The Merchant Portal, at the size the demo iframes sit at. */
-const PortalDemo = () => (
-  // The portal's own page background, so the cards sit as they do in the product
-  <DemoPanel label="Merchant Portal">
-    <ScaleToFit design={430}>
-      <div className={`rounded-[20px] ${PORTAL_PAGE_BG} p-3 space-y-3`}>
-        <div className="rounded-[12px] border border-neutral-200/70 overflow-hidden">
-          <PortalBalanceCard
-            total="R 1,637,102.25"
-            fiatShare={43.65}
-            fiat={{ mark: '/za-flag.svg', amount: 'R714,602.25' }}
-            stable={{ amount: '$50,000.00' }}
-          />
-        </div>
-        <div className="rounded-[12px] border border-neutral-200/70 overflow-hidden">
-          <PortalConvertCard
-            from="Fiat (ZAR)"
-            fromMark="/za-flag.svg"
-            fromAmount="50,000.00"
-            balance="714,602"
-            toAmount="2,710.03"
-            rate="Exchange rate: 1 ZAR = 0.0542 USDT"
-          />
-        </div>
-      </div>
-    </ScaleToFit>
-  </DemoPanel>
-)
-
-/** A small card beside the demo, for what happens around the screen the user sees. */
-type Side = { caption: string; value: string; sub: string; status?: string }
+import PlatformsHeroVisual from './hero/PlatformsHeroVisual'
+import OnlineHeroVisual from './hero/OnlineHeroVisual'
+import InStoreHeroVisual from './hero/InStoreHeroVisual'
+import PayoutsHeroVisual from './hero/PayoutsHeroVisual'
+import WalletsHeroVisual from './hero/WalletsHeroVisual'
 
 type Stop = {
   id: string
   label: string
-  /** The live demo, clickable, in the middle of the stage. */
-  demo: () => ReactNode
-  /** Two cards either side of it on wide screens. */
-  left: Side[]
-  right: Side[]
+  visual: () => ReactNode
   eyebrow: string
   heading: string
   body: string
@@ -94,23 +21,15 @@ type Stop = {
 }
 
 /**
- * One stop per product: the live demo people can click through, with what
- * happens around it on either side, then what it does and the facts a buyer
- * asks about. Every fact here is one the product page already states.
+ * One stop per product: the screen people actually see, then what it does
+ * and the facts a buyer asks about. Every fact here is one the product page
+ * already states.
  */
 const STOPS: Stop[] = [
   {
     id: 'platforms',
     label: 'Platforms',
-    demo: () => <FlowDemo src="/demos/pay-in.html" flow="payin" label="Try a deposit" title="Interactive demo of the Ezeebit checkout a user deposits through" />,
-    left: [
-      { caption: 'Deposit', value: 'Credited to the right user', sub: 'A reference tied to one account' },
-      { caption: 'Rate', value: 'Locked when they pay', sub: 'The amount you credit never moves' },
-    ],
-    right: [
-      { caption: 'Screening', value: 'Wallet checked', status: 'Clear', sub: 'Travel Rule data captured' },
-      { caption: 'Webhook', value: 'Deposit final', status: 'Signed', sub: 'Credit the user in real time' },
-    ],
+    visual: () => <PlatformsHeroVisual />,
     eyebrow: 'Gaming, trading and wallets',
     heading: 'Deposits and withdrawals, without holding crypto',
     body: 'Your users deposit with the crypto they already hold and withdraw in stablecoin. Every deposit is hedged the moment it lands, so you credit a fixed amount and never carry the asset.',
@@ -132,15 +51,7 @@ const STOPS: Stop[] = [
   {
     id: 'online',
     label: 'Online checkout',
-    demo: () => <FlowDemo src="/demos/pay-in.html" flow="payin" label="Try the checkout" title="Interactive demo of the Ezeebit online checkout" />,
-    left: [
-      { caption: 'Order #1042', value: 'Awaiting payment', sub: 'yourstore.co.za/checkout' },
-      { caption: 'Plugins', value: 'Shopify, WooCommerce, Magento', sub: 'Or build on the API' },
-    ],
-    right: [
-      { caption: 'Rate', value: 'Locked at checkout', sub: 'You receive what you charged' },
-      { caption: 'Settlement', value: 'Next business day', sub: 'ZAR, KES, NGN or USD, or stablecoin the same day' },
-    ],
+    visual: () => <OnlineHeroVisual />,
     eyebrow: 'Online stores',
     heading: 'A checkout your customers already know how to use',
     body: 'Customers pick their exchange or wallet and pay in a few taps. The amount is fixed in your currency when they pay, so you receive exactly what you charged.',
@@ -161,15 +72,7 @@ const STOPS: Stop[] = [
   {
     id: 'in-store',
     label: 'In-store',
-    demo: () => <FlowDemo src="/demos/pay-in.html" flow="payin" label="Try a payment" title="Interactive demo of the Ezeebit in-store checkout" />,
-    left: [
-      { caption: 'ePOS', value: 'Prints the receipt', sub: 'Over WiFi, 4G or SIM' },
-      { caption: 'Ezeebit Pay', value: 'A printed QR code', sub: 'No device needed' },
-    ],
-    right: [
-      { caption: 'Fees', value: '1% or lower', sub: 'Per transaction, excluding VAT' },
-      { caption: 'Final', value: 'No chargebacks', status: 'Settled', sub: "Confirmed payments can't be reversed" },
-    ],
+    visual: () => <InStoreHeroVisual />,
     eyebrow: 'Shops, restaurants and hotels',
     heading: 'Ring it up in your currency. They pay in crypto.',
     body: 'Staff enter the amount and the customer scans the code with the wallet or exchange app already on their phone. Every payment is hedged on the spot, so your takings never move with the market.',
@@ -191,15 +94,7 @@ const STOPS: Stop[] = [
   {
     id: 'payouts',
     label: 'Payouts',
-    demo: () => <FlowDemo src="/demos/pay-out.html" flow="payout" label="Try a payout" title="Interactive demo of an Ezeebit payout a user claims" />,
-    left: [
-      { caption: 'Payout link', value: 'Sent to your customer', sub: 'In your name and colours' },
-      { caption: 'Funding', value: 'Reserved from your balance', sub: 'The amount is fixed up front' },
-    ],
-    right: [
-      { caption: 'Screening', value: 'Address checked', status: 'Clear', sub: 'Before any funds move' },
-      { caption: 'Webhook', value: 'Payout finished', status: 'Signed', sub: 'With the transaction hash' },
-    ],
+    visual: () => <PayoutsHeroVisual />,
     eyebrow: 'Payouts',
     heading: 'A payout link your customer claims in minutes',
     body: 'You create the payout from your fiat balance and send a link. Your customer picks the asset and network, enters their own wallet and watches it land. Every address is screened before funds move.',
@@ -221,15 +116,7 @@ const STOPS: Stop[] = [
   {
     id: 'dashboard',
     label: 'Your dashboard',
-    demo: () => <PortalDemo />,
-    left: [
-      { caption: 'Withdraw', value: 'To your bank or wallet', sub: 'Fiat next business day, stablecoin the same day' },
-      { caption: 'Stores', value: 'One balance across them', sub: 'Sub-merchants through the API' },
-    ],
-    right: [
-      { caption: 'Convert', value: 'Fiat and USDT', sub: 'At a quoted rate' },
-      { caption: 'Records', value: 'Every movement referenced', sub: 'In the portal or by API' },
-    ],
+    visual: () => <WalletsHeroVisual />,
     eyebrow: 'Merchant Portal',
     heading: 'Every currency and every coin, on one balance',
     body: 'Pay-ins, payouts, conversions and withdrawals land on one ledger. Hold fiat or USDT, convert at a quoted rate, and withdraw to your bank or your own wallet.',
@@ -249,24 +136,6 @@ const STOPS: Stop[] = [
     ],
   },
 ]
-
-/** The cards either side of the demo. Wide screens only: on a phone the demo has the stage to itself. */
-const SideCards = ({ cards, align }: { cards: Side[]; align: 'start' | 'end' }) => (
-  <div aria-hidden="true" className={`hidden lg:flex flex-col gap-4 ${align === 'end' ? 'items-end' : 'items-start'}`}>
-    {cards.map((c) => (
-      <div key={c.caption} className={`${CARD} w-full max-w-[230px] p-4`}>
-        <div className="flex items-center justify-between gap-2 mb-1.5">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-neutral-500">{c.caption}</p>
-          {c.status && (
-            <span className="rounded-full bg-success-50 text-success-700 text-[10px] font-semibold px-2 py-0.5">{c.status}</span>
-          )}
-        </div>
-        <p className="text-[15px] font-semibold text-neutral-900 leading-snug">{c.value}</p>
-        <p className="text-xs text-neutral-500 mt-0.5 leading-snug">{c.sub}</p>
-      </div>
-    ))}
-  </div>
-)
 
 const ProductTour = () => {
   const [active, setActive] = useState(STOPS[0].id)
@@ -329,7 +198,7 @@ const ProductTour = () => {
         {/*
           Every panel's copy stays in the page, hidden when not selected, so the
           pre-render carries all five. Only the selected panel mounts its
-          demo, so one iframe loads at a time and each opens at its first screen.
+          illustration, so it plays its entrance each time the tab is opened.
         */}
         {STOPS.map((stop) => {
           const isActive = active === stop.id
@@ -342,17 +211,13 @@ const ProductTour = () => {
               hidden={!isActive}
             >
               {/* The product on the same Near Black as the page's opening, as a framed stage */}
-              <div className="relative overflow-hidden rounded-[28px] bg-neutral-950 px-4 py-8 sm:px-10 lg:py-12">
+              <div className="relative overflow-hidden rounded-[28px] bg-neutral-950 px-3 py-8 sm:px-10 lg:py-12">
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute -top-[20%] left-1/2 -translate-x-1/2 w-[110%] h-[70%]"
+                  className="pointer-events-none absolute -top-[30%] left-1/2 -translate-x-1/2 w-[110%] h-[90%]"
                   style={{ background: 'radial-gradient(closest-side, color-mix(in srgb, var(--color-primary-800) 70%, transparent), transparent)' }}
                 />
-                <div className="relative grid grid-cols-1 lg:grid-cols-[1fr_380px_1fr] items-center gap-8">
-                  <SideCards cards={stop.left} align="end" />
-                  <div className="w-full max-w-[380px] mx-auto">{isActive && stop.demo()}</div>
-                  <SideCards cards={stop.right} align="start" />
-                </div>
+                <div className="relative mx-auto max-w-[600px]">{isActive && stop.visual()}</div>
               </div>
 
               <div className="mt-10 lg:mt-12 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 text-left">

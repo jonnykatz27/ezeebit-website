@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react'
+import { useState, useEffect, useRef, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import { useReducedMotion } from 'framer-motion'
 import { motion } from '../lib/motion'
@@ -10,9 +10,11 @@ import {
 } from 'lucide-react'
 import PartnerCarousel from '../components/PartnerCarousel'
 import SEO from '../components/SEO'
+import FlowDemo, { DemoPanel } from '../components/demo/FlowDemo'
 import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import HomeHeroVisual from '../components/hero/HomeHeroVisual'
 import { coinLogo } from '../components/hero/heroKit'
+import { PortalBalanceCard, PortalConvertCard, PORTAL_PAGE_BG } from '../components/portal/PortalUI'
 import DarkBackdrop from '../components/DarkBackdrop'
 import ProductTour from '../components/ProductTour'
 
@@ -208,22 +210,113 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
   ],
 })
 
-/** Where to read more about each flow, under its steps. */
-const FLOW_LINKS: Record<FlowId, { label: string; to: string }[]> = {
-  'pay-in': [{ label: 'In-store payments', to: '/in-store' }, { label: 'Online checkout', to: '/online' }],
-  'pay-out': [{ label: 'Payouts', to: '/payouts' }],
-  'hold': [{ label: 'Wallets', to: '/wallets' }],
+/**
+ * A live, clickable copy of a flow, served from /public/demos. Each demo lays
+ * out at 640px and scales itself to the frame, then posts its new height up
+ * whenever the screen changes, so the frame grows with it instead of scrolling
+ * inside the page.
+ */
+/**
+ * Each demo's own natural height at full width, used until it reports its own.
+ * The iframe is sized from this rather than left to collapse, so a message
+ * that never arrives cannot break the layout.
+ */
+/**
+ * Renders its children at a fixed design width and scales them down to whatever
+ * width it actually gets, reporting the scaled height so the box does not keep
+ * the unscaled one. The same trick the demo iframes use on themselves, so the
+ * portal view can sit at the same size as they do without the shared portal
+ * components being resized for every other page that uses them.
+ */
+const ScaleToFit = ({ design, children }: { design: number; children: React.ReactNode }) => {
+  const box = useRef<HTMLDivElement>(null)
+  const inner = useRef<HTMLDivElement>(null)
+  const [fit, setFit] = useState<{ scale: number; height?: number }>({ scale: 1 })
+
+  useEffect(() => {
+    const b = box.current
+    const i = inner.current
+    if (!b || !i) return
+    const measure = () => {
+      const scale = Math.min(1, b.clientWidth / design)
+      setFit({ scale, height: i.offsetHeight * scale })
+    }
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(b)
+    ro.observe(i)
+    return () => ro.disconnect()
+  }, [design])
+
+  return (
+    <div ref={box} style={{ height: fit.height }}>
+      <div
+        ref={inner}
+        style={{ width: design, transform: `scale(${fit.scale})`, transformOrigin: 'top left' }}
+      >
+        {children}
+      </div>
+    </div>
+  )
+}
+
+type FlowDemoSpec = {
+  node: React.ReactNode
+  /** Where to read more, shown under the steps. */
+  links: { label: string; to: string }[]
+}
+
+const FLOW_DEMOS: Record<FlowId, FlowDemoSpec> = {
+  'pay-in': {
+    node: <FlowDemo src="/demos/pay-in.html" flow="payin" label="Try it" fill title="Interactive demo of the Ezeebit in-store checkout" />,
+    links: [{ label: 'In-store payments', to: '/in-store' }, { label: 'Online checkout', to: '/online' }],
+  },
+  'pay-out': {
+    node: <FlowDemo src="/demos/pay-out.html" flow="payout" label="Try it" fill title="Interactive demo of an Ezeebit payout" />,
+    links: [{ label: 'Payouts', to: '/payouts' }],
+  },
+  'hold': {
+    // The portal's own page background, so the cards sit as they do in the product
+    node: (
+      <DemoPanel label="Merchant Portal">
+      <ScaleToFit design={430}>
+      <div className={`rounded-[20px] ${PORTAL_PAGE_BG} p-3 space-y-3`}>
+        <div className="rounded-[12px] border border-neutral-200/70 overflow-hidden">
+          <PortalBalanceCard
+            total="R 1,637,102.25"
+            fiatShare={43.65}
+            fiat={{ mark: '/za-flag.svg', amount: 'R714,602.25' }}
+            stable={{ amount: '$50,000.00' }}
+          />
+        </div>
+        <div className="rounded-[12px] border border-neutral-200/70 overflow-hidden">
+          <PortalConvertCard
+            from="Fiat (ZAR)"
+            fromMark="/za-flag.svg"
+            fromAmount="50,000.00"
+            balance="714,602"
+            toAmount="2,710.03"
+            rate="Exchange rate: 1 ZAR = 0.0542 USDT"
+          />
+        </div>
+      </div>
+      </ScaleToFit>
+      </DemoPanel>
+    ),
+    links: [{ label: 'Wallets', to: '/wallets' }],
+  },
 }
 
 /**
- * One flow: its three steps, three across on wide screens and stacked on
- * smaller ones. The demos that used to sit beside them are in the product
- * tour above, so each step reads on its own.
+ * One flow: its three steps stacked on the left, and the product itself beside
+ * them, so the explanation and the thing it explains are read together. On
+ * wide screens the step cards stretch to the demo's height, so both columns
+ * start and end together however tall the current demo screen is.
  */
 const FlowCards = ({ flow, isActive }: { flow: FlowId; isActive: boolean }) => {
   const still = useReducedMotion() ?? false
   const steps = flowSteps(still)[flow]
-  const links = FLOW_LINKS[flow]
+  const demo = FLOW_DEMOS[flow]
   const rise = {
     hidden: { opacity: 0, y: 14 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.4, staggerChildren: 0.06 } },
@@ -236,33 +329,47 @@ const FlowCards = ({ flow, isActive }: { flow: FlowId; isActive: boolean }) => {
       variants={{ visible: { transition: { staggerChildren: 0.09 } } }}
       className="text-left"
     >
-      <ol className="flex flex-col lg:grid lg:grid-cols-3 lg:gap-6">
-        {steps.map((step, index) => (
-          <Fragment key={step.title}>
-            <motion.li
-              variants={rise}
-              className="bg-white border border-neutral-200/80 rounded-2xl shadow-sm p-5 lg:p-7 flex flex-col sm:flex-row lg:flex-col sm:items-center gap-3 sm:gap-5 lg:gap-4 text-center sm:text-left lg:text-center"
-            >
-              <div className="sm:w-48 lg:w-auto shrink-0 h-12 flex items-center justify-center">{step.visual}</div>
-              <div className="min-w-0">
-                {/* The same large number as the steps on the Wallets page */}
-                <div className="text-3xl lg:text-4xl font-display font-bold text-gradient leading-none mb-3">
-                  <span className="sr-only">Step </span>0{index + 1}
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px] gap-10 lg:gap-14 items-start lg:items-stretch">
+        {/* The steps are the whole column, so the last one finishes level with
+            the demo rather than stopping short of it. */}
+        <ol className="flex flex-col">
+          {steps.map((step, index) => (
+            <Fragment key={step.title}>
+              <motion.li
+                variants={rise}
+                className="lg:flex-1 bg-white border border-neutral-200/80 rounded-2xl shadow-sm p-5 lg:p-7 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 lg:gap-6 text-center sm:text-left"
+              >
+                <div className="sm:w-48 lg:w-56 shrink-0 h-12 flex items-center justify-center lg:scale-[1.15]">{step.visual}</div>
+                <div className="min-w-0">
+                  {/* The same large number as the steps on the Wallets page */}
+                  <div className="text-3xl lg:text-4xl font-display font-bold text-gradient leading-none mb-3">
+                    <span className="sr-only">Step </span>0{index + 1}
+                  </div>
+                  <h3 className="text-lg lg:text-xl font-semibold text-neutral-900 mb-1 lg:mb-1.5">{step.title}</h3>
+                  <p className="text-sm lg:text-[15px] text-neutral-500 leading-relaxed">{step.body}</p>
                 </div>
-                <h3 className="text-lg lg:text-xl font-semibold text-neutral-900 mb-1 lg:mb-1.5">{step.title}</h3>
-                <p className="text-sm lg:text-[15px] text-neutral-500 leading-relaxed">{step.body}</p>
-              </div>
-            </motion.li>
-            {/* Side by side, the cards need no connector between them */}
-            {index < steps.length - 1 && <div className="lg:hidden"><StepConnector still={still} index={index} /></div>}
-          </Fragment>
-        ))}
-      </ol>
+              </motion.li>
+              {index < steps.length - 1 && <StepConnector still={still} index={index} />}
+            </Fragment>
+          ))}
+        </ol>
 
-      {/* Somewhere to go next */}
-      <motion.div variants={rise} className="mt-6 flex flex-wrap items-center justify-center gap-3">
+        {/* The product itself, beside the steps that describe it */}
+        <motion.div variants={rise} className="w-full max-w-[360px] mx-auto lg:mx-0 flex flex-col">
+          <div className="flex-1">
+            {demo.node}
+          </div>
+        </motion.div>
+      </div>
+
+      {/*
+        Somewhere to go next. It sits under the grid rather than inside the
+        steps column, where it used to take the height the last card needed to
+        finish level with the demo.
+      */}
+      <motion.div variants={rise} className="mt-6 flex flex-wrap items-center justify-center sm:justify-start gap-3">
         <span className="text-sm text-neutral-500">Read more:</span>
-        {links.map((l) => (
+        {demo.links.map((l) => (
           <Link
             key={l.to}
             to={l.to}

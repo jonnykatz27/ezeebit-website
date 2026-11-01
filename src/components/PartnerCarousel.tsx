@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { useReducedMotion } from 'framer-motion'
 import { motion } from '../lib/motion'
 
 interface Partner {
@@ -15,6 +16,7 @@ interface PartnerCarouselProps {
 }
 
 const PartnerCarousel = ({ partners, direction, speed = 30 }: PartnerCarouselProps) => {
+  const reduceMotion = useReducedMotion()
   const [isInitialized, setIsInitialized] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const wrapperRef = useRef<HTMLDivElement>(null)
@@ -63,7 +65,7 @@ const PartnerCarousel = ({ partners, direction, speed = 30 }: PartnerCarouselPro
   }, [singleSetWidth, updateTransform])
 
   useEffect(() => {
-    if (!isInitialized) return
+    if (!isInitialized || reduceMotion) return
 
     let lastTime = performance.now()
 
@@ -100,7 +102,7 @@ const PartnerCarousel = ({ partners, direction, speed = 30 }: PartnerCarouselPro
         cancelAnimationFrame(animationRef.current)
       }
     }
-  }, [isInitialized, direction, speed, normalizePosition, updateTransform])
+  }, [isInitialized, reduceMotion, direction, speed, normalizePosition, updateTransform])
 
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
     isDraggingRef.current = true
@@ -140,7 +142,7 @@ const PartnerCarousel = ({ partners, direction, speed = 30 }: PartnerCarouselPro
     <div
       ref={wrapperRef}
       className="relative overflow-hidden w-full cursor-grab active:cursor-grabbing select-none"
-      style={{ touchAction: 'none' }}
+      style={{ touchAction: 'pan-y' }}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
@@ -164,7 +166,10 @@ const PartnerCarousel = ({ partners, direction, speed = 30 }: PartnerCarouselPro
           >
             <img
               src={partner.logo}
-              alt={partner.name}
+              alt={index < partners.length ? partner.name : ''}
+              width={isMobile ? 194 : 300}
+              height={isMobile ? 116 : 144}
+              loading="lazy"
               className="object-contain max-w-full max-h-full"
               style={{
                 width: isMobile ? '97px' : '150px',

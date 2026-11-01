@@ -67,7 +67,7 @@ const DevelopersHeroVisual = ({ environment, baseUrl, checkoutHost }: { environm
           <span className="flex gap-1.5">
             {[0, 1, 2].map((i) => <span key={i} className="w-2.5 h-2.5 rounded-full bg-white/15" />)}
           </span>
-          <span className="text-[11px] text-neutral-400 font-mono">newOrder</span>
+          <span className="text-[11px] text-neutral-600 font-mono">newOrder</span>
           <span className={`ml-auto text-[10px] font-semibold rounded-full px-2 py-0.5 ${environment === 'uat' ? 'bg-orange-500/15 text-orange-300' : 'bg-success-500/15 text-success-400'}`}>
             {environment === 'uat' ? 'UAT' : 'Live'}
           </span>
@@ -116,7 +116,7 @@ const DevelopersHeroVisual = ({ environment, baseUrl, checkoutHost }: { environm
           <span className={`flex items-center gap-1.5 ${LABEL}`}>
             <Webhook className="w-3.5 h-3.5 text-primary-500" /> Webhook
           </span>
-          <span className={`text-[10px] font-semibold rounded-full px-2 py-0.5 transition-colors duration-300 ${hooked ? 'bg-success-50 text-success-700' : 'bg-neutral-100 text-neutral-500'}`}>
+          <span className={`text-[10px] font-semibold rounded-full px-2 py-0.5 transition-colors duration-300 ${hooked ? 'bg-success-50 text-success-700' : 'bg-neutral-100 text-neutral-600'}`}>
             {hooked ? 'Received' : 'Waiting'}
           </span>
         </div>

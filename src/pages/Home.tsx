@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, Fragment } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useReducedMotion } from 'framer-motion'
 import { motion } from '../lib/motion'
@@ -101,7 +101,7 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
     {
       title: 'We lock the rate',
       body: 'The amount is fixed and hedged the moment they pay, so its value cannot move.',
-      visual: <img src="/ezeebit-icon-blue.png" alt="Ezeebit" className="w-11 h-11 object-contain !mx-0" />,
+      visual: <img src="/ezeebit-icon-blue.webp" alt="Ezeebit" width={88} height={88} className="w-11 h-11 object-contain !mx-0" />,
     },
     {
       title: 'You get settled',
@@ -109,7 +109,7 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
       visual: (
         <div className="flex items-center gap-2.5">
           <FlagStack />
-          <span className="text-xs font-medium text-neutral-400">or</span>
+          <span className="text-xs font-medium text-neutral-600">or</span>
           <div className="flex items-center">
             <img src="/usdt-round.svg" alt="USDT" className={ASSET_CHIP} />
             <img src="/usdc-logo.svg" alt="USDC" className={`${ASSET_CHIP} ${OVERLAP}`} />
@@ -210,17 +210,6 @@ const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string
   ],
 })
 
-/**
- * A live, clickable copy of a flow, served from /public/demos. Each demo lays
- * out at 640px and scales itself to the frame, then posts its new height up
- * whenever the screen changes, so the frame grows with it instead of scrolling
- * inside the page.
- */
-/**
- * Each demo's own natural height at full width, used until it reports its own.
- * The iframe is sized from this rather than left to collapse, so a message
- * that never arrives cannot break the layout.
- */
 /**
  * Renders its children at a fixed design width and scales them down to whatever
  * width it actually gets, reporting the scaled height so the box does not keep
@@ -332,13 +321,14 @@ const FlowCards = ({ flow, isActive }: { flow: FlowId; isActive: boolean }) => {
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px] gap-10 lg:gap-14 items-start lg:items-stretch">
         {/* The steps are the whole column, so the last one finishes level with
             the demo rather than stopping short of it. */}
-        <ol className="flex flex-col">
+        <ol className="flex flex-col list-none">
           {steps.map((step, index) => (
-            <Fragment key={step.title}>
-              <motion.li
-                variants={rise}
-                className="lg:flex-1 bg-white border border-neutral-200/80 rounded-2xl shadow-sm p-5 lg:p-7 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 lg:gap-6 text-center sm:text-left"
-              >
+            <motion.li
+              key={step.title}
+              variants={rise}
+              className="lg:flex-1 flex flex-col"
+            >
+              <div className="lg:flex-1 bg-white border border-neutral-200/80 rounded-2xl shadow-sm p-5 lg:p-7 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 lg:gap-6 text-center sm:text-left">
                 <div className="sm:w-48 lg:w-56 shrink-0 h-12 flex items-center justify-center lg:scale-[1.15]">{step.visual}</div>
                 <div className="min-w-0">
                   {/* The same large number as the steps on the Wallets page */}
@@ -348,9 +338,9 @@ const FlowCards = ({ flow, isActive }: { flow: FlowId; isActive: boolean }) => {
                   <h3 className="text-lg lg:text-xl font-semibold text-neutral-900 mb-1 lg:mb-1.5">{step.title}</h3>
                   <p className="text-sm lg:text-[15px] text-neutral-500 leading-relaxed">{step.body}</p>
                 </div>
-              </motion.li>
+              </div>
               {index < steps.length - 1 && <StepConnector still={still} index={index} />}
-            </Fragment>
+            </motion.li>
           ))}
         </ol>
 
@@ -555,16 +545,16 @@ const Home = () => {
           <div className="mb-2 md:mb-8 partner-carousel-container">
             <PartnerCarousel
               partners={[
-                { name: 'iStore', logo: '/istore-logo(final).png', scale: 1.06 },
-                { name: 'Skins', logo: '/skins-logo.png' },
-                { name: 'Le Creuset', logo: '/le-creuset-logo(final).png', scale: 1.475 },
-                { name: 'Amiri', logo: '/amiri-logo(latest).png', mobileScale: 0.95 },
-                { name: 'Ritual', logo: '/ritual-logo(latest).png', scale: 1.15 },
-                { name: 'Hydraulics', logo: '/hydraulics-logo(latest).png', scale: 1.15 },
-                { name: 'Al Capone', logo: '/alcapone-logo(final).png', scale: 1.15 },
-                { name: 'Scoin', logo: '/scoin-logo(latest).png' },
-                { name: 'Soul Gallery', logo: '/soul-gallery-logo(final).png', scale: 0.8, mobileScale: 0.69 },
-                { name: 'Sunbet', logo: '/sunbet-logo.png' }
+                { name: 'iStore', logo: '/istore-logo(final).webp', scale: 1.06 },
+                { name: 'Skins', logo: '/skins-logo.webp' },
+                { name: 'Le Creuset', logo: '/le-creuset-logo(final).webp', scale: 1.475 },
+                { name: 'Amiri', logo: '/amiri-logo(latest).webp', mobileScale: 0.95 },
+                { name: 'Ritual', logo: '/ritual-logo(latest).webp', scale: 1.15 },
+                { name: 'Hydraulics', logo: '/hydraulics-logo(latest).webp', scale: 1.15 },
+                { name: 'Al Capone', logo: '/alcapone-logo(final).webp', scale: 1.15 },
+                { name: 'Scoin', logo: '/scoin-logo(latest).webp' },
+                { name: 'Soul Gallery', logo: '/soul-gallery-logo(final).webp', scale: 0.8, mobileScale: 0.69 },
+                { name: 'Sunbet', logo: '/sunbet-logo.webp' }
               ]}
               direction="left"
               speed={40}
@@ -574,16 +564,16 @@ const Home = () => {
           <div className="partner-carousel-container">
             <PartnerCarousel
               partners={[
-                { name: 'Yawa', logo: '/yawa-logo(final).png', scale: 0.9, mobileScale: 1.089 },
-                { name: 'Tintswalo Lodge', logo: '/tintswalo-logo(latest).png', scale: 1.32, mobileScale: 1.2245 },
-                { name: 'Luxity', logo: '/luxity-logo(latest).png', mobileScale: 0.8 },
-                { name: 'The Capital', logo: '/thecapital-logo.png', scale: 1.25 },
-                { name: 'Spar', logo: '/spar-logo(latest).png', mobileScale: 0.8 },
-                { name: 'Cultish', logo: '/cultish-logo(latest).png', scale: 1.6, mobileScale: 1.32 },
-                { name: 'Watch Channel', logo: '/watch-channel-logo(final).png', mobileScale: 1.05 },
-                { name: 'Diesel', logo: '/diesel-logo(final).png', scale: 0.806, mobileScale: 0.772 },
-                { name: 'Sumptuous Tours', logo: '/sumptuous-tours-logo.png', scale: 1.5 },
-                { name: 'BHH', logo: '/bhh-logo.png' }
+                { name: 'Yawa', logo: '/yawa-logo(final).webp', scale: 0.9, mobileScale: 1.089 },
+                { name: 'Tintswalo Lodge', logo: '/tintswalo-logo(latest).webp', scale: 1.32, mobileScale: 1.2245 },
+                { name: 'Luxity', logo: '/luxity-logo(latest).webp', mobileScale: 0.8 },
+                { name: 'The Capital', logo: '/thecapital-logo.webp', scale: 1.25 },
+                { name: 'Spar', logo: '/spar-logo(latest).webp', mobileScale: 0.8 },
+                { name: 'Cultish', logo: '/cultish-logo(latest).webp', scale: 1.6, mobileScale: 1.32 },
+                { name: 'Watch Channel', logo: '/watch-channel-logo(final).webp', mobileScale: 1.05 },
+                { name: 'Diesel', logo: '/diesel-logo(final).webp', scale: 0.806, mobileScale: 0.772 },
+                { name: 'Sumptuous Tours', logo: '/sumptuous-tours-logo.webp', scale: 1.5 },
+                { name: 'BHH', logo: '/bhh-logo.webp' }
               ]}
               direction="right"
               speed={40}
@@ -714,7 +704,7 @@ const Home = () => {
             viewport={{ once: true }}
             className="text-center"
           >
-            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-400 mb-8">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-600 mb-8">
               Backed by
             </p>
 
@@ -767,14 +757,14 @@ const Home = () => {
             <div className="relative overflow-hidden group">
               <button
                 onClick={prevTestimonial}
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-md flex items-center justify-center text-neutral-600 hover:text-primary-500 transition-all duration-200 opacity-0 group-hover:opacity-100"
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-md flex items-center justify-center text-neutral-600 hover:text-primary-500 transition-all duration-200 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
                 aria-label="Previous testimonial"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <button
                 onClick={nextTestimonial}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-md flex items-center justify-center text-neutral-600 hover:text-primary-500 transition-all duration-200 opacity-0 group-hover:opacity-100"
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-md flex items-center justify-center text-neutral-600 hover:text-primary-500 transition-all duration-200 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
                 aria-label="Next testimonial"
               >
                 <ChevronRight className="w-5 h-5" />
@@ -817,7 +807,7 @@ const Home = () => {
               <button
                 key={index}
                 onClick={() => setCurrentTestimonial(index)}
-                className="group px-1.5 py-3"
+                className="group px-2 py-3"
                 aria-label={`Go to testimonial ${index + 1}`}
               >
                 <span

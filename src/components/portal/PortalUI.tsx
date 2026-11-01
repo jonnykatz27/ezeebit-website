@@ -16,10 +16,10 @@ const C = {
   text: '#172b4d',         // color.text
   subtle: '#44546f',       // color.text.subtle
   subtlest: '#626f86',     // color.text.subtlest
-  brand: '#0074e3',        // color.text.brand
+  brand: '#00509e',        // darkened so amounts on white clear contrast
   gray900: '#181d27',      // Gray/900
   amount: '#181c1e',
-  success: '#22a06b',      // color.text.success
+  success: '#047857',      // darkened from the portal green so the chip clears contrast on its pale background
   successBg: '#dcfff1',    // color.background.accent.green.subtlest
   fiat: '#00509e',
   stable: '#cfe7ff',

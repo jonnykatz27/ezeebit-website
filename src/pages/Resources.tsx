@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { motion } from '../lib/motion'
 import { Link } from 'react-router-dom'
 import {
@@ -9,6 +10,7 @@ import PageHero, { HeroSearch } from '../components/hero/PageHero'
 import DarkBackdrop from '../components/DarkBackdrop'
 
 const Resources = () => {
+  const [query, setQuery] = useState('')
   const resourceCategories = [
     {
       title: 'About Us',
@@ -90,6 +92,15 @@ const Resources = () => {
     { name: 'Status Page', href: 'https://status.ezeebit.com', icon: <Clock className="w-4 h-4" /> }
   ]
 
+  const needle = query.trim().toLowerCase()
+  const matches = (parts: string[]) => !needle || parts.join(' ').toLowerCase().includes(needle)
+  const visibleCategories = resourceCategories.filter((category) =>
+    matches([category.title, category.description, ...category.items])
+  )
+  const visiblePopular = popularResources.filter((resource) =>
+    matches([resource.title, resource.type, resource.description])
+  )
+
   return (
     <>
       <SEO
@@ -110,14 +121,17 @@ const Resources = () => {
         accent="and support"
         description="Everything you need to succeed with Ezeebit. From getting started guides to legal documentation, we've got you covered."
       >
-        <HeroSearch placeholder="Search resources, guides, and FAQs..." />
+        <HeroSearch placeholder="Search resources, guides, and FAQs..." value={query} onChange={setQuery} />
       </PageHero>
 
       {/* Resource Categories */}
       <section className="section-padding bg-white">
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {resourceCategories.map((category, index) => (
+            {needle && visibleCategories.length === 0 && (
+              <p className="col-span-full text-center text-neutral-600">No guides match “{query.trim()}”.</p>
+            )}
+            {visibleCategories.map((category, index) => (
               <motion.div
                 key={category.title}
                 initial={{ opacity: 0, y: 20 }}
@@ -172,7 +186,10 @@ const Resources = () => {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {popularResources.map((resource, index) => (
+            {needle && visiblePopular.length === 0 && (
+              <p className="col-span-full text-center text-neutral-600">No articles match “{query.trim()}”.</p>
+            )}
+            {visiblePopular.map((resource, index) => (
               <motion.div
                 key={resource.title}
                 initial={{ opacity: 0, y: 20 }}

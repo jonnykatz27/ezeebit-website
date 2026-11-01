@@ -76,13 +76,13 @@ const PlatformsHeroVisual = () => {
           <span className="flex gap-1">
             {[0, 1, 2].map((i) => <span key={i} className="w-2 h-2 rounded-full bg-neutral-300" />)}
           </span>
-          <span className="flex-1 mx-3 h-5 rounded-md bg-white border border-neutral-200 flex items-center gap-1 px-2 text-[10px] text-neutral-500">
+          <span className="flex-1 mx-3 h-5 rounded-md bg-white border border-neutral-200 flex items-center gap-1 px-2 text-[10px] text-neutral-600">
             <Lock className="w-2.5 h-2.5" /> yourplatform.com/wallet
           </span>
         </div>
         <div className="p-4">
           <p className={`${LABEL} mb-1.5`}>Your wallet</p>
-          <p className="text-[11px] text-neutral-500">Available balance</p>
+          <p className="text-[11px] text-neutral-600">Available balance</p>
           <p className="text-[26px] font-semibold text-neutral-900 tracking-tight tabular-nums mb-3">
             {/* Re-keyed per currency, so a new currency swaps the figure rather than counting across from the last one */}
             <Counter key={event.fiat} value={balance} format={fmt} still={still} />
@@ -109,11 +109,11 @@ const PlatformsHeroVisual = () => {
                 </span>
                 <div className="flex-1 min-w-0">
                   <p className="text-[12px] font-semibold text-neutral-900">{isDeposit ? 'Crypto deposit' : 'Withdrawal'}</p>
-                  <p className="text-[10px] text-neutral-500">
+                  <p className="text-[10px] text-neutral-600">
                     {isDeposit ? (settled ? 'Credited' : 'Pending') : (settled ? `Sent as ${event.asset.toUpperCase()}` : 'Processing')}
                   </p>
                 </div>
-                <span className={`text-[12px] font-semibold tabular-nums ${!settled ? 'text-neutral-400' : isDeposit ? 'text-success-700' : 'text-neutral-900'}`}>
+                <span className={`text-[12px] font-semibold tabular-nums ${!settled ? 'text-neutral-600' : isDeposit ? 'text-success-700' : 'text-neutral-900'}`}>
                   {isDeposit ? '+' : '−'}{fmt(event.amount)}
                 </span>
               </motion.div>
@@ -128,11 +128,11 @@ const PlatformsHeroVisual = () => {
           <motion.div key={event.ref} {...SWAP} className="flex items-center justify-between mb-3">
             <div>
               <p className="text-[13px] font-semibold text-neutral-900">{isDeposit ? 'Deposit with crypto' : 'Withdraw to your wallet'}</p>
-              <p className="text-[11px] text-neutral-500">
+              <p className="text-[11px] text-neutral-600">
                 Amount: <b className="text-neutral-800">{fmt(event.amount)}</b>
               </p>
             </div>
-            <img src="/ezeebit-icon-blue.png" alt="" className="w-6 h-6 object-contain" />
+            <img src="/ezeebit-icon-blue.webp" alt="" width={48} height={48} className="w-6 h-6 object-contain" />
           </motion.div>
         </AnimatePresence>
 
@@ -162,18 +162,18 @@ const PlatformsHeroVisual = () => {
 
             {event.kind === 'payout' && !done && (
               <motion.div key={`claim${event.ref}`} {...SWAP} className="absolute inset-0">
-                <p className="text-[11px] text-neutral-500">You receive</p>
+                <p className="text-[11px] text-neutral-600">You receive</p>
                 <p className="text-[22px] font-bold tracking-tight text-neutral-900 leading-tight mb-3">
                   {money(event.amount / event.perCoin)} <span className="text-sm text-primary-600">{event.asset.toUpperCase()}</span>
                 </p>
                 <div className="flex items-center gap-2 rounded-xl bg-neutral-50 px-2.5 py-2 mb-2">
                   <img src={coinLogo(event.asset)} alt="" className={`w-6 h-6 ${COIN}`} />
                   <span className="text-xs font-medium text-neutral-800">{event.asset.toUpperCase()}</span>
-                  <span className="text-xs text-neutral-400">on</span>
+                  <span className="text-xs text-neutral-600">on</span>
                   <span className="text-xs font-medium text-neutral-800">{event.network}</span>
                 </div>
                 <div className="rounded-xl border border-neutral-200 px-2.5 py-2 mb-3">
-                  <p className="text-[9px] uppercase tracking-[0.08em] text-neutral-400">Your wallet address</p>
+                  <p className="text-[9px] uppercase tracking-[0.08em] text-neutral-600">Your wallet address</p>
                   <p className="text-xs font-medium text-neutral-800 font-mono">{event.to}</p>
                 </div>
                 <p className="flex items-center gap-1.5 text-[11px] text-primary-600">
@@ -195,7 +195,7 @@ const PlatformsHeroVisual = () => {
                 {event.kind === 'deposit' ? (
                   <>
                     <p className="text-[15px] font-semibold text-neutral-900">Payment confirmed</p>
-                    <p className="text-[11px] text-neutral-500 mt-0.5 flex items-center gap-1.5">
+                    <p className="text-[11px] text-neutral-600 mt-0.5 flex items-center gap-1.5">
                       <img src={METHODS[event.method].logo} alt="" className="w-4 h-4 rounded object-contain" />
                       Paid with {METHODS[event.method].name}
                     </p>
@@ -203,7 +203,7 @@ const PlatformsHeroVisual = () => {
                 ) : (
                   <>
                     <p className="text-[15px] font-semibold text-neutral-900">Payout sent</p>
-                    <p className="text-[11px] text-neutral-500 mt-0.5 flex items-center gap-1.5">
+                    <p className="text-[11px] text-neutral-600 mt-0.5 flex items-center gap-1.5">
                       <img src={coinLogo(event.asset)} alt="" className={`w-4 h-4 ${COIN}`} />
                       {money(event.amount / event.perCoin)} {event.asset.toUpperCase()} on {event.network}
                     </p>
@@ -221,13 +221,13 @@ const PlatformsHeroVisual = () => {
           <motion.div key={`${event.ref}${done}`} {...SWAP}>
             <div className="flex items-center justify-between mb-2">
               <span className={LABEL}>Webhook</span>
-              <span className={`text-[10px] font-semibold rounded-full px-2 py-0.5 ${done ? 'bg-success-50 text-success-700' : 'bg-neutral-100 text-neutral-500'}`}>
+              <span className={`text-[10px] font-semibold rounded-full px-2 py-0.5 ${done ? 'bg-success-50 text-success-700' : 'bg-neutral-100 text-neutral-600'}`}>
                 {done ? '200 OK' : 'Waiting'}
               </span>
             </div>
             <pre className="font-mono text-[10px] leading-[1.55] text-neutral-600 bg-neutral-50 rounded-lg px-2.5 py-2 mb-2 whitespace-pre">
               <span className="text-primary-600 font-semibold">POST</span> /webhooks/{isDeposit ? 'ezeebit' : 'payouts'}{'\n'}
-              {'{ '}"status": <span className={done ? 'text-success-700' : 'text-neutral-400'}>"{done ? 'success' : 'pending'}"</span>,{'\n'}
+              {'{ '}"status": <span className={done ? 'text-success-700' : 'text-neutral-700'}>"{done ? 'success' : 'pending'}"</span>,{'\n'}
               {isDeposit ? (
                 <>
                   {'  '}"tradeOrderNo": "{event.ref}",{'\n'}
@@ -242,7 +242,7 @@ const PlatformsHeroVisual = () => {
                 </>
               )}
             </pre>
-            <p className={`text-[10px] flex items-center gap-1 ${done ? 'text-success-700' : 'text-neutral-400'}`}>
+            <p className={`text-[10px] flex items-center gap-1 ${done ? 'text-success-700' : 'text-neutral-600'}`}>
               <ShieldCheck className="w-3.5 h-3.5" /> {done ? 'Signature verified' : isDeposit ? 'Waiting for the payment' : 'Waiting for the transfer'}
             </p>
           </motion.div>

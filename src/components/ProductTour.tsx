@@ -168,7 +168,7 @@ const ProductTour = () => {
           <div
             role="tablist"
             aria-label="Ezeebit products"
-            className="inline-flex items-center gap-1 p-1 rounded-full bg-neutral-950 max-w-full overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="flex flex-wrap items-center justify-center gap-1 p-1 rounded-[24px] bg-neutral-950 max-w-full"
           >
             {STOPS.map((stop, index) => (
               <button
@@ -179,11 +179,7 @@ const ProductTour = () => {
                 aria-selected={active === stop.id}
                 aria-controls={`tour-panel-${stop.id}`}
                 tabIndex={active === stop.id ? 0 : -1}
-                onClick={(e) => {
-                  setActive(stop.id)
-                  // On a phone the tabs scroll sideways; bring the chosen one fully into view
-                  e.currentTarget.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' })
-                }}
+                onClick={() => setActive(stop.id)}
                 onKeyDown={(e) => onKeys(e, index)}
                 className={`whitespace-nowrap rounded-full px-4 sm:px-5 py-2.5 text-sm font-semibold transition-colors ${
                   active === stop.id ? 'bg-primary-500 text-white' : 'text-neutral-300 hover:text-white'

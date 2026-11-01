@@ -87,7 +87,7 @@ const OnlineHeroVisual = () => {
             <p className="text-[13px] font-semibold text-neutral-900">Select payment method</p>
             <p className="text-[11px] text-neutral-500">Amount: <b className="text-neutral-800">{rands(order.zar)}</b></p>
           </div>
-          <img src="/ezeebit-icon-blue.png" alt="" className="w-6 h-6 object-contain" />
+          <img src="/ezeebit-icon-blue.webp" alt="" width={48} height={48} className="w-6 h-6 object-contain" />
         </div>
 
         <div className="relative h-[232px]">

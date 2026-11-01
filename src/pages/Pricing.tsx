@@ -96,6 +96,10 @@ const Pricing = () => {
             Monthly
           </span>
           <button
+            type="button"
+            role="switch"
+            aria-checked={billingCycle === 'annual'}
+            aria-label="Annual billing"
             onClick={() => setBillingCycle(billingCycle === 'monthly' ? 'annual' : 'monthly')}
             className="relative inline-flex h-6 w-11 items-center rounded-full bg-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-neutral-950"
           >
@@ -143,7 +147,7 @@ const Pricing = () => {
                   <div className="w-12 h-12 bg-neutral-950 rounded-lg flex items-center justify-center mx-auto mb-3 text-primary-400">
                     {plan.icon}
                   </div>
-                  <h3 className="text-2xl font-bold text-neutral-900 mb-2">{plan.name}</h3>
+                  <h2 className="text-2xl font-bold text-neutral-900 mb-2">{plan.name}</h2>
                   <p className="text-neutral-600 mb-4 text-sm">{plan.description}</p>
                   
                   <div className="mb-4">

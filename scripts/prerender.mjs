@@ -184,7 +184,7 @@ let failCount = 0
 
 for (const url of routes) {
   try {
-    const { html: appHtml, helmet } = render(url)
+    const { html: appHtml, helmet } = await render(url)
 
     // Start from the client-built template
     let page = template

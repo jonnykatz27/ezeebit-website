@@ -36,7 +36,7 @@ export const COIN = 'rounded-full bg-white shadow-sm object-contain'
 export const coinLogo = (ticker: string) => (ticker === 'usdt' ? '/usdt-round.svg' : `/${ticker}-logo.svg`)
 
 /** Small caps label at the top of a floating card. */
-export const LABEL = 'text-[11px] font-semibold uppercase tracking-[0.1em] text-neutral-400'
+export const LABEL = 'text-[11px] font-semibold uppercase tracking-[0.1em] text-neutral-600'
 
 /** Content that is replaced in place: the old copy lifts away as the new one settles. */
 export const SWAP = {

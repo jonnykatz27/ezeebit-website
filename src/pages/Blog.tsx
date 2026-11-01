@@ -366,6 +366,7 @@ const Blog = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="mt-4 inline-flex items-center text-primary-500 hover:text-primary-700 font-medium text-sm group"
+                      aria-label={`Read more: ${post.title}`}
                     >
                       Read More
                       <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
@@ -374,6 +375,7 @@ const Blog = () => {
                     <Link
                       to={`/blog/${post.id}`}
                       className="mt-4 inline-flex items-center text-primary-500 hover:text-primary-700 font-medium text-sm group"
+                      aria-label={`Read more: ${post.title}`}
                     >
                       Read More
                       <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />

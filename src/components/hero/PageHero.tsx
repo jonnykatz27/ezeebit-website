@@ -107,7 +107,7 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
         <motion.p
           variants={HERO_ITEM}
           itemProp={itemProps ? 'description' : undefined}
-          className={`text-lg lg:text-xl text-neutral-300 leading-relaxed mb-8 ${split ? 'max-w-xl mx-auto lg:mx-0' : 'max-w-2xl mx-auto'}`}
+          className={`text-lg lg:text-xl text-neutral-300 leading-relaxed mb-8 ${split ? 'max-w-xl mx-auto lg:mx-0' : stacked ? 'max-w-3xl mx-auto' : 'max-w-2xl mx-auto'}`}
         >
           {description}
         </motion.p>

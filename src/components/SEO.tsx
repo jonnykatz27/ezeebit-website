@@ -23,6 +23,12 @@ interface SEOProps {
   extraNodes?: object[]
   publishedTime?: string
   modifiedTime?: string
+  /**
+   * Replaces the shared organization description for this page only.
+   * The homepage uses it so structured data does not repeat claims the
+   * page itself is not allowed to make.
+   */
+  orgDescription?: string
 }
 
 function clampDescription(description: string) {
@@ -45,13 +51,17 @@ const SEO = ({
   extraNodes,
   publishedTime,
   modifiedTime,
+  orgDescription,
 }: SEOProps) => {
   const fullTitle = exactTitle || title.startsWith('Ezeebit') ? title : `${title} | Ezeebit`
   const summary = clampDescription(description)
   const url = canonicalUrl(path)
   const image = absoluteUrl(ogImage)
 
-  const graph: object[] = [organizationNode, websiteNode]
+  const graph: object[] = [
+    orgDescription ? { ...organizationNode, description: orgDescription } : organizationNode,
+    websiteNode,
+  ]
   if (crumbs && crumbs.length > 0) graph.push(breadcrumbNode(crumbs))
   if (extraNodes) graph.push(...extraNodes)
 

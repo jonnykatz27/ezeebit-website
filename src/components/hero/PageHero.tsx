@@ -63,6 +63,14 @@ type PageHeroProps = {
    * glow coming from the top, for the homepage, where the headline leads.
    */
   stacked?: boolean
+  /** Small label above the headline. Stays outside the entrance animation. */
+  kicker?: ReactNode
+  /**
+   * A full-width block under the headline, outside the entrance animation,
+   * so it paints with the h1 and is not capped at the illustration width.
+   */
+  wideVisual?: ReactNode
+  id?: string
 }
 
 /**
@@ -72,7 +80,7 @@ type PageHeroProps = {
  * are centred. The real product UI in the illustrations reads as white
  * cards against the dark.
  */
-const PageHero = ({ title, accent, description, actions, trust, visual, children, itemProps, bleedVisual, stacked }: PageHeroProps) => {
+const PageHero = ({ title, accent, description, actions, trust, visual, children, itemProps, bleedVisual, stacked, kicker, wideVisual, id }: PageHeroProps) => {
   const split = Boolean(visual) && !stacked
   const align = split ? 'text-center lg:text-left' : 'text-center'
   const justify = split ? 'justify-center lg:justify-start' : 'justify-center'
@@ -86,6 +94,11 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
         is a step below the old 10vw size so "Stablecoin payments," stays on
         one line at 390px.
       */}
+      {kicker && (
+        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-400 mb-4">
+          {kicker}
+        </p>
+      )}
       <h1
         itemProp={itemProps ? 'name' : undefined}
         className={`hero-title font-display font-bold text-white mb-5 sm:mb-6 !leading-[1.04] tracking-[-0.03em] ${
@@ -137,7 +150,7 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
   )
 
   return (
-    <section className={`relative overflow-hidden pt-40 lg:pt-48 ${split ? 'pb-14 lg:pb-24' : 'pb-12 lg:pb-20'}`}>
+    <section id={id} className={`relative overflow-hidden pt-40 lg:pt-48 ${split ? 'pb-14 lg:pb-24' : 'pb-12 lg:pb-20'}`}>
       <HeroBackdrop glow={stacked ? 'top' : 'side'} />
       <div className="container-custom relative z-10">
         {split ? (
@@ -148,6 +161,7 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
         ) : (
           <>
             {text}
+            {wideVisual && <div className="mt-10 lg:mt-14">{wideVisual}</div>}
             {visual && <div className="mt-12 lg:mt-16 mx-auto max-w-[620px]">{visual}</div>}
           </>
         )}

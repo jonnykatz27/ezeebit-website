@@ -142,7 +142,12 @@ const PartnerCarousel = ({ partners, direction, speed = 30 }: PartnerCarouselPro
     <div
       ref={wrapperRef}
       className="relative overflow-hidden w-full cursor-grab active:cursor-grabbing select-none"
-      style={{ touchAction: 'pan-y' }}
+      style={{
+        touchAction: 'pan-y',
+        // Fade the track out before the clip, so a logo is not cut off mid-mark.
+        maskImage: 'linear-gradient(to right, transparent, #000 2.75rem, #000 calc(100% - 2.75rem), transparent)',
+        WebkitMaskImage: 'linear-gradient(to right, transparent, #000 2.75rem, #000 calc(100% - 2.75rem), transparent)',
+      }}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
@@ -150,34 +155,29 @@ const PartnerCarousel = ({ partners, direction, speed = 30 }: PartnerCarouselPro
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="absolute left-0 top-0 w-4 md:w-8 h-full bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-      <div className="absolute right-0 top-0 w-4 md:w-8 h-full bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
-
       <motion.div
         ref={containerRef}
         className="flex items-center will-change-transform"
-        style={{ gap: `${GAP}px` }}
+        style={{ gap: `${GAP}px`, transform: `translateX(${-singleSetWidth}px)` }}
       >
         {seamlessPartners.map((partner, index) => (
           <div
             key={`${partner.name}-${index}`}
-            className="flex-shrink-0 flex items-center justify-center transition-all duration-300 p-2 md:p-3"
+            className="flex-shrink-0 flex items-center justify-center overflow-hidden p-3"
             style={{ width: `${ITEM_WIDTH}px`, height: isMobile ? '77px' : '96px' }}
           >
+            {/*
+              One box for every logo, object-contain, no per-logo scale.
+              Scaling past the box was clipping marks and making neighbours
+              different sizes.
+            */}
             <img
               src={partner.logo}
               alt={index < partners.length ? partner.name : ''}
-              width={isMobile ? 194 : 300}
-              height={isMobile ? 116 : 144}
+              width={isMobile ? 120 : 160}
+              height={isMobile ? 48 : 56}
               loading="lazy"
-              className="object-contain max-w-full max-h-full"
-              style={{
-                width: isMobile ? '97px' : '150px',
-                height: isMobile ? '58px' : '72px',
-                transform: isMobile && partner.mobileScale
-                  ? `scale(${partner.mobileScale})`
-                  : partner.scale ? `scale(${partner.scale})` : undefined
-              }}
+              className="object-contain !mx-0 h-10 md:h-12 w-auto max-w-full"
               draggable={false}
             />
           </div>

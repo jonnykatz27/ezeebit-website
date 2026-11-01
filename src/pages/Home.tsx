@@ -1,223 +1,385 @@
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-import { useReducedMotion } from 'framer-motion'
-import { motion } from '../lib/motion'
 import {
-  Zap, Shield, Globe, TrendingUp,
-  ArrowRight, Star, ChevronLeft, ChevronRight,
-  ThumbsUp, Headphones, Lock, Landmark, Link2, Wallet, Send, Store, ArrowLeftRight,
-  ArrowDownToLine
+  ArrowRight, Check, ChevronDown, ChevronLeft, ChevronRight, Headphones,
+  Star, ThumbsUp,
 } from 'lucide-react'
+import { motion } from '../lib/motion'
 import PartnerCarousel from '../components/PartnerCarousel'
 import SEO from '../components/SEO'
 import FlowDemo, { DemoPanel } from '../components/demo/FlowDemo'
 import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
-import HomeHeroVisual from '../components/hero/HomeHeroVisual'
 import { coinLogo } from '../components/hero/heroKit'
 import { PortalBalanceCard, PortalConvertCard, PORTAL_PAGE_BG } from '../components/portal/PortalUI'
 import DarkBackdrop from '../components/DarkBackdrop'
-import ProductTour from '../components/ProductTour'
-
-const FLOWS = [
-  { id: 'pay-in', label: 'Pay in' },
-  { id: 'pay-out', label: 'Pay out' },
-  { id: 'hold', label: 'Hold & convert' },
-] as const
-
-type FlowId = (typeof FLOWS)[number]['id']
+import { LIVE_MARKETS } from '../lib/schema'
 
 /**
- * How far each logo in a group tucks under the one before it. Important, so
- * it wins over the !mx-0 each logo carries against the site-wide phone rule
- * that centres images.
+ * TODO(confirm): settlement. Company docs: ZAR next business day (T+1) and
+ * stablecoin USDT or USDC the same day (T+0). A merchant has a fiat wallet
+ * and a USDT wallet. Do not mention KES, NGN or USD settlement. The rest of
+ * the site still says ZAR, KES, NGN or USD.
  */
-const OVERLAP = '!-ml-2.5'
-/**
- * Every digital-asset mark is drawn the same way, wherever it appears: a white
- * ring, then a faint outline, so marks with white in them (like Nigeria's flag)
- * keep their edge on a white card and stay distinct where they overlap.
- */
-const ASSET_CHIP = 'relative w-9 h-9 rounded-full bg-white ring-2 ring-white shadow-[0_0_0_3px_rgba(9,30,66,0.1)] object-contain !mx-0'
-
-/** Overlapping coin logos that pop in one after another. */
-const CoinStack = ({ coins }: { coins: string[] }) => (
-  <div className="flex items-center">
-    {coins.map((coin, i) => (
-      <motion.img
-        key={coin}
-        src={coinLogo(coin)}
-        alt={coin.toUpperCase()}
-        variants={{ hidden: { opacity: 0, scale: 0.5 }, visible: { opacity: 1, scale: 1 } }}
-        className={`${ASSET_CHIP} ${i > 0 ? OVERLAP : ''}`}
-        style={{ zIndex: coins.length - i }}
-      />
-    ))}
-  </div>
-)
-
-/** The three settlement currencies, overlapping. */
-const FlagStack = () => (
-  <div className="flex items-center">
-    {['za', 'ke', 'ng'].map((c, i) => (
-      <motion.img
-        key={c}
-        src={`/${c}-flag.svg`}
-        alt=""
-        variants={{ hidden: { opacity: 0, scale: 0.5 }, visible: { opacity: 1, scale: 1 } }}
-        className={`relative w-9 h-9 rounded-full ring-2 ring-white shadow-[0_0_0_3px_rgba(9,30,66,0.1)] !mx-0 ${i > 0 ? OVERLAP : ''}`}
-        style={{ zIndex: 3 - i }}
-      />
-    ))}
-  </div>
-)
+const SETTLEMENT = 'ZAR the next business day (T+1), or USDT or USDC the same day (T+0)'
 
 /**
- * The rail between two stacked steps, with a blue head running down it. Each
- * one starts later than the last, so the pulse reads top to bottom. On wider
- * screens it lines up under the column of step visuals.
+ * TODO(confirm): regulatory wording. Do not say "authorised and regulated by
+ * the FSCA", and do not show FSCA-regulated, FAIS Licensed or FSCA-authorised
+ * badges. This is the sentence the fact-check calls the published footer line.
+ * Other pages still use the older sentence.
  */
-const StepConnector = ({ still, index }: { still: boolean; index: number }) => (
-  <div aria-hidden="true" className="flex justify-center sm:justify-start sm:pl-[115px] lg:pl-[139px] py-2">
-    <div className="relative overflow-hidden rounded-full bg-neutral-200/60 w-[3px] h-7">
-      {!still && (
-        <motion.div
-          className="absolute left-0 right-0"
-          style={{ height: 16, background: 'linear-gradient(to bottom, transparent, var(--color-primary-500))' }}
-          animate={{ y: [-16, 28] }}
-          transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 1.4, delay: index * 0.75, ease: 'linear' }}
-        />
-      )}
+const LICENCE =
+  'Ezee Solutions Group (Pty) Ltd has applied for a Financial Service Provider (FSP) & Crypto Asset Service Provider (CASP) licence, FSP 53664.'
+
+/**
+ * TODO(confirm): support. Fact-check wording. Do not say "24/7 support".
+ * The contact page still lists phone and WhatsApp as Mon–Fri 8am–6pm, and
+ * the FAQ page still says 24/7 support.
+ */
+const SUPPORT = '24/7 chatbot, with human support Mon-Fri during business hours (SAST)'
+
+/**
+ * TODO(confirm): SOC 2. Not a "SOC 2 Certified" badge. Fact-check wording
+ * for custody.
+ */
+const CUSTODY = 'Custody runs on SOC 2 Type II-compliant MPC infrastructure.'
+
+const COINS = ['btc', 'eth', 'usdt', 'usdc', 'bnb'] as const
+
+const PARTNERS_A = [
+  { name: 'iStore', logo: '/istore-logo(final).webp' },
+  { name: 'Skins', logo: '/skins-logo.webp' },
+  { name: 'Le Creuset', logo: '/le-creuset-logo(final).webp' },
+  { name: 'Amiri', logo: '/amiri-logo(latest).webp' },
+  { name: 'Ritual', logo: '/ritual-logo(latest).webp' },
+  { name: 'Hydraulics', logo: '/hydraulics-logo(latest).webp' },
+  { name: 'Al Capone', logo: '/alcapone-logo(final).webp' },
+  { name: 'Scoin', logo: '/scoin-logo(latest).webp' },
+  { name: 'Soul Gallery', logo: '/soul-gallery-logo(final).webp' },
+  { name: 'Sunbet', logo: '/sunbet-logo.webp' },
+]
+
+const PARTNERS_B = [
+  { name: 'Yawa', logo: '/yawa-logo(final).webp' },
+  { name: 'Tintswalo Lodge', logo: '/tintswalo-logo(latest).webp' },
+  { name: 'Luxity', logo: '/luxity-logo(latest).webp' },
+  { name: 'The Capital', logo: '/thecapital-logo.webp' },
+  { name: 'Spar', logo: '/spar-logo(latest).webp' },
+  { name: 'Cultish', logo: '/cultish-logo(latest).webp' },
+  { name: 'Watch Channel', logo: '/watch-channel-logo(final).webp' },
+  { name: 'Diesel', logo: '/diesel-logo(final).webp' },
+  { name: 'Sumptuous Tours', logo: '/sumptuous-tours-logo.webp' },
+  { name: 'BHH', logo: '/bhh-logo.webp' },
+]
+
+const TESTIMONIALS = [
+  {
+    name: 'Rael Demby',
+    role: 'CEO',
+    company: 'Scoin',
+    content: "We have tried various methods of accepting Cryptocurrency, but Ezeebit's integration and back-end support has been fantastic. Ezeebit opens up a huge opportunity for retailers around Southern Africa. This is the future.",
+    logo: '/scoin-logo.webp',
+  },
+  {
+    name: 'Adam Woolf',
+    role: 'Owner',
+    company: 'The Watch Channel',
+    content: 'Partnering with Ezeebit has transformed our payment solutions at The Watch Channel. Their advanced cryptocurrency payment system offers our customers a seamless, secure way to pay with their preferred cryptocurrencies, enhancing their shopping experience.',
+    logo: '/watchchannel-logo(latest).png',
+  },
+  {
+    name: 'Kokona',
+    role: 'Co-founder',
+    company: 'Usurpa',
+    content: 'Pioneering into the Web3 space, partnering with Ezeebit has enabled us to accept stablecoin and cryptocurrency payments easily without any problems whatsoever. We strongly believe our partnership with Ezeebit will allow access to all Africans. Thanks to the team for this amazing opportunity.',
+    logo: '/usurpa-logo.webp',
+  },
+]
+
+type Fact = [string, string]
+type Stop = {
+  id: string
+  label: string
+  eyebrow: string
+  heading: string
+  body: string
+  ticks: string[]
+  facts: Fact[]
+  links: { label: string; to: string }[]
+}
+
+const PAY_IN: Stop[] = [
+  {
+    id: 'in-store',
+    label: 'In-store',
+    eyebrow: 'Shops, restaurants and hotels',
+    heading: 'Ring it up in your currency. They pay in crypto.',
+    body: 'Staff enter the amount and the customer scans the code with the wallet or exchange app already on their phone. Every payment is hedged on the spot, so your takings never move with the market.',
+    ticks: [
+      'An Android ePOS that prints receipts, or a printed Ezeebit Pay QR',
+      'The locked rate shown to the customer before they pay',
+      'Final payments, with no chargebacks',
+      'Refunds handled by you, in rand or store credit',
+    ],
+    facts: [
+      ['Ways to pay', 'An ePOS over WiFi, 4G or SIM, or a static Ezeebit Pay QR'],
+      ['Fees', '1% or lower per transaction, excluding VAT'],
+      ['Setup', 'No setup fees for the ePOS or Ezeebit Pay'],
+      // TODO(confirm): settlement
+      ['Settlement', SETTLEMENT],
+    ],
+    links: [{ label: 'In-store payments', to: '/in-store' }],
+  },
+  {
+    id: 'online',
+    label: 'Online',
+    eyebrow: 'Online stores',
+    heading: 'A checkout your customers already know how to use',
+    body: 'Customers pick their exchange or wallet and pay in a few taps. The amount is fixed in your currency when they pay, so you receive exactly what you charged.',
+    ticks: [
+      'VALR Pay, Luno Pay, Binance Pay, WalletConnect Pay and any on-chain wallet',
+      'Plugins for Shopify, WooCommerce and Magento, or the API',
+      'Final payments, with no chargebacks',
+    ],
+    facts: [
+      ['Coins', 'BTC, ETH, USDT, USDC, BNB, DAI, PAXG, ZARP and ZARU'],
+      ['Rate', 'Locked when the customer pays'],
+      ['Plugins', 'Shopify, WooCommerce and Magento, or the API'],
+      // TODO(confirm): settlement
+      ['Settlement', SETTLEMENT],
+    ],
+    links: [{ label: 'Online checkout', to: '/online' }],
+  },
+  {
+    id: 'platforms',
+    label: 'Platforms',
+    eyebrow: 'Gaming, trading and wallets',
+    heading: 'Deposits and withdrawals, without holding crypto',
+    body: 'Your users deposit with the crypto they already hold and withdraw in stablecoin. Every deposit is hedged the moment it lands, so you credit a fixed amount and never carry the asset.',
+    ticks: [
+      'Every deposit attributed to the right user',
+      'A signed webhook the moment a deposit is final',
+      'Rate locked when they pay, with no chargebacks',
+      'Withdrawals paid in stablecoin from your fiat balance',
+    ],
+    facts: [
+      ['Pay with', 'Any on-chain wallet, 700+ wallets through WalletConnect, Luno, VALR and Binance'],
+      ['Deposits', 'Credited by signed webhook once final'],
+      ['Withdrawals', 'Stablecoin on-chain, usually within minutes'],
+      // TODO(confirm): settlement
+      ['Settlement', SETTLEMENT],
+      ['Compliance', 'KYC, AML, the Travel Rule and address screening, handled by us'],
+    ],
+    links: [{ label: 'Crypto for platforms', to: '/platforms' }],
+  },
+]
+
+const PAY_OUT: Stop = {
+  id: 'pay-out',
+  label: 'Pay out',
+  eyebrow: 'Payouts',
+  heading: 'A payout link your customer claims in minutes',
+  body: 'You create the payout from your fiat balance and send a link. Your customer picks the asset and network, enters their own wallet and watches it land. Every address is screened before funds move.',
+  ticks: [
+    'The widget carries your name and colours',
+    'No wallet addresses to collect, so a mistyped one is never your liability',
+    'Sent at any hour, with no banking cut-offs',
+    'RSA-signed webhooks on every status change',
+  ],
+  facts: [
+    ['Funding', 'Your fiat balance, reserved when the payout is created'],
+    ['Speed', 'Usually within minutes, at any hour'],
+    ['Recipients', 'No Ezeebit account needed, only a wallet'],
+    ['Webhooks', 'Signed, with the final status and transaction hash'],
+    ['Use it for', 'Player winnings, marketplace sellers, remittance and disbursement'],
+  ],
+  links: [{ label: 'Payouts', to: '/payouts' }],
+}
+
+const HOLD: Stop = {
+  id: 'hold',
+  label: 'Hold & convert',
+  eyebrow: 'Merchant Portal',
+  heading: 'A fiat wallet and a USDT wallet, on one balance',
+  body: 'Pay-ins, payouts, conversions and withdrawals land on one ledger. Hold fiat or USDT, convert at a quoted rate, and withdraw to your bank or your own wallet.',
+  ticks: [
+    'A fiat wallet and a USDT wallet, converted at a quoted rate',
+    'Payouts funded from the same balance',
+    'Every movement a line item with a reference and timestamp',
+    'Balances, conversions and withdrawals by API too',
+  ],
+  facts: [
+    // TODO(confirm): settlement — wallets are fiat plus USDT
+    ['Wallets', 'A fiat wallet and a USDT wallet'],
+    // TODO(confirm): settlement
+    ['Withdrawals', SETTLEMENT],
+    ['Records', 'A reference and timestamp on every movement'],
+    ['Access', 'The Merchant Portal or the API'],
+    // TODO(confirm): regulatory wording
+    ['Safeguarding', LICENCE],
+  ],
+  links: [{ label: 'Wallets', to: '/wallets' }],
+}
+
+const SOLUTIONS = [
+  { title: 'Gaming and betting', body: 'Players deposit in seconds and withdraw winnings in stablecoin, with no chargebacks on the way in.', to: '/platforms' },
+  { title: 'Trading and investment', body: 'Traders top up from stablecoins they already hold and withdraw profits the same way, instead of waiting on cards or wires.', to: '/platforms' },
+  { title: 'Payment gateways', body: 'Offer crypto pay-ins and stablecoin payouts to your own merchants, each with its own stores and history.', to: '/platforms' },
+  { title: 'Wallets and neobanks', body: 'Make crypto a first-class way to top up and to cash out, for the users who keep their money on-chain.', to: '/platforms' },
+  { title: 'Online stores', body: 'Add checkout with a plugin or the API. Customers pay from the wallet or exchange they already use.', to: '/online' },
+  { title: 'Shops and hospitality', body: 'Staff enter the amount. The customer scans a code with the wallet already on their phone.', to: '/in-store' },
+  { title: 'Marketplaces', body: 'Settle sellers, drivers and creators on your own schedule, including across borders.', to: '/payouts' },
+  { title: 'Large trades', body: 'The OTC desk quotes large trades. You get a firm price from a named dealer, locked when you accept it.', to: '/otc' },
+]
+
+const MARKETS = [
+  { flag: '/za-flag.svg', name: 'South Africa', note: 'Live' },
+  { flag: '/ke-flag.svg', name: 'Kenya', note: 'Live' },
+  { flag: '/ng-flag.svg', name: 'Nigeria', note: 'Live' },
+]
+
+const PLANS = [
+  {
+    name: 'Starter',
+    body: 'For a business taking its first stablecoin and crypto payments.',
+    points: ['Ezeebit Pay and QR codes', 'Merchant Portal', 'E-commerce plugins and API', 'No ePOS device'],
+  },
+  {
+    name: 'Professional',
+    body: 'For a growing business that wants the counter covered too.',
+    points: ['Everything in Starter', 'ePOS device', 'Printable receipts', 'Easy cash-ups'],
+    featured: true,
+  },
+  {
+    name: 'Enterprise',
+    body: 'For a business that needs its own setup and a named contact.',
+    points: ['Dedicated account manager', 'Custom integrations', 'White-label options', 'Talk to us about the fit'],
+  },
+]
+
+const FAQS: { q: string; a: string }[] = [
+  {
+    q: 'How do I get started with Ezeebit?',
+    a: "Sign up for a merchant account, complete our quick online KYC, then choose either an in-store ePOS device, Ezeebit Pay QR code or plug in our online payment plugin. We guide you through every step until you're live.",
+  },
+  {
+    q: 'Which cryptocurrencies are supported?',
+    // TODO(confirm): settlement — coin list is the existing FAQ; the settlement clause follows the fact-check, not KES, NGN or USD.
+    a: `Accept Bitcoin (BTC), Ethereum (ETH), USDT, USDC, BNB, DAI, PAXG, and the rand-backed stablecoins ZARP and ZARU. Payments are hedged at checkout. Settlement is ${SETTLEMENT}.`,
+  },
+  {
+    q: 'How fast are payments processed?',
+    // TODO(confirm): settlement
+    a: `The rate is locked at checkout and the payment is confirmed on-chain. Settlement is ${SETTLEMENT}.`,
+  },
+  {
+    q: 'What are your transaction fees?',
+    a: '1% or lower per transaction, excluding VAT. No surprises, no fine print. You keep more of every sale.',
+  },
+  {
+    q: 'Are there chargebacks with crypto payments?',
+    a: "No. Crypto payments are irreversible, which means no fraudulent chargebacks and no disputes months after a sale.",
+  },
+  {
+    q: 'Do my customers need a specific app to pay?',
+    a: "No. Customers scan your QR code with whatever crypto wallet they already use. No downloads, no sign-ups, no new accounts.",
+  },
+  {
+    q: 'Can I pay my customers out in stablecoin?',
+    a: 'Yes. You create the payout with an amount and your own reference, we reserve the fiat and hand back a link, and your customer enters their own wallet address to claim it. Payouts settle on-chain in minutes, at any hour.',
+  },
+  {
+    q: 'Can I hold a balance with Ezeebit?',
+    // TODO(confirm): settlement — fiat wallet plus USDT wallet
+    a: 'Yes. You have a fiat wallet and a USDT wallet, and you can convert between them at a quoted rate. What you take in funds what you pay out. Withdraw fiat to your bank, or stablecoin to your own wallet.',
+  },
+  {
+    q: 'Is Ezeebit regulated?',
+    // TODO(confirm): regulatory wording
+    a: LICENCE,
+  },
+  {
+    q: 'Which countries does Ezeebit operate in?',
+    a: 'Ezeebit provides stablecoin and crypto payment infrastructure for merchants and platforms across Africa. It is live in South Africa, Kenya and Nigeria, with more African markets to follow.',
+  },
+  {
+    q: 'Do you provide customer support?',
+    // TODO(confirm): support
+    a: `Yes. ${SUPPORT}. Phone +27 21 879 5074, email support@ezeebit.com, WhatsApp +27 79 443 9375.`,
+  },
+]
+
+function onTabKeys(e: KeyboardEvent, index: number, ids: string[], set: (id: string) => void, prefix: string) {
+  if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return
+  e.preventDefault()
+  const next = e.key === 'ArrowRight' ? (index + 1) % ids.length : (index - 1 + ids.length) % ids.length
+  set(ids[next])
+  document.getElementById(`${prefix}-${ids[next]}`)?.focus()
+}
+
+function Intro({ eyebrow, title, intro }: { eyebrow: string; title: ReactNode; intro?: ReactNode }) {
+  return (
+    <div className="max-w-3xl mb-8 lg:mb-12 w-full text-left">
+      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-600 mb-3">{eyebrow}</p>
+      <h2 className="text-3xl lg:text-5xl font-display font-bold text-neutral-900 leading-[1.08] tracking-[-0.02em]">
+        {title}
+      </h2>
+      {intro && <p className="mt-4 text-lg text-neutral-600 leading-relaxed">{intro}</p>}
     </div>
-  </div>
-)
+  )
+}
 
-const flowSteps = (still: boolean): Record<FlowId, { title: string; body: string; visual: React.ReactNode }[]> => ({
-  'pay-in': [
-    {
-      title: 'Your customer pays',
-      body: 'From whichever wallet or exchange they already use. Nothing new to download.',
-      visual: <CoinStack coins={['btc', 'eth', 'usdt', 'usdc', 'bnb']} />,
-    },
-    {
-      title: 'We lock the rate',
-      body: 'The amount is fixed and hedged the moment they pay, so its value cannot move.',
-      visual: <img src="/ezeebit-icon-blue.webp" alt="Ezeebit" width={88} height={88} className="w-11 h-11 object-contain !mx-0" />,
-    },
-    {
-      title: 'You get settled',
-      body: 'Fiat in your bank the next business day — ZAR, KES, NGN or USD — or stablecoin the same day.',
-      visual: (
-        <div className="flex items-center gap-2.5">
-          <FlagStack />
-          <span className="text-xs font-medium text-neutral-600">or</span>
-          <div className="flex items-center">
-            <img src="/usdt-round.svg" alt="USDT" className={ASSET_CHIP} />
-            <img src="/usdc-logo.svg" alt="USDC" className={`${ASSET_CHIP} ${OVERLAP}`} />
-          </div>
-        </div>
-      ),
-    },
-  ],
-  'pay-out': [
-    {
-      title: 'You start the payout',
-      body: 'Send us the amount and your own reference. We hold the funds aside.',
-      visual: (
-        <div className="flex items-center gap-2 bg-white border border-neutral-200 rounded-full pl-3 pr-2 py-1.5 shadow-sm">
-          <span className="text-sm font-semibold text-neutral-900">R2,000.00</span>
-          <span className="w-6 h-6 rounded-full bg-primary-500 text-white flex items-center justify-center">
-            <Send className="w-3 h-3" />
+function Ticks({ items }: { items: string[] }) {
+  return (
+    <ul className="space-y-2.5">
+      {items.map((item) => (
+        <li key={item} className="flex items-start gap-3 text-neutral-700 text-[15px] leading-relaxed">
+          <span className="mt-0.5 w-5 h-5 rounded-full bg-neutral-950 text-primary-400 flex items-center justify-center shrink-0">
+            <Check className="w-3 h-3" strokeWidth={3} />
           </span>
-        </div>
-      ),
-    },
-    {
-      title: 'They claim it',
-      body: 'Your customer opens a link and enters their own wallet address.',
-      visual: (
-        <div className="flex items-center gap-2">
-          <span className="w-10 h-10 rounded-xl bg-neutral-950 text-primary-400 flex items-center justify-center shrink-0">
-            <Link2 className="w-5 h-5" />
-          </span>
-          <span className="font-mono text-xs text-neutral-500 bg-white border border-neutral-200 rounded-lg px-2 py-1">
-            0x7Ab2…c21F
-          </span>
-        </div>
-      ),
-    },
-    {
-      title: 'It lands in minutes',
-      body: 'Stablecoin arrives, and you get a confirmation to match against your records.',
-      visual: (
-        <img src="/usdt-round.svg" alt="USDT" className={ASSET_CHIP} />
-      ),
-    },
-  ],
-  'hold': [
-    {
-      title: 'Everything lands together',
-      body: 'In-store, online, OTC and direct deposits all land in the same balance.',
-      visual: (
-        <div className="flex items-center gap-1.5">
-          {[
-            <Store key="s" className="w-4 h-4" />,
-            <Globe key="g" className="w-4 h-4" />,
-            <TrendingUp key="t" className="w-4 h-4" />,
-            <ArrowDownToLine key="d" className="w-4 h-4" />,
-          ].map((icon, i) => (
-            <motion.span
-              key={i}
-              variants={{ hidden: { opacity: 0, x: -6 }, visible: { opacity: 1, x: 0 } }}
-              className="w-8 h-8 rounded-lg bg-white border border-neutral-200 text-primary-600 flex items-center justify-center shadow-sm"
-            >
-              {icon}
-            </motion.span>
-          ))}
-        </div>
-      ),
-    },
-    {
-      title: 'Hold it how you like',
-      body: 'Keep fiat or stablecoin, and switch between them whenever it suits you.',
-      visual: (
-        <div className="flex items-center gap-2">
-          <FlagStack />
-          <motion.span
-            className="text-primary-500"
-            animate={still ? undefined : { rotate: 180 }}
-            transition={{ duration: 2.2, repeat: Infinity, repeatType: 'reverse', repeatDelay: 1.6, ease: 'easeInOut' }}
-          >
-            <ArrowLeftRight className="w-4 h-4" />
-          </motion.span>
-          <img src="/usdt-round.svg" alt="USDT" className={ASSET_CHIP} />
-        </div>
-      ),
-    },
-    {
-      title: 'Move it when you need',
-      body: 'Fund payouts, or withdraw to your bank account or your own wallet.',
-      visual: (
-        <div className="flex items-center gap-2">
-          <span className="w-10 h-10 rounded-xl bg-neutral-950 text-primary-400 flex items-center justify-center">
-            <Landmark className="w-5 h-5" />
-          </span>
-          <span className="w-10 h-10 rounded-xl bg-neutral-950 text-primary-400 flex items-center justify-center">
-            <Wallet className="w-5 h-5" />
-          </span>
-        </div>
-      ),
-    },
-  ],
-})
+          {item}
+        </li>
+      ))}
+    </ul>
+  )
+}
 
-/**
- * Renders its children at a fixed design width and scales them down to whatever
- * width it actually gets, reporting the scaled height so the box does not keep
- * the unscaled one. The same trick the demo iframes use on themselves, so the
- * portal view can sit at the same size as they do without the shared portal
- * components being resized for every other page that uses them.
- */
-const ScaleToFit = ({ design, children }: { design: number; children: React.ReactNode }) => {
+function Facts({ facts }: { facts: Fact[] }) {
+  return (
+    <dl className="border-b border-neutral-200">
+      {facts.map(([term, detail]) => (
+        <div key={term} className="grid grid-cols-[7.5rem_1fr] gap-4 border-t border-neutral-200 py-3">
+          <dt className="text-sm font-semibold text-neutral-900">{term}</dt>
+          <dd className="text-sm text-neutral-600 leading-relaxed">{detail}</dd>
+        </div>
+      ))}
+    </dl>
+  )
+}
+
+function StopCopy({ stop }: { stop: Stop }) {
+  return (
+    <div>
+      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-600 mb-2">{stop.eyebrow}</p>
+      <h3 className="text-2xl lg:text-3xl font-display font-bold text-neutral-900 leading-tight mb-3">{stop.heading}</h3>
+      <p className="text-neutral-600 leading-relaxed mb-5">{stop.body}</p>
+      <Ticks items={stop.ticks} />
+      <div className="mt-6">
+        <Facts facts={stop.facts} />
+      </div>
+      <div className="mt-5 flex flex-wrap gap-4">
+        {stop.links.map((l) => (
+          <Link key={l.to} to={l.to} className="inline-flex items-center gap-1.5 font-semibold text-primary-600 hover:text-primary-700">
+            {l.label}
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+const ScaleToFit = ({ design, children }: { design: number; children: ReactNode }) => {
   const box = useRef<HTMLDivElement>(null)
   const inner = useRef<HTMLDivElement>(null)
   const [fit, setFit] = useState<{ scale: number; height?: number }>({ scale: 1 })
@@ -226,10 +388,7 @@ const ScaleToFit = ({ design, children }: { design: number; children: React.Reac
     const b = box.current
     const i = inner.current
     if (!b || !i) return
-    const measure = () => {
-      const scale = Math.min(1, b.clientWidth / design)
-      setFit({ scale, height: i.offsetHeight * scale })
-    }
+    const measure = () => setFit({ scale: Math.min(1, b.clientWidth / design), height: i.offsetHeight * Math.min(1, b.clientWidth / design) })
     measure()
     const ro = new ResizeObserver(measure)
     ro.observe(b)
@@ -239,221 +398,200 @@ const ScaleToFit = ({ design, children }: { design: number; children: React.Reac
 
   return (
     <div ref={box} style={{ height: fit.height }}>
-      <div
-        ref={inner}
-        style={{ width: design, transform: `scale(${fit.scale})`, transformOrigin: 'top left' }}
-      >
+      <div ref={inner} style={{ width: design, transform: `scale(${fit.scale})`, transformOrigin: 'top left' }}>
         {children}
       </div>
     </div>
   )
 }
 
-type FlowDemoSpec = {
-  node: React.ReactNode
-  /** Where to read more, shown under the steps. */
-  links: { label: string; to: string }[]
-}
-
-const FLOW_DEMOS: Record<FlowId, FlowDemoSpec> = {
-  'pay-in': {
-    node: <FlowDemo src="/demos/pay-in.html" flow="payin" label="Try it" fill title="Interactive demo of the Ezeebit in-store checkout" />,
-    links: [{ label: 'In-store payments', to: '/in-store' }, { label: 'Online checkout', to: '/online' }],
-  },
-  'pay-out': {
-    node: <FlowDemo src="/demos/pay-out.html" flow="payout" label="Try it" fill title="Interactive demo of an Ezeebit payout" />,
-    links: [{ label: 'Payouts', to: '/payouts' }],
-  },
-  'hold': {
-    // The portal's own page background, so the cards sit as they do in the product
-    node: (
-      <DemoPanel label="Merchant Portal">
-      <ScaleToFit design={430}>
-      <div className={`rounded-[20px] ${PORTAL_PAGE_BG} p-3 space-y-3`}>
-        <div className="rounded-[12px] border border-neutral-200/70 overflow-hidden">
-          <PortalBalanceCard
-            total="R 1,637,102.25"
-            fiatShare={43.65}
-            fiat={{ mark: '/za-flag.svg', amount: 'R714,602.25' }}
-            stable={{ amount: '$50,000.00' }}
-          />
+function FlowDiagram() {
+  const card = 'flex-1 rounded-2xl border border-white/10 bg-white/[0.04] p-5 text-left'
+  return (
+    <div className="max-w-5xl mx-auto" aria-label="Crypto in, one balance, crypto out">
+      <div className="flex flex-col lg:flex-row lg:items-stretch gap-3">
+        <div className={card}>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-400 mb-2">Crypto In</p>
+          <p className="text-white font-semibold text-lg mb-3">They pay in crypto</p>
+          <div className="flex items-center gap-1.5 mb-4">
+            {COINS.map((c) => (
+              <img key={c} src={coinLogo(c)} alt={c.toUpperCase()} width={28} height={28} className="w-7 h-7 rounded-full !mx-0" />
+            ))}
+          </div>
+          <ul className="space-y-1.5 text-sm text-neutral-300">
+            <li>Any on-chain wallet</li>
+            <li>Luno Pay, VALR Pay, Binance Pay</li>
+            <li>700+ wallets via WalletConnect</li>
+            <li>In-store, online or in your app</li>
+          </ul>
         </div>
-        <div className="rounded-[12px] border border-neutral-200/70 overflow-hidden">
-          <PortalConvertCard
-            from="Fiat (ZAR)"
-            fromMark="/za-flag.svg"
-            fromAmount="50,000.00"
-            balance="714,602"
-            toAmount="2,710.03"
-            rate="Exchange rate: 1 ZAR = 0.0542 USDT"
-          />
+        <div aria-hidden="true" className="hidden lg:flex items-center text-primary-400 px-1">
+          <ChevronRight className="w-5 h-5" />
+        </div>
+        <div className={card}>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-400 mb-2">One balance</p>
+          <p className="text-white font-semibold text-lg mb-3">You hold fiat and USDT</p>
+          {/* TODO(confirm): settlement */}
+          <div className="space-y-2 mb-4">
+            <div className="flex items-center gap-2 rounded-xl bg-white/5 px-3 py-2">
+              <img src="/za-flag.svg" alt="" width={22} height={22} className="w-5 h-5 rounded-full !mx-0" />
+              <span className="text-sm text-white">Fiat wallet</span>
+            </div>
+            <div className="flex items-center gap-2 rounded-xl bg-white/5 px-3 py-2">
+              <img src="/usdt-round.svg" alt="" width={22} height={22} className="w-5 h-5 !mx-0" />
+              <span className="text-sm text-white">USDT wallet</span>
+            </div>
+          </div>
+          <p className="text-sm text-neutral-300 leading-relaxed">
+            Convert between them when it suits you. Pay-ins fund payouts. Settle in {SETTLEMENT}.
+          </p>
+        </div>
+        <div aria-hidden="true" className="hidden lg:flex items-center text-primary-400 px-1">
+          <ChevronRight className="w-5 h-5" />
+        </div>
+        <div className={card}>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-400 mb-2">Crypto Out</p>
+          <p className="text-white font-semibold text-lg mb-3">They cash out in crypto</p>
+          <ul className="space-y-1.5 text-sm text-neutral-300">
+            <li>You send a link, not a wallet address</li>
+            <li>They choose the asset and network</li>
+            <li>Screened before funds move</li>
+            <li>Stablecoin, usually in minutes</li>
+          </ul>
         </div>
       </div>
-      </ScaleToFit>
-      </DemoPanel>
-    ),
-    links: [{ label: 'Wallets', to: '/wallets' }],
-  },
+    </div>
+  )
 }
 
-/**
- * One flow: its three steps stacked on the left, and the product itself beside
- * them, so the explanation and the thing it explains are read together. On
- * wide screens the step cards stretch to the demo's height, so both columns
- * start and end together however tall the current demo screen is.
- */
-const FlowCards = ({ flow, isActive }: { flow: FlowId; isActive: boolean }) => {
-  const still = useReducedMotion() ?? false
-  const steps = flowSteps(still)[flow]
-  const demo = FLOW_DEMOS[flow]
-  const rise = {
-    hidden: { opacity: 0, y: 14 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.4, staggerChildren: 0.06 } },
-  }
+const OUTER = [
+  { id: 'pay-in', label: 'Pay in' },
+  { id: 'pay-out', label: 'Pay out' },
+  { id: 'hold', label: 'Hold & convert' },
+] as const
+
+type OuterId = (typeof OUTER)[number]['id']
+
+function MoneyMovement() {
+  const [outer, setOuter] = useState<OuterId>('pay-in')
+  const [payIn, setPayIn] = useState(PAY_IN[0].id)
 
   return (
-    <motion.div
-      initial="hidden"
-      animate={isActive ? 'visible' : 'hidden'}
-      variants={{ visible: { transition: { staggerChildren: 0.09 } } }}
-      className="text-left"
-    >
-      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px] gap-10 lg:gap-14 items-start lg:items-stretch">
-        {/* The steps are the whole column, so the last one finishes level with
-            the demo rather than stopping short of it. */}
-        <ol className="flex flex-col list-none">
-          {steps.map((step, index) => (
-            <motion.li
-              key={step.title}
-              variants={rise}
-              className="lg:flex-1 flex flex-col"
-            >
-              <div className="lg:flex-1 bg-white border border-neutral-200/80 rounded-2xl shadow-sm p-5 lg:p-7 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 lg:gap-6 text-center sm:text-left">
-                <div className="sm:w-48 lg:w-56 shrink-0 h-12 flex items-center justify-center lg:scale-[1.15]">{step.visual}</div>
-                <div className="min-w-0">
-                  {/* The same large number as the steps on the Wallets page */}
-                  <div className="text-3xl lg:text-4xl font-display font-bold text-gradient leading-none mb-3">
-                    <span className="sr-only">Step </span>0{index + 1}
-                  </div>
-                  <h3 className="text-lg lg:text-xl font-semibold text-neutral-900 mb-1 lg:mb-1.5">{step.title}</h3>
-                  <p className="text-sm lg:text-[15px] text-neutral-500 leading-relaxed">{step.body}</p>
-                </div>
-              </div>
-              {index < steps.length - 1 && <StepConnector still={still} index={index} />}
-            </motion.li>
-          ))}
-        </ol>
+    <section id="how-it-works" className="scroll-mt-24 section-padding bg-white">
+      <div className="container-custom">
+        <Intro
+          eyebrow="Product"
+          title={<>See it move.<br />Then read the facts.</>}
+          intro="One place for the live demos and the details buyers ask about. Pay in, pay out, or hold and convert."
+        />
 
-        {/* The product itself, beside the steps that describe it */}
-        <motion.div variants={rise} className="w-full max-w-[360px] mx-auto lg:mx-0 flex flex-col">
-          <div className="flex-1">
-            {demo.node}
+        <div className="mb-8">
+          <div role="tablist" aria-label="How money moves through Ezeebit" className="inline-flex flex-wrap gap-1 p-1 rounded-full bg-neutral-950">
+            {OUTER.map((tab, index) => (
+              <button
+                key={tab.id}
+                type="button"
+                role="tab"
+                id={`flow-tab-${tab.id}`}
+                aria-selected={outer === tab.id}
+                aria-controls={`flow-panel-${tab.id}`}
+                tabIndex={outer === tab.id ? 0 : -1}
+                onClick={() => setOuter(tab.id)}
+                onKeyDown={(e) => onTabKeys(e, index, OUTER.map((t) => t.id), (id) => setOuter(id as OuterId), 'flow-tab')}
+                className={`min-h-[44px] whitespace-nowrap rounded-full px-4 sm:px-5 py-2 text-sm font-semibold ${outer === tab.id ? 'bg-primary-500 text-white' : 'text-neutral-300 hover:text-white'}`}
+              >
+                {tab.label}
+              </button>
+            ))}
           </div>
-        </motion.div>
-      </div>
+        </div>
 
-      {/*
-        Somewhere to go next. It sits under the grid rather than inside the
-        steps column, where it used to take the height the last card needed to
-        finish level with the demo.
-      */}
-      <motion.div variants={rise} className="mt-6 flex flex-wrap items-center justify-center sm:justify-start gap-3">
-        <span className="text-sm text-neutral-500">Read more:</span>
-        {demo.links.map((l) => (
-          <Link
-            key={l.to}
-            to={l.to}
-            className="inline-flex items-center gap-1.5 rounded-full bg-neutral-950 px-4 py-2 text-sm font-semibold text-white hover:bg-neutral-950/85 transition-colors"
-          >
-            {l.label}
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        ))}
-      </motion.div>
-    </motion.div>
+        <div role="tabpanel" id="flow-panel-pay-in" aria-labelledby="flow-tab-pay-in" hidden={outer !== 'pay-in'}>
+          <div className="mb-6">
+            <div role="tablist" aria-label="Pay-in products" className="inline-flex flex-wrap gap-2">
+              {PAY_IN.map((stop, index) => (
+                <button
+                  key={stop.id}
+                  type="button"
+                  role="tab"
+                  id={`payin-tab-${stop.id}`}
+                  aria-selected={payIn === stop.id}
+                  aria-controls={`payin-panel-${stop.id}`}
+                  tabIndex={payIn === stop.id ? 0 : -1}
+                  onClick={() => setPayIn(stop.id)}
+                  onKeyDown={(e) => onTabKeys(e, index, PAY_IN.map((s) => s.id), setPayIn, 'payin-tab')}
+                  className={`min-h-[44px] rounded-full border px-4 text-sm font-semibold ${payIn === stop.id ? 'border-neutral-950 bg-neutral-950 text-white' : 'border-neutral-200 text-neutral-700 hover:border-neutral-400'}`}
+                >
+                  {stop.label}
+                </button>
+              ))}
+            </div>
+          </div>
+          {PAY_IN.map((stop) => (
+            <div key={stop.id} role="tabpanel" id={`payin-panel-${stop.id}`} aria-labelledby={`payin-tab-${stop.id}`} hidden={payIn !== stop.id}>
+              <div className="home-flow">
+                <StopCopy stop={stop} />
+                {outer === 'pay-in' && payIn === stop.id && (
+                  <FlowDemo src="/demos/pay-in.html" flow="payin" label="Try the in-store checkout" title="Interactive demo of the Ezeebit in-store checkout" />
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div role="tabpanel" id="flow-panel-pay-out" aria-labelledby="flow-tab-pay-out" hidden={outer !== 'pay-out'}>
+          <div className="home-flow">
+            <StopCopy stop={PAY_OUT} />
+            {outer === 'pay-out' && (
+              <FlowDemo src="/demos/pay-out.html" flow="payout" label="Try a payout" title="Interactive demo of an Ezeebit payout" />
+            )}
+          </div>
+        </div>
+
+        <div role="tabpanel" id="flow-panel-hold" aria-labelledby="flow-tab-hold" hidden={outer !== 'hold'}>
+          <div className="home-flow">
+            <StopCopy stop={HOLD} />
+            {outer === 'hold' && (
+              <DemoPanel label="Merchant Portal">
+                <ScaleToFit design={430}>
+                  <div className={`rounded-[20px] ${PORTAL_PAGE_BG} p-3 space-y-3`}>
+                    <div className="rounded-[12px] border border-neutral-200/70 overflow-hidden">
+                      <PortalBalanceCard
+                        total="R 1,637,102.25"
+                        fiatShare={43.65}
+                        fiat={{ mark: '/za-flag.svg', amount: 'R714,602.25', label: 'Fiat wallet' }}
+                        stable={{ amount: '50,000.00 USDT', label: 'USDT wallet' }}
+                      />
+                    </div>
+                    <div className="rounded-[12px] border border-neutral-200/70 overflow-hidden">
+                      <PortalConvertCard
+                        from="Fiat (ZAR)"
+                        fromMark="/za-flag.svg"
+                        fromAmount="50,000.00"
+                        balance="714,602"
+                        toAmount="2,710.03"
+                        rate="Exchange rate: 1 ZAR = 0.0542 USDT"
+                      />
+                    </div>
+                  </div>
+                </ScaleToFit>
+              </DemoPanel>
+            )}
+          </div>
+        </div>
+
+        <p className="mt-8 text-neutral-600">
+          Moving a large amount?{' '}
+          <Link to="/otc" className="font-semibold text-primary-600 hover:text-primary-700">Talk to our OTC desk →</Link>
+        </p>
+      </div>
+    </section>
   )
 }
 
 const Home = () => {
-  const [currentTestimonial, setCurrentTestimonial] = useState(0)
-  const [activeFlow, setActiveFlow] = useState<FlowId>('pay-in')
-
-  // Left/right arrows move between tabs, which is what a tablist is expected to do.
-  const handleFlowKeys = (e: React.KeyboardEvent, index: number) => {
-    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return
-    e.preventDefault()
-    const next = e.key === 'ArrowRight'
-      ? (index + 1) % FLOWS.length
-      : (index - 1 + FLOWS.length) % FLOWS.length
-    setActiveFlow(FLOWS[next].id)
-    document.getElementById(`flow-tab-${FLOWS[next].id}`)?.focus()
-  }
-
-
-  const features = [
-    {
-      icon: <Wallet className="w-6 h-6" />,
-      title: "Any wallet, both directions",
-      description: "Any wallet on-chain, plus Binance Pay, Luno Pay, VALR Pay and 700+ via WalletConnect Pay."
-    },
-    {
-      icon: <ArrowLeftRight className="w-6 h-6" />,
-      title: "One balance behind it all",
-      description: "Money in funds money out. Hold it in fiat or stablecoin and convert whenever."
-    },
-    {
-      icon: <Landmark className="w-6 h-6" />,
-      title: "Settlement on your terms",
-      description: "Fiat next business day in ZAR, KES, NGN or USD. Stablecoin same day. Payouts in minutes."
-    },
-    {
-      icon: <Lock className="w-6 h-6" />,
-      title: "Your funds, held safely",
-      description: "MPC custody splits the keys, so no one person can move your money. FSCA-regulated, FSP No. 53664."
-    }
-  ]
-
-  const stats = [
-    { number: "100,000+", label: "Transactions processed" },
-    { number: "$ Millions", label: "Volume processed (since 2024)" },
-    { number: "99.99%", label: "Uptime" },
-    { number: "24/7", label: "Customer support" }
-  ]
-
-  const testimonials = [
-    {
-      name: "Rael Demby",
-      role: "CEO",
-      company: "Scoin",
-      content: "We have tried various methods of accepting Cryptocurrency, but Ezeebit's integration and back-end support has been fantastic. Ezeebit opens up a huge opportunity for retailers around Southern Africa. This is the future.",
-      rating: 5,
-      logo: "/scoin-logo.webp"
-    },
-    {
-      name: "Adam Woolf",
-      role: "Owner",
-      company: "The Watch Channel",
-      content: "Partnering with Ezeebit has transformed our payment solutions at The Watch Channel. Their advanced cryptocurrency payment system offers our customers a seamless, secure way to pay with their preferred cryptocurrencies, enhancing their shopping experience.",
-      rating: 5,
-      logo: "/watchchannel-logo(latest).png"
-    },
-    {
-      name: "Kokona",
-      role: "Co-founder",
-      company: "Usurpa",
-      content: "Pioneering into the Web3 space, partnering with Ezeebit has enabled us to accept stablecoin and cryptocurrency payments easily without any problems whatsoever. We strongly believe our partnership with Ezeebit will allow access to all Africans. Thanks to the team for this amazing opportunity.",
-      rating: 5,
-      logo: "/usurpa-logo.webp"
-    }
-  ]
-
-  const nextTestimonial = () => {
-    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
-  }
-
-  const prevTestimonial = () => {
-    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)
-  }
+  const [quote, setQuote] = useState(0)
+  const current = TESTIMONIALS[quote]
 
   return (
     <>
@@ -462,466 +600,370 @@ const Home = () => {
         exactTitle
         description="Stablecoin and crypto payments across Africa. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
         canonicalUrl="/"
+        // TODO(confirm): settlement and regulatory wording — homepage structured data only
+        orgDescription={`Ezeebit provides stablecoin and cryptocurrency payment infrastructure for merchants across Africa, including in-store ePOS, online checkout, payouts and wallets. ${LIVE_MARKETS} Settlement is ${SETTLEMENT}. ${LICENCE}`}
       />
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="overflow-hidden -mt-20"
-      >
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="overflow-hidden -mt-20">
+        <PageHero
+          id="hero"
+          stacked
+          kicker="Stablecoin pay-ins and payouts"
+          title={<><span className="block">Crypto in.</span><span className="block">Crypto out.</span></>}
+          accent="One balance."
+          // TODO(confirm): settlement — cards and agents removed; no KES, NGN or USD
+          description={`Your customers pay in and cash out in crypto, in-store, online or in your app. You settle in ${SETTLEMENT}. One balance and one API, with compliance built in.`}
+          actions={
+            <>
+              <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
+                Get started free
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </a>
+              <button type="button" onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })} className={HERO_SECONDARY}>
+                See how it works
+              </button>
+            </>
+          }
+          trust={[
+            { icon: <ThumbsUp />, label: 'No setup fees' },
+            // TODO(confirm): support
+            { icon: <Headphones />, label: SUPPORT },
+          ]}
+          wideVisual={<FlowDiagram />}
+        />
 
-      <PageHero
-        title="Stablecoin payments,"
-        accent="in and out."
-        description="Your customers pay in and cash out in crypto, in-store, online or in your app, while you settle in ZAR, KES, NGN, USD or stablecoin. One balance and one API, with compliance built in."
-        actions={
-          <>
-            <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
-              Get started free
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </a>
-            {/* A button, not a #hash link: the router scrolls to the top on hash changes */}
-            <button
-              type="button"
-              onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
-              className={HERO_SECONDARY}
-            >
-              See how it works
-            </button>
-          </>
-        }
-        trust={[
-          { icon: <ThumbsUp />, label: 'No setup fees' },
-          { icon: <Shield />, label: 'FSCA regulated' },
-          { icon: <Headphones />, label: '24/7 support' },
-        ]}
-        visual={<HomeHeroVisual />}
-        stacked
-      />
-
-      {/*
-        The dark opening: the proof of scale on the hero's own Near Black, set
-        off by a hairline, so hero and stats read as one block.
-      */}
-      <section className="relative bg-neutral-950 pb-14 lg:pb-24">
-        <div className="container-custom relative">
-          <div className="border-t border-white/10 pt-12 lg:pt-16 grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-6 lg:gap-8">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="text-center px-2 py-4"
-              >
-                {/*
-                  The page's one oversized number. Sized so the longest,
-                  "$ Millions", still fits its column: two up on phones and
-                  tablets, four up from lg, full size only from xl.
-                */}
-                <div className="text-4xl sm:text-5xl xl:text-6xl font-display font-bold tracking-[-0.03em] leading-none text-primary-400 mb-3">
-                  {stat.number}
+        <section id="stats" className="relative bg-neutral-950 pb-14 lg:pb-20">
+          <div className="container-custom">
+            <div className="border-t border-white/10 pt-10 lg:pt-14 home-stats">
+              {[
+                { n: '100,000+', l: 'Transactions processed' },
+                { n: '1% or lower', l: 'Per transaction, excl. VAT' },
+                { n: '700+', l: 'Wallets via WalletConnect' },
+                // TODO(confirm): customer count — "hundreds", no specific number
+                { n: 'Hundreds', l: 'Businesses' },
+              ].map((s) => (
+                <div key={s.l} className="text-left">
+                  <div className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-[-0.03em] text-primary-400 leading-none mb-2">{s.n}</div>
+                  <div className="text-sm text-neutral-300">{s.l}</div>
                 </div>
-                <div className="text-neutral-400 text-xs sm:text-sm">{stat.label}</div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-10 lg:py-20 bg-white overflow-hidden">
-        <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-8 md:mb-12"
-          >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Our partners</h2>
-            <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
-              Trusted by leading brands across Africa.
-            </p>
-          </motion.div>
-
-          <div className="mb-2 md:mb-8 partner-carousel-container">
-            <PartnerCarousel
-              partners={[
-                { name: 'iStore', logo: '/istore-logo(final).webp', scale: 1.06 },
-                { name: 'Skins', logo: '/skins-logo.webp' },
-                { name: 'Le Creuset', logo: '/le-creuset-logo(final).webp', scale: 1.475 },
-                { name: 'Amiri', logo: '/amiri-logo(latest).webp', mobileScale: 0.95 },
-                { name: 'Ritual', logo: '/ritual-logo(latest).webp', scale: 1.15 },
-                { name: 'Hydraulics', logo: '/hydraulics-logo(latest).webp', scale: 1.15 },
-                { name: 'Al Capone', logo: '/alcapone-logo(final).webp', scale: 1.15 },
-                { name: 'Scoin', logo: '/scoin-logo(latest).webp' },
-                { name: 'Soul Gallery', logo: '/soul-gallery-logo(final).webp', scale: 0.8, mobileScale: 0.69 },
-                { name: 'Sunbet', logo: '/sunbet-logo.webp' }
-              ]}
-              direction="left"
-              speed={40}
-            />
-          </div>
-
-          <div className="partner-carousel-container">
-            <PartnerCarousel
-              partners={[
-                { name: 'Yawa', logo: '/yawa-logo(final).webp', scale: 0.9, mobileScale: 1.089 },
-                { name: 'Tintswalo Lodge', logo: '/tintswalo-logo(latest).webp', scale: 1.32, mobileScale: 1.2245 },
-                { name: 'Luxity', logo: '/luxity-logo(latest).webp', mobileScale: 0.8 },
-                { name: 'The Capital', logo: '/thecapital-logo.webp', scale: 1.25 },
-                { name: 'Spar', logo: '/spar-logo(latest).webp', mobileScale: 0.8 },
-                { name: 'Cultish', logo: '/cultish-logo(latest).webp', scale: 1.6, mobileScale: 1.32 },
-                { name: 'Watch Channel', logo: '/watch-channel-logo(final).webp', mobileScale: 1.05 },
-                { name: 'Diesel', logo: '/diesel-logo(final).webp', scale: 0.806, mobileScale: 0.772 },
-                { name: 'Sumptuous Tours', logo: '/sumptuous-tours-logo.webp', scale: 1.5 },
-                { name: 'BHH', logo: '/bhh-logo.webp' }
-              ]}
-              direction="right"
-              speed={40}
-            />
-          </div>
-        </div>
-      </section>
-
-      <section className="py-10 lg:py-20 bg-white">
-        <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-10 lg:mb-16"
-          >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Why choose Ezeebit?</h2>
-            <p className="text-lg text-neutral-600 max-w-3xl mx-auto leading-relaxed">
-              One regulated account for money in, money held and money out — with the volatility hedged the moment it lands.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="card px-5 py-4 text-center hover:scale-[1.03] transition-transform"
-              >
-                <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center mx-auto mb-2 text-primary-400">
-                  {feature.icon}
-                </div>
-                <h3 className="text-lg font-semibold text-neutral-900 mb-1">
-                  {feature.title}
-                </h3>
-                <p className="text-neutral-600 text-sm leading-relaxed">
-                  {feature.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <ProductTour />
-
-      {/* ── How it works — one flow per product area ── */}
-      <section id="how-it-works" className="scroll-mt-20 pt-8 pb-16 lg:pt-12 lg:pb-24 bg-white">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 text-center">
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="mb-8 lg:mb-10"
-          >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
-              How it works
-            </h2>
-            <p className="text-neutral-500 text-lg leading-relaxed">
-              Money in, money held, money out. Pick a flow to see the steps.
-            </p>
-          </motion.div>
-
-          {/* ── Flow switcher ── */}
-          <div className="mb-8 lg:mb-10 flex justify-center">
-            <div
-              role="tablist"
-              aria-label="How money moves through Ezeebit"
-              className="inline-flex items-center gap-1 p-1 rounded-full bg-neutral-950 max-w-full overflow-x-auto"
-            >
-              {FLOWS.map((flow, index) => (
-                <button
-                  key={flow.id}
-                  role="tab"
-                  id={`flow-tab-${flow.id}`}
-                  aria-selected={activeFlow === flow.id}
-                  aria-controls={`flow-panel-${flow.id}`}
-                  tabIndex={activeFlow === flow.id ? 0 : -1}
-                  onClick={() => setActiveFlow(flow.id)}
-                  onKeyDown={(e) => handleFlowKeys(e, index)}
-                  className={`whitespace-nowrap rounded-full px-4 sm:px-6 py-2.5 text-sm font-semibold transition-colors ${
-                    activeFlow === flow.id
-                      ? 'bg-primary-500 text-white'
-                      : 'text-neutral-300 hover:text-white'
-                  }`}
-                >
-                  {flow.label}
-                </button>
               ))}
             </div>
           </div>
+        </section>
 
-          {/*
-            Every panel stays mounted and toggles with `hidden`, so the
-            pre-render writes all three flows into the static HTML rather than
-            only whichever one happens to be selected.
-          */}
-          {FLOWS.map((flow) => (
-            <div
-              key={flow.id}
-              role="tabpanel"
-              id={`flow-panel-${flow.id}`}
-              aria-labelledby={`flow-tab-${flow.id}`}
-              hidden={activeFlow !== flow.id}
-            >
-              <FlowCards flow={flow.id} isActive={activeFlow === flow.id} />
+        <section id="logos" className="section-padding bg-white">
+          <div className="container-custom">
+            <Intro
+              eyebrow="Customers"
+              title={<>Trusted by the businesses<br />we move money for.</>}
+              intro="Retail, hospitality, gaming and more, across our live markets."
+            />
+            <div className="partner-carousel-container mb-6">
+              <PartnerCarousel partners={PARTNERS_A} direction="left" speed={40} />
             </div>
-          ))}
-
-          {/* OTC is a desk, not a self-serve flow, so it sits beside the tabs */}
-          <p className="mt-10 text-neutral-500">
-            Moving large volumes?{' '}
-            <Link to="/otc" className="font-semibold text-primary-600 hover:text-primary-700">
-              Talk to our OTC desk{' '}→
-            </Link>
-          </p>
-
-        </div>
-      </section>
-
-
-      <section className="py-10 lg:py-16 bg-white">
-        <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center"
-          >
-            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-600 mb-8">
-              Backed by
-            </p>
-
-            <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-8 lg:gap-x-20">
-              {/*
-                Heights are per logo. Two things pull against each other: DCG
-                fills only 863x226 of its 900x500 canvas so it needs the most
-                height, while Founder Collective is a long two-line lockup that
-                grows wide fast, so it needs the least. Matched by eye on how
-                large each reads, not on artwork height or cap height alone.
-              */}
+            <div className="partner-carousel-container mb-12">
+              <PartnerCarousel partners={PARTNERS_B} direction="right" speed={40} />
+            </div>
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500 mb-5">Backed by</p>
+            <div className="flex flex-wrap items-center gap-x-12 gap-y-6">
               {[
-                { name: 'Founder Collective', logo: '/founder_collective_logo.png', size: 'h-6 lg:h-8' },
+                { name: 'Founder Collective', logo: '/founder_collective_logo.png', size: 'h-7 lg:h-8' },
                 { name: 'Raba Partnership', logo: '/Raba_logo.webp', size: 'h-6 lg:h-7' },
                 { name: 'Digital Currency Group', logo: '/digital-currency-group-logo-nobg.png', size: 'h-10 lg:h-12' },
-              ].map((backer) => (
-                <img
-                  key={backer.name}
-                  src={backer.logo}
-                  alt={backer.name}
-                  loading="lazy"
-                  className={`${backer.size} w-auto object-contain`}
-                />
+              ].map((b) => (
+                <img key={b.name} src={b.logo} alt={b.name} className={`${b.size} w-auto object-contain !mx-0`} />
               ))}
             </div>
+            <Link to="/resources/about" className="inline-flex items-center gap-1.5 mt-5 font-semibold text-primary-600 hover:text-primary-700">
+              Meet our investors and angels
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </section>
 
-            <p className="mt-6 text-sm text-neutral-500">
-              <Link to="/resources/about" className="inline-block py-2 font-semibold text-primary-600 hover:text-primary-700">
-                Meet our investors and angels →
-              </Link>
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      <section className="py-10 lg:py-20 bg-white">
-        <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-8 lg:mb-12"
-          >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Trusted by businesses across Africa</h2>
-            <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
-              Join hundreds of businesses already moving money with stablecoin, in and out, with confidence.
-            </p>
-          </motion.div>
-
-          <div className="max-w-2xl mx-auto">
-            <div className="relative overflow-hidden group">
-              <button
-                onClick={prevTestimonial}
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-md flex items-center justify-center text-neutral-600 hover:text-primary-500 transition-all duration-200 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
-                aria-label="Previous testimonial"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button
-                onClick={nextTestimonial}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-md flex items-center justify-center text-neutral-600 hover:text-primary-500 transition-all duration-200 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
-                aria-label="Next testimonial"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-
-              <motion.div
-                key={currentTestimonial}
-                exit={{ x: '-100%' }}
-                transition={{ duration: 0.5, ease: 'easeInOut' }}
-                className="card p-8 text-center min-h-[400px] flex flex-col justify-between shadow-xl"
-              >
-                <div className="flex items-center justify-center mb-6 flex-shrink-0">
-                  {[...Array(testimonials[currentTestimonial].rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-warning-400 fill-current" />
+        <section id="crypto-in-out" className="section-padding bg-neutral-50">
+          <div className="container-custom">
+            <Intro
+              eyebrow="Crypto In · Crypto Out"
+              title={<>Your customers use crypto.<br />You never have to.</>}
+              intro="The two products run in opposite directions on the same balance. They pay and get paid in crypto. You fund and settle from the wallets you already hold."
+            />
+            <div className="home-grid-2">
+              <article className="rounded-2xl border border-neutral-200 bg-white p-6 lg:p-8">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-600 mb-2">Live</p>
+                <h3 className="text-2xl font-display font-bold text-neutral-900 mb-2">Crypto In</h3>
+                <p className="text-neutral-600 mb-5">Accept crypto. Settle in rand or stablecoin.</p>
+                <ol className="flex flex-col sm:flex-row gap-2 sm:gap-3 text-sm mb-6">
+                  {['Your customer pays', 'We lock the rate', 'You get settled'].map((step, i) => (
+                    <li key={step} className="flex-1 rounded-xl bg-neutral-50 border border-neutral-200 px-3 py-2">
+                      <span className="block text-xs font-semibold text-primary-600 mb-0.5">0{i + 1}</span>
+                      <span className="font-medium text-neutral-900">{step}</span>
+                    </li>
                   ))}
-                </div>
-                <p className="text-lg text-neutral-600 mb-8 italic flex-grow flex items-center justify-center leading-relaxed">
-                  "{testimonials[currentTestimonial].content}"
-                </p>
-                <div className="flex items-center justify-center flex-shrink-0">
-                  <div className="w-32 h-32 mr-4">
-                    <img
-                      src={testimonials[currentTestimonial].logo}
-                      alt={testimonials[currentTestimonial].company}
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
+                </ol>
+                <Ticks items={[
+                  'Any wallet, plus Binance Pay, Luno Pay, VALR Pay and 700+ via WalletConnect',
+                  'Checkout, in-store QR and player deposits',
+                  'Final settlement, so no chargebacks',
+                  // TODO(confirm): settlement
+                  `You settle in ${SETTLEMENT}`,
+                ]} />
+                <Link to="/online" className="inline-flex items-center gap-1.5 mt-6 font-semibold text-primary-600 hover:text-primary-700">
+                  Crypto In
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </article>
+              <article className="rounded-2xl border border-neutral-200 bg-white p-6 lg:p-8">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-600 mb-2">Live</p>
+                <h3 className="text-2xl font-display font-bold text-neutral-900 mb-2">Crypto Out</h3>
+                <p className="text-neutral-600 mb-5">Fund in fiat. Pay out in crypto.</p>
+                <ol className="flex flex-col sm:flex-row gap-2 sm:gap-3 text-sm mb-6">
+                  {['You start the payout', 'They claim the link', 'It lands in minutes'].map((step, i) => (
+                    <li key={step} className="flex-1 rounded-xl bg-neutral-50 border border-neutral-200 px-3 py-2">
+                      <span className="block text-xs font-semibold text-primary-600 mb-0.5">0{i + 1}</span>
+                      <span className="font-medium text-neutral-900">{step}</span>
+                    </li>
+                  ))}
+                </ol>
+                <Ticks items={[
+                  'A payout link per order, claimed by your customer',
+                  'Every address screened before funds move',
+                  'You never collect or store the wallet',
+                  'Crypto In funds payouts from the same balance',
+                ]} />
+                <Link to="/payouts" className="inline-flex items-center gap-1.5 mt-6 font-semibold text-primary-600 hover:text-primary-700">
+                  Crypto Out
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <MoneyMovement />
+
+        <section id="solutions" className="section-padding bg-neutral-50">
+          <div className="container-custom">
+            <Intro
+              eyebrow="Solutions"
+              title={<>For anyone whose users<br />move money in and out.</>}
+              intro="Start with the flow you need. Pay-ins, payouts and the balance are the same underneath."
+            />
+            <div className="home-grid-4">
+              {SOLUTIONS.map((s) => (
+                <Link key={s.title} to={s.to} className="rounded-2xl border border-neutral-200 bg-white p-5 hover:border-neutral-300 block h-full">
+                  <h3 className="text-lg font-semibold text-neutral-900 mb-2">{s.title}</h3>
+                  <p className="text-sm text-neutral-600 leading-relaxed">{s.body}</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="coverage" className="section-padding bg-white">
+          <div className="container-custom">
+            <Intro
+              eyebrow="Coverage"
+              title={<>Live where we operate.<br />More of Africa to follow.</>}
+              intro={LIVE_MARKETS}
+            />
+            <div className="home-grid-3">
+              {MARKETS.map((m) => (
+                <article key={m.name} className="rounded-2xl border border-neutral-200 p-5 flex items-center gap-4">
+                  <img src={m.flag} alt="" width={40} height={40} className="w-10 h-10 rounded-full !mx-0" />
                   <div>
-                    <div className="font-semibold text-neutral-900 text-lg">{testimonials[currentTestimonial].name}</div>
-                    <div className="text-neutral-500">{testimonials[currentTestimonial].role}, {testimonials[currentTestimonial].company}</div>
+                    <h3 className="text-lg font-semibold text-neutral-900">{m.name}</h3>
+                    <p className="text-sm text-primary-600 font-semibold">{m.note}</p>
                   </div>
-                </div>
-              </motion.div>
+                </article>
+              ))}
+            </div>
+            {/* TODO(confirm): settlement — markets are live; settlement is not stated per country */}
+            <p className="mt-6 text-neutral-600 max-w-3xl">Wherever you are live, settlement is {SETTLEMENT}.</p>
+          </div>
+        </section>
+
+        <section id="testimonials" className="section-padding bg-neutral-50">
+          <div className="container-custom">
+            <Intro
+              eyebrow="In their words"
+              // TODO(confirm): customer count
+              title={<>Hundreds of businesses.<br />Three of them, in their words.</>}
+              intro="What merchants say about taking payments and paying people with Ezeebit."
+            />
+            <div className="max-w-3xl w-full">
+              <div className="relative">
+                <button type="button" onClick={() => setQuote((q) => (q - 1 + TESTIMONIALS.length) % TESTIMONIALS.length)} className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-11 h-11 bg-white rounded-full shadow flex items-center justify-center text-neutral-700" aria-label="Previous testimonial">
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <button type="button" onClick={() => setQuote((q) => (q + 1) % TESTIMONIALS.length)} className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-11 h-11 bg-white rounded-full shadow flex items-center justify-center text-neutral-700" aria-label="Next testimonial">
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+                <figure className="rounded-2xl border border-neutral-200 bg-white p-8 sm:px-16">
+                  <div className="flex gap-1 mb-4" aria-label="5 stars">
+                    {Array.from({ length: 5 }).map((_, i) => <Star key={i} className="w-4 h-4 text-warning-500 fill-current" />)}
+                  </div>
+                  <blockquote className="text-lg text-neutral-700 leading-relaxed">“{current.content}”</blockquote>
+                  <figcaption className="mt-6 flex items-center gap-4">
+                    <img src={current.logo} alt="" width={64} height={64} className="w-16 h-16 object-contain !mx-0" />
+                    <div>
+                      <div className="font-semibold text-neutral-900">{current.name}</div>
+                      <div className="text-sm text-neutral-500">{current.role}, {current.company}</div>
+                    </div>
+                  </figcaption>
+                </figure>
+              </div>
+              <div className="flex mt-4">
+                {TESTIMONIALS.map((t, i) => (
+                  <button key={t.name} type="button" onClick={() => setQuote(i)} className="px-1.5 py-3" aria-label={`Go to testimonial from ${t.name}`}>
+                    <span className={`block h-2.5 rounded-full ${i === quote ? 'bg-primary-500 w-6' : 'w-2.5 bg-neutral-300'}`} />
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
+        </section>
 
-          {/* The dots stay small; the padding around each one is what a thumb hits */}
-          <div className="flex justify-center mt-5">
-            {testimonials.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentTestimonial(index)}
-                className="group px-2 py-3"
-                aria-label={`Go to testimonial ${index + 1}`}
-              >
-                <span
-                  className={`block h-2.5 rounded-full transition-all duration-200 ${
-                    index === currentTestimonial ? 'bg-primary-500 w-6' : 'w-2.5 bg-neutral-300 group-hover:bg-neutral-400'
-                  }`}
-                />
-              </button>
-            ))}
+        <section id="security" className="section-padding bg-white">
+          <div className="container-custom">
+            <Intro
+              eyebrow="Security and compliance"
+              title={<>The checks a buyer<br />asks about.</>}
+              intro="Licensing, custody and screening, in the words we can stand behind today."
+            />
+            <div className="home-grid-2">
+              <article className="rounded-2xl border border-neutral-200 p-6">
+                <h3 className="text-lg font-semibold text-neutral-900 mb-2">Licensing</h3>
+                {/* TODO(confirm): regulatory wording */}
+                <p className="text-neutral-600 text-sm leading-relaxed">{LICENCE}</p>
+                <p className="text-neutral-600 text-sm leading-relaxed mt-3">FIC compliant, with KYC, KYB, AML and POPIA handled by Ezeebit.</p>
+              </article>
+              <article className="rounded-2xl border border-neutral-200 p-6">
+                <h3 className="text-lg font-semibold text-neutral-900 mb-2">Custody</h3>
+                {/* TODO(confirm): SOC 2 */}
+                <p className="text-neutral-600 text-sm leading-relaxed">{CUSTODY} Multi-party computation splits the keys, so no one person can move the funds.</p>
+              </article>
+              <article className="rounded-2xl border border-neutral-200 p-6">
+                <h3 className="text-lg font-semibold text-neutral-900 mb-2">Screening</h3>
+                <p className="text-neutral-600 text-sm leading-relaxed">Every payer, payee and wallet is checked. Travel Rule data is captured on transfers, and addresses are screened before funds move.</p>
+              </article>
+              <article className="rounded-2xl border border-neutral-200 p-6">
+                <h3 className="text-lg font-semibold text-neutral-900 mb-2">No chargebacks</h3>
+                <p className="text-neutral-600 text-sm leading-relaxed">A confirmed crypto payment is final. The rate is locked and hedged at the point of payment, so the sale stays settled.</p>
+              </article>
+            </div>
+            <a href="https://trust.ezeebit.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 mt-6 font-semibold text-primary-600 hover:text-primary-700">
+              Trust Centre
+              <ArrowRight className="w-4 h-4" />
+            </a>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/*
-        The dark close, the bookend to the dark opening: security, the call to
-        action and the footer run on as one Near Black block. Trust comes right
-        before the ask.
-      */}
-      <section className="relative overflow-hidden bg-neutral-950 py-14 lg:py-24">
-        <DarkBackdrop glow="left" />
-        <div className="container-custom relative">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-8 lg:mb-12"
-          >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">Enterprise-grade security</h2>
-            <p className="text-lg text-neutral-400 max-w-3xl mx-auto">
-              Built with the highest security standards to protect your business and your customers.
-            </p>
-          </motion.div>
+        <section id="pricing" className="section-padding bg-neutral-50">
+          <div className="container-custom">
+            {/* TODO(confirm): pricing — plan structure only. No R150, no ePOS monthly price, no per-payout fee. */}
+            <Intro
+              eyebrow="Pricing"
+              title={<>Three plans.<br />The prices live on one page.</>}
+              intro="1% or lower per transaction, excluding VAT. Starter, Professional and Enterprise. Open the pricing page for the figures."
+            />
+            <div className="home-grid-3">
+              {PLANS.map((plan) => (
+                <article key={plan.name} className={`rounded-2xl border bg-white p-6 flex flex-col ${plan.featured ? 'border-primary-500 ring-2 ring-primary-500' : 'border-neutral-200'}`}>
+                  {plan.featured && <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-600 mb-2">Most used</p>}
+                  <h3 className="text-xl font-semibold text-neutral-900 mb-2">{plan.name}</h3>
+                  <p className="text-sm text-neutral-600 mb-4">{plan.body}</p>
+                  <ul className="space-y-2 mb-6 flex-1">
+                    {plan.points.map((p) => (
+                      <li key={p} className="flex items-start gap-2 text-sm text-neutral-700">
+                        <Check className="w-4 h-4 text-primary-600 mt-0.5 shrink-0" />
+                        {p}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link to="/pricing" className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-neutral-950 text-white font-semibold px-4 py-3 hover:bg-neutral-800">
+                    See pricing
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {[
-              {
-                icon: <Shield className="w-8 h-8 text-primary-400" />,
-                title: "FSCA regulated",
-                description: "FSCA regulated and FIC compliant, with full KYC/KYB, AML/CFT, and POPIA processes handled end to end by Ezeebit."
-              },
-              {
-                icon: <Lock className="w-8 h-8 text-primary-400" />,
-                title: "MPC wallet technology",
-                description: "Multi-party computation (MPC) eliminates single points of failure by distributing key management across multiple parties, keeping funds secure.",
-                badge: "SOC 2 Certified"
-              },
-              {
-                icon: <Zap className="w-8 h-8 text-primary-400" />,
-                title: "No chargebacks",
-                description: "Blockchain payments are final and irreversible — every sale stays settled, with rates locked and hedged at the point of payment."
-              }
-            ].map((item, index) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 + index * 0.05 }}
-                // Hairline panels rather than white cards: a white card would be a light patch in the dark moment
-                className="relative rounded-2xl border border-white/10 bg-white/[0.04] p-6 text-center"
-              >
-                {item.badge && (
-                  <div className="absolute -top-3 -right-3 bg-primary-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md flex items-center gap-1.5">
-                    <Star className="w-3.5 h-3.5 fill-current" />
-                    {item.badge}
-                  </div>
-                )}
-                <div className="w-16 h-16 bg-primary-500/15 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  {item.icon}
-                </div>
-                <h3 className="text-lg font-semibold text-white mb-3">
-                  {item.title}
-                </h3>
-                <p className="text-neutral-400 text-sm leading-relaxed">
-                  {item.description}
+        <section id="faq" className="section-padding bg-white">
+          <div className="container-custom">
+            <Intro
+              eyebrow="FAQ"
+              title={<>Questions we hear<br />before a first call.</>}
+              intro="Short answers from the questions already on our FAQ. The full list is one click away."
+            />
+            <div className="max-w-3xl w-full border-t border-neutral-200">
+              {FAQS.map((item) => (
+                <details key={item.q} className="group border-b border-neutral-200">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-left font-medium text-neutral-900 [&::-webkit-details-marker]:hidden">
+                    {item.q}
+                    <ChevronDown className="w-4 h-4 text-neutral-500 shrink-0 group-open:rotate-180" />
+                  </summary>
+                  <p className="pb-4 text-sm text-neutral-600 leading-relaxed">{item.a}</p>
+                </details>
+              ))}
+            </div>
+            <Link to="/resources/faq" className="inline-flex items-center gap-1.5 mt-6 font-semibold text-primary-600 hover:text-primary-700">
+              All questions
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </section>
+
+        <section id="book-a-call" className="relative overflow-hidden bg-neutral-950 py-14 lg:py-20">
+          <DarkBackdrop glow="left" />
+          <div className="container-custom relative">
+            <div className="home-grid-2 items-start">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-400 mb-3">Get started</p>
+                <h2 className="text-3xl lg:text-5xl font-display font-bold text-white leading-[1.08] tracking-[-0.02em] mb-4">
+                  Sign up, verify,<br />then choose a way to get paid.
+                </h2>
+                <ol className="space-y-4 mt-6">
+                  {[
+                    ['Create your merchant account', 'A few minutes, with no setup fee.'],
+                    ['Complete online KYC', 'We guide you through it until you are live.'],
+                    ['Choose how you take payments', 'An ePOS, an Ezeebit Pay QR code, or an online plugin.'],
+                  ].map(([t, d], i) => (
+                    <li key={t} className="flex gap-4">
+                      <span className="text-primary-400 font-display font-bold text-xl leading-none mt-0.5">0{i + 1}</span>
+                      <div>
+                        <p className="text-white font-semibold">{t}</p>
+                        <p className="text-sm text-neutral-300">{d}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 lg:p-8">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-400 mb-3">Book a call</p>
+                <h3 className="text-2xl font-display font-bold text-white mb-3">Talk to a person on the team</h3>
+                <p className="text-neutral-300 leading-relaxed mb-6">
+                  Bring your use case. We’ll walk through pay-ins, payouts and which plan fits.
                 </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="relative overflow-hidden bg-neutral-950 pb-14 lg:pb-24">
-        <DarkBackdrop glow="right" />
-        <div className="container-custom relative">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="border-t border-white/10 pt-12 lg:pt-16 text-center"
-          >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">
-              Ready to accept stablecoin and crypto payments?
-            </h2>
-            <p className="text-xl text-neutral-300 mb-8 max-w-2xl mx-auto">
-              Join the future of payments today. Get started in minutes with no setup fees and full regulatory compliance.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="https://merchant.ezeebit.com/#/signup"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
-              >
-                Start Free Trial
-                <ArrowRight className="w-5 h-5 ml-2 inline" />
-              </a>
-              <Link
-                to="/contact"
-                className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
-              >
-                Talk to Sales
-              </Link>
+                {/* TODO(confirm): support */}
+                <p className="text-sm text-neutral-300 mb-6">{SUPPORT}</p>
+                <div className="flex flex-col gap-3">
+                  <Link to="/contact" className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary-500 text-white font-semibold px-5 py-3 hover:bg-primary-600">
+                    Book a call
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                  <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 text-white font-semibold px-5 py-3 hover:bg-white/5">
+                    Get started free
+                  </a>
+                </div>
+                <p className="mt-5 text-sm text-neutral-400">
+                  +27 21 879 5074 · support@ezeebit.com · Cape Town
+                </p>
+              </div>
             </div>
-          </motion.div>
-        </div>
-      </section>
+          </div>
+        </section>
       </motion.div>
     </>
   )

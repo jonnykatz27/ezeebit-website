@@ -1,7 +1,9 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Linkedin, Mail, Phone, MapPin, Shield, Award } from 'lucide-react'
 
 const Footer = () => {
+  const { pathname } = useLocation()
+  const isHome = (pathname.replace(/\/+$/, '') || '/') === '/'
   const footerLinks = {
     Products: [
       { name: 'In-Store Payments', href: '/in-store' },
@@ -129,18 +131,27 @@ const Footer = () => {
 
         <div className="mt-5 pt-5 border-t border-neutral-800">
           <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 mb-4">
-            <div className="flex items-center space-x-1.5 text-xs md:text-sm text-neutral-400">
-              <Shield className="w-3.5 h-3.5 text-secondary-400" />
-              <span>FSCA Regulated</span>
-            </div>
+            {/*
+              TODO(confirm): regulatory badges. The homepage fact-check says not
+              to show FSCA-regulated, FAIS Licensed or FSCA-authorised badges.
+              Other pages keep the badges the footer already had.
+            */}
+            {!isHome && (
+              <div className="flex items-center space-x-1.5 text-xs md:text-sm text-neutral-400">
+                <Shield className="w-3.5 h-3.5 text-secondary-400" />
+                <span>FSCA Regulated</span>
+              </div>
+            )}
             <div className="flex items-center space-x-1.5 text-xs md:text-sm text-neutral-400">
               <Award className="w-3.5 h-3.5 text-secondary-400" />
               <span>FIC Compliant</span>
             </div>
-            <div className="flex items-center space-x-1.5 text-xs md:text-sm text-neutral-400">
-              <Shield className="w-3.5 h-3.5 text-secondary-400" />
-              <span>FAIS Regulated</span>
-            </div>
+            {!isHome && (
+              <div className="flex items-center space-x-1.5 text-xs md:text-sm text-neutral-400">
+                <Shield className="w-3.5 h-3.5 text-secondary-400" />
+                <span>FAIS Regulated</span>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -151,7 +162,13 @@ const Footer = () => {
             &copy; 2026 Ezeebit. All rights reserved.
           </p>
           <p className="mt-2 text-[10px] md:text-xs text-neutral-300 max-w-2xl mx-auto leading-relaxed">
-            Ezeebit is authorised and regulated by the FSCA, and has applied for its CASP licence (FSP 53664).
+            {/*
+              TODO(confirm): regulatory wording. Homepage uses the fact-check
+              sentence. Other pages keep "authorised and regulated by the FSCA".
+            */}
+            {isHome
+              ? 'Ezee Solutions Group (Pty) Ltd has applied for a Financial Service Provider (FSP) & Crypto Asset Service Provider (CASP) licence, FSP 53664.'
+              : 'Ezeebit is authorised and regulated by the FSCA, and has applied for its CASP licence (FSP 53664).'}
           </p>
         </div>
       </div>

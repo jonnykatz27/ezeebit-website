@@ -142,7 +142,7 @@ export const PortalBalanceCard = ({
         <div className="relative flex flex-1 items-center gap-3 min-w-0 rounded-xl [@container(max-width:480px)]:w-full">
           {flash?.stable}
           <span className="relative size-10 rounded-full flex items-center justify-center shrink-0" style={{ background: C.stable }}>
-            <img src="/portal/usdt.png" alt="" className="size-8 object-cover" />
+            <img src="/usdt-round.svg" alt="" className="size-8 object-cover" />
           </span>
           <div className="relative flex flex-col gap-1.5 min-w-0">
             <p className="text-[18px] font-semibold tabular-nums truncate" style={{ color: C.gray900 }}>{stable.amount}</p>
@@ -204,7 +204,7 @@ const Picker = ({ label, mark }: { label: string; mark: string }) => (
 )
 
 /** The Convert panel from the Wallet overview. Design width 317px. */
-export const PortalConvertCard = ({ from, fromMark, fromAmount, balance, to = 'USDT', toMark = '/portal/usdt.png', toAmount, rate }: {
+export const PortalConvertCard = ({ from, fromMark, fromAmount, balance, to = 'USDT', toMark = '/usdt-round.svg', toAmount, rate }: {
   from: string
   /** The flag or coin for the currency being converted from. */
   fromMark: string

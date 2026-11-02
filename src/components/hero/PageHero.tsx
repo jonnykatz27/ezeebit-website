@@ -105,7 +105,7 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
           split
             ? 'text-[clamp(1.7rem,8.2vw,2.15rem)] sm:text-6xl lg:text-[3rem] xl:text-[3.75rem]'
             : stacked
-              ? 'text-[clamp(1.7rem,8.2vw,2.05rem)] sm:text-6xl lg:text-7xl xl:text-[5.5rem]'
+              ? 'text-[clamp(2.1rem,10vw,2.6rem)] sm:text-6xl lg:text-7xl xl:text-[5.25rem]'
               : 'text-[clamp(1.7rem,8.2vw,2.15rem)] sm:text-[3.25rem] lg:text-[3.75rem]'
         }`}
       >
@@ -150,7 +150,7 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
   )
 
   return (
-    <section id={id} className={`relative overflow-hidden pt-40 lg:pt-48 ${split ? 'pb-14 lg:pb-24' : 'pb-12 lg:pb-20'}`}>
+    <section id={id} className={`relative overflow-hidden ${stacked ? 'pt-40 lg:pt-44' : 'pt-40 lg:pt-48'} ${split ? 'pb-14 lg:pb-24' : 'pb-12 lg:pb-20'}`}>
       <HeroBackdrop glow={stacked ? 'top' : 'side'} />
       <div className="container-custom relative z-10">
         {split ? (
@@ -161,7 +161,7 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
         ) : (
           <>
             {text}
-            {wideVisual && <div className="mt-10 lg:mt-14">{wideVisual}</div>}
+            {wideVisual && <div className="mt-12 lg:mt-16">{wideVisual}</div>}
             {visual && <div className="mt-12 lg:mt-16 mx-auto max-w-[620px]">{visual}</div>}
           </>
         )}

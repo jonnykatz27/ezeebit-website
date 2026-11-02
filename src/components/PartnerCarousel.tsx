@@ -4,9 +4,25 @@ import { motion } from '../lib/motion'
 
 interface Partner {
   name: string
+  /** A logo cropped to its mark, with no padding of its own (public/partners). */
   logo: string
-  scale?: number
-  mobileScale?: number
+  /** The cropped file's width and height in pixels. */
+  size: [number, number]
+  /** Extra weight for a mark drawn in hairlines, which reads lighter at the same size. */
+  boost?: number
+}
+
+/**
+ * Every logo gets the same area rather than the same height, within the
+ * cell. Same-height logos made a square badge loom over a long wordmark, and
+ * same-width ones did the opposite; equal area is what reads as equal size.
+ */
+const fit = ([w, h]: [number, number], area: number, maxW: number, maxH: number, boost = 1) => {
+  const ratio = w / h
+  const width = Math.sqrt(area * boost * ratio)
+  const height = Math.sqrt((area * boost) / ratio)
+  const k = Math.min(1, maxW / width, maxH / height)
+  return { width: Math.round(width * k), height: Math.round(height * k) }
 }
 
 interface PartnerCarouselProps {
@@ -144,9 +160,10 @@ const PartnerCarousel = ({ partners, direction, speed = 30 }: PartnerCarouselPro
       className="relative overflow-hidden w-full cursor-grab active:cursor-grabbing select-none"
       style={{
         touchAction: 'pan-y',
-        // Fade the track out before the clip, so a logo is not cut off mid-mark.
-        maskImage: 'linear-gradient(to right, transparent, #000 2.75rem, #000 calc(100% - 2.75rem), transparent)',
-        WebkitMaskImage: 'linear-gradient(to right, transparent, #000 2.75rem, #000 calc(100% - 2.75rem), transparent)',
+        // Fade the track out before the clip, over most of a logo's width, so
+        // one is never left half-drawn and sharp at the edge.
+        maskImage: 'linear-gradient(to right, transparent, #000 12%, #000 88%, transparent)',
+        WebkitMaskImage: 'linear-gradient(to right, transparent, #000 12%, #000 88%, transparent)',
       }}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
@@ -160,28 +177,29 @@ const PartnerCarousel = ({ partners, direction, speed = 30 }: PartnerCarouselPro
         className="flex items-center will-change-transform"
         style={{ gap: `${GAP}px`, transform: `translateX(${-singleSetWidth}px)` }}
       >
-        {seamlessPartners.map((partner, index) => (
-          <div
-            key={`${partner.name}-${index}`}
-            className="flex-shrink-0 flex items-center justify-center overflow-hidden p-3"
-            style={{ width: `${ITEM_WIDTH}px`, height: isMobile ? '77px' : '96px' }}
-          >
-            {/*
-              One box for every logo, object-contain, no per-logo scale.
-              Scaling past the box was clipping marks and making neighbours
-              different sizes.
-            */}
-            <img
-              src={partner.logo}
-              alt={index < partners.length ? partner.name : ''}
-              width={isMobile ? 120 : 160}
-              height={isMobile ? 48 : 56}
-              loading="lazy"
-              className="object-contain !mx-0 h-10 md:h-12 w-auto max-w-full"
-              draggable={false}
-            />
-          </div>
-        ))}
+        {seamlessPartners.map((partner, index) => {
+          const { width, height } = isMobile
+            ? fit(partner.size, 1500, ITEM_WIDTH - 24, 46, partner.boost)
+            : fit(partner.size, 3000, ITEM_WIDTH - 24, 64, partner.boost)
+          return (
+            <div
+              key={`${partner.name}-${index}`}
+              className="flex-shrink-0 flex items-center justify-center"
+              style={{ width: `${ITEM_WIDTH}px`, height: isMobile ? '77px' : '96px' }}
+            >
+              <img
+                src={partner.logo}
+                alt={index < partners.length ? partner.name : ''}
+                width={width}
+                height={height}
+                loading="lazy"
+                className="object-contain !mx-0"
+                style={{ width, height }}
+                draggable={false}
+              />
+            </div>
+          )
+        })}
       </motion.div>
     </div>
   )

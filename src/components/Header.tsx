@@ -41,6 +41,16 @@ function DesktopDropdown({
   const rootRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const focusMenu = useRef(false)
+  const closeTimer = useRef<number>()
+
+  // The pointer gets a moment to cross from the button to the panel, or to
+  // drift past its edge, before the menu shuts.
+  const cancelClose = () => window.clearTimeout(closeTimer.current)
+  const closeSoon = () => {
+    cancelClose()
+    closeTimer.current = window.setTimeout(onClose, 160)
+  }
+  useEffect(() => cancelClose, [])
 
   useEffect(() => {
     if (!open || !focusMenu.current) return
@@ -69,11 +79,14 @@ function DesktopDropdown({
     <div
       ref={rootRef}
       className="relative"
-      onMouseEnter={onOpen}
+      onMouseEnter={() => {
+        cancelClose()
+        onOpen()
+      }}
       onMouseLeave={(e) => {
         const next = e.relatedTarget
         if (next instanceof Node && rootRef.current?.contains(next)) return
-        onClose()
+        closeSoon()
       }}
       onBlur={(e) => {
         const next = e.relatedTarget
@@ -112,38 +125,50 @@ function DesktopDropdown({
         <span>{item.name}</span>
         <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
       </button>
-      {/* Always in the DOM so crawlers can follow the product links */}
+      {/*
+        Always in the DOM so crawlers can follow the product links. The outer
+        box starts flush with the button and its top padding is the visual gap,
+        so the pointer never crosses empty space on its way to a link.
+        Visibility is only animated on the way out: it fades before hiding,
+        but shows at once on open, so keyboard focus can land in it.
+      */}
       <div
-        id={`nav-menu-${item.name}`}
-        role="menu"
-        aria-label={item.name}
-        className={`absolute top-full left-0 mt-1 w-72 bg-white rounded-xl shadow-xl border border-neutral-100 py-1.5 overflow-hidden origin-top transition-[opacity,transform] duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1)] ${
-          open ? 'visible opacity-100 translate-y-0 scale-100' : 'invisible opacity-0 translate-y-2 scale-[0.98]'
+        className={`absolute top-full left-0 pt-2 w-72 origin-top duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1)] ${
+          open
+            ? 'visible opacity-100 translate-y-0 scale-100 transition-[opacity,transform]'
+            : 'invisible opacity-0 translate-y-1 scale-[0.98] transition-[opacity,transform,visibility]'
         }`}
       >
-        {item.dropdown.map((group, groupIndex) => (
-          <div
-            key={group.group ?? `group-${groupIndex}`}
-            className={groupIndex > 0 ? 'border-t border-neutral-100 mt-1.5 pt-1.5' : ''}
-          >
-            {group.group && (
-              <div className="px-4 pt-2 pb-1 text-[0.6875rem] font-semibold uppercase tracking-wider text-neutral-400">
-                {group.group}
-              </div>
-            )}
-            {group.items.map((subItem) => (
-              <Link
-                key={subItem.name}
-                to={subItem.href}
-                role="menuitem"
-                className="block px-4 py-3 hover:bg-neutral-50 transition-colors"
-              >
-                <div className="text-sm font-medium text-neutral-900">{subItem.name}</div>
-                <div className="text-xs text-neutral-500 mt-0.5">{subItem.description}</div>
-              </Link>
-            ))}
-          </div>
-        ))}
+        <div
+          id={`nav-menu-${item.name}`}
+          role="menu"
+          aria-label={item.name}
+          className="bg-white rounded-xl shadow-xl border border-neutral-100 py-1.5 overflow-hidden"
+        >
+          {item.dropdown.map((group, groupIndex) => (
+            <div
+              key={group.group ?? `group-${groupIndex}`}
+              className={groupIndex > 0 ? 'border-t border-neutral-100 mt-1.5 pt-1.5' : ''}
+            >
+              {group.group && (
+                <div className="px-4 pt-2 pb-1 text-[0.6875rem] font-semibold uppercase tracking-wider text-neutral-400">
+                  {group.group}
+                </div>
+              )}
+              {group.items.map((subItem) => (
+                <Link
+                  key={subItem.name}
+                  to={subItem.href}
+                  role="menuitem"
+                  className="block px-4 py-3 hover:bg-neutral-50 transition-colors"
+                >
+                  <div className="text-sm font-medium text-neutral-900">{subItem.name}</div>
+                  <div className="text-xs text-neutral-500 mt-0.5">{subItem.description}</div>
+                </Link>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )

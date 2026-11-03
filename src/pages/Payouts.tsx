@@ -15,7 +15,7 @@ import DarkBackdrop from '../components/DarkBackdrop'
 const payoutFaqs = [
   {
     question: 'What is a stablecoin payout?',
-    answer: 'A payment from your platform to a user in a US-dollar stablecoin, sent to the user\'s own crypto wallet. You create the payout through the API from your fiat balance. The user opens a payout link carrying your brand, chooses the asset and network, and enters their wallet address. Ezeebit screens the address, converts the funds and sends them on-chain.',
+    answer: 'A payment from your platform to a user in stablecoin, sent to the user\'s own crypto wallet. Payouts are available in USDT today, with more stablecoin options coming soon. You create the payout through the API from your fiat balance. The user opens a payout link carrying your brand, chooses the asset and network, and enters their wallet address. Ezeebit screens the address, converts the funds and sends them on-chain.',
   },
   {
     question: 'How fast do payouts arrive?',

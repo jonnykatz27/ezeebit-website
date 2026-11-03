@@ -2,14 +2,14 @@ import { Fragment, useEffect, useRef, useState, type KeyboardEvent, type ReactNo
 import { Link } from 'react-router-dom'
 import {
   ArrowDownLeft, ArrowLeftRight, ArrowRight, ArrowUpRight, Banknote, Check, ChevronDown, ChevronLeft,
-  ChevronRight, Headphones, Landmark, Lock, Plug, Receipt, ShieldCheck, Star, ThumbsUp, UserCheck, Wallet,
-  Webhook, Zap,
+  ChevronRight, Code, Headphones, Lock, MousePointerClick, Plug, ShieldCheck, Star, ThumbsUp,
+  UserCheck, Wallet, Webhook,
 } from 'lucide-react'
 import { motion } from '../lib/motion'
 import PartnerCarousel from '../components/PartnerCarousel'
 import SEO from '../components/SEO'
 import FlowDemo, { DemoPanel } from '../components/demo/FlowDemo'
-import { CashierWidget, CheckoutWidget } from '../components/demo/TourWidgets'
+import { ChannelDemo, type Channel } from '../components/demo/TourWidgets'
 import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import HomeFlowVisual from '../components/hero/HomeFlowVisual'
 import { PortalBalanceCard, PortalConvertCard, PORTAL_PAGE_BG } from '../components/portal/PortalUI'
@@ -84,173 +84,139 @@ const TESTIMONIALS = [
 type Fact = [string, string]
 /** A small card beside the demo, calling out one thing the screen does. */
 type Side = { icon: typeof Lock; caption: string; value: string; sub?: string; ok?: string }
+/** A photo of the hardware beside the demo, with its name and what it does. */
+type Shot = { image: string; size: [number, number]; height: string; name: string; note: string }
+/** One demo in the tour, with the cards (or photos) to its left and right on a wide screen. */
+type Screen = { id: string; label: string; sides: [Side[] | Shot[], Side[] | Shot[]] }
 type Stop = {
   id: string
   label: string
-  eyebrow: string
   heading: string
   body: string
-  ticks: string[]
   facts: Fact[]
   links: { label: string; to: string }[]
-  /** The cards to the left and right of the demo on a wide screen. */
-  sides: [Side[], Side[]]
+  /** The demos under this tab. More than one gets its own switch above the demo. */
+  screens: Screen[]
+  /** Headings over the cards either side of the demo, where they need saying. */
+  sideTitles?: [string, string]
 }
 
-const PAY_IN: Stop[] = [
-  {
-    id: 'in-store',
-    label: 'In-store',
-    eyebrow: 'Shops, restaurants and hotels',
-    heading: 'Ring it up in your currency. They pay in crypto.',
-    body: 'Staff enter the amount and the customer scans the code with the wallet or exchange app already on their phone. Every payment is hedged on the spot, so your takings never move with the market.',
-    ticks: [
-      'An Android ePOS that prints receipts, or a printed Ezeebit Pay QR',
-      'The locked rate shown to the customer before they pay',
-      'Final payments, with no chargebacks',
-      'Refunds handled by you, in local currency or store credit',
-    ],
-    facts: [
-      ['Ways to pay', 'An ePOS over WiFi, 4G or SIM, or a static Ezeebit Pay QR'],
-      ['Fees', '1% or lower per transaction, excluding VAT'],
-      ['Setup', 'No setup fees for the ePOS or Ezeebit Pay'],
-      ['Settlement', SETTLEMENT],
-    ],
-    links: [{ label: 'In-store payments', to: '/in-store' }],
-    sides: [
-      [
-        { icon: Lock, caption: 'Rate', value: 'Locked before they pay', sub: 'Shown to the customer on screen' },
-        { icon: Receipt, caption: 'Fees', value: '1% or lower', sub: 'Per transaction, excluding VAT' },
-      ],
-      [
-        { icon: Landmark, caption: 'Settlement', value: 'Next business day', sub: 'In local currency, or stablecoin the same day' },
-        { icon: ShieldCheck, caption: 'Chargebacks', value: 'None', sub: 'Crypto payments are final' },
-      ],
-    ],
-  },
-  {
-    id: 'online',
-    label: 'Online checkout',
-    eyebrow: 'Online stores',
-    heading: 'A checkout your customers already know how to use',
-    body: 'Customers pick their exchange or wallet and pay in a few taps. The amount is fixed in your currency when they pay, so you receive exactly what you charged.',
-    ticks: [
-      'VALR Pay, Luno Pay, Binance Pay, WalletConnect Pay and any on-chain wallet',
-      'Plugins for Shopify, WooCommerce and Magento, or the API',
-      'Final payments, with no chargebacks',
-    ],
-    facts: [
-      ['Coins', 'BTC, ETH, USDT, USDC, BNB, DAI, PAXG, ZARP and ZARU'],
-      ['Rate', 'Locked when the customer pays'],
-      ['Plugins', 'Shopify, WooCommerce and Magento, or the API'],
-      ['Settlement', SETTLEMENT],
-    ],
-    links: [{ label: 'Online checkout', to: '/online' }],
-    sides: [
-      [
-        { icon: Plug, caption: 'Plugins', value: 'Shopify, WooCommerce, Magento', sub: 'Or the API' },
-        { icon: Lock, caption: 'Rate', value: 'Locked when they pay', sub: 'You receive exactly what you charged' },
-      ],
-      [
-        { icon: Landmark, caption: 'Settlement', value: 'R1,250.00 to your bank', sub: 'Next business day, or stablecoin the same day' },
-        { icon: ShieldCheck, caption: 'Chargebacks', value: 'None', sub: 'Crypto payments are final' },
-      ],
-    ],
-  },
-  {
-    id: 'platforms',
-    label: 'Platforms',
-    eyebrow: 'Gaming, trading and wallets',
-    heading: 'Deposits and withdrawals, without holding crypto',
-    body: 'Your users deposit with the crypto they already hold and withdraw in stablecoin. Every deposit is hedged the moment it lands, so you credit a fixed amount and never carry the asset.',
-    ticks: [
-      'Every deposit attributed to the right user',
-      'A signed webhook the moment a deposit is final',
-      'Rate locked when they pay, with no chargebacks',
-      'Withdrawals paid in stablecoin from your fiat balance',
-    ],
-    facts: [
-      ['Pay with', 'Any on-chain wallet, 700+ wallets through WalletConnect, Luno, VALR and Binance'],
-      ['Deposits', 'Credited by signed webhook once final'],
-      ['Withdrawals', 'Stablecoin on-chain, usually within minutes'],
-      ['Settlement', SETTLEMENT],
-      ['Compliance', 'KYC, AML, the Travel Rule and address screening, handled by us'],
-    ],
-    links: [{ label: 'Crypto for platforms', to: '/platforms' }],
-    sides: [
-      [
-        { icon: Webhook, caption: 'Webhook', value: 'Deposit final', sub: 'Signed, so you credit the right user', ok: '200 OK' },
-        { icon: UserCheck, caption: 'Attribution', value: 'Every deposit to its user', sub: 'No matching payments by hand' },
-      ],
-      [
-        { icon: ShieldCheck, caption: 'Screening', value: 'Player wallet', sub: 'KYC, AML and the Travel Rule handled', ok: 'Clear' },
-        { icon: Zap, caption: 'Withdrawals', value: 'Stablecoin on-chain', sub: 'Usually within minutes' },
-      ],
-    ],
-  },
+/** The same on every channel, because every channel opens the same checkout. */
+const CHECKOUT_SIDES: Side[] = [
+  { icon: Lock, caption: 'Rate', value: 'Locked before they pay', sub: 'You receive exactly what you charged' },
+  { icon: ShieldCheck, caption: 'Chargebacks', value: 'None', sub: 'Crypto payments are final' },
 ]
+
+const PAY_INS: Stop = {
+  id: 'pay-ins',
+  label: 'Pay-ins',
+  heading: 'One checkout, wherever your customers pay',
+  body: 'In your store, on your website or on your platform, customers land on the same checkout and pay from the wallet they already use.',
+  facts: [
+    ['Pay with', 'Any wallet, plus VALR, Luno and Binance'],
+    ['Coins', 'BTC, ETH, USDT, USDC and more'],
+    ['Settlement', 'Local currency next business day, or stablecoin same day'],
+    ['Setup', 'No setup fees'],
+  ],
+  links: [
+    { label: 'In-store payments', to: '/in-store' },
+    { label: 'Online checkout', to: '/online' },
+    { label: 'Crypto for platforms', to: '/platforms' },
+  ],
+  sideTitles: ['How they get there', 'Same on every channel'],
+  screens: [
+    {
+      id: 'in-store',
+      label: 'In-store',
+      sides: [
+        // The two ways into the checkout in a store, one either side of it. Each
+        // photo's height keeps the two in proportion: the stand is shorter than the ePOS.
+        [{ image: '/tour/epos.webp', size: [224, 601], height: 'h-[260px] xl:h-[360px]', name: 'Ezeebit ePOS', note: 'The checkout opens on the device' }],
+        [{ image: '/tour/qr-stand.webp', size: [320, 470], height: 'h-[190px] xl:h-[260px]', name: 'Ezeebit Pay QR', note: 'Customers scan it and pay on their phone' }],
+      ],
+    },
+    {
+      id: 'online',
+      label: 'Online checkout',
+      sides: [
+        [
+          { icon: Plug, caption: 'Plugins', value: 'Shopify, WooCommerce, Magento', sub: 'Or the API' },
+          { icon: MousePointerClick, caption: 'Checkout', value: 'Opens from Pay with crypto', sub: 'With the order total carried over' },
+        ],
+        CHECKOUT_SIDES,
+      ],
+    },
+    {
+      id: 'platforms',
+      label: 'Platforms',
+      sides: [
+        [
+          { icon: Code, caption: 'API', value: 'Opens from your cashier', sub: 'With the amount and the user' },
+          { icon: UserCheck, caption: 'Attribution', value: 'Every deposit to its user', sub: 'No matching payments by hand' },
+        ],
+        CHECKOUT_SIDES,
+      ],
+    },
+  ],
+}
 
 const PAY_OUT: Stop = {
   id: 'pay-out',
   label: 'Payouts',
-  eyebrow: 'Payouts',
   heading: 'A payout link your customer claims in minutes',
-  body: 'You create the payout from your fiat balance and send a link. Your customer picks the asset and network, enters their own wallet and watches it land. Every address is screened before funds move.',
-  ticks: [
-    'The widget carries your name and colours',
-    'No wallet addresses to collect, so a mistyped one is never your liability',
-    'Sent at any hour, with no banking cut-offs',
-    'RSA-signed webhooks on every status change',
-  ],
+  body: 'Send a link from your fiat balance. Your customer adds their own wallet and the funds land in minutes.',
   facts: [
-    ['Funding', 'Your fiat balance, reserved when the payout is created'],
-    ['Speed', 'Usually within minutes, at any hour'],
-    ['Recipients', 'No Ezeebit account needed, only a wallet'],
-    ['Webhooks', 'Signed, with the final status and transaction hash'],
-    ['Use it for', 'Player winnings, marketplace sellers, remittance and disbursement'],
+    ['Pay out in', 'USDT, with more stablecoins soon'],
+    ['Speed', 'Minutes, at any hour'],
+    ['Branding', 'Your name and colours'],
+    ['Use it for', 'Winnings, seller payouts and remittance'],
   ],
   links: [{ label: 'Payouts', to: '/payouts' }],
-  sides: [
-    [
-      { icon: Wallet, caption: 'Funding', value: 'Your fiat balance', sub: 'Reserved when the payout is created' },
-      { icon: UserCheck, caption: 'Recipient', value: 'No Ezeebit account', sub: 'Only a wallet of their own' },
-    ],
-    [
-      { icon: ShieldCheck, caption: 'Screening', value: 'Wallet address', sub: 'Checked before funds move', ok: 'Clear' },
-      { icon: Webhook, caption: 'Webhook', value: 'Payout complete', sub: 'Signed, with the transaction hash', ok: '200 OK' },
-    ],
+  screens: [
+    {
+      id: 'pay-out',
+      label: 'Payout claim',
+      sides: [
+        [
+          { icon: Wallet, caption: 'Funding', value: 'Your fiat balance', sub: 'Reserved when the payout is created' },
+          { icon: UserCheck, caption: 'Recipient', value: 'No Ezeebit account', sub: 'Only a wallet of their own' },
+        ],
+        [
+          { icon: ShieldCheck, caption: 'Screening', value: 'Wallet address', sub: 'Checked before funds move', ok: 'Clear' },
+          { icon: Webhook, caption: 'Webhook', value: 'Payout complete', sub: 'Signed, with the transaction hash', ok: '200 OK' },
+        ],
+      ],
+    },
   ],
 }
 
 const HOLD: Stop = {
   id: 'hold',
   label: 'Your balance',
-  eyebrow: 'Merchant Portal',
   heading: 'A fiat wallet and a USDT wallet, on one balance',
-  body: 'Pay-ins, payouts, conversions and withdrawals land on one ledger. Hold fiat or USDT, convert at a quoted rate, and withdraw to your bank or your own wallet.',
-  ticks: [
-    'A fiat wallet and a USDT wallet, converted at a quoted rate',
-    'Payouts funded from the same balance',
-    'Every movement a line item with a reference and timestamp',
-    'Balances, conversions and withdrawals by API too',
-  ],
+  body: 'Pay-ins, payouts and conversions land on one ledger. Withdraw to your bank or your own wallet.',
   facts: [
-    ['Wallets', 'A fiat wallet and a USDT wallet'],
-    ['Withdrawals', 'Fiat to your bank in ZAR, KES, NGN or USD the next business day, or stablecoin to your own wallet the same day'],
+    ['Wallets', 'Fiat and USDT'],
     ['Records', 'A reference and timestamp on every movement'],
     ['Access', 'The Merchant Portal or the API'],
     ['Safeguarding', 'Held with an FSCA-regulated Crypto Asset Service Provider, FSP No. 53664'],
   ],
   links: [{ label: 'Wallets', to: '/wallets' }],
-  sides: [
-    [
-      { icon: ArrowDownLeft, caption: 'Pay-ins', value: 'Land on one ledger', sub: 'Each with a reference and timestamp' },
-      { icon: ArrowLeftRight, caption: 'Convert', value: 'At a quoted rate', sub: 'Between fiat and USDT' },
-    ],
-    [
-      { icon: ArrowUpRight, caption: 'Payouts', value: 'From the same balance', sub: 'No second provider to pre-fund' },
-      { icon: Banknote, caption: 'Withdraw', value: 'To your bank or wallet', sub: 'Fiat next business day, stablecoin same day' },
-    ],
+  screens: [
+    {
+      id: 'hold',
+      label: 'Merchant Portal',
+      sides: [
+        [
+          { icon: ArrowDownLeft, caption: 'Pay-ins', value: 'Land on one ledger', sub: 'Each with a reference and timestamp' },
+          { icon: ArrowLeftRight, caption: 'Convert', value: 'At a quoted rate', sub: 'Between fiat and USDT' },
+        ],
+        [
+          { icon: ArrowUpRight, caption: 'Payouts', value: 'From the same balance', sub: 'No second provider to pre-fund' },
+          { icon: Banknote, caption: 'Withdraw', value: 'To your bank or wallet', sub: 'Fiat next business day, stablecoin same day' },
+        ],
+      ],
+    },
   ],
 }
 
@@ -324,7 +290,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: 'Can I pay my customers out in stablecoin?',
-    a: 'Yes. You create the payout with an amount and your own reference, we reserve the fiat and hand back a link, and your customer enters their own wallet address to claim it. Payouts settle on-chain in minutes, at any hour.',
+    a: 'Yes. You create the payout with an amount and your own reference, we reserve the fiat and hand back a link, and your customer enters their own wallet address to claim it. Payouts settle on-chain in minutes, at any hour. Payouts are available in USDT today, with more stablecoin options coming soon.',
   },
   {
     q: 'Can I hold a balance with Ezeebit?',
@@ -399,11 +365,9 @@ function StopCopy({ stop }: { stop: Stop }) {
   return (
     <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
       <div className="lg:col-span-7">
-        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-600 mb-2">{stop.eyebrow}</p>
         <h3 className="text-2xl lg:text-3xl font-display font-bold text-neutral-900 leading-tight mb-3 [text-wrap:balance]">{stop.heading}</h3>
-        <p className="text-neutral-600 leading-relaxed mb-5">{stop.body}</p>
-        <Ticks items={stop.ticks} />
-        <div className="mt-6 flex flex-wrap gap-4">
+        <p className="text-neutral-600 leading-relaxed max-w-xl">{stop.body}</p>
+        <div className="mt-6 flex flex-wrap gap-x-5 gap-y-3">
           {stop.links.map((l) => (
             <Link key={l.to} to={l.to} className="inline-flex items-center gap-1.5 font-semibold text-primary-600 hover:text-primary-700">
               {l.label}
@@ -442,7 +406,7 @@ type Product = {
   tagline: string
   steps: { who: string; what: string; you?: boolean }[]
   ticks: string[]
-  strip: { label: string; marks: { name: string; logo: string; coin?: boolean }[]; note?: string; named?: boolean }
+  strip: { label: string; marks: { name: string; logo: string; coin?: boolean; soon?: boolean }[]; note?: string; named?: boolean }
   docs: string
 }
 
@@ -500,23 +464,52 @@ const PRODUCTS: Product[] = [
       named: true,
       marks: [
         { name: 'USDT', logo: '/usdt-round.svg', coin: true },
-        { name: 'USDC', logo: '/usdc-logo.svg', coin: true },
-        { name: 'ZARP', logo: '/zarp-logo.png', coin: true },
-        { name: 'ZARU', logo: '/zaru-logo.png', coin: true },
+        { name: 'USDC', logo: '/usdc-logo.svg', coin: true, soon: true },
+        { name: 'ZARP', logo: '/zarp-logo.png', coin: true, soon: true },
+        { name: 'ZARU', logo: '/zaru-logo.png', coin: true, soon: true },
       ],
-      note: 'On Tron, Ethereum, BNB Chain and Solana',
     },
     docs: `${DOCS}/payout-gateway/overview`,
   },
 ]
 
+type Mark = { name: string; logo: string }
+
+/** What goes into and comes out of each combination, as the coins and flags themselves. */
+const CRYPTO_IN: Mark[] = [
+  { name: 'Bitcoin', logo: '/btc-logo.svg' },
+  { name: 'Ethereum', logo: '/eth-logo.svg' },
+  { name: 'USDT', logo: '/usdt-round.svg' },
+  { name: 'USDC', logo: '/usdc-logo.svg' },
+]
+// Crypto goes out as USDT, the one coin payouts are made in today
+const USDT: Mark[] = [{ name: 'USDT', logo: '/usdt-round.svg' }]
+const LOCAL: Mark[] = [
+  { name: 'ZAR', logo: '/za-flag.svg' },
+  { name: 'KES', logo: '/ke-flag.svg' },
+  { name: 'NGN', logo: '/ng-flag.svg' },
+  { name: 'USD', logo: '/us-flag.svg' },
+]
+
 /** The ways the two products combine, from the merchant's side. */
 const COMBOS = [
-  { kind: 'Off-ramp', from: 'Crypto', to: 'Local currency', title: 'Crypto in, local currency out', body: 'Your customer pays in crypto. You receive ZAR, KES, NGN or USD in your bank.' },
-  { kind: 'On-ramp', from: 'Local currency', to: 'Crypto', title: 'Local currency in, crypto out', body: 'You fund payouts in local currency. Your customer receives stablecoin.' },
-  { kind: 'Stablecoin', from: 'Crypto', to: 'USDT', title: 'Crypto in, stablecoin held', body: 'Keep what comes in as USDT and convert when it suits you.' },
-  { kind: 'Round trip', from: 'Crypto', to: 'Crypto', title: 'Crypto in, crypto out', body: 'What your customers pay in funds what they cash out, on one balance.' },
+  { kind: 'Off-ramp', from: CRYPTO_IN, to: LOCAL, title: 'Crypto in, local currency out', body: 'Your customer pays in crypto. You receive ZAR, KES, NGN or USD in your bank.' },
+  { kind: 'On-ramp', from: LOCAL, to: USDT, title: 'Local currency in, crypto out', body: 'You fund payouts in local currency. Your customer receives stablecoin.' },
+  { kind: 'Stablecoin', from: CRYPTO_IN, to: USDT, title: 'Crypto in, stablecoin held', body: 'Keep what comes in as USDT and convert when it suits you.' },
+  { kind: 'Round trip', from: CRYPTO_IN, to: USDT, title: 'Crypto in, crypto out', body: 'What your customers pay in funds what they cash out, on one balance.' },
 ]
+
+/** One side of a combination: its coins or flags overlapping in a pill, named when there is only one. */
+const Marks = ({ marks }: { marks: Mark[] }) => (
+  <span title={marks.map((m) => m.name).join(', ')} className="inline-flex items-center gap-1.5 rounded-full bg-white p-1 ring-1 ring-inset ring-neutral-200">
+    <span className="flex -space-x-1">
+      {marks.map((m) => (
+        <img key={m.name} src={m.logo} alt="" width={24} height={24} className="w-6 h-6 mx-0 rounded-full bg-white object-contain ring-2 ring-white" />
+      ))}
+    </span>
+    {marks.length === 1 && <span className="pr-1.5 text-xs font-semibold text-neutral-800">{marks[0].name}</span>}
+  </span>
+)
 
 function ProductCard({ product: p }: { product: Product }) {
   const Icon = p.icon
@@ -560,9 +553,10 @@ function ProductCard({ product: p }: { product: Product }) {
           <ul className="flex flex-wrap items-center gap-2">
             {p.strip.marks.map((m) =>
               p.strip.named ? (
-                <li key={m.name} className="flex items-center gap-1.5 rounded-full border border-neutral-200 py-1 pl-1 pr-2.5 text-xs font-semibold text-neutral-800">
-                  <img src={m.logo} alt="" width={20} height={20} className="w-5 h-5 rounded-full !mx-0" />
+                <li key={m.name} className={`flex items-center gap-1.5 rounded-full border py-1 pl-1 pr-2.5 text-xs font-semibold ${m.soon ? 'border-dashed border-neutral-300 text-neutral-500' : 'border-neutral-200 text-neutral-800'}`}>
+                  <img src={m.logo} alt="" width={20} height={20} className={`w-5 h-5 rounded-full !mx-0 ${m.soon ? 'opacity-60 grayscale' : ''}`} />
                   {m.name}
+                  {m.soon && <span className="rounded-full bg-neutral-100 px-1.5 text-[10px] font-semibold text-neutral-500">Soon</span>}
                 </li>
               ) : (
                 <li key={m.name}>
@@ -608,23 +602,32 @@ const ScaleToFit = ({ design, children }: { design: number; children: ReactNode 
   )
 }
 
-/** Every screen in the tour, in the order money moves: in, out, and the balance between. */
-const TOUR: Stop[] = [...PAY_IN, PAY_OUT, HOLD]
+/** Every tab in the tour, in the order money moves: in, out, and the balance between. */
+const TOUR: Stop[] = [PAY_INS, PAY_OUT, HOLD]
 
-/** The demo for a stop. Only the open tab's is mounted, so hidden iframes never load. */
+/** Shows the open one of several things stacked in one grid cell, fading between them. */
+const fade = (on: boolean) => `[grid-area:1/1] transition-opacity duration-300 ${on ? 'opacity-100' : 'opacity-0 invisible pointer-events-none'}`
+
+/**
+ * Every tab's demo sits in a frame of this height, whatever the screen inside
+ * it, so switching tabs or moving through a demo never resizes the section. A
+ * screen taller than the frame scrolls inside it, as it would on a phone.
+ */
+const DEVICE_HEIGHT = 700
+
+/** The demo for a screen, in the fixed frame. */
 function TourDemo({ id }: { id: string }) {
   switch (id) {
     case 'in-store':
-      return <FlowDemo src="/demos/pay-in.html" flow="payin" label="In-store checkout" title="Interactive demo of the Ezeebit in-store checkout" />
     case 'online':
-      return <DemoPanel label="Online checkout"><CheckoutWidget /></DemoPanel>
     case 'platforms':
-      return <DemoPanel label="Platform cashier"><CashierWidget /></DemoPanel>
+      return <ChannelDemo channel={id as Channel} />
     case 'pay-out':
-      return <FlowDemo src="/demos/pay-out.html" flow="payout" label="Payout claim" title="Interactive demo of an Ezeebit payout" />
+      return <FlowDemo fixed src="/demos/pay-out.html" flow="payout" label="Payout claim" title="Interactive demo of an Ezeebit payout" />
     default:
       return (
-        <DemoPanel label="Merchant Portal">
+        <DemoPanel fixed label="Merchant Portal">
+          <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden rounded-[20px]">
           <ScaleToFit design={430}>
             <div className={`rounded-[20px] ${PORTAL_PAGE_BG} p-3 space-y-3`}>
               <div className="rounded-[12px] border border-neutral-200/70 overflow-hidden">
@@ -647,6 +650,7 @@ function TourDemo({ id }: { id: string }) {
               </div>
             </div>
           </ScaleToFit>
+          </div>
         </DemoPanel>
       )
   }
@@ -659,14 +663,73 @@ const STAGE_COINS = [
   { src: '/btc-logo.svg', className: 'right-[10%] bottom-[7%]' },
 ]
 
+const isShots = (x: Side[] | Shot[]): x is Shot[] => 'image' in x[0]
+
+/** Photos of the hardware, on one baseline, each named underneath. */
+const Shots = ({ shots }: { shots: Shot[] }) => (
+  <div className="flex items-end gap-5 xl:gap-8">
+    {shots.map((s) => (
+      <figure key={s.name} className="flex w-[140px] xl:w-[190px] flex-col items-center text-center">
+        <img src={s.image} alt={s.name} width={s.size[0]} height={s.size[1]} loading="lazy" className={`${s.height} w-auto max-w-full object-contain drop-shadow-[0_18px_24px_rgba(0,26,54,0.18)]`} />
+        <figcaption className="mt-4">
+          <span className="block text-sm font-semibold text-neutral-900">{s.name}</span>
+          <span className="block text-xs text-neutral-500 leading-snug">{s.note}</span>
+        </figcaption>
+      </figure>
+    ))}
+  </div>
+)
+
 /**
- * The product tour: one tab per screen your customers or your team see. The
- * live demo sits on a stage with what it does called out either side, and the
- * copy and facts follow underneath.
+ * The cards or photos either side of a demo, with the tab's heading over the
+ * cards if it has one; photos are named in their captions instead. Cards that
+ * several screens share are drawn once, so they hold still while the demo
+ * beside them changes.
+ */
+function SideColumn({ stop, col, showing }: { stop: Stop; col: 0 | 1; showing: string }) {
+  const groups = [...new Set(stop.screens.map((s) => s.sides[col]))]
+  const shown = stop.screens.find((s) => s.id === showing)!.sides[col]
+  const align = col === 0 ? 'items-end' : 'items-start'
+  return (
+    <div className="hidden lg:grid grid-cols-1">
+      {groups.map((cards, i) => (
+        // The heading goes in with each set, so it sits on top of whichever is showing, however tall
+        <div key={i} className={`${fade(cards === shown)} flex flex-col justify-center gap-3 ${align}`}>
+          {/* Set against the edge nearest the demo */}
+          {stop.sideTitles && !isShots(cards) && <p className={`w-full text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-500 ${col === 0 ? 'text-right' : ''}`}>{stop.sideTitles[col]}</p>}
+          <div className={`w-full flex flex-col gap-4 ${align}`}>
+            {isShots(cards) ? <Shots shots={cards} /> : cards.map((side) => <SideCard key={side.caption} side={side} />)}
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+/**
+ * The product tour: a tab each for pay-ins, payouts and the balance between,
+ * with pay-ins switching between its three channels, each leading into the
+ * same checkout. The live demo sits on a
+ * stage with what it does called out either side, and the copy and facts
+ * follow underneath.
  */
 function ProductTour() {
   const [open, setOpen] = useState(TOUR[0].id)
-  const stop = TOUR.find((t) => t.id === open) ?? TOUR[0]
+  // The demo each tab is showing, for a tab with more than one
+  const [screenOf, setScreenOf] = useState<Record<string, string>>({})
+  const current = (t: Stop) => screenOf[t.id] ?? t.screens[0].id
+  // A demo mounts the first time it is shown and then stays, so the iframes
+  // load only when asked for and going back to one picks up where it was
+  const [seen, setSeen] = useState<string[]>([TOUR[0].screens[0].id])
+  const see = (id: string) => setSeen((s) => (s.includes(id) ? s : [...s, id]))
+  const show = (id: string) => {
+    setOpen(id)
+    see(current(TOUR.find((t) => t.id === id)!))
+  }
+  const pick = (stop: string, screen: string) => {
+    setScreenOf((m) => ({ ...m, [stop]: screen }))
+    see(screen)
+  }
 
   return (
     <section id="how-it-works" className="scroll-mt-24 section-padding bg-white">
@@ -688,8 +751,8 @@ function ProductTour() {
                 aria-selected={open === t.id}
                 aria-controls={`tour-panel-${t.id}`}
                 tabIndex={open === t.id ? 0 : -1}
-                onClick={() => setOpen(t.id)}
-                onKeyDown={(e) => onTabKeys(e, index, TOUR.map((x) => x.id), setOpen, 'tour-tab')}
+                onClick={() => show(t.id)}
+                onKeyDown={(e) => onTabKeys(e, index, TOUR.map((x) => x.id), show, 'tour-tab')}
                 className={`min-h-[44px] whitespace-nowrap rounded-full px-4 sm:px-5 py-2 text-sm font-semibold ${open === t.id ? 'bg-primary-500 text-white' : 'text-neutral-300 hover:text-white'}`}
               >
                 {t.label}
@@ -698,45 +761,90 @@ function ProductTour() {
           </div>
         </div>
 
-        {TOUR.map((t) => (
-          <div key={t.id} role="tabpanel" id={`tour-panel-${t.id}`} aria-labelledby={`tour-tab-${t.id}`} hidden={open !== t.id}>
-            {open === t.id && (
-              <>
-                <div className="relative overflow-hidden rounded-[32px] border border-neutral-200/70 bg-gradient-to-b from-neutral-50 to-white px-3 py-6 sm:px-8 lg:py-14 [&_img]:!mx-0">
-                  {/* A still glow and hairline rings behind the demo */}
-                  <div aria-hidden="true" className="pointer-events-none absolute left-1/2 top-1/2">
-                    <span
-                      className="absolute rounded-full"
-                      style={{ width: 760, height: 760, left: -380, top: -380, background: 'radial-gradient(closest-side, color-mix(in srgb, var(--color-primary-500) 14%, transparent), transparent)' }}
-                    />
-                    {[500, 700, 900].map((d) => (
-                      <span key={d} className="absolute rounded-full border border-neutral-200/80" style={{ width: d, height: d, left: -d / 2, top: -d / 2 }} />
+        {/*
+          Every panel sits in the same grid cell, so the section takes the
+          tallest one's height and nothing below it moves between tabs. The
+          closed ones are invisible, which also keeps them out of the tab order
+          and away from screen readers.
+        */}
+        {/* minmax(0, 1fr) so a wide demo inside can never stretch the panels past the page */}
+        <div className="grid grid-cols-1">
+          {TOUR.map((t) => (
+            <div
+              key={t.id}
+              role="tabpanel"
+              id={`tour-panel-${t.id}`}
+              aria-labelledby={`tour-tab-${t.id}`}
+              className={fade(open === t.id)}
+            >
+              {/* The bottom padding matches the switch row above the demo, so the demo sits in the middle of the stage */}
+              <div className="relative overflow-hidden rounded-[32px] border border-neutral-200/70 bg-gradient-to-b from-neutral-50 to-white px-3 pt-5 pb-6 sm:px-8 lg:pt-8 lg:pb-[100px] [&_img]:!mx-0">
+                {/* A still glow and hairline rings behind the demo */}
+                <div aria-hidden="true" className="pointer-events-none absolute left-1/2 top-1/2">
+                  <span
+                    className="absolute rounded-full"
+                    style={{ width: 760, height: 760, left: -380, top: -380, background: 'radial-gradient(closest-side, color-mix(in srgb, var(--color-primary-500) 14%, transparent), transparent)' }}
+                  />
+                  {[500, 700, 900].map((d) => (
+                    <span key={d} className="absolute rounded-full border border-neutral-200/80" style={{ width: d, height: d, left: -d / 2, top: -d / 2 }} />
+                  ))}
+                </div>
+                {STAGE_COINS.map((c) => (
+                  <img key={c.src} src={c.src} alt="" aria-hidden="true" width={44} height={44} className={`hidden lg:block absolute w-11 h-11 rounded-full bg-white p-0.5 shadow-md ${c.className}`} />
+                ))}
+
+                {/*
+                  The switch between a tab's demos, or an empty row of the same
+                  height where there is only one, so the demo sits in the same
+                  place on every tab
+                */}
+                <div className="relative mb-5 lg:mb-6 flex h-11 justify-center">
+                  {t.screens.length > 1 && (
+                    <div role="tablist" aria-label={`${t.label} demos`} className="inline-flex gap-1 p-1 rounded-full bg-white ring-1 ring-neutral-200 shadow-[0_8px_24px_-12px_rgba(0,26,54,0.25)]">
+                      {t.screens.map((s, index) => (
+                        <button
+                          key={s.id}
+                          type="button"
+                          role="tab"
+                          id={`tour-screen-${s.id}`}
+                          aria-selected={current(t) === s.id}
+                          aria-controls={`tour-screen-panel-${s.id}`}
+                          tabIndex={current(t) === s.id ? 0 : -1}
+                          onClick={() => pick(t.id, s.id)}
+                          onKeyDown={(e) => onTabKeys(e, index, t.screens.map((x) => x.id), (id) => pick(t.id, id), 'tour-screen')}
+                          className={`whitespace-nowrap rounded-full px-3 sm:px-4 text-[13px] sm:text-sm font-semibold ${current(t) === s.id ? 'bg-neutral-950 text-white' : 'text-neutral-600 hover:text-neutral-900'}`}
+                        >
+                          {s.label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Each demo and its cards are stacked in place too, so switching between them moves nothing */}
+                <div className="relative grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px_minmax(0,1fr)] lg:items-center lg:gap-10">
+                  <SideColumn stop={t} col={0} showing={current(t)} />
+                  <div className="grid grid-cols-1 grid-rows-1 w-full max-w-[380px] mx-auto" style={{ height: DEVICE_HEIGHT }}>
+                    {t.screens.map((s) => (
+                      <div
+                        key={s.id}
+                        {...(t.screens.length > 1 && { role: 'tabpanel', id: `tour-screen-panel-${s.id}`, 'aria-labelledby': `tour-screen-${s.id}` })}
+                        className={`${fade(current(t) === s.id)} min-h-0`}
+                      >
+                        {seen.includes(s.id) && <TourDemo id={s.id} />}
+                      </div>
                     ))}
                   </div>
-                  {STAGE_COINS.map((c) => (
-                    <img key={c.src} src={c.src} alt="" aria-hidden="true" width={44} height={44} className={`hidden lg:block absolute w-11 h-11 rounded-full bg-white p-0.5 shadow-md ${c.className}`} />
-                  ))}
-
-                  <div className="relative grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px_minmax(0,1fr)] lg:items-center lg:gap-10">
-                    <div className="hidden lg:flex flex-col items-end gap-4">
-                      {t.sides[0].map((side) => <SideCard key={side.caption} side={side} />)}
-                    </div>
-                    <div className="w-full max-w-[380px] mx-auto">
-                      <TourDemo id={t.id} />
-                    </div>
-                    <div className="hidden lg:flex flex-col items-start gap-4">
-                      {t.sides[1].map((side) => <SideCard key={side.caption} side={side} />)}
-                    </div>
-                  </div>
+                  <SideColumn stop={t} col={1} showing={current(t)} />
                 </div>
+              </div>
 
-                <div className="mt-10 lg:mt-14">
-                  <StopCopy stop={stop} />
-                </div>
-              </>
-            )}
-          </div>
-        ))}
+              <div className="mt-10 lg:mt-14">
+                <StopCopy stop={t} />
+              </div>
+            </div>
+          ))}
+        </div>
 
         <div className="mt-12 flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-neutral-950 px-6 py-5">
           <p className="text-neutral-300">Moving a large amount in stablecoin?</p>
@@ -795,10 +903,11 @@ const Home = () => {
             <div className="border-t border-white/10 pt-10 lg:pt-14 home-stats">
               {[
                 { n: '100,000+', l: 'Transactions processed' },
+                { n: '$2m+', l: 'Processed monthly' },
                 { n: '60+', l: 'Platforms and businesses' },
                 { n: '700+', l: 'Wallets supported' },
               ].map((s) => (
-                <div key={s.l} className="text-center sm:[&:not(:first-child)]:border-l sm:border-white/10">
+                <div key={s.l} className="text-center even:border-l lg:[&:not(:first-child)]:border-l border-white/10">
                   <div className="text-3xl sm:text-4xl xl:text-5xl whitespace-nowrap font-display font-bold tracking-[-0.03em] text-primary-400 leading-none mb-2">{s.n}</div>
                   <div className="text-sm text-neutral-300">{s.l}</div>
                 </div>
@@ -852,9 +961,9 @@ const Home = () => {
               {COMBOS.map((c) => (
                 <div key={c.kind} className="rounded-2xl border border-neutral-200 bg-white p-5">
                   <div className="flex items-center gap-2 mb-4" aria-hidden="true">
-                    <span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${c.from === 'Crypto' ? 'bg-neutral-950 text-primary-400' : 'bg-neutral-100 text-neutral-700'}`}>{c.from}</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-neutral-400" />
-                    <span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${c.to === 'Crypto' ? 'bg-neutral-950 text-primary-400' : 'bg-neutral-100 text-neutral-700'}`}>{c.to}</span>
+                    <Marks marks={c.from} />
+                    <ArrowRight className="w-3.5 h-3.5 text-neutral-500" />
+                    <Marks marks={c.to} />
                   </div>
                   <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-600 mb-1">{c.kind}</p>
                   <h3 className="text-lg font-semibold leading-snug text-neutral-900 mb-1.5">{c.title}</h3>

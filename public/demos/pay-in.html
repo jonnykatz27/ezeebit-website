@@ -641,16 +641,33 @@ function go(id){
    Tapping out a number is the least interesting part of the flow and costs the
    reader a screen before anything happens, so the keypad is left behind the
    back button rather than in front of the demo. */
-const START_AMOUNT = '4000';
+const PARAMS = new URLSearchParams(location.search);
+/* A page that leads into the checkout from a screen of its own (a till, a
+   store's checkout, a platform's deposit) passes the amount it was paying, and
+   takes the reader back to that screen when they start again. */
+const HANDOFF = PARAMS.has('handoff');
+const START_AMOUNT = /^\d{1,7}(\.\d{1,2})?$/.test(PARAMS.get('amount') || '') ? PARAMS.get('amount') : '4000';
+/* In a store there is no cart to bring an amount with it, so the in-store
+   handoff opens on the keypad, where the cashier or the customer keys it in. */
+const KEYPAD_FIRST = PARAMS.get('start') === 'amount';
 function start(){
-  amount = START_AMOUNT; picked = null; pickedNet = null;
+  picked = null; pickedNet = null;
+  clearInterval(timerId);
+  if (KEYPAD_FIRST) { amount = ''; paintAmount(); go('A'); return; }
+  amount = START_AMOUNT;
   paintAmount();
   document.getElementById('methodAmt').textContent = 'R' + money(parseFloat(amount));
   document.querySelectorAll('.acard').forEach(c=>c.classList.remove('sel'));
   clearInterval(timerId);
   go('B');
 }
-function reset(){ clearTimeout(settleId); start(); }
+function reset(){
+  clearTimeout(settleId);
+  if (HANDOFF && window.parent !== window) {
+    try{ window.parent.postMessage({type:'ezeebit:again',flow:'payin'},location.origin); return; }catch(e){}
+  }
+  start();
+}
 function fit(){
   const frame = document.getElementById('frame');
   const stage = document.getElementById('stage');

@@ -1,246 +1,190 @@
-import { useEffect, useState, type ReactNode } from 'react'
-import { Check, ChevronLeft, ChevronRight, Loader2, Lock } from 'lucide-react'
+import { useCallback, useState, type ReactNode } from 'react'
+import { ChevronRight, CreditCard, Landmark, ShoppingBag, type LucideIcon } from 'lucide-react'
+import FlowDemo, { DemoPanel } from './FlowDemo'
 
 /**
- * Small clickable versions of the online checkout and a platform's cashier,
- * for the homepage's product tour. The amounts and rates are illustrative.
+ * The pay-ins in the homepage's product tour. In a store, on a website and on
+ * a platform the customer ends up on the same Ezeebit checkout; what differs is
+ * where they come from. Online and on a platform that is a screen of the
+ * merchant's own, so those channels open on it and hand off to the checkout
+ * demo. In a store it is the ePOS or the Ezeebit Pay code, which the tour shows
+ * beside the demo, so that channel opens on the checkout itself. The amounts
+ * are illustrative.
  */
 
-/** Rand per coin, for the illustrative conversions. */
-const RATE = { USDT: 18.45, USDC: 18.45, BTC: 1_950_000 } as const
-type Coin = keyof typeof RATE
-const NETWORK: Record<Coin, string> = { USDT: 'Tron', USDC: 'Solana', BTC: 'Bitcoin' }
-const COIN_LOGO: Record<Coin, string> = { USDT: '/usdt-round.svg', USDC: '/usdc-logo.svg', BTC: '/btc-logo.svg' }
+export type Channel = 'in-store' | 'online' | 'platforms'
+
+/** Where each channel's customer starts, as the panel's label names it. */
+const FROM: Record<Channel, string> = { 'in-store': 'In store', online: 'Your checkout', platforms: 'Your cashier' }
 
 const rand = (v: number) => `R${v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-const units = (zar: number, coin: Coin) =>
-  `${(zar / RATE[coin]).toLocaleString('en-US', { maximumFractionDigits: coin === 'BTC' ? 8 : 2, minimumFractionDigits: 2 })} ${coin}`
 
-const BTN = 'w-full min-h-[44px] rounded-xl bg-primary-500 px-4 text-sm font-semibold text-white hover:bg-primary-600'
 const LBL = 'text-[11px] font-semibold uppercase tracking-[0.1em] text-neutral-500'
+// The merchant's screens are in neutral colours with a dark button, so the
+// hand-off to the checkout, in Ezeebit's blue, reads as a change of screen
+const GO = 'w-full min-h-[48px] rounded-xl bg-neutral-900 px-4 text-sm font-semibold text-white hover:bg-neutral-700'
 
-/** Runs a list of steps one after another once started, and reports how far it got. */
-function useSteps(count: number, ms = 900) {
-  const [done, setDone] = useState(-1)
-  useEffect(() => {
-    if (done < 0 || done >= count) return
-    const t = window.setTimeout(() => setDone((d) => d + 1), ms)
-    return () => window.clearTimeout(t)
-  }, [done, count, ms])
-  return { done, start: () => setDone(0), reset: () => setDone(-1), running: done >= 0, finished: done >= count }
-}
-
-const Steps = ({ items, done }: { items: string[]; done: number }) => (
-  <ol className="space-y-2.5" aria-live="polite">
-    {items.map((item, i) => {
-      const state = i < done ? 'done' : i === done ? 'now' : 'next'
-      return (
-        <li key={item} className={`flex items-center gap-3 text-sm ${state === 'next' ? 'text-neutral-400' : 'text-neutral-900'}`}>
-          <span className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${state === 'done' ? 'bg-success-500 text-white' : 'bg-neutral-100 text-neutral-500'}`}>
-            {state === 'done' ? <Check className="w-3.5 h-3.5" strokeWidth={3} /> : state === 'now' ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : null}
-          </span>
-          {item}
-        </li>
-      )
-    })}
-  </ol>
+/** The panel's label: the merchant's screen, then the checkout, with the one showing picked out. Phones show only that one. */
+const Handoff = ({ from, at }: { from: string; at: 'from' | 'checkout' }) => (
+  <p className="flex items-center gap-1.5 whitespace-nowrap">
+    <span className={at === 'from' ? 'text-neutral-900' : 'hidden sm:inline'}>{from}</span>
+    <ChevronRight className="hidden sm:block w-3 h-3 shrink-0" aria-hidden="true" />
+    <span className={at === 'checkout' ? 'text-neutral-900' : 'hidden sm:inline'}>Ezeebit checkout</span>
+  </p>
 )
 
-/** The white widget inside the panel's bezel, with the merchant's name on top. */
-const Widget = ({ title, sub, children, foot }: { title: string; sub: string; children: ReactNode; foot: string }) => (
-  <div className="flex-1 flex flex-col rounded-[20px] bg-white font-ui overflow-hidden [&_img]:!mx-0">
-    <div className="flex items-center justify-between px-5 pt-4 pb-3 border-b border-neutral-100">
-      <div>
-        <p className="text-[15px] font-semibold text-neutral-900">{title}</p>
-        <p className="text-xs text-neutral-500">{sub}</p>
-      </div>
-      <p className="text-[10px] text-neutral-400 text-right leading-tight">Powered by<br /><span className="font-semibold text-neutral-700">Ezeebit</span></p>
+/** One of the merchant's own screens, inside the panel's card. */
+const MerchantScreen = ({ title, sub, children, action }: { title: string; sub: string; children: ReactNode; action?: ReactNode }) => (
+  <div className="flex-1 min-h-0 flex flex-col rounded-[20px] bg-white font-ui overflow-hidden [&_img]:!mx-0">
+    <div className="px-5 pt-4 pb-3 border-b border-neutral-100">
+      <p className="text-[15px] font-semibold text-neutral-900">{title}</p>
+      <p className="text-xs text-neutral-500">{sub}</p>
     </div>
-    <div className="flex-1 flex flex-col gap-4 p-5">{children}</div>
-    <p className="px-5 py-3 border-t border-neutral-100 text-[11px] text-neutral-500 text-center">{foot}</p>
+    <div className="flex-1 min-h-0 overflow-y-auto flex flex-col gap-5 p-5">{children}</div>
+    {action && <div className="px-5 pb-5 pt-3 border-t border-neutral-100">{action}</div>}
   </div>
 )
 
-const METHODS = [
-  { name: 'VALR Pay', logo: '/valr_logo%20(clean).png', note: 'Exchange' },
-  { name: 'Luno Pay', logo: '/luno_logo%20(clean).png', note: 'Exchange' },
-  { name: 'Binance Pay', logo: '/Binance-Logo%20(clean).png', note: 'Exchange' },
-  { name: 'WalletConnect Pay', logo: '/walletconnect-pay.svg', note: '700+ wallets' },
-  { name: 'Ezeebit Pay', logo: '/ezeebit-icon-blue.webp', note: 'Any on-chain wallet' },
+const OTHER_METHODS: { icon: LucideIcon; name: string }[] = [
+  { icon: CreditCard, name: 'Card' },
+  { icon: Landmark, name: 'Instant EFT' },
 ]
 
-/** An online store's checkout: pick a way to pay, pay, and the order is marked paid. */
-export const CheckoutWidget = ({ onStatus }: { onStatus?: (status: string) => void }) => {
+/** The merchant's list of ways to pay, with crypto chosen. */
+const Methods = () => (
+  <div>
+    <p className={LBL}>Payment method</p>
+    <ul className="mt-2 flex flex-col gap-2">
+      {OTHER_METHODS.map(({ icon: Icon, name }) => (
+        <li key={name} className="flex items-center gap-3 rounded-xl border border-neutral-200 px-3 py-2.5 text-sm text-neutral-500">
+          <span className="w-4 h-4 rounded-full border border-neutral-300" />
+          <Icon className="w-4 h-4" />
+          {name}
+        </li>
+      ))}
+      <li className="flex items-center gap-3 rounded-xl border border-neutral-900 ring-1 ring-neutral-900 px-3 py-2.5 text-sm font-semibold text-neutral-900">
+        <span className="w-4 h-4 rounded-full border-[5px] border-neutral-900" />
+        <img src="/ezeebit-icon-blue.webp" alt="" width={16} height={16} className="w-4 h-4" />
+        Crypto
+        <span className="ml-auto text-[11px] font-normal text-neutral-500">by Ezeebit</span>
+      </li>
+    </ul>
+  </div>
+)
+
+/** An online store's own checkout page, with crypto among its payment methods. */
+const Store = ({ onPay }: { onPay: (amount: number) => void }) => {
   const total = 1_250
-  const [method, setMethod] = useState<(typeof METHODS)[number] | null>(null)
-  const steps = useSteps(3)
-
-  useEffect(() => {
-    onStatus?.(steps.finished ? 'Paid' : steps.running ? 'Confirming payment' : method ? `Paying with ${method.name}` : 'Awaiting payment')
-  }, [method, steps.running, steps.finished, onStatus])
-
   return (
-    <Widget title="Checkout" sub="Your store · Order #1042" foot="The price is fixed in your currency when they pay">
-      <div>
-        <p className={LBL}>Order total</p>
-        <p className="text-3xl font-semibold tracking-tight text-neutral-900 tabular-nums">{rand(total)}</p>
+    <MerchantScreen
+      title="Checkout"
+      sub="Your store"
+      action={<button type="button" className={GO} onClick={() => onPay(total)}>Pay {rand(total)} with crypto</button>}
+    >
+      <div className="flex flex-col divide-y divide-neutral-100 rounded-xl border border-neutral-200 text-sm">
+        <p className="flex gap-3 px-3 py-2.5"><span className="w-14 shrink-0 text-neutral-500">Contact</span>you@example.com</p>
+        <p className="flex gap-3 px-3 py-2.5"><span className="w-14 shrink-0 text-neutral-500">Ship to</span>12 Bree St, Cape Town</p>
       </div>
-
-      {!method && (
-        <div className="flex flex-col gap-2">
-          <p className={LBL}>Select payment method</p>
-          {METHODS.map((m) => (
-            <button
-              key={m.name}
-              type="button"
-              onClick={() => setMethod(m)}
-              className="flex items-center gap-3 rounded-xl border border-neutral-200 px-3 py-2.5 text-left hover:border-primary-400 hover:bg-primary-50/40"
-            >
-              <img src={m.logo} alt="" width={28} height={28} className="w-7 h-7 rounded-lg object-contain" />
-              <span className="flex-1 min-w-0">
-                <span className="block text-sm font-semibold text-neutral-900">{m.name}</span>
-                <span className="block text-[11px] text-neutral-500">{m.note}</span>
-              </span>
-              <ChevronRight className="w-4 h-4 text-neutral-400" />
-            </button>
-          ))}
+      <div>
+        <p className={LBL}>Order summary</p>
+        <div className="mt-2 flex items-center gap-3 text-sm">
+          <span className="w-11 h-11 shrink-0 rounded-lg bg-neutral-100 flex items-center justify-center">
+            <ShoppingBag className="w-5 h-5 text-neutral-400" />
+          </span>
+          <span className="flex-1 min-w-0">
+            <span className="block font-semibold text-neutral-900">Trail running shoes</span>
+            <span className="block text-xs text-neutral-500">Size 9</span>
+          </span>
+          <span className="tabular-nums text-neutral-900">{rand(1_100)}</span>
         </div>
-      )}
-
-      {method && !steps.running && (
-        <div className="flex flex-col gap-3">
-          <div className="flex items-center gap-3">
-            <img src={method.logo} alt="" width={36} height={36} className="w-9 h-9 rounded-lg object-contain" />
-            <p className="text-sm text-neutral-700">Continue in <b className="text-neutral-900">{method.name}</b></p>
-          </div>
-          <div className="flex items-center gap-2 rounded-xl bg-neutral-50 border border-neutral-200 px-3 py-2.5 text-sm">
-            <img src={COIN_LOGO.USDT} alt="" width={20} height={20} className="w-5 h-5 rounded-full" />
-            <b className="text-neutral-900 tabular-nums">{units(total, 'USDT')}</b>
-            <span className="ml-auto flex items-center gap-1 text-[11px] font-semibold text-success-700"><Lock className="w-3 h-3" />Rate locked</span>
-          </div>
-          <button type="button" className={BTN} onClick={steps.start}>Pay {units(total, 'USDT')}</button>
-          <button type="button" onClick={() => setMethod(null)} className="flex items-center justify-center gap-1 text-sm font-semibold text-neutral-500 hover:text-neutral-800">
-            <ChevronLeft className="w-4 h-4" />Choose another method
-          </button>
+        <div className="mt-3 space-y-1.5 border-t border-neutral-100 pt-3 text-sm">
+          <p className="flex justify-between text-neutral-500"><span>Shipping</span><span className="tabular-nums">{rand(150)}</span></p>
+          <p className="flex justify-between font-semibold text-neutral-900"><span>Total</span><span className="tabular-nums">{rand(total)}</span></p>
         </div>
-      )}
-
-      {steps.running && (
-        <div className="flex flex-col gap-4">
-          <Steps items={['Payment detected', 'Confirmed on-chain', 'Order paid']} done={steps.done} />
-          {steps.finished && (
-            <button type="button" className={`${BTN} !bg-neutral-950 hover:!bg-neutral-800`} onClick={() => { steps.reset(); setMethod(null) }}>
-              Start again
-            </button>
-          )}
-        </div>
-      )}
-    </Widget>
+      </div>
+      <Methods />
+    </MerchantScreen>
   )
 }
 
-const AMOUNTS = [100, 250, 500, 1_000]
+const AMOUNTS = [250, 500, 1_000, 2_000]
 
-/** A platform's cashier: deposit with crypto, or withdraw to a verified wallet. */
-export const CashierWidget = () => {
-  const [balance, setBalance] = useState(1_240)
-  const [mode, setMode] = useState<'deposit' | 'withdraw'>('deposit')
+/** A platform's own deposit screen: the user picks an amount and deposits with crypto. */
+const Cashier = ({ onPay }: { onPay: (amount: number) => void }) => {
   const [amount, setAmount] = useState(500)
-  const [coin, setCoin] = useState<Coin>('USDT')
-  const steps = useSteps(4)
-  const items = mode === 'deposit'
-    ? ['Payment detected', 'Rate locked', 'Wallet screened', 'Credited to balance']
-    : ['Wallet screened', 'Converted from fiat', 'Sent on-chain', 'Claimed']
-
-  // The balance moves once the last step completes
-  // The balance moves once the last step completes. The controls are hidden
-  // until the reader presses Done, so mode and amount cannot change meanwhile.
-  useEffect(() => {
-    if (steps.finished) setBalance((b) => (mode === 'deposit' ? b + amount : b - amount))
-  }, [steps.finished, mode, amount])
-
-  const segment = (m: typeof mode, label: string) => (
-    <button
-      type="button"
-      aria-pressed={mode === m}
-      disabled={steps.running}
-      onClick={() => { setMode(m); if (m === 'withdraw' && coin === 'BTC') setCoin('USDT') }}
-      className={`flex-1 min-h-[40px] rounded-lg text-sm font-semibold ${mode === m ? 'bg-white text-neutral-900 shadow-sm' : 'text-neutral-500 hover:text-neutral-800'}`}
-    >
-      {label}
-    </button>
-  )
-
   return (
-    <Widget title="Cashier" sub="Your platform" foot="Deposits fund withdrawals on one balance">
+    <MerchantScreen
+      title="Deposit"
+      sub="Your platform"
+      action={<button type="button" className={GO} onClick={() => onPay(amount)}>Deposit {rand(amount)} with crypto</button>}
+    >
       <div className="flex items-end justify-between">
         <div>
           <p className={LBL}>Balance</p>
-          <p className="text-3xl font-semibold tracking-tight text-neutral-900 tabular-nums">{rand(balance)}</p>
+          <p className="text-3xl font-semibold tracking-tight text-neutral-900 tabular-nums">{rand(1_240)}</p>
         </div>
         <span className="rounded-full bg-success-50 px-2 py-0.5 text-[11px] font-semibold text-success-700">Verified</span>
       </div>
-
-      <div className="flex gap-1 rounded-xl bg-neutral-100 p-1">
-        {segment('deposit', 'Deposit')}
-        {segment('withdraw', 'Withdraw')}
+      <div>
+        <p className={LBL}>Amount</p>
+        <div className="mt-2 grid grid-cols-2 gap-2">
+          {AMOUNTS.map((a) => (
+            <button
+              key={a}
+              type="button"
+              aria-pressed={amount === a}
+              onClick={() => setAmount(a)}
+              className={`min-h-[44px] rounded-xl border text-sm font-semibold tabular-nums ${amount === a ? 'border-neutral-900 ring-1 ring-neutral-900 text-neutral-900' : 'border-neutral-200 text-neutral-600 hover:border-neutral-400'}`}
+            >
+              R{a.toLocaleString('en-US')}
+            </button>
+          ))}
+        </div>
       </div>
+      <Methods />
+    </MerchantScreen>
+  )
+}
 
-      {!steps.running && (
-        <div className="flex flex-col gap-3">
-          <p className={LBL}>Amount</p>
-          <div className="grid grid-cols-4 gap-1.5">
-            {AMOUNTS.map((a) => (
-              <button
-                key={a}
-                type="button"
-                aria-pressed={amount === a}
-                onClick={() => setAmount(a)}
-                className={`min-h-[40px] rounded-lg border text-sm font-semibold ${amount === a ? 'border-primary-500 bg-primary-50 text-primary-700' : 'border-neutral-200 text-neutral-700 hover:border-neutral-300'}`}
-              >
-                R{a.toLocaleString('en-US')}
-              </button>
-            ))}
-          </div>
-          <p className={LBL}>{mode === 'deposit' ? 'Pay with' : 'Receive in'}</p>
-          <div className={`grid gap-1.5 ${mode === 'deposit' ? 'grid-cols-3' : 'grid-cols-2'}`}>
-            {(mode === 'deposit' ? (['USDT', 'USDC', 'BTC'] as Coin[]) : (['USDT', 'USDC'] as Coin[])).map((c) => (
-              <button
-                key={c}
-                type="button"
-                aria-pressed={coin === c}
-                onClick={() => setCoin(c)}
-                className={`min-h-[40px] flex items-center justify-center gap-1.5 rounded-lg border text-sm font-semibold ${coin === c ? 'border-primary-500 bg-primary-50 text-primary-700' : 'border-neutral-200 text-neutral-700 hover:border-neutral-300'}`}
-              >
-                <img src={COIN_LOGO[c]} alt="" width={18} height={18} className="w-[18px] h-[18px] rounded-full" />
-                {c}
-              </button>
-            ))}
-          </div>
-          <div className="flex items-center gap-2 rounded-xl bg-neutral-50 border border-neutral-200 px-3 py-2.5 text-sm">
-            <b className="text-neutral-900 tabular-nums">{units(amount, coin)}</b>
-            <span className="text-neutral-500">on {NETWORK[coin]}</span>
-            <span className="ml-auto flex items-center gap-1 text-[11px] font-semibold text-success-700"><Lock className="w-3 h-3" />{mode === 'deposit' ? 'Rate locked' : 'Verified wallet'}</span>
-          </div>
-          <button
-            type="button"
-            className={BTN}
-            disabled={mode === 'withdraw' && amount > balance}
-            onClick={steps.start}
-          >
-            {mode === 'deposit' ? `Deposit R${amount.toLocaleString('en-US')}` : `Withdraw R${amount.toLocaleString('en-US')}`}
-          </button>
-        </div>
-      )}
+/**
+ * One channel's pay-in. In a store the checkout opens on its keypad, where the
+ * amount is keyed in. Online and on a platform the merchant's screen comes
+ * first, then, once the customer chooses crypto, the same checkout with the
+ * amount carried over; restarting, from the panel or the checkout's own button,
+ * goes back to the merchant's screen.
+ */
+export function ChannelDemo({ channel }: { channel: Channel }) {
+  // What the merchant's screen hands the checkout, or null while that screen is showing
+  const [handoff, setHandoff] = useState<string | null>(null)
+  const back = useCallback(() => setHandoff(null), [])
 
-      {steps.running && (
-        <div className="flex flex-col gap-4">
-          <Steps items={items} done={steps.done} />
-          {steps.finished && (
-            <button type="button" className={`${BTN} !bg-neutral-950 hover:!bg-neutral-800`} onClick={steps.reset}>Done</button>
-          )}
-        </div>
-      )}
-    </Widget>
+  if (channel === 'in-store')
+    return (
+      <FlowDemo
+        fixed
+        src="/demos/pay-in.html?start=amount"
+        flow="payin"
+        label={<Handoff from={FROM[channel]} at="checkout" />}
+        title="Interactive demo of the Ezeebit checkout in a store"
+      />
+    )
+
+  if (handoff)
+    return (
+      <FlowDemo
+        fixed
+        src={`/demos/pay-in.html?handoff&${handoff}`}
+        flow="payin"
+        label={<Handoff from={FROM[channel]} at="checkout" />}
+        title="Interactive demo of the Ezeebit checkout"
+        onRestart={back}
+      />
+    )
+
+  const pay = (amount: number) => setHandoff(`amount=${amount}`)
+  return (
+    <DemoPanel fixed label={<Handoff from={FROM[channel]} at="from" />}>
+      {channel === 'online' ? <Store onPay={pay} /> : <Cashier onPay={pay} />}
+    </DemoPanel>
   )
 }

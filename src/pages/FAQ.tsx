@@ -196,7 +196,7 @@ const FAQ = () => {
       id: '27',
       category: 'payments',
       question: 'Can I pay my customers out in stablecoin?',
-      answer: 'Yes. Our Payout Gateway lets you send payouts from your fiat balance without collecting a single wallet address. You create the payout with an amount and your own reference, we reserve the fiat and hand back a link, and your customer enters their own wallet address to claim it. Payouts settle on-chain in minutes, at any hour.',
+      answer: 'Yes. Our Payout Gateway lets you send payouts from your fiat balance without collecting a single wallet address. You create the payout with an amount and your own reference, we reserve the fiat and hand back a link, and your customer enters their own wallet address to claim it. Payouts settle on-chain in minutes, at any hour. Payouts are available in USDT today, with more stablecoin options coming soon.',
       popular: true
     },
     {

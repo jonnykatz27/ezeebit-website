@@ -37,7 +37,7 @@ const inStoreFaqs = [
   },
   {
     question: 'What does in-store crypto acceptance cost?',
-    answer: '1% or lower per transaction, excluding VAT. The Starter plan is R0 a month, Professional is R150 a month, and Enterprise pricing is custom. There are no setup fees for the ePOS or Ezeebit Pay.',
+    answer: '1% or less per payment, excluding VAT. There are no setup fees and no monthly platform fees. The ePOS is optional, at R150 a month per device, and an Ezeebit Pay QR code is free.',
   },
 ]
 

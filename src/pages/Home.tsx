@@ -237,28 +237,6 @@ const MARKETS = [
   { flag: '/ng-flag.svg', name: 'Nigeria', note: 'Live · settle in NGN' },
 ]
 
-const PLANS = [
-  {
-    name: 'Starter',
-    price: 'R0 a month',
-    body: 'For a business taking its first stablecoin and crypto payments.',
-    points: ['Ezeebit Pay and QR codes', 'Merchant Portal', 'E-commerce plugins and API', 'No ePOS device'],
-  },
-  {
-    name: 'Professional',
-    price: 'R150 per device a month',
-    body: 'For a growing business that wants the counter covered too.',
-    points: ['Everything in Starter', 'ePOS device', 'Printable receipts', 'Easy cash-ups'],
-    featured: true,
-  },
-  {
-    name: 'Enterprise',
-    price: 'Custom pricing',
-    body: 'For a business that needs its own setup and a named contact.',
-    points: ['Dedicated account manager', 'Custom integrations', 'White-label options', 'Custom analytics and reporting'],
-  },
-]
-
 const FAQS: { q: string; a: string }[] = [
   {
     q: 'How do I get started with Ezeebit?',
@@ -277,8 +255,8 @@ const FAQS: { q: string; a: string }[] = [
     a: 'Yes. You decide how you want to be settled: stablecoins (USDT or USDC) for speed and flexibility, or fiat (ZAR, KES, NGN or USD) deposited directly into your bank account.',
   },
   {
-    q: 'What are your transaction fees?',
-    a: '1% or lower per transaction, excluding VAT. No surprises, no fine print. You keep more of every sale.',
+    q: 'What does Ezeebit cost?',
+    a: 'Crypto In is 1% or less per payment and Crypto Out is $0.65 per payout, both excluding VAT. There are no setup fees or monthly platform fees. The only monthly charge is the optional ePOS rental, at R150 a month per device. Platforms get volume pricing.',
   },
   {
     q: 'Are there chargebacks with crypto payments?',
@@ -497,6 +475,41 @@ const COMBOS = [
   { kind: 'On-ramp', from: LOCAL, to: USDT, title: 'Local currency in, crypto out', body: 'You fund payouts in local currency. Your customer receives stablecoin.' },
   { kind: 'Stablecoin', from: CRYPTO_IN, to: USDT, title: 'Crypto in, stablecoin held', body: 'Keep what comes in as USDT and convert when it suits you.' },
   { kind: 'Round trip', from: CRYPTO_IN, to: USDT, title: 'Crypto in, crypto out', body: 'What your customers pay in funds what they cash out, on one balance.' },
+]
+
+/** The pricing section's figures, each with what it covers. */
+const PRICE_SUMMARY = [
+  { value: '1%', label: 'Crypto In, or less per payment' },
+  { value: '$0.65', label: 'Crypto Out, per payout' },
+  { value: 'R0', label: 'Setup and monthly platform fees' },
+]
+
+/** The company behind Ezeebit in each country, and what it operates under. */
+const ENTITIES: { flag: string; country: string; entity: string; reg?: string; points: ReactNode[]; check?: { label: string; href: string } }[] = [
+  {
+    flag: '/za-flag.svg',
+    country: 'South Africa',
+    entity: 'Ezee Solutions Group (Pty) Ltd',
+    reg: '2022/250578/07',
+    points: [
+      <>Regulated by the FSCA as a Crypto Asset Service Provider, <b>FSP No. 53664</b></>,
+      'FIC compliant, with KYC, KYB, AML and POPIA handled by Ezeebit',
+    ],
+  },
+  {
+    flag: '/ke-flag.svg',
+    country: 'Kenya',
+    entity: 'Ezee Solutions Group (Kenya) Limited',
+    reg: 'PVT-RQ13JL95',
+    points: ['Operates under the transitional provisions of the Virtual Asset Service Providers Act, 2025'],
+  },
+  {
+    flag: '/ca-flag.svg',
+    country: 'Canada',
+    entity: 'Kinetic Payments Ltd., changing its name to Ezeebit Canada Ltd.',
+    points: [<>On FINTRAC&apos;s money services business registry, <b>MSB No. N300001912</b>, for foreign exchange, money transfers, virtual currency and payment services</>],
+    check: { label: 'Check the FINTRAC registry', href: 'https://fintrac-canafe.canada.ca/msb-esm/reg-eng' },
+  },
 ]
 
 /** One side of a combination: its coins or flags overlapping in a pill, named when there is only one. */
@@ -1066,15 +1079,35 @@ const Home = () => {
           <div className="container-custom">
             <Intro
               eyebrow="Security and compliance"
-              title={<>The checks a buyer<br />asks about.</>}
-              intro="How Ezeebit is regulated, how funds are held, and how every payment is checked before it reaches you."
+              title={<>Regulated where<br />we operate.</>}
+              intro="The companies behind Ezeebit, how funds are held, and how every payment is checked before it reaches you."
             />
-            <div className="home-grid-2">
-              <article className="rounded-2xl border border-neutral-200 p-6">
-                <h3 className="text-lg font-semibold text-neutral-900 mb-2">Regulation</h3>
-                <p className="text-neutral-600 text-sm leading-relaxed">{REGULATED}</p>
-                <p className="text-neutral-600 text-sm leading-relaxed mt-3">FIC compliant, with KYC, KYB, AML and POPIA handled by Ezeebit.</p>
-              </article>
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500">Our entities</p>
+            <div className="grid gap-4 lg:grid-cols-3">
+              {ENTITIES.map((e) => (
+                <article key={e.country} className="flex gap-4 rounded-2xl border border-neutral-200 bg-neutral-50 p-5 lg:p-6">
+                  <img src={e.flag} alt="" width={28} height={28} className="w-7 h-7 mx-0 mt-0.5 shrink-0 rounded-full" />
+                  <div className="min-w-0">
+                    <h3 className="text-lg font-semibold text-neutral-900">{e.country}</h3>
+                    <p className="mt-0.5 mb-3 text-[13px] text-neutral-500">
+                      {e.entity}
+                      {/* Kept whole so a registration number never breaks across lines */}
+                      {e.reg && <> · <span className="whitespace-nowrap">Reg. {e.reg}</span></>}
+                    </p>
+                    <ul className="list-disc space-y-1.5 pl-4 text-sm leading-relaxed text-neutral-600 marker:text-neutral-300 [&_b]:font-semibold [&_b]:text-neutral-900">
+                      {e.points.map((point, i) => <li key={i}>{point}</li>)}
+                    </ul>
+                    {e.check && (
+                      <a href={e.check.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 mt-3 text-sm font-semibold text-primary-600 hover:text-primary-700">
+                        {e.check.label}
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </a>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+            <div className="home-grid-3 mt-4">
               <article className="rounded-2xl border border-neutral-200 p-6">
                 <h3 className="text-lg font-semibold text-neutral-900 mb-2">Custody</h3>
                 <p className="text-neutral-600 text-sm leading-relaxed">Balances sit with an FSCA-regulated Crypto Asset Service Provider. Crypto moves through MPC wallets, which split every key so no single person can move funds.</p>
@@ -1095,34 +1128,27 @@ const Home = () => {
           </div>
         </section>
 
-        <section id="pricing" className="section-padding bg-neutral-50">
+        {/* The full plans are on /pricing; here, just the figures a first visit asks about */}
+        <section id="pricing" className="bg-neutral-50 py-14 lg:py-20">
           <div className="container-custom">
-            <Intro
-              eyebrow="Pricing"
-              title={<>Simple pricing.<br />No setup fees.</>}
-              intro="1% or lower per transaction, excluding VAT. Choose the plan that fits how you take payments."
-            />
-            <div className="home-grid-3">
-              {PLANS.map((plan) => (
-                <article key={plan.name} className={`rounded-2xl border bg-white p-6 flex flex-col ${plan.featured ? 'border-primary-500 ring-2 ring-primary-500' : 'border-neutral-200'}`}>
-                  {plan.featured && <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-600 mb-2">Most popular</p>}
-                  <h3 className="text-xl font-semibold text-neutral-900 mb-1">{plan.name}</h3>
-                  <p className="text-sm font-semibold text-neutral-900 mb-2">{plan.price}</p>
-                  <p className="text-sm text-neutral-600 mb-4">{plan.body}</p>
-                  <ul className="space-y-2 mb-6 flex-1">
-                    {plan.points.map((p) => (
-                      <li key={p} className="flex items-start gap-2 text-sm text-neutral-700">
-                        <Check className="w-4 h-4 text-primary-600 mt-0.5 shrink-0" />
-                        {p}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link to="/pricing" className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-neutral-950 text-white font-semibold px-4 py-3 hover:bg-neutral-800">
-                    See pricing
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </article>
-              ))}
+            <div className="grid gap-8 rounded-3xl border border-neutral-200 bg-white p-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-12 lg:p-10">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-600 mb-3">Pricing</p>
+                <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 leading-[1.08] tracking-[-0.02em]">Pay when money moves.</h2>
+                <dl className="mt-8 grid gap-6 sm:grid-cols-3">
+                  {PRICE_SUMMARY.map((p) => (
+                    <div key={p.label} className="flex flex-col-reverse justify-end gap-2 border-t border-neutral-200 pt-4">
+                      <dt className="text-sm text-neutral-600">{p.label}</dt>
+                      <dd className="text-3xl font-semibold tracking-[-0.02em] text-neutral-900 leading-none">{p.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+                <p className="mt-6 text-[13px] text-neutral-500">Excluding VAT. The ePOS is optional, at R150 a month per device. Platforms get volume pricing.</p>
+              </div>
+              <Link to="/pricing" className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-neutral-950 text-white font-semibold px-5 py-3 hover:bg-neutral-800">
+                See pricing
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
         </section>

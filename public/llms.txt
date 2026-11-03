@@ -16,7 +16,7 @@ Ezeebit does not offer retail crypto trading and this site does not give investm
 - **Payouts** — pay customers from an Ezeebit balance in USDT or other crypto. Recipients choose the asset and network. <https://ezeebit.com/payouts>
 - **Wallets** — hold fiat and USDT, convert between them, fund payouts, and withdraw to a bank or a wallet. <https://ezeebit.com/wallets>
 - **Developer API** — signed REST endpoints for payments, payouts and wallets, with webhooks. <https://ezeebit.com/developers>
-- **Pricing** — 1% or lower per transaction, excluding VAT. No setup fee on the Starter plan. <https://ezeebit.com/pricing>
+- **Pricing** — Crypto In is 1% or less per payment and Crypto Out is $0.65 per payout, both excluding VAT. No setup fees and no monthly platform fees; the optional ePOS is R150 a month per device. <https://ezeebit.com/pricing>
 - **OTC desk** — large crypto-to-fiat trades quoted by a dealer, settled in ZAR, KES, NGN or USD. <https://ezeebit.com/otc>
 
 ## Who it is for

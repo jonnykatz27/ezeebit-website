@@ -124,7 +124,7 @@ const OTCHeroVisual = () => {
                 <Check className="w-4 h-4" /> Settling same day in ZAR
               </motion.div>
             ) : (
-              <motion.div key="cta" {...SWAP} className={`absolute inset-0 rounded-xl text-sm font-semibold flex items-center justify-center transition-colors ${phase === 'locked' ? 'bg-primary-500 text-white' : 'bg-neutral-100 text-neutral-500'}`}>
+              <motion.div key="cta" {...SWAP} className={`absolute inset-0 rounded-xl text-sm font-semibold flex items-center justify-center transition-colors ${phase === 'locked' ? 'bg-primary-500 text-white' : 'bg-neutral-100 text-neutral-600'}`}>
                 {phase === 'locked' ? 'Accept quote' : 'Lock rate'}
               </motion.div>
             )}

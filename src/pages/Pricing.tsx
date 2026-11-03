@@ -1,228 +1,76 @@
-import { useState } from 'react'
 import { motion } from '../lib/motion'
-import { Link } from 'react-router-dom'
-import {
-  Check, X, ArrowRight, Zap,
-  Users, Building, Star
-} from 'lucide-react'
+import { ArrowRight, Check } from 'lucide-react'
 import SEO from '../components/SEO'
 import PageHero from '../components/hero/PageHero'
 import DarkBackdrop from '../components/DarkBackdrop'
+import FaqBlock from '../components/FaqBlock'
+import PricingPlans from '../components/pricing/PricingPlans'
 
-const Pricing = () => {
-  const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('monthly')
+/** What comes with every account, whichever products it uses. */
+const INCLUDED = ['Merchant Portal', 'Ezeebit Pay QR codes', 'E-commerce plugins and API access', '24/7 support', 'No setup fees']
 
-  const plans = [
-    {
-      name: 'Starter',
-      icon: <Zap className="w-6 h-6" />,
-      description: 'Perfect for small businesses getting started with stablecoin and crypto payments',
-      price: { monthly: 0, annual: 0 },
-      features: [
-        'Ezeebit Pay',
-        '24/7 support',
-        'Local currency next business day, stablecoin same day',
-        'QR code payments',
-        'Merchant Portal',
-        'E-commerce plugins',
-        'API access'
-      ],
-      limitations: [
-        'No ePOS device',
-      ],
-      popular: false,
-      cta: 'Start Free'
-    },
-    {
-      name: 'Professional',
-      icon: <Users className="w-6 h-6" />,
-      description: 'Ideal for growing businesses with higher transaction volumes',
-      price: { monthly: 150, annual: 1500 },
-      features: [
-        'Everything in Starter plan',
-        'Advanced ePOS device',
-        'Printable receipts',
-        'Easy cash-ups'
-      ],
-      limitations: [
-      ],
-      popular: true,
-      cta: 'Sign Up'
-    },
-    {
-      name: 'Enterprise',
-      icon: <Building className="w-6 h-6" />,
-      description: 'For large businesses requiring custom solutions and dedicated support',
-      price: { monthly: 'Custom', annual: 'Custom' },
-      features: [
-        'Dedicated account manager',
-        'Local currency next business day, stablecoin same day',
-        'Custom analytics & reporting',
-        'White-label solutions',
-        'Custom integrations',
-        'SLA guarantees',
-        'Advanced security features',
-        'Compliance assistance',
-        'Training & onboarding'
-      ],
-      limitations: [],
-      popular: false,
-      cta: 'Contact Sales'
-    }
-  ]
+const pricingFaqs = [
+  {
+    question: 'What does Ezeebit cost?',
+    answer: 'Crypto In is 1% or less per payment and Crypto Out is $0.65 per payout, both excluding VAT. Converting between your fiat and USDT wallets is at a quoted rate, shown before you convert. Platforms get volume pricing.',
+  },
+  {
+    question: 'Are there setup or monthly fees?',
+    answer: 'No. There are no setup fees and no monthly platform fees. The only monthly charge is the optional ePOS rental, at R150 a month per device. An Ezeebit Pay QR code is free.',
+  },
+  {
+    question: 'Do I lose anything on the exchange rate?',
+    answer: 'No. You receive exactly the amount you charged. Your customer sees and accepts the rate before paying, and that rate includes our conversion spread.',
+  },
+  {
+    question: 'When do I get paid?',
+    answer: 'In local currency the next business day, or in stablecoin the same day.',
+  },
+  {
+    question: 'Can I get lower rates?',
+    answer: 'Yes. Platforms moving money both ways at scale get volume pricing, based on their volumes. Book a call and we will put a price together.',
+  },
+]
 
-  return (
-    <>
-      <SEO
-        title="Pricing"
-        description="1% or lower per transaction, excluding VAT. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
-        canonicalUrl="/pricing"
-        crumbs={[{ name: 'Pricing', path: '/pricing' }]}
-      />
-      <motion.div
+const Pricing = () => (
+  <>
+    <SEO
+      title="Pricing"
+      description="Crypto In is 1% or less per payment and Crypto Out is $0.65 per payout, excluding VAT. No setup fees and no monthly platform fees."
+      canonicalUrl="/pricing"
+      crumbs={[{ name: 'Pricing', path: '/pricing' }]}
+    />
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className="overflow-hidden -mt-20"
     >
-      {/* Hero Section */}
       <PageHero
-        title="Simple, transparent"
-        accent="pricing"
-        description="Choose the perfect plan for your business. No hidden fees, no surprises. Start with our free plan and scale as you grow. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
-      >
-        <div className="flex items-center justify-center">
-          <span className={`mr-3 ${billingCycle === 'monthly' ? 'text-white font-medium' : 'text-neutral-400'}`}>
-            Monthly
-          </span>
-          <button
-            onClick={() => setBillingCycle(billingCycle === 'monthly' ? 'annual' : 'monthly')}
-            className="relative inline-flex h-6 w-11 items-center rounded-full bg-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-neutral-950"
-          >
-            <span
-              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                billingCycle === 'annual' ? 'translate-x-6' : 'translate-x-1'
-              }`}
-            />
-          </button>
-          <span className={`ml-3 ${billingCycle === 'annual' ? 'text-white font-medium' : 'text-neutral-400'}`}>
-            Annual
-          </span>
-          {billingCycle === 'annual' && (
-            <span className="ml-2 bg-primary-500 text-white px-2 py-1 rounded-full text-xs font-medium">
-              Save 17%
-            </span>
-          )}
-        </div>
-      </PageHero>
+        title="Pay when"
+        accent="money moves"
+        description="A percentage on the way in, a flat fee on the way out. No setup fees and no monthly platform fees."
+      />
 
-      {/* Pricing Plans */}
-      <section className="py-12 bg-white">
+      <section className="section-padding bg-neutral-50">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {plans.map((plan, index) => (
-              <motion.div
-                key={plan.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className={`card p-6 relative flex flex-col ${
-                  plan.popular ? 'ring-2 ring-primary-500' : ''
-                }`}
-              >
-                {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-primary-500 text-white px-4 py-1 rounded-full text-sm font-medium flex items-center">
-                      <Star className="w-4 h-4 mr-1" />
-                      Most Popular
-                    </span>
-                  </div>
-                )}
-                
-                <div className="text-center mb-6">
-                  <div className="w-12 h-12 bg-neutral-950 rounded-lg flex items-center justify-center mx-auto mb-3 text-primary-400">
-                    {plan.icon}
-                  </div>
-                  <h3 className="text-2xl font-bold text-neutral-900 mb-2">{plan.name}</h3>
-                  <p className="text-neutral-600 mb-4 text-sm">{plan.description}</p>
-                  
-                  <div className="mb-4">
-                    <div className="text-3xl font-bold text-neutral-900">
-                      {typeof plan.price[billingCycle] === 'number' 
-                        ? plan.price[billingCycle] === 0 
-                          ? 'Free' 
-                          : `R${plan.price[billingCycle]}`
-                        : plan.price[billingCycle]
-                      }
-                    </div>
-                    {typeof plan.price[billingCycle] === 'number' && plan.price[billingCycle] > 0 && (
-                      <div className="text-neutral-500">
-                        per device per {billingCycle === 'monthly' ? 'month' : 'year'}
-                      </div>
-                    )}
-                  </div>
-                  
-                  <div className="text-center mb-4">
-                    <span className="text-sm text-neutral-500">Transaction fee: </span>
-                    <span className="font-semibold text-neutral-900">
-                      1% or lower
-                    </span>
-                  </div>
-                </div>
-
-                <div className="space-y-3 mb-6 flex-grow">
-                  {plan.features.map((feature) => (
-                    <div key={feature} className="flex items-start">
-                      <Check className="w-4 h-4 text-primary-500 mr-2 mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-700 text-sm">{feature}</span>
-                    </div>
-                  ))}
-                  {plan.limitations.map((limitation) => (
-                    <div key={limitation} className="flex items-start">
-                      <X className="w-4 h-4 text-gray-400 mr-2 mt-0.5 flex-shrink-0" />
-                      <span className="text-neutral-500 text-sm">{limitation}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {plan.name === 'Enterprise' ? (
-                  <Link
-                    to="/contact"
-                    className={`w-full text-center py-3 px-6 rounded-lg font-medium transition-all duration-200 flex items-center justify-center ${
-                      plan.popular
-                        ? 'bg-primary-500 hover:bg-primary-600 text-white shadow-lg hover:shadow-xl'
-                        : 'bg-neutral-100 hover:bg-neutral-200 text-neutral-900'
-                    }`}
-                  >
-                    {plan.cta}
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Link>
-                ) : (
-                  <a
-                    href="https://merchant.ezeebit.com/#/signup"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`w-full text-center py-3 px-6 rounded-lg font-medium transition-all duration-200 flex items-center justify-center ${
-                      plan.popular
-                        ? 'bg-primary-500 hover:bg-primary-600 text-white shadow-lg hover:shadow-xl'
-                        : 'bg-neutral-100 hover:bg-neutral-200 text-neutral-900'
-                    }`}
-                  >
-                    {plan.cta}
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </a>
-                )}
-              </motion.div>
-            ))}
+          <PricingPlans />
+          <div className="mt-10 border-t border-neutral-200 pt-8">
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500">Every account includes</p>
+            <ul className="flex flex-wrap gap-x-8 gap-y-3">
+              {INCLUDED.map((item) => (
+                <li key={item} className="flex items-center gap-2 text-[15px] text-neutral-700">
+                  <Check className="w-4 h-4 text-primary-600 shrink-0" strokeWidth={2.5} />
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
 
+      <FaqBlock heading="Pricing: frequently asked questions" items={pricingFaqs} tone="white" />
 
-
-      {/* FAQ Section */}
-
-      {/* CTA Section */}
       <section className="section-padding relative overflow-hidden bg-neutral-950 text-white">
         <DarkBackdrop glow="left" />
         <div className="relative container-custom text-center">
@@ -234,20 +82,20 @@ const Pricing = () => {
               Ready to get started?
             </h2>
             <p className="text-xl mb-8 max-w-2xl mx-auto text-neutral-300">
-              Join thousands of merchants already accepting stablecoin and crypto payments. Start with our free plan today.
+              Sign up free and pay only when money moves, or talk to us about volume pricing.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a 
-                href="https://merchant.ezeebit.com/#/signup" 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href="https://merchant.ezeebit.com/#/signup"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
               >
-                Start Free Trial
+                Start free
                 <ArrowRight className="w-5 h-5 ml-2 inline" />
               </a>
-              <a 
-                href="mailto:sales@ezeebit.com" 
+              <a
+                href="mailto:sales@ezeebit.com"
                 className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
               >
                 Contact Sales
@@ -256,9 +104,8 @@ const Pricing = () => {
           </motion.div>
         </div>
       </section>
-      </motion.div>
-    </>
-  )
-}
+    </motion.div>
+  </>
+)
 
 export default Pricing

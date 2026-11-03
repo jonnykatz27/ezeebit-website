@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, ChevronDown } from 'lucide-react'
 import { AnimatePresence } from 'framer-motion'
@@ -24,6 +24,155 @@ type NavGroup = {
 type NavItem =
   | { name: string; href: string; dropdown?: undefined }
   | { name: string; href?: string; dropdown: NavGroup[] }
+
+function DesktopDropdown({
+  item,
+  open,
+  onOpen,
+  onClose,
+  linkClass,
+}: {
+  item: Extract<NavItem, { dropdown: NavGroup[] }>
+  open: boolean
+  onOpen: () => void
+  onClose: () => void
+  linkClass: string
+}) {
+  const rootRef = useRef<HTMLDivElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
+  const focusMenu = useRef(false)
+  const closeTimer = useRef<number>()
+
+  // The pointer gets a moment to cross from the button to the panel, or to
+  // drift past its edge, before the menu shuts.
+  const cancelClose = () => window.clearTimeout(closeTimer.current)
+  const closeSoon = () => {
+    cancelClose()
+    closeTimer.current = window.setTimeout(onClose, 160)
+  }
+  useEffect(() => cancelClose, [])
+
+  useEffect(() => {
+    if (!open || !focusMenu.current) return
+    // After the open commit (and StrictMode's double effect) so focus
+    // is not pulled back to the button that received the key.
+    const id = requestAnimationFrame(() => {
+      if (!focusMenu.current) return
+      focusMenu.current = false
+      rootRef.current?.querySelector<HTMLAnchorElement>('a')?.focus()
+    })
+    return () => cancelAnimationFrame(id)
+  }, [open])
+
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return
+      onClose()
+      buttonRef.current?.focus()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [open, onClose])
+
+  return (
+    <div
+      ref={rootRef}
+      className="relative"
+      onMouseEnter={() => {
+        cancelClose()
+        onOpen()
+      }}
+      onMouseLeave={(e) => {
+        const next = e.relatedTarget
+        if (next instanceof Node && rootRef.current?.contains(next)) return
+        closeSoon()
+      }}
+      onBlur={(e) => {
+        const next = e.relatedTarget
+        if (next instanceof Node && rootRef.current?.contains(next)) return
+        onClose()
+      }}
+    >
+      <button
+        ref={buttonRef}
+        type="button"
+        aria-expanded={open}
+        aria-haspopup="true"
+        aria-controls={`nav-menu-${item.name}`}
+        onClick={(e) => {
+          // Hover may already have opened it. A mouse click should not
+          // immediately close that menu; keyboard Enter/Space toggles.
+          if (open) {
+            if (e.detail === 0) onClose()
+            return
+          }
+          if (e.detail === 0) focusMenu.current = true
+          onOpen()
+        }}
+        onKeyDown={(e) => {
+          if (e.key !== 'ArrowDown' && e.key !== 'Enter' && e.key !== ' ') return
+          e.preventDefault()
+          if ((e.key === 'Enter' || e.key === ' ') && open) {
+            onClose()
+            return
+          }
+          focusMenu.current = true
+          onOpen()
+        }}
+        className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-base font-medium transition-colors ${linkClass}`}
+      >
+        <span>{item.name}</span>
+        <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
+      </button>
+      {/*
+        Always in the DOM so crawlers can follow the product links. The outer
+        box starts flush with the button and its top padding is the visual gap,
+        so the pointer never crosses empty space on its way to a link.
+        Visibility is only animated on the way out: it fades before hiding,
+        but shows at once on open, so keyboard focus can land in it.
+      */}
+      <div
+        className={`absolute top-full left-0 pt-2 w-72 origin-top duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1)] ${
+          open
+            ? 'visible opacity-100 translate-y-0 scale-100 transition-[opacity,transform]'
+            : 'invisible opacity-0 translate-y-1 scale-[0.98] transition-[opacity,transform,visibility]'
+        }`}
+      >
+        <div
+          id={`nav-menu-${item.name}`}
+          role="menu"
+          aria-label={item.name}
+          className="bg-white rounded-xl shadow-xl border border-neutral-100 py-1.5 overflow-hidden"
+        >
+          {item.dropdown.map((group, groupIndex) => (
+            <div
+              key={group.group ?? `group-${groupIndex}`}
+              className={groupIndex > 0 ? 'border-t border-neutral-100 mt-1.5 pt-1.5' : ''}
+            >
+              {group.group && (
+                <div className="px-4 pt-2 pb-1 text-[0.6875rem] font-semibold uppercase tracking-wider text-neutral-400">
+                  {group.group}
+                </div>
+              )}
+              {group.items.map((subItem) => (
+                <Link
+                  key={subItem.name}
+                  to={subItem.href}
+                  role="menuitem"
+                  className="block px-4 py-3 hover:bg-neutral-50 transition-colors"
+                >
+                  <div className="text-sm font-medium text-neutral-900">{subItem.name}</div>
+                  <div className="text-xs text-neutral-500 mt-0.5">{subItem.description}</div>
+                </Link>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -150,53 +299,13 @@ const Header = () => {
             {navigation.map((item) => (
               <div key={item.name} className="relative">
                 {item.dropdown ? (
-                  <div
-                    className="relative"
-                    onMouseEnter={() => setActiveDropdown(item.name)}
-                    onMouseLeave={() => setActiveDropdown(null)}
-                  >
-                    <button
-                      className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-base font-medium transition-colors ${navLink(isItemActive(item))}`}
-                    >
-                      <span>{item.name}</span>
-                      <ChevronDown
-                        className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                          activeDropdown === item.name ? 'rotate-180' : ''
-                        }`}
-                      />
-                    </button>
-                    {/* Always in the DOM so crawlers can follow the product links; CSS gives it the same quick fade and lift it had */}
-                    <div
-                      className={`absolute top-full left-0 mt-1 w-72 bg-white rounded-xl shadow-xl border border-neutral-100 py-1.5 overflow-hidden origin-top transition-[opacity,transform,visibility] duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1)] ${
-                        activeDropdown === item.name ? 'visible opacity-100 translate-y-0 scale-100' : 'invisible opacity-0 translate-y-2 scale-[0.98]'
-                      }`}
-                    >
-                          {item.dropdown.map((group, groupIndex) => (
-                            <div
-                              key={group.group ?? `group-${groupIndex}`}
-                              className={
-                                groupIndex > 0 ? 'border-t border-neutral-100 mt-1.5 pt-1.5' : ''
-                              }
-                            >
-                              {group.group && (
-                                <div className="px-4 pt-2 pb-1 text-[0.6875rem] font-semibold uppercase tracking-wider text-neutral-400">
-                                  {group.group}
-                                </div>
-                              )}
-                              {group.items.map((subItem) => (
-                                <Link
-                                  key={subItem.name}
-                                  to={subItem.href}
-                                  className="block px-4 py-3 hover:bg-neutral-50 transition-colors"
-                                >
-                                  <div className="text-sm font-medium text-neutral-900">{subItem.name}</div>
-                                  <div className="text-xs text-neutral-500 mt-0.5">{subItem.description}</div>
-                                </Link>
-                              ))}
-                            </div>
-                          ))}
-                    </div>
-                  </div>
+                  <DesktopDropdown
+                    item={item}
+                    open={activeDropdown === item.name}
+                    onOpen={() => setActiveDropdown(item.name)}
+                    onClose={() => setActiveDropdown((cur) => (cur === item.name ? null : cur))}
+                    linkClass={navLink(isItemActive(item))}
+                  />
                 ) : (
                   <Link
                     to={item.href}

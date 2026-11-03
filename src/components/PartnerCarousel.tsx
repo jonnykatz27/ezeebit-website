@@ -1,11 +1,28 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { useReducedMotion } from 'framer-motion'
 import { motion } from '../lib/motion'
 
 interface Partner {
   name: string
+  /** A logo cropped to its mark, with no padding of its own (public/partners). */
   logo: string
-  scale?: number
-  mobileScale?: number
+  /** The cropped file's width and height in pixels. */
+  size: [number, number]
+  /** Extra weight for a mark drawn in hairlines, which reads lighter at the same size. */
+  boost?: number
+}
+
+/**
+ * Every logo gets the same area rather than the same height, within the
+ * cell. Same-height logos made a square badge loom over a long wordmark, and
+ * same-width ones did the opposite; equal area is what reads as equal size.
+ */
+const fit = ([w, h]: [number, number], area: number, maxW: number, maxH: number, boost = 1) => {
+  const ratio = w / h
+  const width = Math.sqrt(area * boost * ratio)
+  const height = Math.sqrt((area * boost) / ratio)
+  const k = Math.min(1, maxW / width, maxH / height)
+  return { width: Math.round(width * k), height: Math.round(height * k) }
 }
 
 interface PartnerCarouselProps {
@@ -15,6 +32,7 @@ interface PartnerCarouselProps {
 }
 
 const PartnerCarousel = ({ partners, direction, speed = 30 }: PartnerCarouselProps) => {
+  const reduceMotion = useReducedMotion()
   const [isInitialized, setIsInitialized] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const wrapperRef = useRef<HTMLDivElement>(null)
@@ -63,7 +81,7 @@ const PartnerCarousel = ({ partners, direction, speed = 30 }: PartnerCarouselPro
   }, [singleSetWidth, updateTransform])
 
   useEffect(() => {
-    if (!isInitialized) return
+    if (!isInitialized || reduceMotion) return
 
     let lastTime = performance.now()
 
@@ -100,7 +118,7 @@ const PartnerCarousel = ({ partners, direction, speed = 30 }: PartnerCarouselPro
         cancelAnimationFrame(animationRef.current)
       }
     }
-  }, [isInitialized, direction, speed, normalizePosition, updateTransform])
+  }, [isInitialized, reduceMotion, direction, speed, normalizePosition, updateTransform])
 
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
     isDraggingRef.current = true
@@ -140,7 +158,13 @@ const PartnerCarousel = ({ partners, direction, speed = 30 }: PartnerCarouselPro
     <div
       ref={wrapperRef}
       className="relative overflow-hidden w-full cursor-grab active:cursor-grabbing select-none"
-      style={{ touchAction: 'none' }}
+      style={{
+        touchAction: 'pan-y',
+        // Fade the track out before the clip, over most of a logo's width, so
+        // one is never left half-drawn and sharp at the edge.
+        maskImage: 'linear-gradient(to right, transparent, #000 12%, #000 88%, transparent)',
+        WebkitMaskImage: 'linear-gradient(to right, transparent, #000 12%, #000 88%, transparent)',
+      }}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
@@ -148,35 +172,34 @@ const PartnerCarousel = ({ partners, direction, speed = 30 }: PartnerCarouselPro
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="absolute left-0 top-0 w-4 md:w-8 h-full bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-      <div className="absolute right-0 top-0 w-4 md:w-8 h-full bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
-
       <motion.div
         ref={containerRef}
         className="flex items-center will-change-transform"
-        style={{ gap: `${GAP}px` }}
+        style={{ gap: `${GAP}px`, transform: `translateX(${-singleSetWidth}px)` }}
       >
-        {seamlessPartners.map((partner, index) => (
-          <div
-            key={`${partner.name}-${index}`}
-            className="flex-shrink-0 flex items-center justify-center transition-all duration-300 p-2 md:p-3"
-            style={{ width: `${ITEM_WIDTH}px`, height: isMobile ? '77px' : '96px' }}
-          >
-            <img
-              src={partner.logo}
-              alt={partner.name}
-              className="object-contain max-w-full max-h-full"
-              style={{
-                width: isMobile ? '97px' : '150px',
-                height: isMobile ? '58px' : '72px',
-                transform: isMobile && partner.mobileScale
-                  ? `scale(${partner.mobileScale})`
-                  : partner.scale ? `scale(${partner.scale})` : undefined
-              }}
-              draggable={false}
-            />
-          </div>
-        ))}
+        {seamlessPartners.map((partner, index) => {
+          const { width, height } = isMobile
+            ? fit(partner.size, 1500, ITEM_WIDTH - 24, 46, partner.boost)
+            : fit(partner.size, 3000, ITEM_WIDTH - 24, 64, partner.boost)
+          return (
+            <div
+              key={`${partner.name}-${index}`}
+              className="flex-shrink-0 flex items-center justify-center"
+              style={{ width: `${ITEM_WIDTH}px`, height: isMobile ? '77px' : '96px' }}
+            >
+              <img
+                src={partner.logo}
+                alt={index < partners.length ? partner.name : ''}
+                width={width}
+                height={height}
+                loading="lazy"
+                className="object-contain !mx-0"
+                style={{ width, height }}
+                draggable={false}
+              />
+            </div>
+          )
+        })}
       </motion.div>
     </div>
   )

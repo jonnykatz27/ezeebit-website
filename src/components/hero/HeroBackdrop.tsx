@@ -24,7 +24,8 @@ const HeroBackdrop = ({ glow = 'side' }: { glow?: 'side' | 'top' }) => (
     />
       </>
     )}
-    <div className="hero-grid absolute inset-0" />
+    {/* The grid fades out around the glow: over to the right beside a split hero, centred under a stacked one */}
+    <div className={`hero-grid absolute inset-0 ${glow === 'top' ? 'hero-grid-centre' : ''}`} />
   </div>
 )
 

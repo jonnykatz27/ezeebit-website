@@ -32,11 +32,13 @@ export const COIN = 'rounded-full bg-white shadow-sm object-contain'
  * QR markers. Every other ticker's own `-logo.svg` is already a full round
  * coin mark, but USDT's is its diamond brand mark, which doesn't fill a
  * circular badge the way the others do — so USDT gets its round mark instead.
+ * The rand stablecoins only ship as PNGs.
  */
-export const coinLogo = (ticker: string) => (ticker === 'usdt' ? '/usdt-round.svg' : `/${ticker}-logo.svg`)
+export const coinLogo = (ticker: string) =>
+  ticker === 'usdt' ? '/usdt-round.svg' : ticker === 'zarp' || ticker === 'zaru' ? `/${ticker}-logo.png` : `/${ticker}-logo.svg`
 
 /** Small caps label at the top of a floating card. */
-export const LABEL = 'text-[11px] font-semibold uppercase tracking-[0.1em] text-neutral-400'
+export const LABEL = 'text-[11px] font-semibold uppercase tracking-[0.1em] text-neutral-600'
 
 /** Content that is replaced in place: the old copy lifts away as the new one settles. */
 export const SWAP = {

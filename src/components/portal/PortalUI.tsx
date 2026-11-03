@@ -16,10 +16,10 @@ const C = {
   text: '#172b4d',         // color.text
   subtle: '#44546f',       // color.text.subtle
   subtlest: '#626f86',     // color.text.subtlest
-  brand: '#0074e3',        // color.text.brand
+  brand: '#00509e',        // darkened so amounts on white clear contrast
   gray900: '#181d27',      // Gray/900
   amount: '#181c1e',
-  success: '#22a06b',      // color.text.success
+  success: '#047857',      // darkened from the portal green so the chip clears contrast on its pale background
   successBg: '#dcfff1',    // color.background.accent.green.subtlest
   fiat: '#00509e',
   stable: '#cfe7ff',
@@ -142,7 +142,7 @@ export const PortalBalanceCard = ({
         <div className="relative flex flex-1 items-center gap-3 min-w-0 rounded-xl [@container(max-width:480px)]:w-full">
           {flash?.stable}
           <span className="relative size-10 rounded-full flex items-center justify-center shrink-0" style={{ background: C.stable }}>
-            <img src="/portal/usdt.png" alt="" className="size-8 object-cover" />
+            <img src="/usdt-round.svg" alt="" className="size-8 object-cover" />
           </span>
           <div className="relative flex flex-col gap-1.5 min-w-0">
             <p className="text-[18px] font-semibold tabular-nums truncate" style={{ color: C.gray900 }}>{stable.amount}</p>
@@ -204,7 +204,7 @@ const Picker = ({ label, mark }: { label: string; mark: string }) => (
 )
 
 /** The Convert panel from the Wallet overview. Design width 317px. */
-export const PortalConvertCard = ({ from, fromMark, fromAmount, balance, to = 'USDT', toMark = '/portal/usdt.png', toAmount, rate }: {
+export const PortalConvertCard = ({ from, fromMark, fromAmount, balance, to = 'USDT', toMark = '/usdt-round.svg', toAmount, rate }: {
   from: string
   /** The flag or coin for the currency being converted from. */
   fromMark: string

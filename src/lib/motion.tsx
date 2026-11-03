@@ -31,8 +31,25 @@ function isEntrance(initial: unknown): boolean {
   return false
 }
 
+/**
+ * A route shell that only fades opacity would hide the prerendered h1 until
+ * JavaScript hydrates and the fade finishes. That text is the LCP element, so
+ * those shells stay painted. A fixed overlay (the phone-menu scrim) still fades.
+ */
+function keepPainted(props: { initial?: unknown; className?: unknown }): boolean {
+  const initial = props.initial
+  if (!initial || typeof initial !== 'object' || Array.isArray(initial)) return false
+  const keys = Object.keys(initial as object)
+  if (!(keys.length === 1 && (initial as { opacity?: unknown }).opacity === 0)) return false
+  const className = typeof props.className === 'string' ? props.className : ''
+  return !className.includes('fixed')
+}
+
 function wrap(Component: any) {
   return forwardRef(function SafeMotion(props: any, ref) {
+    if (keepPainted(props)) {
+      return <Component ref={ref} {...props} initial={false} />
+    }
     const entrance = isEntrance(props.initial)
     const [phase, setPhase] = useState<'ssr' | 'live'>(() =>
       entrance && !appHydrated ? 'ssr' : 'live'

@@ -63,6 +63,14 @@ type PageHeroProps = {
    * glow coming from the top, for the homepage, where the headline leads.
    */
   stacked?: boolean
+  /** Small label above the headline. Stays outside the entrance animation. */
+  kicker?: ReactNode
+  /**
+   * A full-width block under the headline, outside the entrance animation,
+   * so it paints with the h1 and is not capped at the illustration width.
+   */
+  wideVisual?: ReactNode
+  id?: string
 }
 
 /**
@@ -72,47 +80,53 @@ type PageHeroProps = {
  * are centred. The real product UI in the illustrations reads as white
  * cards against the dark.
  */
-const PageHero = ({ title, accent, description, actions, trust, visual, children, itemProps, bleedVisual, stacked }: PageHeroProps) => {
+const PageHero = ({ title, accent, description, actions, trust, visual, children, itemProps, bleedVisual, stacked, kicker, wideVisual, id }: PageHeroProps) => {
   const split = Boolean(visual) && !stacked
   const align = split ? 'text-center lg:text-left' : 'text-center'
   const justify = split ? 'justify-center lg:justify-start' : 'justify-center'
 
   const text = (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
-      className={`${align} ${split ? 'lg:col-span-6' : stacked ? 'max-w-5xl mx-auto' : 'max-w-3xl mx-auto'}`}
-    >
+    <div className={`${align} ${split ? 'lg:col-span-6' : stacked ? 'max-w-5xl mx-auto' : 'max-w-3xl mx-auto'}`}>
       {/*
         hero-title opts out of the site-wide phone rule that pins every h1 to
-        30px. On a phone the size follows the screen instead: about 38px on a
-        375px phone, where each line of every hero still fits on one line.
+        30px. The headline stays outside the entrance animation: it is the LCP
+        text, and data-entrance would hide it until hydration. The phone clamp
+        is a step below the old 10vw size so "Stablecoin payments," stays on
+        one line at 390px.
       */}
+      {kicker && (
+        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-400 mb-4">
+          {kicker}
+        </p>
+      )}
       <h1
         itemProp={itemProps ? 'name' : undefined}
         className={`hero-title font-display font-bold text-white mb-5 sm:mb-6 !leading-[1.04] tracking-[-0.03em] ${
           split
-            ? 'text-[clamp(2.125rem,10vw,2.5rem)] sm:text-6xl lg:text-[3rem] xl:text-[3.75rem]'
+            ? 'text-[clamp(1.7rem,8.2vw,2.15rem)] sm:text-6xl lg:text-[3rem] xl:text-[3.75rem]'
             : stacked
-              ? 'text-[clamp(2.125rem,10vw,2.5rem)] sm:text-6xl lg:text-7xl xl:text-[5.5rem]'
-              : 'text-[clamp(2.125rem,10vw,2.5rem)] sm:text-[3.25rem] lg:text-[3.75rem]'
+              ? 'text-[clamp(2.1rem,10vw,2.6rem)] sm:text-6xl lg:text-7xl xl:text-[5.25rem]'
+              : 'text-[clamp(1.7rem,8.2vw,2.15rem)] sm:text-[3.25rem] lg:text-[3.75rem]'
         }`}
       >
-        <motion.span variants={HERO_ITEM} className="block">{title}</motion.span>
-        {accent && <motion.span variants={HERO_ITEM} className="block text-primary-400">{accent}</motion.span>}
+        <span className="block">{title}</span>
+        {accent && <span className="block text-primary-400">{accent}</span>}
       </h1>
 
       {description && (
-        <motion.p
-          variants={HERO_ITEM}
+        <p
           itemProp={itemProps ? 'description' : undefined}
           className={`text-lg lg:text-xl text-neutral-300 leading-relaxed mb-8 ${split ? 'max-w-xl mx-auto lg:mx-0' : stacked ? 'max-w-3xl mx-auto' : 'max-w-2xl mx-auto'}`}
         >
           {description}
-        </motion.p>
+        </p>
       )}
 
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
+      >
       {actions && (
         <motion.div variants={HERO_ITEM} className={`flex flex-col sm:flex-row gap-3 mb-8 ${justify}`}>
           {actions}
@@ -131,11 +145,12 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
           ))}
         </motion.div>
       )}
-    </motion.div>
+      </motion.div>
+    </div>
   )
 
   return (
-    <section className={`relative overflow-hidden pt-40 lg:pt-48 ${split ? 'pb-14 lg:pb-24' : 'pb-12 lg:pb-20'}`}>
+    <section id={id} className={`relative overflow-hidden ${stacked ? 'pt-40 lg:pt-44' : 'pt-40 lg:pt-48'} ${split ? 'pb-14 lg:pb-24' : 'pb-12 lg:pb-20'}`}>
       <HeroBackdrop glow={stacked ? 'top' : 'side'} />
       <div className="container-custom relative z-10">
         {split ? (
@@ -146,6 +161,7 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
         ) : (
           <>
             {text}
+            {wideVisual && <div className="mt-12 lg:mt-16">{wideVisual}</div>}
             {visual && <div className="mt-12 lg:mt-16 mx-auto max-w-[620px]">{visual}</div>}
           </>
         )}

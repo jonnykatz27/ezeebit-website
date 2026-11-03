@@ -8,15 +8,35 @@ import SEO from '../components/SEO'
 import PageHero from '../components/hero/PageHero'
 import DarkBackdrop from '../components/DarkBackdrop'
 
+const ZENDESK_SRC = 'https://static.zdassets.com/ekr/snippet.js?key=a6ca5c3e-5ecf-45c9-82f0-40e61445fead'
+
 const Contact = () => {
   useEffect(() => {
-    const script = document.createElement('script')
-    script.id = 'ze-snippet'
-    script.src = 'https://static.zdassets.com/ekr/snippet.js?key=a6ca5c3e-5ecf-45c9-82f0-40e61445fead'
-    script.async = true
-    document.body.appendChild(script)
+    let loaded = false
+    let idleId = 0
+    const load = () => {
+      if (loaded || document.getElementById('ze-snippet')) return
+      loaded = true
+      const script = document.createElement('script')
+      script.id = 'ze-snippet'
+      script.src = ZENDESK_SRC
+      script.async = true
+      document.body.appendChild(script)
+    }
+    const onInteract = () => load()
+    window.addEventListener('pointerdown', onInteract, { passive: true })
+    window.addEventListener('keydown', onInteract)
+    const scheduleIdle = () => {
+      idleId = window.requestIdleCallback(load, { timeout: 8000 })
+    }
+    if (document.readyState === 'complete') scheduleIdle()
+    else window.addEventListener('load', scheduleIdle, { once: true })
 
     return () => {
+      window.removeEventListener('pointerdown', onInteract)
+      window.removeEventListener('keydown', onInteract)
+      window.removeEventListener('load', scheduleIdle)
+      if (idleId) window.cancelIdleCallback(idleId)
       document.getElementById('ze-snippet')?.remove()
       // Remove the Zendesk widget iframe/container on unmount
       document.getElementById('launcher')?.remove()

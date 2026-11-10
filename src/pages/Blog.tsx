@@ -30,6 +30,19 @@ const Blog = () => {
 
   const blogPosts: BlogPostItem[] = [
     {
+      id: 'restricted-wallets-and-platforms',
+      title: "Which wallets and platforms can't Ezeebit accept payments from or send funds to?",
+      excerpt: "Most crypto payments go through without any issues. A small number can't, because the wallet or platform is linked to sanctions or other serious financial-crime risks. Here's why, what we check, and how to check a counterparty yourself.",
+      author: 'Jonathan Katz',
+      date: '2026-11-10',
+      readTime: '5 min read',
+      category: 'Policy & Regulation',
+      categoryId: 'policy',
+      image: '/blog/restricted-wallets-cover.webp',
+      views: '0',
+      featured: false
+    },
+    {
       id: 'crypto-deposits-igaming-sunbet',
       title: "Crypto deposits for iGaming: inside the Sunbet integration",
       excerpt: "Sunbet — a subsidiary of JSE-listed Sun International — is one of the first online gaming platforms in South Africa to accept crypto deposits. Here's the complexity behind letting any user fund their account from any wallet, how we kept compliance and innovation at the forefront, and why the same deposit rail extends to FX, trading, and any platform that takes deposits.",

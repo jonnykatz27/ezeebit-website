@@ -8,6 +8,239 @@ import SEO from '../components/SEO'
 import DarkBackdrop from '../components/DarkBackdrop'
 import { ORG_ID, absoluteUrl, canonicalUrl } from '../lib/schema'
 
+/* ---------- Restricted wallets and platforms ---------- */
+
+const OFAC = { label: 'OFAC SDN', href: 'https://sanctionssearch.ofac.treas.gov/' }
+const OFSI = { label: 'UK OFSI', href: 'https://sanctionssearchapp.ofsi.hmtreasury.gov.uk/' }
+const EU = { label: 'EU Sanctions', href: 'https://www.sanctionsmap.eu/' }
+const FINCEN = { label: 'US FinCEN', href: 'https://www.fincen.gov/resources/statutes-and-regulations/special-measures' }
+
+type Source = { label: string; href?: string }
+type Restricted = { name: string; aka?: string; sources: Source[] }
+
+/**
+ * The platforms Ezeebit can't accept payments from or send funds to, grouped
+ * as in the compliance draft, each with the source relied on. A source with no
+ * link is tracking rather than an official list.
+ */
+const RESTRICTED: { group: string; items: Restricted[] }[] = [
+  {
+    group: 'Russian, ransomware, and cybercrime-linked platforms',
+    items: [
+      { name: 'Garantex', aka: 'Garantex Europe OÜ', sources: [OFAC, OFSI, EU] },
+      { name: 'Grinex', aka: 'successor entity to Garantex', sources: [OFAC, OFSI] },
+      {
+        name: 'Heleket',
+        aka: 'parallel or successor platform to Cryptomus',
+        sources: [
+          { label: 'FINTRAC enforcement notice', href: 'https://fintrac-canafe.canada.ca/pen/4-eng' },
+          { label: 'Law enforcement and blockchain sanctions-evasion tracking (Garantex liquidity facility)' },
+        ],
+      },
+      { name: 'HTX', aka: 'formerly Huobi Global / Huobi SA', sources: [OFSI] },
+      { name: 'EXMO Exchange Limited', sources: [OFSI] },
+      { name: 'Bitzlato', aka: 'formerly ChangeBot', sources: [FINCEN] },
+      { name: 'Cryptex', aka: 'International Payment Service Provider Ltd', sources: [OFAC, { label: 'FinCEN enforcement action', href: FINCEN.href }] },
+      { name: 'PM2BTC', sources: [FINCEN, OFAC] },
+      { name: 'MEXC Global', sources: [{ label: 'US FinCEN section 9714 order', href: FINCEN.href }] },
+      { name: 'Suex', aka: 'SUEX OTC S.R.O. / Suex OTC', sources: [OFAC] },
+      { name: 'Chatex', aka: 'Chatextech OÜ / izichange', sources: [OFAC] },
+      { name: 'Rapira', aka: 'Rapira Group LLC', sources: [OFSI] },
+      { name: 'ABCeX', aka: 'Nueva Cryptologia S.A.S. de C.V.', sources: [EU] },
+      { name: 'Exnode / Exnode Pay', aka: 'Arvix / Arvix LLC', sources: [EU] },
+      { name: 'Aifory Pro', aka: 'Sooty Ltd.', sources: [EU] },
+      { name: 'Tradex', aka: 'Brightum LLC', sources: [EU] },
+      { name: 'BitPapa', aka: 'BitPapa IC FZC LLC / Alistera Limited', sources: [EU] },
+      { name: 'WhiteBird', aka: 'WhiteBird LLC', sources: [EU] },
+      { name: 'NoOnecrypto INC.', sources: [EU] },
+      { name: 'Monease Ltd', sources: [EU] },
+    ],
+  },
+  {
+    group: 'Iranian state-linked and Middle Eastern exchanges',
+    items: [
+      { name: 'Nobitex', aka: 'Nobitex Market', sources: [OFAC] },
+      { name: 'Wallex', aka: 'Wallex Exchange', sources: [OFAC] },
+      { name: 'Bitpin', aka: 'Bitpin Exchange', sources: [OFAC] },
+      { name: 'Ramzinex', aka: 'Ramzinex Exchange', sources: [OFAC] },
+      { name: 'Shelbit', aka: 'Shelbit General Trading LLC', sources: [OFAC, OFSI] },
+      { name: 'Aban Tether', aka: 'Aban Tether Exchange', sources: [OFAC] },
+      { name: 'Zedcex / Zedxion', aka: 'Zedxion Financial Network', sources: [OFAC] },
+    ],
+  },
+  {
+    group: 'Cross-border settlement and MSB networks',
+    items: [
+      {
+        name: 'A7 Network',
+        aka: 'A7 LLC, A7 Africa, A7 Nigeria, PilotFinance Ltd, issuer of the A7A5 token',
+        sources: [OFAC, { label: 'EU Sanctions (sectoral transaction ban)', href: EU.href }, OFSI],
+      },
+      { name: 'Bitcoin Xchange', aka: 'Syria-based crypto MSB', sources: [OFAC] },
+      { name: 'Spider', aka: 'Turkey-based crypto MSB', sources: [OFAC] },
+      { name: 'Alkaram', aka: 'Turkey-based crypto MSB', sources: [OFAC] },
+    ],
+  },
+  {
+    group: 'Sanctioned mixing protocols and privacy infrastructure',
+    items: [
+      { name: 'Blender.io', sources: [OFAC] },
+      { name: 'Sinbad.io', aka: 'successor to Blender.io', sources: [OFAC, { label: 'Dutch FIOD and law enforcement seizure' }] },
+    ],
+  },
+]
+
+/** Official public lists a merchant can check a counterparty against. */
+const CHECK_LISTS: { who: string; links: Source[] }[] = [
+  { who: 'US Treasury (OFAC)', links: [{ label: 'Sanctions List Search', href: 'https://sanctionssearch.ofac.treas.gov/' }] },
+  { who: 'European Union', links: [{ label: 'EU Sanctions Map', href: 'https://www.sanctionsmap.eu/' }] },
+  {
+    who: 'United Kingdom (OFSI)',
+    links: [
+      { label: 'UK sanctions list search', href: 'https://sanctionssearchapp.ofsi.hmtreasury.gov.uk/' },
+      { label: 'OFSI consolidated list of asset freeze targets', href: 'https://www.gov.uk/government/publications/financial-sanctions-consolidated-list-of-targets' },
+    ],
+  },
+  { who: 'FATF', links: [{ label: '"Black and grey" lists of high-risk jurisdictions', href: 'https://www.fatf-gafi.org/en/countries/black-and-grey-lists.html' }] },
+  { who: 'United Nations', links: [{ label: 'Security Council Consolidated List', href: 'https://main.un.org/securitycouncil/en/content/un-sc-consolidated-list' }] },
+  { who: 'US FinCEN', links: [{ label: 'Special measures (sections 311 and 9714)', href: 'https://www.fincen.gov/resources/statutes-and-regulations/special-measures' }] },
+  { who: 'UK FCA', links: [{ label: 'Warning List of unauthorised firms', href: 'https://www.fca.org.uk/consumers/warning-list-unauthorised-firms' }] },
+  { who: 'Canada (FINTRAC)', links: [{ label: 'Money services business registry', href: 'https://fintrac-canafe.canada.ca/msb-esm/msb-eng' }] },
+]
+
+const UNAVAILABLE_IN = [
+  'Canada', 'Cuba', 'India', 'Iran', 'Kazakhstan', 'North Korea', 'Myanmar',
+  'Russia', 'Somalia', 'Sudan', 'South Sudan', 'Syria', 'Ukraine', 'United States of America',
+]
+
+const EXT = { target: '_blank', rel: 'noopener noreferrer' } as const
+const LINK = 'text-primary-600 font-semibold hover:underline'
+
+/** One restricted platform: its name, who it is, and the sources relied on. */
+const RestrictedRow = ({ r }: { r: Restricted }) => (
+  <li className="flex flex-col gap-1.5 py-3.5 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
+    <div className="min-w-0">
+      <p className="font-semibold text-neutral-900">{r.name}</p>
+      {r.aka && <p className="text-sm text-neutral-500">{r.aka}</p>}
+    </div>
+    <div className="flex flex-wrap gap-1.5 sm:max-w-[55%] sm:justify-end">
+      {r.sources.map((s) =>
+        s.href ? (
+          <a key={s.label} href={s.href} {...EXT} className="rounded-full bg-primary-50 px-2.5 py-1 text-xs font-semibold text-primary-700 hover:bg-primary-100">
+            {s.label}
+          </a>
+        ) : (
+          <span key={s.label} className="rounded-full bg-neutral-100 px-2.5 py-1 text-xs font-medium text-neutral-600">{s.label}</span>
+        ),
+      )}
+    </div>
+  </li>
+)
+
+const restrictedWalletsContent = (
+  <>
+    <p className="text-lg font-semibold text-neutral-900 mb-8">
+      When you accept crypto with Ezeebit, or withdraw your funds, we screen the wallets involved. Most payments go through without any issues. A small number can't, because the wallet or platform is linked to sanctions or other serious financial-crime risks. This article explains why, what we check, and how you can check a counterparty yourself.
+    </p>
+
+    <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-4">Why do these restrictions apply?</h2>
+    <p className="mb-4">
+      Ezeebit is regulated by the FSCA as a Crypto Asset Service Provider, FSP No. 53664, and is an accountable institution under the Financial Intelligence Centre Act.
+    </p>
+    <p>
+      This means we must help prevent money laundering, terrorist financing, and sanctions breaches. In practice, we can't process crypto that comes from, or goes to, a person, business, platform, or wallet address that is under sanctions or that our checks flag as too high-risk. These rules protect you, your customers, and the wider payments system.
+    </p>
+
+    <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-4">How does Ezeebit check payments and withdrawals?</h2>
+    <p className="mb-4">We use several layers of protection:</p>
+    <ul className="list-disc pl-6 mb-4 space-y-2">
+      <li><strong>KYC and KYB.</strong> We verify the identity of the merchants and businesses we work with.</li>
+      <li>
+        <strong>Payer wallet screening.</strong> When a customer pays you, we screen the wallet they pay from. The result is either APPROVED or REJECTED. Developers can see how this works in our{' '}
+        <a href="https://docs.ezeebit.com/services/screen-payer-address" {...EXT} className={LINK}>screen payer address guide</a>.
+      </li>
+      <li><strong>Transaction monitoring.</strong> After screening, we keep watching activity for unusual patterns.</li>
+      <li>
+        <strong>Whitelisted withdrawal addresses.</strong> Withdrawals can only go to addresses you've added to your whitelist. Each address is screened, and one that fails our checks can be marked BLACKLISTED. Withdrawals are currently available in USDT on Ethereum only. See{' '}
+        <a href="https://docs.ezeebit.com/wallets-and-withdrawal/create-whitelist-address" {...EXT} className={LINK}>how to create a whitelist address</a>.
+      </li>
+      <li>
+        <strong>Exchange risk scores.</strong> Exchanges and other virtual asset service providers carry a GREEN, YELLOW, or RED risk score. You can view them in our{' '}
+        <a href="https://docs.ezeebit.com/wallets-and-withdrawal/vasp-list" {...EXT} className={LINK}>VASP list</a>.
+      </li>
+    </ul>
+
+    <h3 className="text-xl font-semibold text-neutral-900 mt-6 mb-3">What is the Travel Rule?</h3>
+    <p>
+      South Africa's Travel Rule, set out in FIC Directive 9 of 2024, has been in force since 30 April 2025. It requires information about the sender and recipient to travel with certain crypto transfers, so we may ask you for these details.
+    </p>
+
+    <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-4">Which platforms are restricted?</h2>
+    <p className="mb-6">
+      Ezeebit can't accept payments from, or send funds to, the platforms below or businesses associated with them. Each entry shows the source we rely on, which in most cases is an official sanctions or enforcement list.
+    </p>
+    <div className="not-prose space-y-8">
+      {RESTRICTED.map((g) => (
+        <section key={g.group}>
+          <h3 className="text-lg font-semibold text-neutral-900 mb-2">{g.group}</h3>
+          <ul className="divide-y divide-neutral-100 rounded-2xl border border-neutral-200 px-5">
+            {g.items.map((r) => <RestrictedRow key={r.name} r={r} />)}
+          </ul>
+        </section>
+      ))}
+    </div>
+    <p className="mt-6">
+      This list isn't exhaustive, and we may update it at any time. Restrictions can also apply to associated businesses, domains, wallet addresses, or other infrastructure connected to a listed platform, even if they aren't named here.
+    </p>
+
+    <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-4">How can I check a counterparty myself?</h2>
+    <p className="mb-4">
+      Sanctions lists change often. Before you send funds to an exchange or wallet provider, or ask a customer to pay from one, it's worth checking it first. These official public resources can help:
+    </p>
+    <ul className="list-disc pl-6 mb-4 space-y-2">
+      {CHECK_LISTS.map((c) => (
+        <li key={c.who}>
+          <strong>{c.who}:</strong>{' '}
+          {c.links.map((l, i) => (
+            <span key={l.label}>
+              {i > 0 && ' and the '}
+              <a href={l.href} {...EXT} className={LINK}>{l.label}</a>
+            </span>
+          ))}
+        </li>
+      ))}
+    </ul>
+    <p>
+      These are general references and may not cover every restriction. A clear result on one site doesn't guarantee that Ezeebit can process a transaction.
+    </p>
+
+    <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-4">What happens if a payment or withdrawal is restricted?</h2>
+    <p className="mb-4">
+      <strong>Incoming payments:</strong> Deposits rejected on compliance grounds are not credited, and are returned and documented.
+    </p>
+    <p className="mb-4">
+      <strong>Outgoing withdrawals:</strong> If a withdrawal is linked to a restricted wallet or platform, Ezeebit will not send it, and we will let you know so that you can choose a different whitelisted address.
+    </p>
+    <p>To avoid delays, check where a payment is coming from and where your funds are going before you start.</p>
+
+    <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-4">Where are Ezeebit's services available?</h2>
+    <p className="mb-4">
+      Ezeebit's services are currently available in South Africa. Our services are not available to residents of the following countries, and we may be unable to accept payments from, or send funds to, people or businesses based there:
+    </p>
+    <ul className="list-disc pl-6 mb-4 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-1">
+      {UNAVAILABLE_IN.map((c) => <li key={c}>{c}</li>)}
+    </ul>
+
+    <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-4">Need help checking a wallet or platform?</h2>
+    <p>
+      If you're unsure about an exchange, wallet, or address, email our support team at{' '}
+      <a href="mailto:support@ezeebit.com" className={LINK}>support@ezeebit.com</a> before you send or accept funds, and we'll help where we can. Sanctions and risk information can change, so our guidance can't confirm that a wallet or platform will be acceptable every time.
+    </p>
+
+    <p className="mt-12 text-center font-accent font-bold text-2xl text-primary-600">Secure. Speedy. Ezee.</p>
+  </>
+)
+
 const blogPostsData: Record<string, {
   title: string
   subtitle: string
@@ -20,6 +253,18 @@ const blogPostsData: Record<string, {
   views: string
   content: React.ReactNode
 }> = {
+  'restricted-wallets-and-platforms': {
+    title: "Which wallets and platforms can't Ezeebit accept payments from or send funds to?",
+    subtitle: "Most crypto payments go through without any issues. A small number can't, because the wallet or platform is linked to sanctions or other serious financial-crime risks. Here's why, what we check, and how to check a counterparty yourself.",
+    author: 'Jonathan Katz',
+    role: 'COO & Co-Founder of Ezeebit',
+    date: '2026-11-10',
+    readTime: '5 min read',
+    category: 'Policy & Regulation',
+    image: '/blog/restricted-wallets-cover.webp',
+    views: '0',
+    content: restrictedWalletsContent,
+  },
   'crypto-deposits-igaming-sunbet': {
     title: "Crypto deposits for iGaming: inside the Sunbet integration",
     subtitle: "Sunbet — a subsidiary of JSE-listed Sun International — is one of the first online gaming platforms in South Africa to accept crypto deposits. Here's the complexity behind letting any user fund their account from any wallet, how we kept compliance and innovation at the forefront, and why the same deposit rail extends to FX, trading, and any platform that takes deposits.",
@@ -807,6 +1052,8 @@ const blogPostsData: Record<string, {
 }
 
 const articleDescriptions: Record<string, string> = {
+  'restricted-wallets-and-platforms':
+    "Why Ezeebit screens wallets, which sanctioned platforms it can't accept payments from or send funds to, and how to check a counterparty yourself.",
   'crypto-deposits-igaming-sunbet':
     'How a South African iGaming platform takes crypto deposits through Ezeebit, and how the same flow applies to other platforms.',
   'ezeebit-raises-r35-million':

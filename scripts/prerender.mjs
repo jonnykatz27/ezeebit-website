@@ -76,6 +76,7 @@ const storeSlugs = [
 ]
 
 const blogSlugs = [
+  'restricted-wallets-and-platforms',
   'crypto-deposits-igaming-sunbet',
   'most-comprehensive-crypto-payment-gateway-africa',
   'capital-flow-management-regulations',

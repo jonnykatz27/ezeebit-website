@@ -613,19 +613,6 @@
 /* ============================================================
    Hero backdrop — drifting glows and a fading grid
    ============================================================ */
-.hero-grid {
-  background-image:
-    linear-gradient(to right, rgba(0, 116, 228, 0.07) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 116, 228, 0.07) 1px, transparent 1px);
-  background-size: 56px 56px;
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 70% 35%, #000 10%, transparent 75%);
-  mask-image: radial-gradient(ellipse 70% 60% at 70% 35%, #000 10%, transparent 75%);
-}
-.hero-grid-centre {
-  -webkit-mask-image: radial-gradient(ellipse 65% 55% at 50% 45%, #000 10%, transparent 75%);
-  mask-image: radial-gradient(ellipse 65% 55% at 50% 45%, #000 10%, transparent 75%);
-}
-
 .hero-blob { will-change: transform; }
 .hero-blob-a { animation: hero-drift-a 18s ease-in-out infinite; }
 .hero-blob-b { animation: hero-drift-b 22s ease-in-out infinite; }

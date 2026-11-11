@@ -39,8 +39,9 @@ const MerchantScreen = ({ title, sub, children, action }: { title: string; sub: 
       <p className="text-[15px] font-semibold text-neutral-900">{title}</p>
       <p className="text-xs text-neutral-500">{sub}</p>
     </div>
-    <div className="flex-1 min-h-0 overflow-y-auto flex flex-col gap-5 p-5">{children}</div>
-    {action && <div className="px-5 pb-5 pt-3 border-t border-neutral-100">{action}</div>}
+    {/* Spaced to fit the tour's frame whole: these screens never scroll */}
+    <div className="flex-1 min-h-0 overflow-hidden flex flex-col gap-4 px-5 py-4">{children}</div>
+    {action && <div className="px-5 pb-4 pt-3 border-t border-neutral-100">{action}</div>}
   </div>
 )
 

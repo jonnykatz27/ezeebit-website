@@ -24,6 +24,9 @@ body{font-family:var(--font);color:var(--text);min-height:100vh;
 #frame{width:100%;max-width:640px;position:relative;overflow:hidden}
 #stage{width:640px;transform-origin:top left;position:relative;background:var(--bg);overflow:hidden}
 .screen{display:none;position:relative;width:640px;min-height:900px;background:var(--bg)}
+/* Fit mode drops the minimum height, so each screen is scaled by its own content */
+body.fit{overflow:hidden}
+body.fit .screen{min-height:0}
 .screen.on{display:block}
 button{font-family:inherit;border:0;background:none;cursor:pointer;color:inherit;text-align:left}
 .ic{display:block}
@@ -337,6 +340,9 @@ const ZAR = 4000;              // amount being withdrawn, passed in by the opera
 const PROC_FEE = 5.00;         // Ezeebit processing fee, flat ZAR
 const TXHASH = '0xeca0647a6fdbd5abc0e45e036dd4765990af0b5a0aac970d0dfc8c3f1283842c';
 const REF = 'PO' + Date.now();
+/* Fit mode, for a frame held at a fixed size: the whole screen always shows */
+const FIT = new URLSearchParams(location.search).has('fit') && window.parent !== window;
+if (FIT) document.body.classList.add('fit');
 
 // ZAR per USDT — fabricated
 const ASSETS = [
@@ -443,6 +449,17 @@ function fit(){
   stage.style.transform = 'scale('+k+')';
   var a = document.querySelector('.screen.on');
   var h = a ? a.offsetHeight : 900;
+  if (FIT) {
+    var vw = document.documentElement.clientWidth, vh = document.documentElement.clientHeight;
+    var kf = Math.min(1, vw / 640, vh / h);
+    frame.style.maxWidth = 'none';
+    frame.style.width = (640 * kf) + 'px';
+    stage.style.transform = 'scale(' + kf + ')';
+    stage.style.height = (vh / kf) + 'px';
+    frame.style.height = vh + 'px';
+    try { window.parent.postMessage({type:'ezeebit:resize', flow:'payout', height:vh}, location.origin); } catch(e) {}
+    return;
+  }
   stage.style.height = h+'px';
   frame.style.height = (h*k)+'px';
   try{

@@ -32,8 +32,10 @@ type Event =
 
 /**
  * One loop of activity: pay-ins from each channel, and payouts in each
- * stablecoin funded from the fiat balance, as the Payouts page describes.
- * Long enough that the four rows each list shows never repeat.
+ * stablecoin. A USDT pay-in settles to the USDT wallet and a USDT payout
+ * comes out of it; every other pay-in settles to fiat, and the other
+ * stablecoins are paid out of the fiat balance, as the Payouts page
+ * describes. Long enough that the four rows each list shows never repeat.
  */
 const LOOP: Event[] = [
   { kind: 'in', method: 'Ezeebit Pay', channel: 'In-store', asset: 'btc', zar: 4_500 },
@@ -52,9 +54,22 @@ const LOOP: Event[] = [
 
 const mod = (n: number, m: number) => ((n % m) + m) % m
 
-/** Fiat, in rand, after the first `k` events of a loop. */
-const fiatAfter = (k: number) =>
-  LOOP.slice(0, k).reduce((zar, e) => (e.kind === 'in' ? zar + e.zar : zar - e.amount * STABLE_ZAR[e.asset]), START.zar)
+/** Whether an event moves the USDT wallet rather than the fiat one. */
+const usesUsdt = (e: Event) => e.asset === 'usdt'
+
+/** Both wallets after the first `k` events of a loop: fiat in rand, USDT in units. */
+function walletsAfter(k: number) {
+  let zar = START.zar
+  let usdt = START.usdt
+  for (const e of LOOP.slice(0, k)) {
+    if (e.kind === 'in') {
+      if (usesUsdt(e)) usdt += e.zar / STABLE_ZAR.usdt
+      else zar += e.zar
+    } else if (usesUsdt(e)) usdt -= e.amount
+    else zar -= e.amount * STABLE_ZAR[e.asset]
+  }
+  return { zar, usdt }
+}
 
 /** The `count` latest events of a kind before `step`, newest first, keyed by the step each happened on. */
 function recent<K extends Event['kind']>(kind: K, step: number, count: number) {
@@ -107,36 +122,64 @@ const Caption = ({ children }: { children: ReactNode }) => (
   <p className="h-6 mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-primary-400 text-center lg:text-left">{children}</p>
 )
 
+/** What a connector carries across: the currency or coin the money moves in. */
+type Token = { src: string; code: string }
+
 /**
- * The line between two panels, with a marker that runs along it each time
- * money moves that way: across on a wide screen, down when the panels stack.
+ * The line between two panels. Each time money moves that way, the currency
+ * or coin it moves in travels along it, named underneath: across on a wide
+ * screen, down when the panels stack.
  */
-const Connector = ({ fire, still }: { fire: number | null; still: boolean }) => (
+const Connector = ({ fire, still, token }: { fire: number | null; still: boolean; token: Token | null }) => (
   // Centred on the cards, not on the captions above them
-  <div aria-hidden="true" className="relative h-12 lg:h-14 lg:self-center lg:mt-9">
+  <div aria-hidden="true" className="relative h-16 lg:h-16 lg:self-center lg:mt-9">
     <span className="absolute left-1/2 top-1 bottom-3 w-px -translate-x-1/2 bg-white/15 lg:left-1 lg:right-3 lg:top-1/2 lg:bottom-auto lg:w-auto lg:h-px lg:translate-x-0 lg:-translate-y-1/2" />
     <ChevronDown className="absolute left-1/2 bottom-0 -translate-x-1/2 w-4 h-4 text-primary-400 lg:hidden" />
     <ChevronRight className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 text-primary-400 hidden lg:block" />
-    {fire !== null && !still && (
+    {fire !== null && !still && token && (
       <>
         <motion.span
           key={`x${fire}`}
-          className="absolute top-1/2 -mt-[3px] -ml-[3px] size-1.5 rounded-full bg-primary-400 hidden lg:block"
-          initial={{ left: '4%', opacity: 0 }}
-          animate={{ left: '86%', opacity: [0, 1, 1, 0] }}
-          transition={{ duration: 1, ease: 'easeInOut' }}
-        />
+          className="absolute top-1/2 -mt-[11px] hidden lg:flex flex-col items-center"
+          initial={{ left: '0%', opacity: 0 }}
+          animate={{ left: '62%', opacity: [0, 1, 1, 0] }}
+          transition={{ duration: 1.1, ease: 'easeInOut', times: [0, 0.15, 0.8, 1] }}
+        >
+          <TokenMark token={token} />
+        </motion.span>
         <motion.span
           key={`y${fire}`}
-          className="absolute left-1/2 -ml-[3px] -mt-[3px] size-1.5 rounded-full bg-primary-400 lg:hidden"
-          initial={{ top: '8%', opacity: 0 }}
-          animate={{ top: '78%', opacity: [0, 1, 1, 0] }}
-          transition={{ duration: 1, ease: 'easeInOut' }}
-        />
+          className="absolute left-1/2 -ml-[11px] flex lg:hidden items-center"
+          initial={{ top: '0%', opacity: 0 }}
+          animate={{ top: '52%', opacity: [0, 1, 1, 0] }}
+          transition={{ duration: 1.1, ease: 'easeInOut', times: [0, 0.15, 0.8, 1] }}
+        >
+          <TokenMark token={token} side />
+        </motion.span>
       </>
     )}
   </div>
 )
+
+/** The coin or flag on the move, with its code: underneath on the line across, beside it on the line down. */
+const TokenMark = ({ token, side = false }: { token: Token; side?: boolean }) => (
+  <span className={`flex items-center ${side ? 'flex-row gap-1.5' : 'flex-col gap-1'}`}>
+    <img src={token.src} alt="" className="size-[22px] rounded-full object-cover bg-white ring-2 ring-[#0b1424] shadow-[0_0_14px_rgba(61,154,237,0.75)]" />
+    <span className="text-[9px] font-semibold tracking-[0.08em] text-primary-300 leading-none">{token.code}</span>
+  </span>
+)
+
+/** A brief wash over the wallet that just changed. */
+const Glow = ({ on, id }: { on: boolean; id: number }) =>
+  on ? (
+    <motion.span
+      key={id}
+      className="absolute -inset-x-2 -inset-y-1.5 rounded-xl bg-primary-400/15"
+      initial={{ opacity: 1 }}
+      animate={{ opacity: 0 }}
+      transition={{ duration: 1.6, ease: 'easeOut' }}
+    />
+  ) : null
 
 /**
  * The homepage hero: crypto paid in on the left lands on one balance in the
@@ -147,34 +190,50 @@ const Connector = ({ fire, still }: { fire: number | null; still: boolean }) => 
 const HomeFlowVisual = () => {
   const { ref, step, still } = useHeroLoop(BEAT)
 
-  // The balance moves once the marker has arrived, not on the same frame as the row
-  const [settled, setSettled] = useState(step)
-  useEffect(() => {
-    if (still) { setSettled(step); return }
-    const t = window.setTimeout(() => setSettled(step), 900)
-    return () => window.clearTimeout(t)
-  }, [step, still])
-
-  // The newest payout is sending, then claimed a beat later
+  // Money moves left to right. A pay-in's row comes first, then its currency
+  // crosses and the balance moves; a payout leaves the balance first, then its
+  // coin crosses and the payout lands at the top of the list.
   const last = step > 0 ? LOOP[mod(step - 1, LOOP.length)] : null
+  const [settled, setSettled] = useState(step)
+  const [paid, setPaid] = useState(step)
+  useEffect(() => {
+    if (still) { setSettled(step); setPaid(step); return }
+    const out = last?.kind === 'out'
+    const a = window.setTimeout(() => setSettled(step), out ? 0 : 1000)
+    const b = window.setTimeout(() => setPaid(step), out ? 1100 : 0)
+    return () => { window.clearTimeout(a); window.clearTimeout(b) }
+  }, [step, still, last?.kind])
+
+  // The newest payout is sending, then claimed a beat after it lands
+  const lastPaid = paid > 0 ? LOOP[mod(paid - 1, LOOP.length)] : null
   const [claimed, setClaimed] = useState(true)
   useEffect(() => {
-    if (still || last?.kind !== 'out') { setClaimed(true); return }
+    if (still || lastPaid?.kind !== 'out') { setClaimed(true); return }
     setClaimed(false)
     const t = window.setTimeout(() => setClaimed(true), 2000)
     return () => window.clearTimeout(t)
-  }, [step, still, last?.kind])
+  }, [paid, still, lastPaid?.kind])
 
   const cur = CURRENCIES[mod(Math.floor(step / LOOP.length), CURRENCIES.length)]
   const balCur = CURRENCIES[mod(Math.floor(settled / LOOP.length), CURRENCIES.length)]
-  const fiat = fiatAfter(mod(settled, LOOP.length)) * balCur.perZar
-  const usdt = START.usdt
+  const wallets = walletsAfter(mod(settled, LOOP.length))
+  const fiat = wallets.zar * balCur.perZar
+  const usdt = wallets.usdt
   const total = fiat + usdt * STABLE_ZAR.usdt * balCur.perZar
+
+  // The wallet the last settled event moved, for its glow
+  const landed = settled > 0 ? LOOP[mod(settled - 1, LOOP.length)] : null
+  const glowUsdt = landed ? usesUsdt(landed) : false
+
+  // What crosses each line: the currency a pay-in settles in, the coin a payout goes out in
+  const inToken: Token | null =
+    last?.kind === 'in' ? (usesUsdt(last) ? { src: '/usdt-round.svg', code: 'USDT' } : { src: cur.flag, code: cur.code }) : null
+  const outToken: Token | null = last?.kind === 'out' ? { src: coinLogo(last.asset), code: last.asset.toUpperCase() } : null
 
   // One more than shows: the extra row waits below the clip, so the oldest
   // slides out of view instead of fading over the newest
   const ins = recent('in', step, ROWS + 1)
-  const outs = recent('out', step, ROWS + 1)
+  const outs = recent('out', paid, ROWS + 1)
 
   return (
     <div
@@ -183,7 +242,7 @@ const HomeFlowVisual = () => {
       aria-label="Crypto payments arriving in-store, online and on platforms, landing on one balance in the Ezeebit Merchant Portal in ZAR, KES, NGN or USD, and going back out as payouts in USDT, USDC, ZARP and ZARU."
       className="mx-auto max-w-6xl [&_img]:!mx-0"
     >
-      <div className="grid grid-cols-1 max-w-md mx-auto lg:max-w-none lg:grid-cols-[minmax(0,1fr)_64px_minmax(0,1.3fr)_64px_minmax(0,1fr)]">
+      <div className="grid grid-cols-1 max-w-md mx-auto lg:max-w-none lg:grid-cols-[minmax(0,1fr)_80px_minmax(0,1.3fr)_80px_minmax(0,1fr)]">
         <motion.div {...arrive(0.35, 'left')} className="flex flex-col">
           <Caption>Crypto in</Caption>
           <Feed title="Pay-ins" tag={<LiveTag still dark />}>
@@ -209,7 +268,7 @@ const HomeFlowVisual = () => {
           </Feed>
         </motion.div>
 
-        <Connector fire={last?.kind === 'in' ? step : null} still={still} />
+        <Connector fire={last?.kind === 'in' ? step : null} still={still} token={inToken} />
 
         <motion.div {...arrive(0.2)}>
           <Caption>One balance</Caption>
@@ -223,20 +282,24 @@ const HomeFlowVisual = () => {
                 amount: <Counter key={balCur.code} value={fiat} format={balCur.fmt} still={still} />,
                 label: `Fiat wallet · ${balCur.code}`,
               }}
-              stable={{ amount: `${money(usdt)} USDT`, label: 'USDT wallet' }}
+              stable={{
+                amount: <Counter key={balCur.code} value={usdt} format={(v) => `${money(v)} USDT`} still={still} />,
+                label: 'USDT wallet',
+              }}
+              flash={{ fiat: <Glow on={!still && !!landed && !glowUsdt} id={settled} />, stable: <Glow on={!still && glowUsdt} id={settled} /> }}
               tone="dark"
             />
           </div>
         </motion.div>
 
-        <Connector fire={last?.kind === 'out' ? step : null} still={still} />
+        <Connector fire={last?.kind === 'out' ? step : null} still={still} token={outToken} />
 
         <motion.div {...arrive(0.5, 'right')} className="flex flex-col">
           <Caption>Crypto out</Caption>
           <Feed title="Payouts" tag={<span className={`text-[11px] font-medium ${SUBTLE}`}>Sent 24/7</span>}>
             <AnimatePresence mode="popLayout" initial={false}>
               {outs.map(({ at, e }) => {
-                const sending = at === step - 1 && !claimed
+                const sending = at === paid - 1 && !claimed
                 return (
                   <motion.div key={at} layout {...ROW} className={ROW_CLASS}>
                     <img src={coinLogo(e.asset)} alt="" className={`w-8 h-8 shrink-0 ${COIN}`} />

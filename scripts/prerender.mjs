@@ -83,8 +83,20 @@ const blogSlugs = [
   'pundi-x-rebrand',
 ]
 
+const solutionSlugs = [
+  'gaming-and-betting',
+  'trading-and-investment',
+  'payment-gateways',
+  'wallets-and-neobanks',
+  'online-stores',
+  'shops-and-hospitality',
+  'marketplaces',
+  'large-trades',
+]
+
 const routes = [
   ...staticRoutes,
+  ...solutionSlugs.map((s) => `/solutions/${s}`),
   ...storeSlugs.map((s) => `/resources/stores/${s}`),
   ...blogSlugs.map((s) => `/blog/${s}`),
 ]

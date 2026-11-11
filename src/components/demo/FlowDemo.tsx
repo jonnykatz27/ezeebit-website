@@ -119,7 +119,9 @@ const FlowDemo = ({ src, flow, title, label, fill = false, fixed = false, device
   const [height, setHeight] = useState(DEMO_HEIGHT[flow])
   // public/demos ships unhashed, so without this a browser can keep showing an
   // old build of the demo. The stamp only moves when a demo file changes.
-  const versioned = `${src}${src.includes('?') ? '&' : '?'}v=${__DEMO_VERSION__}`
+  // A frame held at a fixed size asks the demo to fit itself to it, so a tall
+  // screen scales down instead of scrolling inside the frame
+  const versioned = `${src}${src.includes('?') ? '&' : '?'}v=${__DEMO_VERSION__}${fixed || device ? '&fit=1' : ''}`
   // Bumping this remounts the iframe, which starts the flow again from the top
   const [run, setRun] = useState(0)
 

@@ -52,6 +52,14 @@ Supported assets include BTC, ETH, USDT, USDC, BNB, DAI and PAXG, on Bitcoin, Et
 - [In-store ePOS](https://ezeebit.com/in-store): Android till and static QR
 - [Online payments](https://ezeebit.com/online): Shopify, WooCommerce and Magento
 - [Platforms](https://ezeebit.com/platforms): Crypto pay-ins and payouts for platforms
+- [Gaming and betting](https://ezeebit.com/solutions/gaming-and-betting): Crypto deposits and stablecoin withdrawals for gaming and betting
+- [Trading and investment](https://ezeebit.com/solutions/trading-and-investment): Top-ups and withdrawals in stablecoin for trading platforms
+- [Payment gateways](https://ezeebit.com/solutions/payment-gateways): Crypto pay-ins and payouts for the merchants on a gateway
+- [Wallets and neobanks](https://ezeebit.com/solutions/wallets-and-neobanks): Crypto top-ups and cash-outs for wallet and neobank apps
+- [Online stores](https://ezeebit.com/solutions/online-stores): Crypto checkout with a plugin or the API
+- [Shops and hospitality](https://ezeebit.com/solutions/shops-and-hospitality): Crypto at the counter, with an ePOS or a QR code
+- [Marketplaces](https://ezeebit.com/solutions/marketplaces): Stablecoin payouts to sellers, drivers, and creators
+- [Large trades](https://ezeebit.com/solutions/large-trades): Firm prices from the OTC desk
 - [Payouts](https://ezeebit.com/payouts): Pay customers in USDT or other crypto
 - [Wallets](https://ezeebit.com/wallets): Fiat and USDT balances
 - [Pricing](https://ezeebit.com/pricing): Merchant pricing

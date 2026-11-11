@@ -55,6 +55,7 @@ export const EzeebitResources = lazyPage(() => import('./pages/EzeebitResources'
 export const WhereToSpend = lazyPage(() => import('./pages/WhereToSpend'))
 export const StoreDetail = lazyPage(() => import('./pages/StoreDetail'))
 export const Careers = lazyPage(() => import('./pages/Careers'))
+export const Solution = lazyPage(() => import('./pages/Solution'))
 export const NotFound = lazyPage(() => import('./pages/NotFound'))
 
 const exact: Record<string, RoutePage> = {
@@ -85,5 +86,6 @@ export function preloadRoute(url: string) {
   const path = url.split('?')[0].split('#')[0].replace(/\/+$/, '') || '/'
   if (path.startsWith('/blog/')) return BlogPost.preload()
   if (path.startsWith('/resources/stores/')) return StoreDetail.preload()
+  if (path.startsWith('/solutions/')) return Solution.preload()
   return (exact[path] ?? NotFound).preload()
 }

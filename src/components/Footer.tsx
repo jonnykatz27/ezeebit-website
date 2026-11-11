@@ -1,17 +1,21 @@
 import { Link } from 'react-router-dom'
 import { Linkedin, Mail, Phone, MapPin, Shield, Award } from 'lucide-react'
+import { SOLUTIONS, solutionPath } from '../lib/solutions'
 
 const Footer = () => {
   const footerLinks = {
     Products: [
       { name: 'In-Store Payments', href: '/in-store' },
       { name: 'Online Payments', href: '/online' },
-      { name: 'Platforms', href: '/platforms' },
       { name: 'Payouts', href: '/payouts' },
       { name: 'Wallets', href: '/wallets' },
       { name: 'OTC', href: '/otc' },
       { name: 'Pricing', href: '/pricing' },
       { name: 'API Documentation', href: '/developers' },
+    ],
+    Solutions: [
+      { name: 'Platforms', href: '/platforms' },
+      ...SOLUTIONS.map((s) => ({ name: s.name, href: solutionPath(s) })),
     ],
     Resources: [
       { name: 'About Us', href: '/resources/about' },
@@ -79,7 +83,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6 md:mb-10 text-center">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-6 md:mb-10 text-center">
           {Object.entries(footerLinks).map(([title, links]) => (
             <div key={title}>
               <h3 className="font-semibold mb-3 text-xs md:text-sm tracking-wide uppercase text-neutral-300">{title}</h3>

@@ -4,6 +4,7 @@ import { Menu, X, ChevronDown } from 'lucide-react'
 import { AnimatePresence } from 'framer-motion'
 import { motion } from '../lib/motion'
 import { hasDarkHero } from '../lib/darkHero'
+import { SOLUTIONS, solutionPath } from '../lib/solutions'
 
 type NavLink = {
   name: string
@@ -23,7 +24,7 @@ type NavGroup = {
  */
 type NavItem =
   | { name: string; href: string; dropdown?: undefined }
-  | { name: string; href?: string; dropdown: NavGroup[] }
+  | { name: string; href?: string; dropdown: NavGroup[]; /** Groups side by side, for a long menu. */ columns?: 2 }
 
 function DesktopDropdown({
   item,
@@ -133,7 +134,7 @@ function DesktopDropdown({
         but shows at once on open, so keyboard focus can land in it.
       */}
       <div
-        className={`absolute top-full left-0 pt-2 w-72 origin-top duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1)] ${
+        className={`absolute top-full left-0 pt-2 ${item.columns === 2 ? 'w-[560px]' : 'w-72'} origin-top duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1)] ${
           open
             ? 'visible opacity-100 translate-y-0 scale-100 transition-[opacity,transform]'
             : 'invisible opacity-0 translate-y-1 scale-[0.98] transition-[opacity,transform,visibility]'
@@ -143,12 +144,12 @@ function DesktopDropdown({
           id={`nav-menu-${item.name}`}
           role="menu"
           aria-label={item.name}
-          className="bg-white rounded-xl shadow-xl border border-neutral-100 py-1.5 overflow-hidden"
+          className={`bg-white rounded-xl shadow-xl border border-neutral-100 py-1.5 overflow-hidden ${item.columns === 2 ? 'grid grid-cols-2 divide-x divide-neutral-100' : ''}`}
         >
           {item.dropdown.map((group, groupIndex) => (
             <div
               key={group.group ?? `group-${groupIndex}`}
-              className={groupIndex > 0 ? 'border-t border-neutral-100 mt-1.5 pt-1.5' : ''}
+              className={groupIndex > 0 && item.columns !== 2 ? 'border-t border-neutral-100 mt-1.5 pt-1.5' : ''}
             >
               {group.group && (
                 <div className="px-4 pt-2 pb-1 text-[0.6875rem] font-semibold uppercase tracking-wider text-neutral-400">
@@ -216,7 +217,6 @@ const Header = () => {
           items: [
             { name: 'In-Store', href: '/in-store', description: 'Accept payments at the point of sale' },
             { name: 'Online', href: '/online', description: 'Hosted checkout for your website' },
-            { name: 'Platforms', href: '/platforms', description: 'Crypto pay-ins and payouts for platforms' },
             { name: 'Payouts', href: '/payouts', description: 'Pay your customers out in stablecoin' },
           ],
         },
@@ -225,6 +225,23 @@ const Header = () => {
             { name: 'Wallets', href: '/wallets', description: 'Hold, convert, and withdraw balances' },
             { name: 'OTC', href: '/otc', description: 'Large-volume trades with a dedicated dealer' },
           ],
+        },
+      ],
+    },
+    {
+      name: 'Solutions',
+      columns: 2,
+      dropdown: [
+        {
+          group: 'Platforms',
+          items: [
+            { name: 'Platforms', href: '/platforms', description: 'Pay-ins and payouts for any platform' },
+            ...SOLUTIONS.filter((s) => s.group === 'platforms').map((s) => ({ name: s.name, href: solutionPath(s), description: s.nav })),
+          ],
+        },
+        {
+          group: 'Businesses',
+          items: SOLUTIONS.filter((s) => s.group === 'businesses').map((s) => ({ name: s.name, href: solutionPath(s), description: s.nav })),
         },
       ],
     },

@@ -90,6 +90,64 @@ export const ScaleToFit = ({ design, children }: { design: number; children: Rea
   )
 }
 
+/**
+ * Fits content into the box it is given, both ways: laid out at a design
+ * width, then scaled down to whichever of the box's width or height runs out
+ * first, and centred across. Whatever the content, it never overflows the
+ * box, so a demo in a fixed frame never scrolls. `background` fills the box
+ * behind and around it.
+ */
+export const FitToFrame = ({ design, height, background = '', children }: {
+  design: number
+  /**
+   * A fixed design height to fit instead of the content's own, so the scale
+   * holds still while the content changes. The content must fit within it.
+   */
+  height?: number
+  background?: string
+  children: ReactNode
+}) => {
+  const box = useRef<HTMLDivElement>(null)
+  const content = useRef<HTMLDivElement>(null)
+  const [fit, setFit] = useState<{ k: number; w: number; h: number } | null>(null)
+
+  useEffect(() => {
+    const b = box.current
+    const c = content.current
+    if (!b || !c) return
+    const measure = () => {
+      const k = Math.min(b.clientWidth / design, b.clientHeight / Math.max(1, height ?? c.offsetHeight))
+      setFit({ k, w: b.clientWidth, h: b.clientHeight })
+    }
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(b)
+    ro.observe(c)
+    return () => ro.disconnect()
+  }, [design, height])
+
+  return (
+    <div ref={box} className={`relative h-full w-full overflow-hidden ${background}`}>
+      <div
+        className={background}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: fit ? (fit.w - design * fit.k) / 2 : 0,
+          width: design,
+          // Tall enough to fill the box once scaled, so the background reaches the bottom
+          height: fit ? fit.h / fit.k : undefined,
+          transform: `scale(${fit?.k ?? 1})`,
+          transformOrigin: 'top left',
+          visibility: fit ? 'visible' : 'hidden',
+        }}
+      >
+        <div ref={content}>{children}</div>
+      </div>
+    </div>
+  )
+}
+
 /** The green "+5.2%" chip and its "vs last month" note. */
 const Change = ({ value, dark }: { value: string; dark?: boolean }) => (
   <span className="flex items-center gap-1">

@@ -8,7 +8,7 @@ import { hasDarkHero } from './lib/darkHero'
 import {
   Home, InStore, Online, OTC, Payouts, Platforms, Wallets, Pricing, Developers,
   Resources, About, FAQ, Legal, Blog, UserManual, SignUp, Contact, BlogPost,
-  EzeebitResources, WhereToSpend, StoreDetail, Careers, NotFound,
+  EzeebitResources, WhereToSpend, StoreDetail, Careers, NotFound, Solution,
 } from './routePages'
 
 function ScrollToTop() {
@@ -55,6 +55,7 @@ function App() {
             <Route path="/resources/where-to-spend" element={<Suspense fallback={<PageLoader />}><WhereToSpend /></Suspense>} />
             <Route path="/resources/stores/:slug" element={<Suspense fallback={<PageLoader />}><StoreDetail /></Suspense>} />
             <Route path="/careers" element={<Suspense fallback={<PageLoader />}><Careers /></Suspense>} />
+            <Route path="/solutions/:slug" element={<Suspense fallback={<PageLoader />}><Solution /></Suspense>} />
             <Route path="*" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />
           </Routes>
       </AnimatePresence>

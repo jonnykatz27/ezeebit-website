@@ -1,7 +1,9 @@
+import HeroTracers from './HeroTracers'
+
 /**
- * The backdrop behind every page hero: Near Black, one static glow in the
- * deepest brand blue behind the illustration, and a fine grid that fades out
- * towards the edges. Pure CSS, and nothing moves.
+ * The backdrop behind every page hero: Near Black, still glows in the deepest
+ * brand blues, and a faint grid with tracers of light running along it (see
+ * HeroTracers), clear of the copy. The tracers are the only thing that moves.
  */
 const HeroBackdrop = ({ glow = 'side' }: { glow?: 'side' | 'top' }) => (
   <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden bg-neutral-950">
@@ -31,8 +33,8 @@ const HeroBackdrop = ({ glow = 'side' }: { glow?: 'side' | 'top' }) => (
     />
       </>
     )}
-    {/* The grid fades out around the glow: over to the right beside a split hero, centred under a stacked one */}
-    <div className={`hero-grid absolute inset-0 ${glow === 'top' ? 'hero-grid-centre' : ''}`} />
+    {/* The grid keeps clear of the copy: the left of a split hero, the middle of a stacked one */}
+    <HeroTracers clear={glow === 'top' ? 'centre' : 'side'} />
   </div>
 )
 

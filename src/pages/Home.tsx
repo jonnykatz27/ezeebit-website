@@ -13,9 +13,10 @@ import { ChannelDemo, type Channel } from '../components/demo/TourWidgets'
 import CustomerAccountsDemo from '../components/demo/CustomerAccountsDemo'
 import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import HomeFlowVisual from '../components/hero/HomeFlowVisual'
-import { PortalBalanceCard, PortalConvertCard, PORTAL_PAGE_BG, ScaleToFit } from '../components/portal/PortalUI'
+import { FitToFrame, PortalBalanceCard, PortalConvertCard, PORTAL_PAGE_BG } from '../components/portal/PortalUI'
 import DarkBackdrop from '../components/DarkBackdrop'
 import { LIVE_MARKETS } from '../lib/schema'
+import { SOLUTIONS, solutionPath } from '../lib/solutions'
 
 /**
  * The facts the homepage repeats, worded as the product pages, the FAQ and
@@ -87,7 +88,7 @@ type Side = { icon: typeof Lock; caption: string; value: string; sub?: string; o
 /** A photo of the hardware beside the demo, with its name and what it does. */
 type Shot = { image: string; size: [number, number]; height: string; name: string; note: string }
 /** One demo in the tour, with the cards (or photos) to its left and right on a wide screen. */
-type Screen = { id: string; label: string; sides: [Side[] | Shot[], Side[] | Shot[]] }
+type Screen = { id: string; label: string; sides?: [Side[] | Shot[], Side[] | Shot[]] }
 type Stop = {
   id: string
   label: string
@@ -99,6 +100,11 @@ type Stop = {
   screens: Screen[]
   /** Headings over the cards either side of the demo, where they need saying. */
   sideTitles?: [string, string]
+  /**
+   * A demo laid out as a desktop page, given the stage's full width instead of
+   * a phone-width column between cards. Its points go in the facts below.
+   */
+  wide?: boolean
 }
 
 /** The same on every channel, because every channel opens the same checkout. */
@@ -205,22 +211,8 @@ const ACCOUNTS: Stop = {
     { label: 'Customer accounts API', to: 'https://docs.ezeebit.com/customer-accounts/overview' },
     { label: 'Crypto for platforms', to: '/platforms' },
   ],
-  screens: [
-    {
-      id: 'accounts',
-      label: 'Customer wallet',
-      sides: [
-        [
-          { icon: Code, caption: 'API', value: 'One call opens an account', sub: 'With your own customer ID' },
-          { icon: ArrowDownLeft, caption: 'Deposits', value: 'Credited to the customer', sub: 'Not to your merchant balance' },
-        ],
-        [
-          { icon: ArrowLeftRight, caption: 'Transfers', value: 'Instant, with no fee', sub: 'Between your wallet and theirs' },
-          { icon: Webhook, caption: 'Webhook', value: 'Deposit confirmed', sub: 'With the customer account ID', ok: '200 OK' },
-        ],
-      ],
-    },
-  ],
+  wide: true,
+  screens: [{ id: 'accounts', label: 'Customer accounts' }],
 }
 
 const HOLD: Stop = {
@@ -253,16 +245,6 @@ const HOLD: Stop = {
   ],
 }
 
-const SOLUTIONS = [
-  { title: 'Gaming and betting', body: 'Players deposit in seconds and withdraw winnings in stablecoin, with no chargebacks on the way in.', to: '/platforms' },
-  { title: 'Trading and investment', body: 'Traders top up from stablecoins they already hold and withdraw profits the same way, instead of waiting on cards or wires.', to: '/platforms' },
-  { title: 'Payment gateways', body: 'Offer crypto pay-ins and stablecoin payouts to your own merchants, each with its own stores and history.', to: '/platforms' },
-  { title: 'Wallets and neobanks', body: 'Make crypto a first-class way to top up and to cash out, for the users who keep their money on-chain.', to: '/platforms' },
-  { title: 'Online stores', body: 'Add checkout with a plugin or the API. Customers pay from the wallet or exchange they already use.', to: '/online' },
-  { title: 'Shops and hospitality', body: 'Staff enter the amount. The customer scans a code with the wallet already on their phone.', to: '/in-store' },
-  { title: 'Marketplaces', body: 'Settle sellers, drivers and creators on your own schedule, including across borders.', to: '/payouts' },
-  { title: 'Large trades', body: 'The OTC desk quotes large trades. You get a firm price from a named dealer, locked when you accept it.', to: '/otc' },
-]
 
 const MARKETS = [
   { flag: '/za-flag.svg', name: 'South Africa', note: 'Live · settle in ZAR' },
@@ -471,6 +453,16 @@ const DEMO_FRAME = 'h-[640px]'
 /** Customer accounts in the Merchant Portal, at the portal's mobile width, with a restart that starts it afresh. */
 function AccountsDemo() {
   const [run, setRun] = useState(0)
+  const box = useRef<HTMLDivElement>(null)
+  const [width, setWidth] = useState(0)
+  useEffect(() => {
+    const el = box.current
+    if (!el) return
+    const ro = new ResizeObserver(() => setWidth(el.clientWidth))
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+  const compact = width < 600
   return (
     <DemoPanel
       fixed
@@ -486,10 +478,14 @@ function AccountsDemo() {
         </button>
       }
     >
-      <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden rounded-[20px] bg-[#f9f9f9]">
-        <ScaleToFit design={390}>
-          <CustomerAccountsDemo key={run} />
-        </ScaleToFit>
+      <div ref={box} className="flex-1 min-h-0 overflow-hidden rounded-[20px]">
+        {width > 0 && (
+          // The portal's section where there is room for it; its compact page on a phone. A fixed
+          // design height locks the scale, so choosing another customer never resizes the demo.
+          <FitToFrame design={compact ? 390 : 820} height={compact ? 600 : 660} background="bg-[#f8f9fb]">
+            <CustomerAccountsDemo key={`${run}-${compact}`} compact={compact} />
+          </FitToFrame>
+        )}
       </div>
     </DemoPanel>
   )
@@ -509,9 +505,9 @@ function TourDemo({ id }: { id: string }) {
     default:
       return (
         <DemoPanel fixed label="Merchant Portal">
-          <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden rounded-[20px]">
-          <ScaleToFit design={430}>
-            <div className={`rounded-[20px] ${PORTAL_PAGE_BG} p-3 space-y-3`}>
+          <div className="flex-1 min-h-0 overflow-hidden rounded-[20px]">
+          <FitToFrame design={430} background={PORTAL_PAGE_BG}>
+            <div className="p-3 space-y-3">
               <div className="rounded-[12px] border border-neutral-200/70 overflow-hidden">
                 <PortalBalanceCard
                   total="R 1,637,102.25"
@@ -531,7 +527,7 @@ function TourDemo({ id }: { id: string }) {
                 />
               </div>
             </div>
-          </ScaleToFit>
+          </FitToFrame>
           </div>
         </DemoPanel>
       )
@@ -569,8 +565,8 @@ const Shots = ({ shots }: { shots: Shot[] }) => (
  * beside them changes.
  */
 function SideColumn({ stop, col, showing }: { stop: Stop; col: 0 | 1; showing: string }) {
-  const groups = [...new Set(stop.screens.map((s) => s.sides[col]))]
-  const shown = stop.screens.find((s) => s.id === showing)!.sides[col]
+  const groups = [...new Set(stop.screens.map((s) => s.sides![col]))]
+  const shown = stop.screens.find((s) => s.id === showing)!.sides![col]
   const align = col === 0 ? 'items-end' : 'items-start'
   return (
     <div className="hidden lg:grid grid-cols-1">
@@ -671,7 +667,7 @@ function ProductTour() {
           intro="The screens your customers and your team use, with the details buyers ask about. Click through them."
         />
 
-        <div role="toolbar" aria-label="Product screens" className="relative z-20 mb-6 grid grid-cols-2 gap-1 rounded-[24px] bg-neutral-950 p-1 sm:inline-flex sm:items-center sm:rounded-full">
+        <div role="toolbar" aria-label="Product screens" className="relative z-20 mb-6 grid w-full grid-cols-2 gap-1 rounded-[24px] bg-neutral-950 p-1 lg:mx-auto lg:w-fit lg:grid-cols-none lg:grid-flow-col lg:auto-cols-fr lg:rounded-full">
           {TOUR.map((stop, index) => {
             const on = open === stop
             if (stop.screens.length === 1)
@@ -684,14 +680,15 @@ function ProductTour() {
                   aria-controls={`tour-panel-${stop.id}`}
                   onClick={() => goTop(stop.id)}
                   onKeyDown={(e) => onTabKeys(e, index, topIds, goTop, 'tour-tab')}
-                  className={`${item} ${on ? 'bg-primary-500 text-white' : 'text-neutral-300 hover:text-white'}`}
+                  className={`${item} w-full ${on ? 'bg-primary-500 text-white' : 'text-neutral-300 hover:text-white'}`}
                 >
                   {stop.label}
                 </button>
               )
             return (
-              // Wide enough for the longest channel name, so picking one never shifts the buttons beside it
-              <div key={stop.id} ref={menuBox} className="relative sm:w-[232px]" onPointerEnter={hoverOpen} onPointerLeave={hoverClose}>
+              // Wide enough for the longest channel name, so picking one never shifts the buttons beside it;
+              // the bar's equal columns give the other buttons the same width
+              <div key={stop.id} ref={menuBox} className="relative lg:w-[232px]" onPointerEnter={hoverOpen} onPointerLeave={hoverClose}>
                 <button
                   type="button"
                   id={`tour-tab-${stop.id}`}
@@ -794,7 +791,12 @@ function ProductTour() {
                   <img key={c.src} src={c.src} alt="" aria-hidden="true" width={44} height={44} className={`hidden lg:block absolute w-11 h-11 rounded-full bg-white p-0.5 shadow-md ${c.className}`} />
                 ))}
 
-                {/* Each demo and its cards are stacked in place too, so switching between them moves nothing */}
+                {t.wide ? (
+                  <div className={`relative mx-auto w-full max-w-[920px] ${DEMO_FRAME}`}>
+                    {seen.includes(t.screens[0].id) && <TourDemo id={t.screens[0].id} />}
+                  </div>
+                ) : (
+                // Each demo and its cards are stacked in place too, so switching between them moves nothing
                 <div className="relative grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px_minmax(0,1fr)] lg:items-center lg:gap-10">
                   <SideColumn stop={t} col={0} showing={current(t)} />
                   <div className="grid grid-cols-1 grid-rows-1 items-center w-full max-w-[380px] mx-auto">
@@ -806,6 +808,7 @@ function ProductTour() {
                   </div>
                   <SideColumn stop={t} col={1} showing={current(t)} />
                 </div>
+                )}
               </div>
 
               <div className="mt-10 lg:mt-14">
@@ -906,14 +909,14 @@ const Home = () => {
           <div className="container-custom">
             <Intro
               eyebrow="Solutions"
-              title={<>For anyone whose users<br />move money in and out.</>}
+              title={<>For anyone who accepts,<br />holds, and sends money.</>}
               intro="Start with the flow you need. Pay-ins, payouts and the balance are the same underneath."
             />
             <div className="home-grid-4">
               {SOLUTIONS.map((s) => (
-                <Link key={s.title} to={s.to} className="rounded-2xl border border-neutral-200 bg-white p-5 hover:border-neutral-300 block h-full">
-                  <h3 className="text-lg font-semibold text-neutral-900 mb-2">{s.title}</h3>
-                  <p className="text-sm text-neutral-600 leading-relaxed">{s.body}</p>
+                <Link key={s.slug} to={solutionPath(s)} className="rounded-2xl border border-neutral-200 bg-white p-5 hover:border-neutral-300 block h-full">
+                  <h3 className="text-lg font-semibold text-neutral-900 mb-2">{s.name}</h3>
+                  <p className="text-sm text-neutral-600 leading-relaxed">{s.card}</p>
                 </Link>
               ))}
             </div>

@@ -7,15 +7,14 @@ import FlowDemo, { DemoPanel } from './FlowDemo'
  * a platform the customer ends up on the same Ezeebit checkout; what differs is
  * where they come from. Online and on a platform that is a screen of the
  * merchant's own, so those channels open on it and hand off to the checkout
- * demo. In a store it is the ePOS or the Ezeebit Pay code, which the tour shows
- * beside the demo, so that channel opens on the checkout itself. The amounts
- * are illustrative.
+ * demo. In a store the checkout runs on the Ezeebit ePOS itself, so that
+ * channel opens on the device's keypad. The amounts are illustrative.
  */
 
 export type Channel = 'in-store' | 'online' | 'platforms'
 
 /** Where each channel's customer starts, as the panel's label names it. */
-const FROM: Record<Channel, string> = { 'in-store': 'In store', online: 'Your checkout', platforms: 'Your cashier' }
+const FROM: Record<Channel, string> = { 'in-store': 'Ezeebit ePOS', online: 'Your checkout', platforms: 'Your cashier' }
 
 const rand = (v: number) => `R${v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 
@@ -147,8 +146,8 @@ const Cashier = ({ onPay }: { onPay: (amount: number) => void }) => {
 }
 
 /**
- * One channel's pay-in. In a store the checkout opens on its keypad, where the
- * amount is keyed in. Online and on a platform the merchant's screen comes
+ * One channel's pay-in. In a store the checkout opens on the ePOS's screen, at
+ * its keypad, where the amount is keyed in. Online and on a platform the merchant's screen comes
  * first, then, once the customer chooses crypto, the same checkout with the
  * amount carried over; restarting, from the panel or the checkout's own button,
  * goes back to the merchant's screen.
@@ -162,10 +161,12 @@ export function ChannelDemo({ channel }: { channel: Channel }) {
     return (
       <FlowDemo
         fixed
+        device="epos"
         src="/demos/pay-in.html?start=amount"
         flow="payin"
-        label={<Handoff from={FROM[channel]} at="checkout" />}
-        title="Interactive demo of the Ezeebit checkout in a store"
+        // The device itself says where the checkout runs, so it needs no label over it
+        label={null}
+        title="Interactive demo of the Ezeebit checkout on the Ezeebit ePOS"
       />
     )
 

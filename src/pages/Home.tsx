@@ -1,18 +1,19 @@
-import { Fragment, useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import {
   ArrowDownLeft, ArrowLeftRight, ArrowRight, ArrowUpRight, Banknote, Check, ChevronDown, ChevronLeft,
-  ChevronRight, Code, Headphones, Lock, MousePointerClick, Plug, ShieldCheck, Star, ThumbsUp,
-  UserCheck, Wallet, Webhook,
+  ChevronRight, Code, Headphones, Lock, MousePointerClick, Plug, RotateCcw, ShieldCheck, ShoppingCart, Star, Store,
+  ThumbsUp, UserCheck, Wallet, Webhook, type LucideIcon,
 } from 'lucide-react'
 import { motion } from '../lib/motion'
 import PartnerCarousel from '../components/PartnerCarousel'
 import SEO from '../components/SEO'
 import FlowDemo, { DemoPanel } from '../components/demo/FlowDemo'
 import { ChannelDemo, type Channel } from '../components/demo/TourWidgets'
+import CustomerAccountsDemo from '../components/demo/CustomerAccountsDemo'
 import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import HomeFlowVisual from '../components/hero/HomeFlowVisual'
-import { PortalBalanceCard, PortalConvertCard, PORTAL_PAGE_BG } from '../components/portal/PortalUI'
+import { PortalBalanceCard, PortalConvertCard, PORTAL_PAGE_BG, ScaleToFit } from '../components/portal/PortalUI'
 import DarkBackdrop from '../components/DarkBackdrop'
 import { LIVE_MARKETS } from '../lib/schema'
 
@@ -21,7 +22,6 @@ import { LIVE_MARKETS } from '../lib/schema'
  * the contact page already state them, so a figure never differs between
  * sections or from the rest of the site.
  */
-const SETTLEMENT = 'ZAR, KES, NGN or USD the next business day, or stablecoin the same day'
 
 /** Regulatory status, in the "regulated by the FSCA" wording used for new copy. */
 const REGULATED = 'Ezeebit is regulated by the FSCA as a Crypto Asset Service Provider, FSP No. 53664.'
@@ -32,29 +32,29 @@ const SUPPORT = 'Support 24/7 by email, and by phone or WhatsApp Mon–Fri, 8am�
 
 /** Logos cropped to their marks, with each file's size, so the carousel can give them equal weight. */
 const PARTNERS_A: { name: string; logo: string; size: [number, number]; boost?: number }[] = [
-  { name: 'iStore', logo: '/partners/istore.webp', size: [464, 128] },
-  { name: 'Skins', logo: '/partners/skins.webp', size: [154, 155], boost: 1.3 },
-  { name: 'Le Creuset', logo: '/partners/le-creuset.webp', size: [456, 72] },
-  { name: 'Amiri', logo: '/partners/amiri.webp', size: [455, 111] },
-  { name: 'Ritual', logo: '/partners/ritual.webp', size: [346, 58] },
-  { name: 'Hydraulics', logo: '/partners/hydraulics.webp', size: [480, 41] },
-  { name: 'Al Capone', logo: '/partners/alcapone.webp', size: [461, 101] },
-  { name: 'Scoin', logo: '/partners/scoin.webp', size: [480, 148], boost: 1.15 },
-  { name: 'Soul Gallery', logo: '/partners/soul-gallery.webp', size: [456, 105] },
   { name: 'Sunbet', logo: '/partners/sunbet.webp', size: [313, 164] },
+  { name: 'iStore', logo: '/partners/istore.webp', size: [464, 128] },
+  { name: 'Le Creuset', logo: '/partners/le-creuset.webp', size: [456, 72] },
+  { name: 'Skins', logo: '/partners/skins.webp', size: [154, 155], boost: 1.3 },
+  { name: 'Amiri', logo: '/partners/amiri.webp', size: [455, 111] },
+  { name: 'Scoin', logo: '/partners/scoin.webp', size: [480, 148], boost: 1.15 },
+  { name: 'Diesel', logo: '/partners/diesel.webp', size: [469, 173] },
+  { name: 'BHH', logo: '/partners/bhh.webp', size: [256, 164], boost: 1.3 },
 ]
 
+/** The exchanges, wallets, platforms and stablecoin issuers. ZARP's solid badge gets less area, so it doesn't outweigh the wordmarks. */
 const PARTNERS_B: typeof PARTNERS_A = [
-  { name: 'Yawa', logo: '/partners/yawa.webp', size: [456, 145] },
-  { name: 'Tintswalo Lodge', logo: '/partners/tintswalo.webp', size: [461, 309] },
-  { name: 'Luxity', logo: '/partners/luxity.webp', size: [480, 129] },
-  { name: 'The Capital', logo: '/partners/the-capital.webp', size: [464, 134] },
-  { name: 'Spar', logo: '/partners/spar.webp', size: [370, 442] },
-  { name: 'Cultish', logo: '/partners/cultish.webp', size: [298, 57] },
-  { name: 'Watch Channel', logo: '/partners/watch-channel.webp', size: [480, 117], boost: 1.15 },
-  { name: 'Diesel', logo: '/partners/diesel.webp', size: [469, 173] },
-  { name: 'Sumptuous Tours', logo: '/partners/sumptuous-tours.webp', size: [364, 57] },
-  { name: 'BHH', logo: '/partners/bhh.webp', size: [256, 164], boost: 1.3 },
+  { name: 'WalletConnect', logo: '/partners/walletconnect.webp', size: [480, 78] },
+  { name: 'Tether', logo: '/partners/tether.webp', size: [480, 103] },
+  { name: 'Shopify', logo: '/partners/shopify.webp', size: [480, 139] },
+  { name: 'Luno', logo: '/partners/luno.webp', size: [480, 150] },
+  { name: 'VALR', logo: '/partners/valr.webp', size: [480, 140] },
+  { name: 'Binance', logo: '/partners/binance.webp', size: [480, 95] },
+  { name: 'Quidax', logo: '/partners/quidax.webp', size: [480, 120] },
+  { name: 'Utila', logo: '/partners/utila.webp', size: [480, 124] },
+  { name: 'Sumsub', logo: '/partners/sumsub.webp', size: [480, 110] },
+  { name: 'BlockTower', logo: '/partners/blocktower.webp', size: [480, 90] },
+  { name: 'ZARP', logo: '/partners/zarp.webp', size: [170, 170], boost: 0.75 },
 ]
 
 const TESTIMONIALS = [
@@ -129,10 +129,9 @@ const PAY_INS: Stop = {
       id: 'in-store',
       label: 'In-store',
       sides: [
-        // The two ways into the checkout in a store, one either side of it. Each
-        // photo's height keeps the two in proportion: the stand is shorter than the ePOS.
-        [{ image: '/tour/epos.webp', size: [224, 601], height: 'h-[260px] xl:h-[360px]', name: 'Ezeebit ePOS', note: 'The checkout opens on the device' }],
-        [{ image: '/tour/qr-stand.webp', size: [320, 470], height: 'h-[190px] xl:h-[260px]', name: 'Ezeebit Pay QR', note: 'Customers scan it and pay on their phone' }],
+        // The checkout runs on the ePOS in the middle; the other way in sits beside it
+        [{ image: '/tour/qr-stand.webp', size: [320, 470], height: 'h-[190px] xl:h-[260px]', name: 'Or an Ezeebit Pay QR', note: 'Customers scan it and pay on their phone, with no device needed' }],
+        CHECKOUT_SIDES,
       ],
     },
     {
@@ -184,6 +183,40 @@ const PAY_OUT: Stop = {
         [
           { icon: ShieldCheck, caption: 'Screening', value: 'Wallet address', sub: 'Checked before funds move', ok: 'Clear' },
           { icon: Webhook, caption: 'Webhook', value: 'Payout complete', sub: 'Signed, with the transaction hash', ok: '200 OK' },
+        ],
+      ],
+    },
+  ],
+}
+
+/** From the Customer Accounts API at docs.ezeebit.com. */
+const ACCOUNTS: Stop = {
+  id: 'accounts',
+  label: 'Customer accounts',
+  heading: 'A USDT wallet for every customer, under your account',
+  body: 'Open a wallet for each customer with one API call. Their deposits are credited to them rather than to your balance, and you move funds between your wallet and theirs instantly.',
+  facts: [
+    ['Deposit networks', 'Ethereum, BSC, Tron, and Solana'],
+    ['Transfers', 'Instant book transfers, with no fee'],
+    ['Withdrawals', 'To whitelisted addresses, with Travel Rule screening'],
+    ['Records', 'A ledger for every account, with the balance after each entry'],
+  ],
+  links: [
+    { label: 'Customer accounts API', to: 'https://docs.ezeebit.com/customer-accounts/overview' },
+    { label: 'Crypto for platforms', to: '/platforms' },
+  ],
+  screens: [
+    {
+      id: 'accounts',
+      label: 'Customer wallet',
+      sides: [
+        [
+          { icon: Code, caption: 'API', value: 'One call opens an account', sub: 'With your own customer ID' },
+          { icon: ArrowDownLeft, caption: 'Deposits', value: 'Credited to the customer', sub: 'Not to your merchant balance' },
+        ],
+        [
+          { icon: ArrowLeftRight, caption: 'Transfers', value: 'Instant, with no fee', sub: 'Between your wallet and theirs' },
+          { icon: Webhook, caption: 'Webhook', value: 'Deposit confirmed', sub: 'With the customer account ID', ok: '200 OK' },
         ],
       ],
     },
@@ -309,21 +342,6 @@ function Intro({ eyebrow, title, intro, aside }: { eyebrow: string; title: React
   )
 }
 
-function Ticks({ items }: { items: string[] }) {
-  return (
-    <ul className="space-y-2.5">
-      {items.map((item) => (
-        <li key={item} className="flex items-start gap-3 text-neutral-700 text-[15px] leading-relaxed">
-          <span className="mt-0.5 w-5 h-5 rounded-full bg-neutral-950 text-primary-400 flex items-center justify-center shrink-0">
-            <Check className="w-3 h-3" strokeWidth={3} />
-          </span>
-          {item}
-        </li>
-      ))}
-    </ul>
-  )
-}
-
 /** The facts as a boxed grid, two to a row; an odd last fact takes the full row. */
 function Facts({ facts }: { facts: Fact[] }) {
   return (
@@ -346,12 +364,20 @@ function StopCopy({ stop }: { stop: Stop }) {
         <h3 className="text-2xl lg:text-3xl font-display font-bold text-neutral-900 leading-tight mb-3 [text-wrap:balance]">{stop.heading}</h3>
         <p className="text-neutral-600 leading-relaxed max-w-xl">{stop.body}</p>
         <div className="mt-6 flex flex-wrap gap-x-5 gap-y-3">
-          {stop.links.map((l) => (
-            <Link key={l.to} to={l.to} className="inline-flex items-center gap-1.5 font-semibold text-primary-600 hover:text-primary-700">
-              {l.label}
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          ))}
+          {stop.links.map((l) => {
+            const cls = 'inline-flex items-center gap-1.5 font-semibold text-primary-600 hover:text-primary-700'
+            const body = (
+              <>
+                {l.label}
+                <ArrowRight className="w-4 h-4" />
+              </>
+            )
+            return l.to.startsWith('http') ? (
+              <a key={l.to} href={l.to} target="_blank" rel="noopener noreferrer" className={cls}>{body}</a>
+            ) : (
+              <Link key={l.to} to={l.to} className={cls}>{body}</Link>
+            )
+          })}
         </div>
       </div>
       <div className="lg:col-span-5">
@@ -378,103 +404,13 @@ const SideCard = ({ side }: { side: Side }) => {
   )
 }
 
-type Product = {
-  name: string
-  icon: typeof ArrowDownLeft
-  tagline: string
-  steps: { who: string; what: string; you?: boolean }[]
-  ticks: string[]
-  strip: { label: string; marks: { name: string; logo: string; coin?: boolean; soon?: boolean }[]; note?: string; named?: boolean }
-  docs: string
-}
-
-const DOCS = 'https://docs.ezeebit.com'
-
-const PRODUCTS: Product[] = [
-  {
-    name: 'Crypto In',
-    icon: ArrowDownLeft,
-    tagline: 'Accept crypto. Settle in local currency or stablecoin.',
-    steps: [
-      { who: 'Your customer', what: 'Pays in USDT, USDC, BTC, ETH and more' },
-      { who: 'Ezeebit', what: 'Locks the rate, screens and hedges' },
-      { who: 'You', what: 'Get local currency next business day, or stablecoin same day', you: true },
-    ],
-    ticks: [
-      'Any wallet, plus Binance Pay, Luno Pay, VALR Pay and 700+ wallets via WalletConnect',
-      'In-store QR, online checkout and platform deposits',
-      'Final payments, so no chargebacks',
-      `You settle in ${SETTLEMENT}`,
-    ],
-    strip: {
-      label: 'Pay with',
-      marks: [
-        { name: 'VALR Pay', logo: '/valr_logo%20(clean).png' },
-        { name: 'Luno Pay', logo: '/luno_logo%20(clean).png' },
-        { name: 'Binance Pay', logo: '/Binance-Logo%20(clean).png' },
-        { name: 'WalletConnect Pay', logo: '/walletconnect-pay.svg' },
-        { name: 'USDT', logo: '/usdt-round.svg', coin: true },
-        { name: 'USDC', logo: '/usdc-logo.svg', coin: true },
-        { name: 'Bitcoin', logo: '/btc-logo.svg', coin: true },
-        { name: 'Ethereum', logo: '/eth-logo.svg', coin: true },
-        { name: 'BNB', logo: '/bnb-logo.svg', coin: true },
-      ],
-    },
-    docs: `${DOCS}/payment-gateway/overview`,
-  },
-  {
-    name: 'Crypto Out',
-    icon: ArrowUpRight,
-    tagline: 'Fund in local currency. Pay out in stablecoin.',
-    steps: [
-      { who: 'You', what: 'Create the payout from your fiat balance', you: true },
-      { who: 'Ezeebit', what: 'Screens the wallet and sends on-chain' },
-      { who: 'Your customer', what: 'Claims it to their own wallet in minutes' },
-    ],
-    ticks: [
-      'A payout link per order, claimed by your customer',
-      'Every address screened before funds move',
-      'You never collect or store the wallet',
-      'Pay-ins fund payouts from the same balance',
-    ],
-    strip: {
-      label: 'Pay out in',
-      named: true,
-      marks: [
-        { name: 'USDT', logo: '/usdt-round.svg', coin: true },
-        { name: 'USDC', logo: '/usdc-logo.svg', coin: true, soon: true },
-        { name: 'ZARP', logo: '/zarp-logo.png', coin: true, soon: true },
-        { name: 'ZARU', logo: '/zaru-logo.png', coin: true, soon: true },
-      ],
-    },
-    docs: `${DOCS}/payout-gateway/overview`,
-  },
-]
-
-type Mark = { name: string; logo: string }
-
-/** What goes into and comes out of each combination, as the coins and flags themselves. */
-const CRYPTO_IN: Mark[] = [
-  { name: 'Bitcoin', logo: '/btc-logo.svg' },
-  { name: 'Ethereum', logo: '/eth-logo.svg' },
-  { name: 'USDT', logo: '/usdt-round.svg' },
-  { name: 'USDC', logo: '/usdc-logo.svg' },
-]
-// Crypto goes out as USDT, the one coin payouts are made in today
-const USDT: Mark[] = [{ name: 'USDT', logo: '/usdt-round.svg' }]
-const LOCAL: Mark[] = [
-  { name: 'ZAR', logo: '/za-flag.svg' },
-  { name: 'KES', logo: '/ke-flag.svg' },
-  { name: 'NGN', logo: '/ng-flag.svg' },
-  { name: 'USD', logo: '/us-flag.svg' },
-]
-
-/** The ways the two products combine, from the merchant's side. */
-const COMBOS = [
-  { kind: 'Off-ramp', from: CRYPTO_IN, to: LOCAL, title: 'Crypto in, local currency out', body: 'Your customer pays in crypto. You receive ZAR, KES, NGN or USD in your bank.' },
-  { kind: 'On-ramp', from: LOCAL, to: USDT, title: 'Local currency in, crypto out', body: 'You fund payouts in local currency. Your customer receives stablecoin.' },
-  { kind: 'Stablecoin', from: CRYPTO_IN, to: USDT, title: 'Crypto in, stablecoin held', body: 'Keep what comes in as USDT and convert when it suits you.' },
-  { kind: 'Round trip', from: CRYPTO_IN, to: USDT, title: 'Crypto in, crypto out', body: 'What your customers pay in funds what they cash out, on one balance.' },
+/** The figures under the hero, each with what is behind it. One marked soon is not live yet. */
+const STATS: { n: string; l: string; detail: string; soon?: boolean }[] = [
+  { n: '140', l: 'Payout countries', soon: true, detail: 'Bank, mobile wallet and cash pickup · crypto worldwide today' },
+  { n: '6', l: 'Currencies held and converted', detail: 'ZAR, KES, NGN, USD, USDT and USDC · up to 90 with global rails' },
+  { n: '9', l: 'Cryptocurrencies accepted', detail: 'BTC, ETH, USDT, USDC, BNB, DAI, PAXG, ZARP and ZARU on 5 networks' },
+  { n: '60+', l: 'Platforms and businesses', detail: 'Today' },
+  { n: '$25M+', l: 'Moved every year', detail: "Today's run rate" },
 ]
 
 /** The pricing section's figures, each with what it covers. */
@@ -512,123 +448,54 @@ const ENTITIES: { flag: string; country: string; entity: string; reg?: string; p
   },
 ]
 
-/** One side of a combination: its coins or flags overlapping in a pill, named when there is only one. */
-const Marks = ({ marks }: { marks: Mark[] }) => (
-  <span title={marks.map((m) => m.name).join(', ')} className="inline-flex items-center gap-1.5 rounded-full bg-white p-1 ring-1 ring-inset ring-neutral-200">
-    <span className="flex -space-x-1">
-      {marks.map((m) => (
-        <img key={m.name} src={m.logo} alt="" width={24} height={24} className="w-6 h-6 mx-0 rounded-full bg-white object-contain ring-2 ring-white" />
-      ))}
-    </span>
-    {marks.length === 1 && <span className="pr-1.5 text-xs font-semibold text-neutral-800">{marks[0].name}</span>}
-  </span>
-)
+/** Every stop in the tour, in the order money moves: in, out, your customers' wallets, and your balance. */
+const TOUR: Stop[] = [PAY_INS, PAY_OUT, ACCOUNTS, HOLD]
 
-function ProductCard({ product: p }: { product: Product }) {
-  const Icon = p.icon
-  return (
-    <article className="flex flex-col rounded-3xl border border-neutral-200 bg-white p-6 lg:p-8 shadow-[0_1px_2px_rgba(16,24,40,0.04)]">
-      <div className="flex items-center justify-between gap-4 mb-3">
-        <h3 className="flex items-center gap-3 text-2xl lg:text-3xl font-display font-bold text-neutral-900">
-          <span className="w-11 h-11 rounded-xl bg-neutral-950 text-primary-400 flex items-center justify-center shrink-0" aria-hidden="true">
-            <Icon className="w-5 h-5" strokeWidth={2.5} />
-          </span>
-          {p.name}
-        </h3>
-        <span className="flex items-center gap-1.5 rounded-full bg-success-50 px-2.5 py-1 text-xs font-semibold text-success-700">
-          <span className="w-1.5 h-1.5 rounded-full bg-success-500" />
-          Live
-        </span>
-      </div>
-      <p className="text-lg text-neutral-600 mb-6">{p.tagline}</p>
-
-      <ol className="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1fr)] items-stretch gap-1.5 sm:gap-2 mb-7">
-        {p.steps.map((s, i) => (
-          <Fragment key={s.who}>
-            {i > 0 && (
-              <li aria-hidden="true" className="flex items-center justify-center text-neutral-400">
-                <ArrowRight className="w-4 h-4 rotate-90 sm:rotate-0" />
-              </li>
-            )}
-            <li className={`rounded-xl px-3.5 py-3 ${s.you ? 'bg-neutral-950 text-white' : 'bg-neutral-50 border border-neutral-200 text-neutral-900'}`}>
-              <span className={`block text-[11px] font-semibold uppercase tracking-[0.12em] mb-1 ${s.you ? 'text-primary-400' : 'text-neutral-500'}`}>{s.who}</span>
-              <span className="block text-sm font-medium leading-snug">{s.what}</span>
-            </li>
-          </Fragment>
-        ))}
-      </ol>
-
-      <Ticks items={p.ticks} />
-
-      <div className="mt-auto pt-7">
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-3 border-t border-neutral-200 pt-5">
-          <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-500">{p.strip.label}</span>
-          <ul className="flex flex-wrap items-center gap-2">
-            {p.strip.marks.map((m) =>
-              p.strip.named ? (
-                <li key={m.name} className={`flex items-center gap-1.5 rounded-full border py-1 pl-1 pr-2.5 text-xs font-semibold ${m.soon ? 'border-dashed border-neutral-300 text-neutral-500' : 'border-neutral-200 text-neutral-800'}`}>
-                  <img src={m.logo} alt="" width={20} height={20} className={`w-5 h-5 rounded-full !mx-0 ${m.soon ? 'opacity-60 grayscale' : ''}`} />
-                  {m.name}
-                  {m.soon && <span className="rounded-full bg-neutral-100 px-1.5 text-[10px] font-semibold text-neutral-500">Soon</span>}
-                </li>
-              ) : (
-                <li key={m.name}>
-                  <img src={m.logo} alt={m.name} title={m.name} width={28} height={28} className={`w-7 h-7 !mx-0 ${m.coin ? 'rounded-full' : 'rounded-lg'}`} />
-                </li>
-              ),
-            )}
-          </ul>
-          {p.strip.note && <span className="text-xs text-neutral-500">{p.strip.note}</span>}
-        </div>
-        <a href={p.docs} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 mt-5 font-semibold text-primary-600 hover:text-primary-700">
-          {p.name} docs
-          <ArrowRight className="w-4 h-4" />
-        </a>
-      </div>
-    </article>
-  )
-}
-
-const ScaleToFit = ({ design, children }: { design: number; children: ReactNode }) => {
-  const box = useRef<HTMLDivElement>(null)
-  const inner = useRef<HTMLDivElement>(null)
-  const [fit, setFit] = useState<{ scale: number; height?: number }>({ scale: 1 })
-
-  useEffect(() => {
-    const b = box.current
-    const i = inner.current
-    if (!b || !i) return
-    const measure = () => setFit({ scale: Math.min(1, b.clientWidth / design), height: i.offsetHeight * Math.min(1, b.clientWidth / design) })
-    measure()
-    const ro = new ResizeObserver(measure)
-    ro.observe(b)
-    ro.observe(i)
-    return () => ro.disconnect()
-  }, [design])
-
-  return (
-    <div ref={box} style={{ height: fit.height }}>
-      <div ref={inner} style={{ width: design, transform: `scale(${fit.scale})`, transformOrigin: 'top left' }}>
-        {children}
-      </div>
-    </div>
-  )
-}
-
-/** Every tab in the tour, in the order money moves: in, out, and the balance between. */
-const TOUR: Stop[] = [PAY_INS, PAY_OUT, HOLD]
+/**
+ * Every demo in the tour, with its stop. Pay-ins' three channels are each a
+ * page under the Pay-ins menu; the other stops have one demo each.
+ */
+const TABS = TOUR.flatMap((stop) => stop.screens.map((screen) => ({ id: screen.id, stop, label: stop.screens.length > 1 ? screen.label : stop.label })))
 
 /** Shows the open one of several things stacked in one grid cell, fading between them. */
 const fade = (on: boolean) => `[grid-area:1/1] transition-opacity duration-300 ${on ? 'opacity-100' : 'opacity-0 invisible pointer-events-none'}`
 
 /**
- * Every tab's demo sits in a frame of this height, whatever the screen inside
- * it, so switching tabs or moving through a demo never resizes the section. A
- * screen taller than the frame scrolls inside it, as it would on a phone.
+ * Every demo sits in a frame of this height, the ePOS included, so switching
+ * tabs or moving through a demo never resizes the section, and the whole stage
+ * fits on a laptop screen under the tabs. A screen taller than the frame
+ * scrolls inside it, as it would on a phone.
  */
-const DEVICE_HEIGHT = 700
+const DEMO_FRAME = 'h-[640px]'
 
-/** The demo for a screen, in the fixed frame. */
+/** Customer accounts in the Merchant Portal, at the portal's mobile width, with a restart that starts it afresh. */
+function AccountsDemo() {
+  const [run, setRun] = useState(0)
+  return (
+    <DemoPanel
+      fixed
+      label="Merchant Portal"
+      action={
+        <button
+          type="button"
+          onClick={() => setRun((r) => r + 1)}
+          className="flex items-center gap-1.5 -my-2 py-2 -mr-1.5 pr-1.5 pl-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-primary-500 hover:text-primary-700"
+        >
+          <RotateCcw className="w-3.5 h-3.5" />
+          Restart
+        </button>
+      }
+    >
+      <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden rounded-[20px] bg-[#f9f9f9]">
+        <ScaleToFit design={390}>
+          <CustomerAccountsDemo key={run} />
+        </ScaleToFit>
+      </div>
+    </DemoPanel>
+  )
+}
+
+/** The demo for a screen, in its frame. */
 function TourDemo({ id }: { id: string }) {
   switch (id) {
     case 'in-store':
@@ -637,6 +504,8 @@ function TourDemo({ id }: { id: string }) {
       return <ChannelDemo channel={id as Channel} />
     case 'pay-out':
       return <FlowDemo fixed src="/demos/pay-out.html" flow="payout" label="Payout claim" title="Interactive demo of an Ezeebit payout" />
+    case 'accounts':
+      return <AccountsDemo />
     default:
       return (
         <DemoPanel fixed label="Merchant Portal">
@@ -719,30 +588,79 @@ function SideColumn({ stop, col, showing }: { stop: Stop; col: 0 | 1; showing: s
   )
 }
 
+/** What each pay-in channel is, for the Pay-ins menu. */
+const CHANNEL_NOTES: Record<string, { icon: LucideIcon; note: string }> = {
+  'in-store': { icon: Store, note: 'On the Ezeebit ePOS or an Ezeebit Pay QR code' },
+  online: { icon: ShoppingCart, note: 'Shopify, WooCommerce, Magento, or the API' },
+  platforms: { icon: Wallet, note: 'Deposits from your own cashier' },
+}
+
 /**
- * The product tour: a tab each for pay-ins, payouts and the balance between,
- * with pay-ins switching between its three channels, each leading into the
- * same checkout. The live demo sits on a
- * stage with what it does called out either side, and the copy and facts
- * follow underneath.
+ * The product tour. Pay-ins is a menu button: hovering it (or tapping it on a
+ * phone) opens its three channels, In-store, Online checkout and Platforms,
+ * each a page of its own. Payouts, Customer accounts and Your balance are
+ * plain buttons beside it. The live demo sits on a stage with what it does
+ * called out either side, and the copy and facts follow underneath.
  */
 function ProductTour() {
-  const [open, setOpen] = useState(TOUR[0].id)
-  // The demo each tab is showing, for a tab with more than one
+  const [tab, setTab] = useState(TABS[0].id)
+  const open = TABS.find((t) => t.id === tab)!.stop
+  // The demo each stop last showed, so going back to pay-ins returns to the same channel
   const [screenOf, setScreenOf] = useState<Record<string, string>>({})
   const current = (t: Stop) => screenOf[t.id] ?? t.screens[0].id
   // A demo mounts the first time it is shown and then stays, so the iframes
   // load only when asked for and going back to one picks up where it was
-  const [seen, setSeen] = useState<string[]>([TOUR[0].screens[0].id])
-  const see = (id: string) => setSeen((s) => (s.includes(id) ? s : [...s, id]))
-  const show = (id: string) => {
-    setOpen(id)
-    see(current(TOUR.find((t) => t.id === id)!))
+  const [seen, setSeen] = useState<string[]>([TABS[0].id])
+  const select = (id: string) => {
+    const stop = TABS.find((t) => t.id === id)!.stop
+    setTab(id)
+    setScreenOf((m) => ({ ...m, [stop.id]: id }))
+    setSeen((s) => (s.includes(id) ? s : [...s, id]))
   }
-  const pick = (stop: string, screen: string) => {
-    setScreenOf((m) => ({ ...m, [stop]: screen }))
-    see(screen)
+
+  const [menu, setMenu] = useState(false)
+  const menuBox = useRef<HTMLDivElement>(null)
+  const closing = useRef<number>()
+  // How the last press on the Pay-ins button was made, so a mouse click doesn't close what hovering opened
+  const pointer = useRef('')
+  // Hover opens and closes the menu for a mouse only; a short delay lets the pointer cross to it
+  const hoverOpen = (e: PointerEvent) => {
+    if (e.pointerType !== 'mouse') return
+    window.clearTimeout(closing.current)
+    setMenu(true)
   }
+  const hoverClose = (e: PointerEvent) => {
+    if (e.pointerType !== 'mouse') return
+    closing.current = window.setTimeout(() => setMenu(false), 160)
+  }
+  useEffect(() => {
+    if (!menu) return
+    const outside = (e: MouseEvent) => { if (!menuBox.current?.contains(e.target as Node)) setMenu(false) }
+    const escape = (e: globalThis.KeyboardEvent) => {
+      if (e.key !== 'Escape') return
+      setMenu(false)
+      document.getElementById(`tour-tab-${PAY_INS.id}`)?.focus()
+    }
+    document.addEventListener('mousedown', outside)
+    document.addEventListener('keydown', escape)
+    return () => {
+      document.removeEventListener('mousedown', outside)
+      document.removeEventListener('keydown', escape)
+    }
+  }, [menu])
+  useEffect(() => () => window.clearTimeout(closing.current), [])
+
+  const pick = (id: string) => {
+    select(id)
+    setMenu(false)
+  }
+  const topIds = TOUR.map((s) => s.id)
+  const goTop = (id: string) => {
+    const stop = TOUR.find((s) => s.id === id)!
+    select(current(stop))
+  }
+  const item = 'min-h-[44px] whitespace-nowrap rounded-full px-4 sm:px-5 py-2 text-sm font-semibold transition-colors'
+  const channel = TABS.find((t) => t.id === current(PAY_INS))!
 
   return (
     <section id="how-it-works" className="scroll-mt-24 section-padding bg-white">
@@ -753,25 +671,97 @@ function ProductTour() {
           intro="The screens your customers and your team use, with the details buyers ask about. Click through them."
         />
 
-        <div className="mb-6 -mx-4 px-4 overflow-x-auto [scrollbar-width:none]">
-          <div role="tablist" aria-label="Product screens" className="inline-flex gap-1 p-1 rounded-full bg-neutral-950">
-            {TOUR.map((t, index) => (
-              <button
-                key={t.id}
-                type="button"
-                role="tab"
-                id={`tour-tab-${t.id}`}
-                aria-selected={open === t.id}
-                aria-controls={`tour-panel-${t.id}`}
-                tabIndex={open === t.id ? 0 : -1}
-                onClick={() => show(t.id)}
-                onKeyDown={(e) => onTabKeys(e, index, TOUR.map((x) => x.id), show, 'tour-tab')}
-                className={`min-h-[44px] whitespace-nowrap rounded-full px-4 sm:px-5 py-2 text-sm font-semibold ${open === t.id ? 'bg-primary-500 text-white' : 'text-neutral-300 hover:text-white'}`}
-              >
-                {t.label}
-              </button>
-            ))}
-          </div>
+        <div role="toolbar" aria-label="Product screens" className="relative z-20 mb-6 grid grid-cols-2 gap-1 rounded-[24px] bg-neutral-950 p-1 sm:inline-flex sm:items-center sm:rounded-full">
+          {TOUR.map((stop, index) => {
+            const on = open === stop
+            if (stop.screens.length === 1)
+              return (
+                <button
+                  key={stop.id}
+                  type="button"
+                  id={`tour-tab-${stop.id}`}
+                  aria-pressed={on}
+                  aria-controls={`tour-panel-${stop.id}`}
+                  onClick={() => goTop(stop.id)}
+                  onKeyDown={(e) => onTabKeys(e, index, topIds, goTop, 'tour-tab')}
+                  className={`${item} ${on ? 'bg-primary-500 text-white' : 'text-neutral-300 hover:text-white'}`}
+                >
+                  {stop.label}
+                </button>
+              )
+            return (
+              // Wide enough for the longest channel name, so picking one never shifts the buttons beside it
+              <div key={stop.id} ref={menuBox} className="relative sm:w-[232px]" onPointerEnter={hoverOpen} onPointerLeave={hoverClose}>
+                <button
+                  type="button"
+                  id={`tour-tab-${stop.id}`}
+                  aria-haspopup="menu"
+                  aria-expanded={menu}
+                  aria-controls="tour-channels"
+                  onPointerDown={(e) => { pointer.current = e.pointerType }}
+                  onClick={() => {
+                    if (!on) goTop(stop.id)
+                    // A mouse has already opened it by hovering, so its click keeps it open; a tap or a key toggles it
+                    setMenu((m) => (pointer.current === 'mouse' || !on ? true : !m))
+                    pointer.current = ''
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'ArrowDown') {
+                      e.preventDefault()
+                      setMenu(true)
+                      requestAnimationFrame(() => document.querySelector<HTMLButtonElement>('#tour-channels [role=menuitemradio]')?.focus())
+                    } else onTabKeys(e, index, topIds, goTop, 'tour-tab')
+                  }}
+                  className={`${item} flex w-full items-center justify-center gap-1.5 ${on ? 'bg-primary-500 text-white' : 'text-neutral-300 hover:text-white'}`}
+                >
+                  {stop.label}
+                  <span className={`hidden sm:inline font-medium ${on ? 'text-white/75' : 'text-neutral-500'}`}>· {channel.label}</span>
+                  <ChevronDown className={`w-4 h-4 transition-transform ${menu ? 'rotate-180' : ''}`} />
+                </button>
+                {/* The padding, not a margin, bridges the gap to the menu so hover holds while the pointer crosses */}
+                <div className={`absolute left-0 top-full pt-2 transition-all duration-150 ${menu ? 'visible opacity-100 translate-y-0' : 'invisible opacity-0 -translate-y-1'}`}>
+                  <div
+                    id="tour-channels"
+                    role="menu"
+                    aria-label={`${stop.label} channels`}
+                    className="w-[min(320px,calc(100vw-2rem))] rounded-2xl bg-white p-2 ring-1 ring-neutral-200 shadow-[0_24px_60px_-20px_rgba(0,26,54,0.45)]"
+                    onKeyDown={(e) => {
+                      const items = [...e.currentTarget.querySelectorAll<HTMLButtonElement>('[role=menuitemradio]')]
+                      const at = items.indexOf(document.activeElement as HTMLButtonElement)
+                      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                        e.preventDefault()
+                        items[(at + (e.key === 'ArrowDown' ? 1 : items.length - 1)) % items.length]?.focus()
+                      }
+                    }}
+                  >
+                    {stop.screens.map((s) => {
+                      const { icon: Icon, note } = CHANNEL_NOTES[s.id]
+                      const chosen = tab === s.id
+                      return (
+                        <button
+                          key={s.id}
+                          type="button"
+                          role="menuitemradio"
+                          aria-checked={chosen}
+                          onClick={() => pick(s.id)}
+                          className={`flex w-full items-center gap-3 rounded-xl p-3 text-left transition-colors ${chosen ? 'bg-primary-50' : 'hover:bg-neutral-50'}`}
+                        >
+                          <span className={`flex size-9 shrink-0 items-center justify-center rounded-lg ${chosen ? 'bg-primary-500 text-white' : 'bg-neutral-100 text-neutral-700'}`}>
+                            <Icon className="w-[18px] h-[18px]" />
+                          </span>
+                          <span className="min-w-0 flex-1">
+                            <span className="block text-sm font-semibold text-neutral-900">{s.label}</span>
+                            <span className="block text-xs text-neutral-500 leading-snug">{note}</span>
+                          </span>
+                          {chosen && <Check className="w-4 h-4 shrink-0 text-primary-600" />}
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+              </div>
+            )
+          })}
         </div>
 
         {/*
@@ -780,18 +770,16 @@ function ProductTour() {
           closed ones are invisible, which also keeps them out of the tab order
           and away from screen readers.
         */}
-        {/* minmax(0, 1fr) so a wide demo inside can never stretch the panels past the page */}
         <div className="grid grid-cols-1">
           {TOUR.map((t) => (
             <div
               key={t.id}
-              role="tabpanel"
+              role="region"
               id={`tour-panel-${t.id}`}
-              aria-labelledby={`tour-tab-${t.id}`}
-              className={fade(open === t.id)}
+              aria-label={t.label}
+              className={fade(open === t)}
             >
-              {/* The bottom padding matches the switch row above the demo, so the demo sits in the middle of the stage */}
-              <div className="relative overflow-hidden rounded-[32px] border border-neutral-200/70 bg-gradient-to-b from-neutral-50 to-white px-3 pt-5 pb-6 sm:px-8 lg:pt-8 lg:pb-[100px] [&_img]:!mx-0">
+              <div className="relative overflow-hidden rounded-[32px] border border-neutral-200/70 bg-gradient-to-b from-neutral-50 to-white px-3 pt-5 pb-6 sm:px-8 lg:py-8 [&_img]:!mx-0">
                 {/* A still glow and hairline rings behind the demo */}
                 <div aria-hidden="true" className="pointer-events-none absolute left-1/2 top-1/2">
                   <span
@@ -806,44 +794,12 @@ function ProductTour() {
                   <img key={c.src} src={c.src} alt="" aria-hidden="true" width={44} height={44} className={`hidden lg:block absolute w-11 h-11 rounded-full bg-white p-0.5 shadow-md ${c.className}`} />
                 ))}
 
-                {/*
-                  The switch between a tab's demos, or an empty row of the same
-                  height where there is only one, so the demo sits in the same
-                  place on every tab
-                */}
-                <div className="relative mb-5 lg:mb-6 flex h-11 justify-center">
-                  {t.screens.length > 1 && (
-                    <div role="tablist" aria-label={`${t.label} demos`} className="inline-flex gap-1 p-1 rounded-full bg-white ring-1 ring-neutral-200 shadow-[0_8px_24px_-12px_rgba(0,26,54,0.25)]">
-                      {t.screens.map((s, index) => (
-                        <button
-                          key={s.id}
-                          type="button"
-                          role="tab"
-                          id={`tour-screen-${s.id}`}
-                          aria-selected={current(t) === s.id}
-                          aria-controls={`tour-screen-panel-${s.id}`}
-                          tabIndex={current(t) === s.id ? 0 : -1}
-                          onClick={() => pick(t.id, s.id)}
-                          onKeyDown={(e) => onTabKeys(e, index, t.screens.map((x) => x.id), (id) => pick(t.id, id), 'tour-screen')}
-                          className={`whitespace-nowrap rounded-full px-3 sm:px-4 text-[13px] sm:text-sm font-semibold ${current(t) === s.id ? 'bg-neutral-950 text-white' : 'text-neutral-600 hover:text-neutral-900'}`}
-                        >
-                          {s.label}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
                 {/* Each demo and its cards are stacked in place too, so switching between them moves nothing */}
                 <div className="relative grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px_minmax(0,1fr)] lg:items-center lg:gap-10">
                   <SideColumn stop={t} col={0} showing={current(t)} />
-                  <div className="grid grid-cols-1 grid-rows-1 w-full max-w-[380px] mx-auto" style={{ height: DEVICE_HEIGHT }}>
+                  <div className="grid grid-cols-1 grid-rows-1 items-center w-full max-w-[380px] mx-auto">
                     {t.screens.map((s) => (
-                      <div
-                        key={s.id}
-                        {...(t.screens.length > 1 && { role: 'tabpanel', id: `tour-screen-panel-${s.id}`, 'aria-labelledby': `tour-screen-${s.id}` })}
-                        className={`${fade(current(t) === s.id)} min-h-0`}
-                      >
+                      <div key={s.id} className={`${fade(current(t) === s.id)} min-h-0 ${DEMO_FRAME}`}>
                         {seen.includes(s.id) && <TourDemo id={s.id} />}
                       </div>
                     ))}
@@ -887,11 +843,11 @@ const Home = () => {
         <PageHero
           id="hero"
           stacked
-          kicker="Stablecoin pay-ins and payouts"
-          // Breaks only between the two phrases, so neither splits across lines
-          title={<><span className="inline-block">Crypto in.</span> <span className="inline-block">Crypto out.</span></>}
-          accent="One balance."
-          description="Your customers pay in and cash out in crypto, in-store, online or on your platform, while you settle in ZAR, KES, NGN, USD or stablecoin. One balance and one API, with compliance built in."
+          kicker="Payments infrastructure for Africa"
+          // Wraps between the two phrases first, and "pay-ins" never splits at its hyphen
+          title={<><span className="inline-block">Stablecoin <span className="whitespace-nowrap">pay-ins</span></span> <span className="inline-block">and payouts,</span></>}
+          accent="made Ezee."
+          description="Your customers pay in and cash out in crypto, in-store, online, or on your platform, while you settle in ZAR, KES, NGN, USD, or stablecoin. One balance and one API, with compliance built in."
           actions={
             <>
               <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
@@ -906,7 +862,7 @@ const Home = () => {
           trust={[
             { icon: <ThumbsUp />, label: 'No setup fees' },
             { icon: <ShieldCheck />, label: 'No chargebacks' },
-            { icon: <Headphones />, label: '24/7 support' },
+            { icon: <Headphones />, label: '24/7 chat support' },
           ]}
           wideVisual={<HomeFlowVisual />}
         />
@@ -914,15 +870,14 @@ const Home = () => {
         <section id="stats" className="relative bg-neutral-950 pb-14 lg:pb-20">
           <div className="container-custom">
             <div className="border-t border-white/10 pt-10 lg:pt-14 home-stats">
-              {[
-                { n: '100,000+', l: 'Transactions processed' },
-                { n: '$2m+', l: 'Processed monthly' },
-                { n: '60+', l: 'Platforms and businesses' },
-                { n: '700+', l: 'Wallets supported' },
-              ].map((s) => (
-                <div key={s.l} className="text-center even:border-l lg:[&:not(:first-child)]:border-l border-white/10">
-                  <div className="text-3xl sm:text-4xl xl:text-5xl whitespace-nowrap font-display font-bold tracking-[-0.03em] text-primary-400 leading-none mb-2">{s.n}</div>
-                  <div className="text-sm text-neutral-300">{s.l}</div>
+              {STATS.map((s) => (
+                <div key={s.l} className="border-l border-white/10 pl-5">
+                  <div className="text-4xl xl:text-5xl whitespace-nowrap font-display font-bold tracking-[-0.03em] text-primary-400 leading-none mb-3">{s.n}</div>
+                  <p className="flex flex-wrap items-center gap-2 text-[15px] text-neutral-200">
+                    {s.l}
+                    {s.soon && <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold text-amber-800">Soon</span>}
+                  </p>
+                  <p className="mt-1.5 text-[13px] leading-relaxed text-neutral-400">{s.detail}</p>
                 </div>
               ))}
             </div>
@@ -932,57 +887,15 @@ const Home = () => {
         <section id="logos" className="section-padding bg-white">
           <div className="container-custom">
             <Intro
-              eyebrow="Customers"
-              title={<>Chosen by brands<br />your customers know.</>}
-              intro="Retail, hospitality, gaming and more, across our live markets."
+              eyebrow="Trusted partners"
+              title={<>Names your customers<br />already trust.</>}
+              intro="Merchants that take payments with Ezeebit, and the exchanges, wallets, platforms and stablecoin issuers we work with."
             />
             <div className="partner-carousel-container mb-6">
               <PartnerCarousel partners={PARTNERS_A} direction="left" speed={40} />
             </div>
-            <div className="partner-carousel-container mb-12">
+            <div className="partner-carousel-container">
               <PartnerCarousel partners={PARTNERS_B} direction="right" speed={40} />
-            </div>
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500 mb-5">Backed by</p>
-            <div className="flex flex-wrap items-center gap-x-12 gap-y-6">
-              {[
-                { name: 'Founder Collective', logo: '/founder_collective_logo.png', size: 'h-7 lg:h-8' },
-                { name: 'Raba Partnership', logo: '/Raba_logo.webp', size: 'h-6 lg:h-7' },
-                { name: 'Digital Currency Group', logo: '/digital-currency-group-logo-nobg.png', size: 'h-10 lg:h-12' },
-              ].map((b) => (
-                <img key={b.name} src={b.logo} alt={b.name} className={`${b.size} w-auto object-contain !mx-0`} />
-              ))}
-            </div>
-            <Link to="/resources/about" className="inline-flex items-center gap-1.5 mt-5 font-semibold text-primary-600 hover:text-primary-700">
-              Meet our investors and angels
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </section>
-
-        <section id="crypto-in-out" className="section-padding bg-neutral-50">
-          <div className="container-custom">
-            <Intro
-              eyebrow="Crypto In · Crypto Out"
-              title={<>Your customers use crypto.<br />You never have to.</>}
-              intro="Two products on one balance. Your customers pay in and cash out in crypto, while you fund payouts and settle in local currency or stablecoin."
-            />
-            <div className="home-grid-2">
-              {PRODUCTS.map((p) => <ProductCard key={p.name} product={p} />)}
-            </div>
-            <p className="mt-10 mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500">On their own or together</p>
-            <div className="home-grid-4">
-              {COMBOS.map((c) => (
-                <div key={c.kind} className="rounded-2xl border border-neutral-200 bg-white p-5">
-                  <div className="flex items-center gap-2 mb-4" aria-hidden="true">
-                    <Marks marks={c.from} />
-                    <ArrowRight className="w-3.5 h-3.5 text-neutral-500" />
-                    <Marks marks={c.to} />
-                  </div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-600 mb-1">{c.kind}</p>
-                  <h3 className="text-lg font-semibold leading-snug text-neutral-900 mb-1.5">{c.title}</h3>
-                  <p className="text-sm text-neutral-600 leading-relaxed">{c.body}</p>
-                </div>
-              ))}
             </div>
           </div>
         </section>
@@ -1028,6 +941,28 @@ const Home = () => {
             <p className="mt-6 text-neutral-600 max-w-3xl">
               Fiat settles the next business day, in your local currency or in USD. Stablecoin settles the same day.
             </p>
+          </div>
+        </section>
+
+        {/* The investors, on their own just before what merchants say */}
+        <section id="investors" className="bg-white pb-10 lg:pb-20">
+          <div className="container-custom">
+            <div className="border-t border-neutral-200 pt-10">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500 mb-5">Backed by</p>
+              <div className="flex flex-wrap items-center gap-x-12 gap-y-6">
+                {[
+                  { name: 'Founder Collective', logo: '/founder_collective_logo.png', size: 'h-7 lg:h-8' },
+                  { name: 'Raba Partnership', logo: '/Raba_logo.webp', size: 'h-6 lg:h-7' },
+                  { name: 'Digital Currency Group', logo: '/digital-currency-group-logo-nobg.png', size: 'h-10 lg:h-12' },
+                ].map((b) => (
+                  <img key={b.name} src={b.logo} alt={b.name} className={`${b.size} w-auto object-contain !mx-0`} />
+                ))}
+              </div>
+              <Link to="/resources/about" className="inline-flex items-center gap-1.5 mt-5 font-semibold text-primary-600 hover:text-primary-700">
+                Meet our investors and angels
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
           </div>
         </section>
 

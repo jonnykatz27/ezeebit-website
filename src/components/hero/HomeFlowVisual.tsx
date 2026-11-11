@@ -2,7 +2,7 @@ import { useEffect, useState, type ReactNode } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { ChevronDown, ChevronRight } from 'lucide-react'
 import { motion } from '../../lib/motion'
-import { PORTAL_CARD, SWAP, COIN, EASE, arrive, money, coinLogo, useHeroLoop, Counter, LiveTag } from './heroKit'
+import { SWAP, COIN, EASE, arrive, money, coinLogo, useHeroLoop, Counter, LiveTag } from './heroKit'
 import { PortalBalanceCard } from '../portal/PortalUI'
 
 /**
@@ -66,22 +66,32 @@ function recent<K extends Event['kind']>(kind: K, step: number, count: number) {
   return found
 }
 
-/** Portal text colours, as PortalUI uses them. */
-const TEXT = 'text-[#172b4d]'
-const SUBTLE = 'text-[#626f86]'
+/**
+ * The hero's panels, in dark glass: a faint white wash over the hero's own
+ * navy, a hairline edge, and a blur, so the blue glow behind shows through
+ * and the panels read as part of the hero rather than cards laid on top.
+ */
+const FLOW_CARD =
+  'rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.08] to-white/[0.03] backdrop-blur-md shadow-[0_30px_80px_-40px_rgba(0,116,228,0.6)]'
+const LINE = 'border-white/[0.08]'
+
+/** Text on the glass: white for what matters, a soft grey for the detail. */
+const TEXT = 'text-white'
+const SUBTLE = 'text-neutral-400'
+const DONE = 'text-emerald-400'
 
 /** Rows each list shows: two on a phone, four beside the balance card. */
 const ROWS = 4
 
 /**
- * A white portal panel with a title row and a list that new rows push down.
+ * A glass panel with a title row and a list that new rows push down.
  * On a wide screen it stretches to the balance card's height and splits it
  * between four rows; the list itself adds no height, so the balance card
  * alone sets the row.
  */
 const Feed = ({ title, tag, children }: { title: string; tag: ReactNode; children: ReactNode }) => (
-  <div className={`${PORTAL_CARD} font-ui overflow-hidden flex flex-col lg:flex-1`}>
-    <div className="flex items-center justify-between px-4 pt-3.5 pb-3 border-b border-[#ededed]">
+  <div className={`${FLOW_CARD} font-ui overflow-hidden flex flex-col lg:flex-1`}>
+    <div className={`flex items-center justify-between px-4 pt-3.5 pb-3 border-b ${LINE}`}>
       <p className={`text-[14px] font-semibold ${TEXT}`}>{title}</p>
       {tag}
     </div>
@@ -90,7 +100,7 @@ const Feed = ({ title, tag, children }: { title: string; tag: ReactNode; childre
 )
 
 const ROW = { initial: { opacity: 0, y: -12 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0 }, transition: { duration: 0.7, ease: EASE } }
-const ROW_CLASS = 'h-16 lg:h-1/4 flex items-center gap-3 border-b border-[#f1f2f4] last:border-b-0'
+const ROW_CLASS = `h-16 lg:h-1/4 flex items-center gap-3 border-b ${LINE} last:border-b-0`
 
 /** The caption over each panel, echoing the headline. */
 const Caption = ({ children }: { children: ReactNode }) => (
@@ -176,7 +186,7 @@ const HomeFlowVisual = () => {
       <div className="grid grid-cols-1 max-w-md mx-auto lg:max-w-none lg:grid-cols-[minmax(0,1fr)_64px_minmax(0,1.3fr)_64px_minmax(0,1fr)]">
         <motion.div {...arrive(0.35, 'left')} className="flex flex-col">
           <Caption>Crypto in</Caption>
-          <Feed title="Pay-ins" tag={<LiveTag still />}>
+          <Feed title="Pay-ins" tag={<LiveTag still dark />}>
             <AnimatePresence mode="wait" initial={false}>
               <motion.div key={cur.code} {...SWAP} className="h-full">
                 <AnimatePresence mode="popLayout" initial={false}>
@@ -189,7 +199,7 @@ const HomeFlowVisual = () => {
                       </div>
                       <div className="text-right shrink-0">
                         <p className={`text-[13px] font-semibold tabular-nums ${TEXT}`}>+{cur.fmt(e.zar * cur.perZar)}</p>
-                        <p className="text-[11px] font-medium text-[#047857]">Paid</p>
+                        <p className={`text-[11px] font-medium ${DONE}`}>Paid</p>
                       </div>
                     </motion.div>
                   ))}
@@ -203,7 +213,7 @@ const HomeFlowVisual = () => {
 
         <motion.div {...arrive(0.2)}>
           <Caption>One balance</Caption>
-          <div className={`${PORTAL_CARD} overflow-hidden`}>
+          <div className={`${FLOW_CARD} overflow-hidden`}>
             {/* A new merchant swaps the figures in rather than counting across currencies */}
             <PortalBalanceCard
               total={<Counter key={balCur.code} value={total} format={balCur.fmt} still={still} />}
@@ -214,6 +224,7 @@ const HomeFlowVisual = () => {
                 label: `Fiat wallet · ${balCur.code}`,
               }}
               stable={{ amount: `${money(usdt)} USDT`, label: 'USDT wallet' }}
+              tone="dark"
             />
           </div>
         </motion.div>
@@ -235,7 +246,7 @@ const HomeFlowVisual = () => {
                     </div>
                     <div className="text-right shrink-0">
                       <p className={`text-[13px] font-semibold tabular-nums ${TEXT}`}>{money(e.amount)} {e.asset.toUpperCase()}</p>
-                      <p className={`text-[11px] font-medium transition-colors duration-500 ${sending ? 'text-[#b45309]' : 'text-[#047857]'}`}>{sending ? 'Sending' : 'Claimed'}</p>
+                      <p className={`text-[11px] font-medium transition-colors duration-500 ${sending ? 'text-amber-400' : DONE}`}>{sending ? 'Sending' : 'Claimed'}</p>
                     </div>
                   </motion.div>
                 )

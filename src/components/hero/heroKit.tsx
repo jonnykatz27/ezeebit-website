@@ -263,8 +263,8 @@ export const Flash = ({ on, id }: { on: boolean; id: number }) =>
   ) : null
 
 /** The pulsing green "Live" tag. */
-export const LiveTag = ({ still, children = 'Live' }: { still: boolean; children?: ReactNode }) => (
-  <span className="flex items-center gap-1.5 text-[11px] font-semibold text-success-700 bg-success-50 rounded-full px-2 py-0.5">
+export const LiveTag = ({ still, dark = false, children = 'Live' }: { still: boolean; dark?: boolean; children?: ReactNode }) => (
+  <span className={`flex items-center gap-1.5 text-[11px] font-semibold rounded-full px-2 py-0.5 ${dark ? 'text-emerald-300 bg-emerald-400/10 ring-1 ring-inset ring-emerald-400/20' : 'text-success-700 bg-success-50'}`}>
     <span className="relative flex w-1.5 h-1.5">
       {!still && <span className="absolute inset-0 rounded-full bg-success-500 animate-ping" />}
       <span className="relative w-1.5 h-1.5 rounded-full bg-success-500" />

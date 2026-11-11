@@ -86,7 +86,7 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
   const justify = split ? 'justify-center lg:justify-start' : 'justify-center'
 
   const text = (
-    <div className={`${align} ${split ? 'lg:col-span-6' : stacked ? 'max-w-5xl mx-auto' : 'max-w-3xl mx-auto'}`}>
+    <div className={`${align} ${split ? 'lg:col-span-6' : stacked ? 'max-w-7xl mx-auto' : 'max-w-3xl mx-auto'}`}>
       {/*
         hero-title opts out of the site-wide phone rule that pins every h1 to
         30px. The headline stays outside the entrance animation: it is the LCP

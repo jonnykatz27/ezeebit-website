@@ -60,15 +60,62 @@ export const PortalScale = ({ width, scale, children, className = '' }: { width:
   )
 }
 
+/**
+ * Renders content at a design width and scales it down to fit its box,
+ * measuring the scaled height so the box takes up only what it shows.
+ */
+export const ScaleToFit = ({ design, children }: { design: number; children: ReactNode }) => {
+  const box = useRef<HTMLDivElement>(null)
+  const inner = useRef<HTMLDivElement>(null)
+  const [fit, setFit] = useState<{ scale: number; height?: number }>({ scale: 1 })
+
+  useEffect(() => {
+    const b = box.current
+    const i = inner.current
+    if (!b || !i) return
+    const measure = () => setFit({ scale: Math.min(1, b.clientWidth / design), height: i.offsetHeight * Math.min(1, b.clientWidth / design) })
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(b)
+    ro.observe(i)
+    return () => ro.disconnect()
+  }, [design])
+
+  return (
+    <div ref={box} style={{ height: fit.height }}>
+      <div ref={inner} style={{ width: design, transform: `scale(${fit.scale})`, transformOrigin: 'top left' }}>
+        {children}
+      </div>
+    </div>
+  )
+}
+
 /** The green "+5.2%" chip and its "vs last month" note. */
-const Change = ({ value }: { value: string }) => (
+const Change = ({ value, dark }: { value: string; dark?: boolean }) => (
   <span className="flex items-center gap-1">
-    <span className="h-[14px] px-1 rounded-[2px] flex items-center text-[10px] font-semibold" style={{ background: C.successBg, color: C.success }}>
+    <span className="h-[14px] px-1 rounded-[2px] flex items-center text-[10px] font-semibold" style={dark ? { background: 'rgba(52,211,153,0.14)', color: '#6ee7b7' } : { background: C.successBg, color: C.success }}>
       {value}
     </span>
-    <span className="text-[9px] leading-[13.5px] text-[#464555]">vs last month</span>
+    <span className={`text-[9px] leading-[13.5px] ${dark ? 'text-neutral-400' : 'text-[#464555]'}`}>vs last month</span>
   </span>
 )
+
+/**
+ * The balance card's colours. Light is the portal's own; dark is for a card
+ * sitting on one of the site's dark sections, where the portal's white would
+ * stand out from the page rather than belong to it.
+ */
+const BALANCE_TONES = {
+  light: {
+    card: 'bg-white', label: C.subtlest, total: C.amount, legend: C.text, amount: C.gray900, sub: C.subtle,
+    fiat: C.fiat, stable: C.stable, stableBadge: C.stable, divider: C.divider, rule: 'bg-[#dcdfe4]', action: C.brand, actionIcon: '', active: 'bg-[#e9f2ff]',
+  },
+  dark: {
+    card: 'bg-transparent', label: '#9ca3af', total: '#ffffff', legend: '#d1d5db', amount: '#ffffff', sub: '#9ca3af',
+    fiat: '#3d9aed', stable: 'rgba(207,231,255,0.28)', stableBadge: 'rgba(207,231,255,0.16)', divider: 'rgba(255,255,255,0.08)', rule: 'bg-white/15', action: '#70b8ff',
+    actionIcon: '[filter:brightness(0)_invert(1)] opacity-80', active: 'bg-white/10',
+  },
+}
 
 type Action = 'deposit' | 'withdraw' | 'convert'
 
@@ -84,7 +131,7 @@ const ACTIONS: { key: Action; label: string; icon: string; flip?: boolean }[] = 
  * Design width 560–976px.
  */
 export const PortalBalanceCard = ({
-  total, change = '+5.2%', fiatShare, fiat, stable, active = null, flash,
+  total, change = '+5.2%', fiatShare, fiat, stable, active = null, flash, tone = 'light',
 }: {
   total: ReactNode
   change?: string
@@ -96,21 +143,25 @@ export const PortalBalanceCard = ({
   active?: Action | null
   /** Extra layers drawn under each wallet, for a highlight when it changes. */
   flash?: { fiat?: ReactNode; stable?: ReactNode }
-}) => (
+  /** Dark for a card on one of the site's dark sections. */
+  tone?: keyof typeof BALANCE_TONES
+}) => {
+  const t = BALANCE_TONES[tone]
+  return (
   // Sized by its own width, not the screen: narrow, the wallets stack as the portal does on mobile
-  <div className="font-ui bg-white rounded-[12px] pt-6 [container-type:inline-size] [&_img]:!mx-0">
+  <div className={`font-ui ${t.card} rounded-[12px] pt-6 [container-type:inline-size] [&_img]:!mx-0`}>
     <div className="px-8 [@container(max-width:480px)]:px-5">
       <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-3 mb-4">
         <div className="flex flex-col gap-1">
-          <p className="text-[12px]" style={{ color: C.subtlest }}>Total wallet balance</p>
+          <p className="text-[12px]" style={{ color: t.label }}>Total wallet balance</p>
           <div className="flex items-center gap-2">
-            <p className="text-[20px] font-bold tabular-nums" style={{ color: C.amount }}>{total}</p>
-            <Change value={change} />
+            <p className="text-[20px] font-bold tabular-nums" style={{ color: t.total }}>{total}</p>
+            <Change value={change} dark={tone === 'dark'} />
           </div>
         </div>
         <div className="flex items-center gap-3">
-          {[{ c: C.fiat, l: 'Fiat wallet' }, { c: C.stable, l: 'Stablecoin wallet' }].map((k) => (
-            <span key={k.l} className="flex items-center gap-1 text-[14px] leading-[12px] font-medium" style={{ color: C.text }}>
+          {[{ c: t.fiat, l: 'Fiat wallet' }, { c: t.stable, l: 'Stablecoin wallet' }].map((k) => (
+            <span key={k.l} className="flex items-center gap-1 text-[14px] leading-[12px] font-medium" style={{ color: t.legend }}>
               <span className="size-3 rounded-full" style={{ background: k.c }} />
               {k.l}
             </span>
@@ -118,10 +169,10 @@ export const PortalBalanceCard = ({
         </div>
       </div>
 
-      <div className="h-2 w-full rounded-[12px] overflow-hidden mb-6" style={{ background: C.stable }}>
+      <div className="h-2 w-full rounded-[12px] overflow-hidden mb-6" style={{ background: t.stable }}>
         <motion.div
           className="h-full rounded-[12px]"
-          style={{ background: C.fiat }}
+          style={{ background: t.fiat }}
           initial={false}
           animate={{ width: `${fiatShare}%` }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
@@ -135,38 +186,39 @@ export const PortalBalanceCard = ({
             <img src={fiat.mark} alt="" className="size-8 rounded-full object-cover" />
           </span>
           <div className="relative flex flex-col gap-1.5 min-w-0">
-            <p className="text-[18px] font-semibold tabular-nums truncate" style={{ color: C.gray900 }}>{fiat.amount}</p>
-            <p className="text-[12px]" style={{ color: C.subtle }}>{fiat.label ?? 'Fiat wallet'}</p>
+            <p className="text-[18px] font-semibold tabular-nums truncate" style={{ color: t.amount }}>{fiat.amount}</p>
+            <p className="text-[12px]" style={{ color: t.sub }}>{fiat.label ?? 'Fiat wallet'}</p>
           </div>
         </div>
         <div className="relative flex flex-1 items-center gap-3 min-w-0 rounded-xl [@container(max-width:480px)]:w-full">
           {flash?.stable}
-          <span className="relative size-10 rounded-full flex items-center justify-center shrink-0" style={{ background: C.stable }}>
+          <span className="relative size-10 rounded-full flex items-center justify-center shrink-0" style={{ background: t.stableBadge }}>
             <img src="/usdt-round.svg" alt="" className="size-8 object-cover" />
           </span>
           <div className="relative flex flex-col gap-1.5 min-w-0">
-            <p className="text-[18px] font-semibold tabular-nums truncate" style={{ color: C.gray900 }}>{stable.amount}</p>
-            <p className="text-[12px]" style={{ color: C.subtle }}>{stable.label ?? 'Stablecoin wallet'}</p>
+            <p className="text-[18px] font-semibold tabular-nums truncate" style={{ color: t.amount }}>{stable.amount}</p>
+            <p className="text-[12px]" style={{ color: t.sub }}>{stable.label ?? 'Stablecoin wallet'}</p>
           </div>
         </div>
       </div>
     </div>
 
-    <div className="border-t px-8 py-4 flex items-center gap-6 [@container(max-width:480px)]:px-5 [@container(max-width:480px)]:gap-4" style={{ borderColor: C.divider }}>
+    <div className="border-t px-8 py-4 flex items-center gap-6 [@container(max-width:480px)]:px-5 [@container(max-width:480px)]:gap-4" style={{ borderColor: t.divider }}>
       {ACTIONS.map((a, i) => (
         <span key={a.key} className="flex items-center gap-6 [@container(max-width:480px)]:gap-4">
-          {i > 0 && <span className="h-[19px] w-px bg-[#dcdfe4]" />}
+          {i > 0 && <span className={`h-[19px] w-px ${t.rule}`} />}
           <span
-            className={`flex items-center gap-1 rounded-md -mx-1.5 px-1.5 transition-colors duration-300 ${active === a.key ? 'bg-[#e9f2ff]' : ''}`}
+            className={`flex items-center gap-1 rounded-md -mx-1.5 px-1.5 transition-colors duration-300 ${active === a.key ? t.active : ''}`}
           >
-            <img src={a.icon} alt="" className={`size-5 ${a.flip ? '-scale-y-100' : ''}`} />
-            <span className="text-[14px] leading-5 font-semibold" style={{ color: C.brand }}>{a.label}</span>
+            <img src={a.icon} alt="" className={`size-5 ${t.actionIcon} ${a.flip ? '-scale-y-100' : ''}`} />
+            <span className="text-[14px] leading-5 font-semibold" style={{ color: t.action }}>{a.label}</span>
           </span>
         </span>
       ))}
     </div>
   </div>
-)
+  )
+}
 
 const ACTIVITY_ICONS = {
   payment: { bg: '#f3f0ff', icon: '/portal/file-text.svg' },             // Payment processed

@@ -6,6 +6,7 @@ import { ENTITIES } from '../lib/entities'
 const Footer = () => {
   const footerLinks = {
     Products: [
+      { name: 'Platforms', href: '/platforms' },
       { name: 'In-Store Payments', href: '/in-store' },
       { name: 'Online Payments', href: '/online' },
       { name: 'Payouts', href: '/payouts' },

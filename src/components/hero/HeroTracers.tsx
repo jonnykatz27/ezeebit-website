@@ -14,8 +14,8 @@ import { useEffect, useRef } from 'react'
 const CELL = 32 // grid square, px
 const COLOUR = '61,154,237' // primary-400
 const GRID_ALPHA = 0.14 // grid line strength
-const MAX_TRACERS = 3 // most on screen at once
-const SPAWNS_PER_SECOND = 0.9
+const MAX_TRACERS = 5 // most on screen at once
+const SPAWNS_PER_SECOND = 1.6
 
 type Tracer = { horizontal: boolean; line: number; pos: number; speed: number; len: number }
 

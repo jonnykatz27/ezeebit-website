@@ -31,26 +31,28 @@ type Event =
   | { kind: 'out'; to: string; network: string; asset: Stable; amount: number }
 
 /**
- * One loop of activity: pay-ins from each channel, and payouts in each
- * stablecoin. A USDT pay-in settles to the USDT wallet and a USDT payout
- * comes out of it; every other pay-in settles to fiat, and the other
- * stablecoins are paid out of the fiat balance, as the Payouts page
- * describes. Long enough that the four rows each list shows never repeat.
+ * One loop of activity: pay-ins from each channel, and payouts in USDT, the
+ * one stablecoin payouts go out in today. A USDT pay-in settles to the USDT
+ * wallet and a payout comes out of it; every other pay-in settles to fiat.
+ * Long enough that the four rows each list shows never repeat.
  */
 const LOOP: Event[] = [
   { kind: 'in', method: 'Ezeebit Pay', channel: 'In-store', asset: 'btc', zar: 4_500 },
   { kind: 'out', to: 'Player withdrawal', network: 'Tron', asset: 'usdt', amount: 250 },
   { kind: 'in', method: 'Binance Pay', channel: 'Online checkout', asset: 'usdt', zar: 12_800 },
   { kind: 'in', method: 'Player deposit', channel: 'Platform', asset: 'usdc', zar: 2_150 },
-  { kind: 'out', to: 'Seller payout', network: 'Ethereum', asset: 'zarp', amount: 4_500 },
+  { kind: 'out', to: 'Seller payout', network: 'Ethereum', asset: 'usdt', amount: 245 },
   { kind: 'in', method: 'Luno Pay', channel: 'Online checkout', asset: 'eth', zar: 1_899 },
-  { kind: 'out', to: 'Trader withdrawal', network: 'Solana', asset: 'usdc', amount: 1_500 },
+  { kind: 'out', to: 'Trader withdrawal', network: 'Solana', asset: 'usdt', amount: 1_500 },
   { kind: 'in', method: 'VALR Pay', channel: 'In-store', asset: 'usdt', zar: 7_350 },
   { kind: 'in', method: 'Trader top-up', channel: 'Platform', asset: 'usdt', zar: 25_000 },
-  { kind: 'out', to: 'Creator payout', network: 'Solana', asset: 'zaru', amount: 2_000 },
+  { kind: 'out', to: 'Creator payout', network: 'Solana', asset: 'usdt', amount: 110 },
   { kind: 'in', method: 'WalletConnect Pay', channel: 'Online checkout', asset: 'usdc', zar: 3_420 },
-  { kind: 'out', to: 'Affiliate payout', network: 'Ethereum', asset: 'usdc', amount: 320 },
+  { kind: 'out', to: 'Affiliate payout', network: 'Ethereum', asset: 'usdt', amount: 320 },
 ]
+
+/** Stablecoins payouts will also go out in, shown faded beside the Payouts title. */
+const SOON: Stable[] = ['usdc', 'zarp', 'zaru']
 
 const mod = (n: number, m: number) => ((n % m) + m) % m
 
@@ -93,7 +95,7 @@ const LINE = 'border-white/[0.08]'
 /** Text on the glass: white for what matters, a soft grey for the detail. */
 const TEXT = 'text-white'
 const SUBTLE = 'text-neutral-400'
-const DONE = 'text-emerald-400'
+const DONE = 'text-success-400'
 
 /** Rows each list shows: two on a phone, four beside the balance card. */
 const ROWS = 4
@@ -239,7 +241,7 @@ const HomeFlowVisual = () => {
     <div
       ref={ref}
       role="img"
-      aria-label="Crypto payments arriving in-store, online and on platforms, landing on one balance in the Ezeebit Merchant Portal in ZAR, KES, NGN or USD, and going back out as payouts in USDT, USDC, ZARP and ZARU."
+      aria-label="Crypto payments arriving in-store, online and on platforms, landing on one balance in the Ezeebit Merchant Portal in ZAR, KES, NGN or USD, and going back out as payouts in USDT, with USDC, ZARP, and ZARU payouts coming soon."
       className="mx-auto max-w-6xl [&_img]:!mx-0"
     >
       <div className="grid grid-cols-1 max-w-md mx-auto lg:max-w-none lg:grid-cols-[minmax(0,1fr)_80px_minmax(0,1.3fr)_80px_minmax(0,1fr)]">
@@ -271,7 +273,7 @@ const HomeFlowVisual = () => {
         <Connector fire={last?.kind === 'in' ? step : null} still={still} token={inToken} />
 
         <motion.div {...arrive(0.2)}>
-          <Caption>One balance</Caption>
+          <Caption>Settle your way</Caption>
           <div className={`${FLOW_CARD} overflow-hidden`}>
             {/* A new merchant swaps the figures in rather than counting across currencies */}
             <PortalBalanceCard
@@ -296,7 +298,20 @@ const HomeFlowVisual = () => {
 
         <motion.div {...arrive(0.5, 'right')} className="flex flex-col">
           <Caption>Crypto out</Caption>
-          <Feed title="Payouts" tag={<span className={`text-[11px] font-medium ${SUBTLE}`}>Sent 24/7</span>}>
+          <Feed
+            title="Payouts"
+            tag={
+              // Payouts go out in USDT today; the stablecoins to come show beside it, marked soon
+              <span className={`flex items-center gap-1.5 text-[11px] font-medium ${SUBTLE}`} title="USDC, ZARP, and ZARU payouts are coming soon">
+                <span className="flex -space-x-1" aria-hidden="true">
+                  {SOON.map((c) => (
+                    <img key={c} src={coinLogo(c)} alt="" className={`w-4 h-4 ${COIN} opacity-60`} />
+                  ))}
+                </span>
+                soon
+              </span>
+            }
+          >
             <AnimatePresence mode="popLayout" initial={false}>
               {outs.map(({ at, e }) => {
                 const sending = at === paid - 1 && !claimed
@@ -309,7 +324,7 @@ const HomeFlowVisual = () => {
                     </div>
                     <div className="text-right shrink-0">
                       <p className={`text-[13px] font-semibold tabular-nums ${TEXT}`}>{money(e.amount)} {e.asset.toUpperCase()}</p>
-                      <p className={`text-[11px] font-medium transition-colors duration-500 ${sending ? 'text-amber-400' : DONE}`}>{sending ? 'Sending' : 'Claimed'}</p>
+                      <p className={`text-[11px] font-medium transition-colors duration-500 ${sending ? 'text-warning-400' : DONE}`}>{sending ? 'Sending' : 'Claimed'}</p>
                     </div>
                   </motion.div>
                 )

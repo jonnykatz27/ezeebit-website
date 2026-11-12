@@ -5,7 +5,7 @@ import {
   Code, ExternalLink, Copy,
   Terminal, Webhook, Key, Shield, Zap, CheckCircle,
   Globe, Database, Wallet, Send, Store,
-  Fingerprint, Wrench
+  Fingerprint, Users
 } from 'lucide-react'
 import SEO from '../components/SEO'
 import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
@@ -400,7 +400,7 @@ app.post(
     {
       icon: <Send className="w-6 h-6" />,
       title: "Payout Gateway",
-      count: "2 endpoints",
+      count: "3 endpoints",
       description: "Pay customers out in crypto from your fiat balance, completed in our widget.",
       href: `${DOCS}/payout-gateway/overview`
     },
@@ -410,6 +410,13 @@ app.post(
       count: "13 endpoints",
       description: "Balances, ledger, ZAR and USDT conversion, fiat and crypto withdrawals.",
       href: `${DOCS}/wallets-and-withdrawal/overview`
+    },
+    {
+      icon: <Users className="w-6 h-6" />,
+      title: "Customer Accounts",
+      count: "5 endpoints",
+      description: "A USDT wallet for each of your customers, with deposit addresses on four networks, a ledger, and transfers.",
+      href: `${DOCS}/customer-accounts/overview`
     },
     {
       icon: <Store className="w-6 h-6" />,
@@ -513,6 +520,7 @@ app.post(
     >
       {/* Hero Section */}
       <PageHero
+        kicker="Developers"
         title="Build on the"
         accent="Ezeebit API."
         description="Accept crypto, hold and convert balances, and pay your customers out — from one API and one set of credentials."
@@ -542,7 +550,7 @@ app.post(
               onClick={() => setEnvironment('uat')}
               className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
                 environment === 'uat'
-                  ? 'bg-orange-500 text-white shadow-sm'
+                  ? 'bg-warning-500 text-white shadow-sm'
                   : 'text-neutral-300 hover:text-white'
               }`}
             >
@@ -552,7 +560,7 @@ app.post(
               onClick={() => setEnvironment('live')}
               className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
                 environment === 'live'
-                  ? 'bg-green-500 text-white shadow-sm'
+                  ? 'bg-success-500 text-white shadow-sm'
                   : 'text-neutral-300 hover:text-white'
               }`}
             >
@@ -566,12 +574,12 @@ app.post(
       <section className="section-padding bg-white">
         <div className="container-custom">
           <div
-            className="text-center mb-16"
+            className="section-head"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+            <h2 className="section-title">
               Quick start guide
             </h2>
-            <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+            <p className="section-lead">
               From an empty portal account to a verified payment notification.
             </p>
           </div>
@@ -602,13 +610,13 @@ app.post(
       <section className="section-padding bg-neutral-50">
         <div className="container-custom">
           <div
-            className="text-center mb-16"
+            className="section-head"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
-              One API, five surfaces
+            <h2 className="section-title">
+              One API, six surfaces
             </h2>
-            <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
-              Twenty-eight endpoints, one integration.
+            <p className="section-lead">
+              Thirty-four endpoints, one integration.
             </p>
             <p className="text-neutral-600 mt-3">
               Running pay-ins and payouts for a platform or a gateway?{' '}
@@ -626,7 +634,7 @@ app.post(
                 className="card p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 will-change-transform group"
               >
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-neutral-950 rounded-lg flex items-center justify-center text-primary-400">
+                  <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center text-primary-400">
                     {product.icon}
                   </div>
                   <span className="text-xs font-medium text-neutral-500 bg-neutral-100 px-2 py-1 rounded">
@@ -643,22 +651,6 @@ app.post(
               </a>
             ))}
 
-            <div className="card p-6 border-dashed border-neutral-200 bg-transparent shadow-none">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-neutral-100 rounded-lg flex items-center justify-center text-neutral-400">
-                  <Wrench className="w-6 h-6" />
-                </div>
-                <span className="text-xs font-medium text-neutral-400 bg-neutral-100 px-2 py-1 rounded">
-                  In build
-                </span>
-              </div>
-              <h3 className="text-xl font-semibold text-neutral-500 mb-3">
-                More coming soon
-              </h3>
-              <p className="text-neutral-500">
-                New surfaces are in development.
-              </p>
-            </div>
           </div>
         </div>
       </section>
@@ -666,11 +658,11 @@ app.post(
       {/* API Examples */}
       <section className="py-8 lg:py-24 bg-white">
         <div className="container-custom">
-          <div className="text-center mb-8 lg:mb-16">
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+          <div className="section-head">
+            <h2 className="section-title">
               API examples
             </h2>
-            <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+            <p className="section-lead">
               One call from each product area, plus the webhook we send back to you.
             </p>
           </div>
@@ -703,7 +695,7 @@ app.post(
             className="max-w-6xl mx-auto"
           >
             <div className="flex flex-wrap items-center justify-center gap-3 mb-4 lg:mb-6">
-              <span className="px-2 py-1 bg-green-600 text-white rounded text-xs font-medium">
+              <span className="px-2 py-1 bg-success-600 text-white rounded text-xs font-medium">
                 {currentEndpoint.method}
               </span>
               <code className="text-sm font-mono text-neutral-700 bg-neutral-50 border border-neutral-200 px-3 py-1 rounded break-all">
@@ -716,12 +708,12 @@ app.post(
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8">
               {/* Request */}
-              <div className="card p-0 overflow-hidden min-w-0 bg-gray-800">
+              <div className="card p-0 overflow-hidden min-w-0 bg-neutral-800">
                 <div className="text-white p-3 lg:p-4 min-w-0 h-full">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-2">
                       <Terminal className="w-5 h-5 text-neutral-400" />
-                      <span className="text-gray-300">
+                      <span className="text-neutral-300">
                         {currentEndpoint.inbound ? 'From Ezeebit' : 'Request'}
                       </span>
                     </div>
@@ -735,16 +727,16 @@ app.post(
                   </div>
                   <div className="space-y-3 lg:space-y-4">
                     <div>
-                      <h4 className="text-sm font-medium text-gray-300 mb-2">
+                      <h4 className="text-sm font-medium text-neutral-300 mb-2">
                         {currentEndpoint.inbound ? 'Incoming request' : 'cURL'}
                       </h4>
-                      <pre className="text-xs lg:text-sm overflow-x-auto whitespace-pre-wrap break-all bg-gray-900 p-2 lg:p-3 rounded">
+                      <pre className="text-xs lg:text-sm overflow-x-auto whitespace-pre-wrap break-all bg-neutral-900 p-2 lg:p-3 rounded">
                         <code>{currentEndpoint.curl}</code>
                       </pre>
                     </div>
                     <div>
-                      <h4 className="text-sm font-medium text-gray-300 mb-2">JavaScript</h4>
-                      <pre className="text-xs lg:text-sm overflow-x-auto whitespace-pre-wrap break-all bg-gray-900 p-2 lg:p-3 rounded">
+                      <h4 className="text-sm font-medium text-neutral-300 mb-2">JavaScript</h4>
+                      <pre className="text-xs lg:text-sm overflow-x-auto whitespace-pre-wrap break-all bg-neutral-900 p-2 lg:p-3 rounded">
                         <code>{currentEndpoint.javascript}</code>
                       </pre>
                     </div>
@@ -753,15 +745,15 @@ app.post(
               </div>
 
               {/* Response */}
-              <div className="card p-0 overflow-hidden min-w-0 bg-gray-800">
+              <div className="card p-0 overflow-hidden min-w-0 bg-neutral-800">
                 <div className="text-white p-3 lg:p-4 min-w-0 h-full">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-5 h-5 text-green-400" />
-                      <span className="text-gray-300">
+                      <CheckCircle className="w-5 h-5 text-success-400" />
+                      <span className="text-neutral-300">
                         {currentEndpoint.inbound ? 'Payload' : 'Response'}
                       </span>
-                      <span className="px-2 py-1 bg-green-600 rounded text-xs font-medium">
+                      <span className="px-2 py-1 bg-success-600 rounded text-xs font-medium">
                         {currentEndpoint.inbound ? 'signed' : 'code 200'}
                       </span>
                     </div>
@@ -773,22 +765,22 @@ app.post(
                       {copiedCode === 'response' ? 'Copied!' : 'Copy'}
                     </button>
                   </div>
-                  <pre className="text-xs lg:text-sm overflow-x-auto whitespace-pre-wrap break-all bg-gray-900 p-2 lg:p-3 rounded">
+                  <pre className="text-xs lg:text-sm overflow-x-auto whitespace-pre-wrap break-all bg-neutral-900 p-2 lg:p-3 rounded">
                     <code>{currentEndpoint.response}</code>
                   </pre>
                 </div>
               </div>
             </div>
 
-            <div className="mt-4 lg:mt-6 p-3 lg:p-4 bg-blue-50 rounded-lg flex flex-wrap items-baseline gap-x-2">
-              <p className="text-blue-800">
+            <div className="mt-4 lg:mt-6 p-3 lg:p-4 bg-primary-50 rounded-lg flex flex-wrap items-baseline gap-x-2">
+              <p className="text-primary-800">
                 <strong>{currentEndpoint.title}:</strong> {currentEndpoint.description}
               </p>
               <a
                 href={currentEndpoint.docs}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-700 underline hover:text-blue-900 whitespace-nowrap text-sm"
+                className="text-primary-700 underline hover:text-primary-900 whitespace-nowrap text-sm"
               >
                 Read the reference
               </a>
@@ -866,12 +858,12 @@ app.post(
       <section className="section-padding bg-neutral-50">
         <div className="container-custom">
           <div
-            className="text-center mb-12"
+            className="section-head"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+            <h2 className="section-title">
               Supported cryptos & networks
             </h2>
-            <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+            <p className="section-lead">
               Accept payments in multiple cryptocurrencies across different networks.
             </p>
           </div>
@@ -926,18 +918,18 @@ app.post(
                 href="https://merchant.ezeebit.com/#/signup"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+                className={HERO_PRIMARY}
               >
-                Get API Keys
+                Get API keys
                 <Key className="w-5 h-5 ml-2 inline" />
               </a>
               <a
                 href={DOCS}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
+                className={HERO_SECONDARY}
               >
-                Full Documentation
+                Full documentation
                 <ExternalLink className="w-5 h-5 ml-2 inline" />
               </a>
             </div>

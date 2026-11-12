@@ -9,7 +9,7 @@ import {
 /** Illustrative payouts, one after another. */
 const PAYOUTS = [
   { zar: 2_000, asset: 'usdt', network: 'Tron', link: '8Hq2x', hash: '0x93f1…a7c2' },
-  { zar: 15_000, asset: 'usdc', network: 'Ethereum', link: 'Rk7pW', hash: '0x4be0…19d5' },
+  { zar: 15_000, asset: 'usdt', network: 'Ethereum', link: 'Rk7pW', hash: '0x4be0…19d5' },
   { zar: 650, asset: 'usdt', network: 'BSC', link: 'c3LmZ', hash: '0x7a2e…f04b' },
 ] as const
 

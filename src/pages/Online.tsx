@@ -79,9 +79,10 @@ const Online = () => {
       >
         {/* Hero Section */}
       <PageHero
+        kicker="Online checkout"
         title="Stablecoin checkout"
         accent="for your online store."
-        description="Add stablecoin and crypto payments to your store with zero-code plugins, or build on our API. Customers pay with Bitcoin, Ethereum, stablecoins, and more, and you're settled in ZAR, KES, NGN or USD. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+        description="Add stablecoin and crypto payments to your store with zero-code plugins, or build on our API. Customers pay with Bitcoin, Ethereum, stablecoins, and more, and you're settled in ZAR, KES, NGN or USD."
         actions={
           <>
           <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
@@ -103,9 +104,9 @@ const Online = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-8 md:mb-16"
+            className="section-head"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+            <h2 className="section-title">
               Seamless platform integration
             </h2>
             <p className="text-lg md:text-xl text-neutral-600 max-w-3xl mx-auto px-4">
@@ -229,32 +230,32 @@ const Online = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-16"
+            className="section-head"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+            <h2 className="section-title">
               Everything you need for online payments
             </h2>
-            <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+            <p className="section-lead">
               Our comprehensive solution includes all the tools and features you need to accept stablecoin and crypto payments online.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="feature-grid feature-grid-4">
             {features.map((feature, index) => (
               <motion.div
                 key={feature.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="card p-6 text-center hover:scale-105 transition-transform"
+                className="card feature-card"
               >
-                <div className="w-12 h-12 bg-neutral-950 rounded-lg flex items-center justify-center mx-auto mb-4 text-primary-400">
+                <div className="bg-neutral-950 rounded-xl flex items-center justify-center text-primary-400 [&_svg]:w-5 [&_svg]:h-5 lg:[&_svg]:w-6 lg:[&_svg]:h-6">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-semibold text-neutral-900 mb-3">
+                <h3 className="feature-title">
                   {feature.title}
                 </h3>
-                <p className="text-neutral-600">
+                <p className="feature-text">
                   {feature.description}
                 </p>
               </motion.div>
@@ -303,12 +304,12 @@ const Online = () => {
               Install our plugin in minutes and start accepting stablecoin and cryptocurrency payments from customers worldwide.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center">
-                Install Plugin Now
+              <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
+                Install plugin now
                 <ArrowRight className="w-5 h-5 ml-2 inline" />
               </a>
-              <Link to="/developers" className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center">
-                View Documentation
+              <Link to="/developers" className={HERO_SECONDARY}>
+                View documentation
               </Link>
             </div>
           </motion.div>

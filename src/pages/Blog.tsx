@@ -5,8 +5,16 @@ import {
   Calendar, Clock, ArrowRight
 } from 'lucide-react'
 import SEO from '../components/SEO'
-import PageHero, { HeroSearch } from '../components/hero/PageHero'
+import PageHero, { HeroSearch, HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import DarkBackdrop from '../components/DarkBackdrop'
+
+/**
+ * A post's date as the post itself shows it, "November 10, 2026". The locale
+ * and time zone are fixed, so the pre-rendered page and the visitor's browser
+ * print the same thing and React keeps the pre-rendered page.
+ */
+const postDate = (date: string) =>
+  new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })
 
 const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState('all')
@@ -29,6 +37,19 @@ const Blog = () => {
   }
 
   const blogPosts: BlogPostItem[] = [
+    {
+      id: 'restricted-wallets-and-platforms',
+      title: "Which wallets and platforms can't Ezeebit accept payments from or send funds to?",
+      excerpt: "Most crypto payments go through without any issues. A small number can't, because the wallet or platform is linked to sanctions or other serious financial-crime risks. Here's why, what we check, and how to check a counterparty yourself.",
+      author: 'Jonathan Katz',
+      date: '2026-11-10',
+      readTime: '5 min read',
+      category: 'Policy & Regulation',
+      categoryId: 'policy',
+      image: '/blog/restricted-wallets-cover.webp',
+      views: '0',
+      featured: false
+    },
     {
       id: 'crypto-deposits-igaming-sunbet',
       title: "Crypto deposits for iGaming: inside the Sunbet integration",
@@ -160,6 +181,7 @@ const Blog = () => {
     >
       {/* Hero Section */}
       <PageHero
+        kicker="Blog"
         title="News and insights"
         accent="from Ezeebit"
         description="Stay updated with the latest news, insights, and tutorials from the world of stablecoin and cryptocurrency payments and African fintech."
@@ -183,7 +205,7 @@ const Blog = () => {
                   }`}
                 >
                   <span>{category.name}</span>
-                  <span className="bg-gray-200 text-neutral-600 px-1.5 md:px-2 py-0.5 rounded-full text-xs">
+                  <span className="bg-neutral-100 text-neutral-600 px-1.5 md:px-2 py-0.5 rounded-full text-xs">
                     {category.count}
                   </span>
                 </button>
@@ -221,7 +243,7 @@ const Blog = () => {
                   <div className="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm text-neutral-500 mb-3 md:mb-4">
                     <span className="flex items-center">
                       <Calendar className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                      {new Date(featuredPost.date).toLocaleDateString()}
+                      {postDate(featuredPost.date)}
                     </span>
                     <span className="flex items-center">
                       <Clock className="w-3 h-3 md:w-4 md:h-4 mr-1" />
@@ -326,7 +348,7 @@ const Blog = () => {
                   <div className="flex flex-wrap items-center gap-3 text-xs text-neutral-500 mb-3">
                     <span className="flex items-center">
                       <Calendar className="w-3 h-3 mr-1" />
-                      {new Date(post.date).toLocaleDateString()}
+                      {postDate(post.date)}
                     </span>
                     <span className="flex items-center">
                       <Clock className="w-3 h-3 mr-1" />
@@ -407,13 +429,13 @@ const Blog = () => {
                 href="https://merchant.ezeebit.com/#/signup"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+                className={HERO_PRIMARY}
               >
-                Get Started
+                Get started
                 <ArrowRight className="w-5 h-5 ml-2" />
               </a>
-              <Link to="/contact" className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center">
-                Talk to Sales
+              <Link to="/book-a-call" className={HERO_SECONDARY}>
+                Talk to sales
               </Link>
             </div>
           </motion.div>

@@ -1,9 +1,11 @@
-import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, CheckCircle, type LucideIcon } from 'lucide-react'
 import { motion } from '../lib/motion'
 import FlowDemo from './demo/FlowDemo'
 import type { CaseStudy } from '../lib/caseStudies'
+import SectionHeader, { Eyebrow } from './SectionHeader'
+
+export { Eyebrow }
 
 /**
  * The sections the Platforms page tells pay-ins and payouts with, shared with
@@ -17,11 +19,6 @@ export type Feature = { icon: LucideIcon; title: string; body: string }
 type Tone = 'white' | 'muted'
 
 const BG: Record<Tone, string> = { white: 'bg-white', muted: 'bg-neutral-50' }
-
-/** Small caps line above a section heading, naming which way the money moves. */
-export const Eyebrow = ({ children }: { children: ReactNode }) => (
-  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-600 mb-3">{children}</p>
-)
 
 /**
  * A numbered list of what happens, in order. Always left-aligned: on phones
@@ -44,34 +41,25 @@ export const Steps = ({ steps }: { steps: Step[] }) => (
   </ol>
 )
 
-/** A centred section heading with its line of introduction. */
-const SectionHead = ({ eyebrow, title, intro, className = 'mb-16' }: { eyebrow?: string; title: string; intro: string; className?: string }) => (
-  <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} className={`text-center ${className}`}>
-    {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-    <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">{title}</h2>
-    <p className="text-xl text-neutral-600 max-w-3xl mx-auto">{intro}</p>
-  </motion.div>
-)
-
 /** Four cards, side by side on desktop, on what the product does for you. */
 export const PillarsSection = ({ title, intro, items, tone = 'white' }: { title: string; intro: string; items: Feature[]; tone?: Tone }) => (
   <section className={`section-padding ${BG[tone]}`}>
     <div className="container-custom">
-      <SectionHead title={title} intro={intro} />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <SectionHeader title={title} intro={intro} />
+      <div className="feature-grid feature-grid-4">
         {items.map(({ icon: Icon, title, body }, index) => (
           <motion.div
             key={title}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="card p-6 h-full"
+            className="card feature-card h-full"
           >
-            <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center mb-4 text-primary-400">
+            <div className="bg-neutral-950 rounded-xl flex items-center justify-center text-primary-400 [&_svg]:w-5 [&_svg]:h-5 lg:[&_svg]:w-6 lg:[&_svg]:h-6">
               <Icon className="w-6 h-6" />
             </div>
-            <h3 className="text-lg font-semibold text-neutral-900 mb-2">{title}</h3>
-            <p className="text-neutral-600 text-sm leading-relaxed">{body}</p>
+            <h3 className="feature-title">{title}</h3>
+            <p className="feature-text">{body}</p>
           </motion.div>
         ))}
       </div>
@@ -83,21 +71,21 @@ export const PillarsSection = ({ title, intro, items, tone = 'white' }: { title:
 export const PayinsSection = ({ title, intro, items, tone = 'muted' }: { title: string; intro: string; items: Feature[]; tone?: Tone }) => (
   <section className={`section-padding ${BG[tone]}`}>
     <div className="container-custom">
-      <SectionHead eyebrow="Pay-ins" title={title} intro={intro} />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <SectionHeader eyebrow="Pay-ins" title={title} intro={intro} />
+      <div className="feature-grid feature-grid-3">
         {items.map(({ icon: Icon, title, body }, index) => (
           <motion.div
             key={title}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="card px-5 py-4 text-center hover:scale-[1.03] transition-transform"
+            className="card feature-card"
           >
-            <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center mx-auto mb-2 text-primary-400">
+            <div className="bg-neutral-950 rounded-xl flex items-center justify-center text-primary-400 [&_svg]:w-5 [&_svg]:h-5 lg:[&_svg]:w-6 lg:[&_svg]:h-6">
               <Icon className="w-6 h-6" />
             </div>
-            <h3 className="text-lg font-semibold text-neutral-900 mb-1">{title}</h3>
-            <p className="text-neutral-600 text-sm leading-relaxed">{body}</p>
+            <h3 className="feature-title">{title}</h3>
+            <p className="feature-text">{body}</p>
           </motion.div>
         ))}
       </div>
@@ -181,7 +169,7 @@ export const PayoutSection = ({ title, intro, steps, tone = 'muted' }: { title: 
 export const CaseStudiesSection = ({ title, intro, studies, tone = 'white' }: { title: string; intro: string; studies: CaseStudy[]; tone?: Tone }) => (
   <section className={`section-padding ${BG[tone]}`}>
     <div className="container-custom">
-      <SectionHead title={title} intro={intro} className="mb-12" />
+      <SectionHeader title={title} intro={intro} />
       <div className="space-y-8 max-w-6xl mx-auto">
         {studies.map((study) => (
           <motion.article
@@ -211,7 +199,7 @@ export const CaseStudiesSection = ({ title, intro, studies, tone = 'white' }: { 
               <div>
                 <div className="flex items-center gap-3 mb-5">
                   <img src={study.logo} alt={study.name} className="h-10 w-auto !mx-0" />
-                  <span className="text-xs font-semibold uppercase tracking-[0.12em] text-primary-600 bg-primary-50 rounded-full px-3 py-1">
+                  <span className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-600 bg-primary-50 rounded-full px-3 py-1">
                     {study.sector}
                   </span>
                 </div>

@@ -21,8 +21,8 @@ const PLANS: Plan[] = [
     price: '1%',
     unit: 'or less per payment',
     fee: 'Excluding VAT',
-    body: 'You receive exactly the amount you charged. Your customer sees and accepts the rate before paying, and that rate includes our conversion spread.',
-    points: ['In store, online checkout and platform deposits', 'Local currency next business day, or stablecoin the same day', 'Lower rates for platforms at volume'],
+    body: 'You receive exactly the amount you charged. Your customer sees and accepts the rate before paying.',
+    points: ['In store, online checkout and platform deposits', 'Local currency next business day, or stablecoin the same day', 'Lower rates at volume on Enterprise'],
     cta: { label: 'Start free', href: 'https://merchant.ezeebit.com/#/signup' },
   },
   {
@@ -43,13 +43,13 @@ const PLANS: Plan[] = [
     cta: { label: 'Wallet docs', href: `${DOCS}/wallets-and-withdrawal/overview` },
   },
   {
-    name: 'Platforms',
+    name: 'Enterprise',
     tag: 'Volume pricing',
     price: 'Custom',
     fee: 'Based on your volumes',
     body: 'For gaming operators, PSPs and platforms moving money both ways at scale.',
     points: ['Crypto In and Crypto Out on one balance', 'Dedicated account manager', 'Custom integrations and white-label options'],
-    cta: { label: 'Book a call', href: '/contact' },
+    cta: { label: 'Book a call', href: '/book-a-call' },
   },
 ]
 

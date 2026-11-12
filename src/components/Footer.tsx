@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
-import { Linkedin, Mail, Phone, MapPin, Shield, Award } from 'lucide-react'
+import { Linkedin, Mail, Phone, MapPin } from 'lucide-react'
 import { SOLUTIONS, solutionPath } from '../lib/solutions'
+import { ENTITIES } from '../lib/entities'
 
 const Footer = () => {
   const footerLinks = {
@@ -131,21 +132,24 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-5 pt-5 border-t border-neutral-800">
-          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 mb-4">
-            <div className="flex items-center space-x-1.5 text-xs md:text-sm text-neutral-400">
-              <Shield className="w-3.5 h-3.5 text-secondary-400" />
-              <span>FSCA Regulated</span>
-            </div>
-            <div className="flex items-center space-x-1.5 text-xs md:text-sm text-neutral-400">
-              <Award className="w-3.5 h-3.5 text-secondary-400" />
-              <span>FIC Compliant</span>
-            </div>
-            <div className="flex items-center space-x-1.5 text-xs md:text-sm text-neutral-400">
-              <Shield className="w-3.5 h-3.5 text-secondary-400" />
-              <span>FAIS Regulated</span>
-            </div>
-          </div>
+        {/* The group's companies, with each one's registration and what it operates under */}
+        <div className="mt-6 pt-6 border-t border-neutral-800">
+          <h3 className="mb-4 text-center font-semibold text-xs md:text-sm tracking-wide uppercase text-neutral-300">The Ezeebit group of companies</h3>
+          <ul className="mx-auto grid max-w-5xl gap-4 md:grid-cols-3 md:gap-6">
+            {ENTITIES.map((e) => (
+              <li key={e.country} className="text-center text-xs leading-relaxed text-neutral-400">
+                <p className="flex items-center justify-center gap-2 text-sm font-medium text-neutral-200">
+                  <img src={e.flag} alt="" width={16} height={16} className="w-4 h-4 !mx-0 rounded-full" />
+                  {e.country}
+                </p>
+                <p className="mt-1">
+                  {e.entity}
+                  {e.reg && <> · <span className="whitespace-nowrap">Reg. {e.reg}</span></>}
+                </p>
+                <p className="mt-0.5">{e.status}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
@@ -155,7 +159,7 @@ const Footer = () => {
             &copy; 2026 Ezeebit. All rights reserved.
           </p>
           <p className="mt-2 text-[10px] md:text-xs text-neutral-300 max-w-2xl mx-auto leading-relaxed">
-            Ezeebit is authorised and regulated by the FSCA, and has applied for its CASP licence (FSP 53664).
+            Ezeebit is regulated by the FSCA as a Crypto Asset Service Provider, FSP No. 53664.
           </p>
         </div>
       </div>

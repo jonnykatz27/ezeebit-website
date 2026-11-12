@@ -16,9 +16,9 @@ const EzeebitResources = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 -mt-20 pt-20"
+        className="min-h-screen flex flex-col bg-gradient-to-br from-primary-50 via-white to-secondary-50 -mt-20 pt-20"
     >
-      <div className="h-full flex flex-col items-center justify-center px-4 py-6 md:py-8">
+      <div className="flex-1 flex flex-col items-center justify-center px-4 py-6 md:py-8">
         <motion.div
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -39,7 +39,7 @@ const EzeebitResources = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-6 md:mb-10 text-center"
         >
-          <p className="text-xs md:text-sm text-primary-500 uppercase tracking-wider mb-4 md:mb-5">Pay With Crypto</p>
+          <p className="text-xs font-semibold text-primary-600 uppercase tracking-[0.14em] mb-4 md:mb-5">Pay With Crypto</p>
           <div className="flex items-center justify-center gap-2.5 md:gap-5">
             <img src="/btc-logo.svg" alt="Bitcoin" className="w-8 h-8 md:w-10 md:h-10" />
             <img src="/eth-logo.svg" alt="Ethereum" className="w-8 h-8 md:w-10 md:h-10" />
@@ -50,7 +50,7 @@ const EzeebitResources = () => {
             <img src="/zarp-logo.png" alt="ZARP" className="w-8 h-8 md:w-10 md:h-10 rounded-full" />
             <img src="/zaru-logo.png" alt="ZARU" className="w-8 h-8 md:w-10 md:h-10 rounded-full" />
           </div>
-          <p className="text-xs md:text-sm text-primary-500 uppercase tracking-widest mt-5 md:mt-7 mb-4 md:mb-5">Direct Integrations</p>
+          <p className="text-xs font-semibold text-primary-600 uppercase tracking-[0.14em] mt-5 md:mt-7 mb-4 md:mb-5">Direct Integrations</p>
           <div className="grid grid-cols-4 gap-3 md:gap-4 max-w-sm md:max-w-xl mx-auto">
             <div className="bg-white rounded-xl md:rounded-2xl p-3.5 md:p-5 shadow-sm border border-neutral-100 flex flex-col items-center justify-center hover:shadow-md transition-shadow">
               <img src="/luno_logo.png" alt="Luno" className="w-9 h-9 md:w-10 md:h-10 rounded-full object-cover mb-1.5 md:mb-2 flex-shrink-0" />

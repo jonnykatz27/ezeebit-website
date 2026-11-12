@@ -77,16 +77,17 @@ const OTC = () => {
       >
         {/* Hero Section */}
         <PageHero
+          kicker="OTC desk"
           title="Move large volumes"
           accent="of crypto."
-          description="Buy or sell crypto at scale without moving the market. Get a firm quote, lock the rate, and settle the same day in ZAR, KES, NGN or USD, with a dedicated dealer handling every trade. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+          description="Buy or sell crypto at scale without moving the market. Get a firm quote, lock the rate, and settle the same day in ZAR, KES, NGN or USD, with a dedicated dealer handling every trade."
           actions={
             <>
             <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
               Get started free
               <ArrowRight className="w-5 h-5 ml-2" />
             </a>
-            <Link to="/contact" className={HERO_SECONDARY}>
+            <Link to="/book-a-call" className={HERO_SECONDARY}>
               Talk to the desk
             </Link>
             </>
@@ -101,33 +102,33 @@ const OTC = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="text-center mb-16"
+              className="section-head"
             >
-              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+              <h2 className="section-title">
                 A desk built for size
               </h2>
-              <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+              <p className="section-lead">
                 When the amounts get large, exchanges fall short. Our OTC desk gives you pricing,
                 liquidity, and settlement designed for serious volume.
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="feature-grid feature-grid-3">
               {features.map((feature, index) => (
                 <motion.div
                   key={feature.title}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="card p-6 hover:scale-105 transition-transform"
+                  className="card feature-card"
                 >
-                  <div className="w-12 h-12 bg-neutral-950 rounded-lg flex items-center justify-center mb-4 text-primary-400">
+                  <div className="bg-neutral-950 rounded-xl flex items-center justify-center text-primary-400 [&_svg]:w-5 [&_svg]:h-5 lg:[&_svg]:w-6 lg:[&_svg]:h-6">
                     {feature.icon}
                   </div>
-                  <h3 className="text-xl font-semibold text-neutral-900 mb-3">
+                  <h3 className="feature-title">
                     {feature.title}
                   </h3>
-                  <p className="text-neutral-600">
+                  <p className="feature-text">
                     {feature.description}
                   </p>
                 </motion.div>
@@ -142,17 +143,17 @@ const OTC = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="text-center mb-16"
+              className="section-head"
             >
-              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+              <h2 className="section-title">
                 How it works
               </h2>
-              <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+              <p className="section-lead">
                 Three steps from quote to settled funds, with a dealer alongside you the whole way.
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="feature-grid md:grid-cols-3">
               {steps.map((step, index) => (
                 <motion.div
                   key={step.number}
@@ -161,14 +162,14 @@ const OTC = () => {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="relative"
                 >
-                  <div className="card p-8 h-full">
-                    <div className="text-4xl font-display font-bold text-gradient mb-4">
+                  <div className="card step-card h-full">
+                    <div className="font-display font-bold text-gradient">
                       {step.number}
                     </div>
-                    <h3 className="text-xl font-semibold text-neutral-900 mb-3">
+                    <h3 className="feature-title">
                       {step.title}
                     </h3>
-                    <p className="text-neutral-600">
+                    <p className="feature-text">
                       {step.description}
                     </p>
                   </div>
@@ -198,9 +199,9 @@ const OTC = () => {
                   href="https://merchant.ezeebit.com/#/signup"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+                  className={HERO_PRIMARY}
                 >
-                  Sign Up
+                  Sign up
                   <ArrowRight className="w-5 h-5 ml-2 inline" />
                 </a>
               </div>

@@ -6,6 +6,7 @@ import {
 } from 'lucide-react'
 import SEO from '../components/SEO'
 import DarkBackdrop from '../components/DarkBackdrop'
+import { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 
 const Legal = () => {
   const location = useLocation()
@@ -797,10 +798,10 @@ const Legal = () => {
             className="card p-6"
           >
             <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-secondary-100 rounded-lg flex items-center justify-center text-secondary-600">
+              <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center text-primary-400">
                 {item.icon}
               </div>
-              <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-medium">
+              <span className="bg-success-100 text-success-700 px-2 py-1 rounded-full text-xs font-medium">
                 {item.status}
               </span>
             </div>
@@ -947,10 +948,10 @@ const Legal = () => {
               privacy policy, or compliance requirements.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/contact" className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center">
-                Contact Legal Team
+              <Link to="/contact" className={HERO_PRIMARY}>
+                Contact legal team
               </Link>
-              <a href="mailto:legal@ezeebit.com" className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center">
+              <a href="mailto:legal@ezeebit.com" className={HERO_SECONDARY}>
                 Email: legal@ezeebit.com
               </a>
             </div>

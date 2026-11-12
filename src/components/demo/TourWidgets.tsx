@@ -18,7 +18,7 @@ const FROM: Record<Channel, string> = { 'in-store': 'Ezeebit ePOS', online: 'You
 
 const rand = (v: number) => `R${v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 
-const LBL = 'text-[11px] font-semibold uppercase tracking-[0.1em] text-neutral-500'
+const LBL = 'text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-500'
 // The merchant's screens are in neutral colours with a dark button, so the
 // hand-off to the checkout, in Ezeebit's blue, reads as a change of screen
 const GO = 'w-full min-h-[48px] rounded-xl bg-neutral-900 px-4 text-sm font-semibold text-white hover:bg-neutral-700'

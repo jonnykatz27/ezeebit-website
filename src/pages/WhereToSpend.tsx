@@ -6,7 +6,7 @@ import {
 } from 'lucide-react'
 import { stores, categories } from '../lib/stores'
 import SEO from '../components/SEO'
-import PageHero, { HeroSearch } from '../components/hero/PageHero'
+import PageHero, { HeroSearch, HERO_SECONDARY } from '../components/hero/PageHero'
 import DarkBackdrop from '../components/DarkBackdrop'
 
 const WhereToSpend = () => {
@@ -40,6 +40,7 @@ const WhereToSpend = () => {
     >
       {/* Hero Section */}
       <PageHero
+        kicker="Where to spend crypto"
         title="Where to"
         accent="spend crypto"
         description="Discover verified merchants across South Africa where you can pay with cryptocurrency using Ezeebit."
@@ -81,7 +82,7 @@ const WhereToSpend = () => {
         <div className="container-custom px-4">
           {filteredStores.length === 0 ? (
             <div className="text-center py-12">
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-neutral-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Search className="w-8 h-8 text-neutral-400" />
               </div>
               <h3 className="text-xl font-semibold text-neutral-900 mb-2">No stores found</h3>
@@ -123,7 +124,7 @@ const WhereToSpend = () => {
                       }}
                     />
                     <div className="absolute top-3 md:top-4 left-3 md:left-4">
-                      <span className="bg-white/90 backdrop-blur-sm text-gray-700 px-2.5 md:px-3 py-1 md:py-1 rounded-full text-xs md:text-sm font-medium">
+                      <span className="bg-white/90 backdrop-blur-sm text-neutral-700 px-2.5 md:px-3 py-1 md:py-1 rounded-full text-xs md:text-sm font-medium">
                         {store.category}
                       </span>
                     </div>
@@ -191,8 +192,8 @@ const WhereToSpend = () => {
                 Become a Partner
                 <ArrowRight className="w-4 h-4 md:w-5 md:h-5 ml-2 inline" />
               </a>
-              <Link to="/contact" className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-6 md:px-8 py-3 md:py-4 rounded-lg transition-all duration-200 flex items-center justify-center text-sm md:text-base">
-                Contact Sales
+              <Link to="/book-a-call" className={HERO_SECONDARY}>
+                Contact sales
               </Link>
             </div>
           </motion.div>

@@ -1,7 +1,8 @@
 import { motion } from '../lib/motion'
 import { ArrowRight, Check } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import SEO from '../components/SEO'
-import PageHero from '../components/hero/PageHero'
+import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import DarkBackdrop from '../components/DarkBackdrop'
 import FaqBlock from '../components/FaqBlock'
 import PricingPlans from '../components/pricing/PricingPlans'
@@ -12,7 +13,7 @@ const INCLUDED = ['Merchant Portal', 'Ezeebit Pay QR codes', 'E-commerce plugins
 const pricingFaqs = [
   {
     question: 'What does Ezeebit cost?',
-    answer: 'Crypto In is 1% or less per payment and Crypto Out is $0.65 per payout, both excluding VAT. Converting between your fiat and USDT wallets is at a quoted rate, shown before you convert. Platforms get volume pricing.',
+    answer: 'Crypto In is 1% or less per payment and Crypto Out is $0.65 per payout, both excluding VAT. Converting between your fiat and USDT wallets is at a quoted rate, shown before you convert. Enterprise pricing is based on your volumes.',
   },
   {
     question: 'Are there setup or monthly fees?',
@@ -20,7 +21,7 @@ const pricingFaqs = [
   },
   {
     question: 'Do I lose anything on the exchange rate?',
-    answer: 'No. You receive exactly the amount you charged. Your customer sees and accepts the rate before paying, and that rate includes our conversion spread.',
+    answer: 'No. You receive exactly the amount you charged. Your customer sees and accepts the rate before paying.',
   },
   {
     question: 'When do I get paid?',
@@ -28,7 +29,7 @@ const pricingFaqs = [
   },
   {
     question: 'Can I get lower rates?',
-    answer: 'Yes. Platforms moving money both ways at scale get volume pricing, based on their volumes. Book a call and we will put a price together.',
+    answer: 'Yes. Enterprise gives businesses moving money both ways at scale volume pricing, based on their volumes. Book a call and we will put a price together.',
   },
 ]
 
@@ -47,6 +48,7 @@ const Pricing = () => (
       className="overflow-hidden -mt-20"
     >
       <PageHero
+        kicker="Pricing"
         title="Pay when"
         accent="money moves"
         description="A percentage on the way in, a flat fee on the way out. No setup fees and no monthly platform fees."
@@ -89,17 +91,14 @@ const Pricing = () => (
                 href="https://merchant.ezeebit.com/#/signup"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+                className={HERO_PRIMARY}
               >
                 Start free
                 <ArrowRight className="w-5 h-5 ml-2 inline" />
               </a>
-              <a
-                href="mailto:sales@ezeebit.com"
-                className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
-              >
-                Contact Sales
-              </a>
+              <Link to="/book-a-call" className={HERO_SECONDARY}>
+                Contact sales
+              </Link>
             </div>
           </motion.div>
         </div>

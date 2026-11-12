@@ -1,6 +1,6 @@
 /** The only FSCA wording that may appear in FAQPage JSON-LD. */
 export const FSCA_LINE =
-  'Ezeebit is authorised and regulated by the FSCA, and has applied for its CASP licence (FSP 53664).'
+  'Ezeebit is regulated by the FSCA as a Crypto Asset Service Provider, FSP No. 53664.'
 
 const FSCA_DEFINITION = "The FSCA is South Africa's Financial Sector Conduct Authority."
 

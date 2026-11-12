@@ -1,19 +1,22 @@
-import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode } from 'react'
+import { Fragment, useEffect, useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import {
-  ArrowDownLeft, ArrowLeftRight, ArrowRight, ArrowUpRight, Banknote, Check, ChevronDown, ChevronLeft,
-  ChevronRight, Code, Headphones, Lock, MousePointerClick, Plug, RotateCcw, ShieldCheck, ShoppingCart, Star, Store,
-  ThumbsUp, UserCheck, Wallet, Webhook, type LucideIcon,
+  ArrowRight, Check, ChevronDown, ChevronLeft,
+  ChevronRight, Code, Headphones, LayoutDashboard, Lock, Mail, MessageCircle, MousePointerClick, Phone, Plug, RotateCcw, ShieldCheck,
+  Receipt, ShoppingCart, Star, Store, ThumbsUp, TrendingUp, UserCheck, Wallet, Webhook, type LucideIcon,
 } from 'lucide-react'
 import { motion } from '../lib/motion'
 import PartnerCarousel from '../components/PartnerCarousel'
 import SEO from '../components/SEO'
-import FlowDemo, { DemoPanel } from '../components/demo/FlowDemo'
+import FlowDemo, { DemoPanel, prefetchDemos } from '../components/demo/FlowDemo'
 import { ChannelDemo, type Channel } from '../components/demo/TourWidgets'
 import CustomerAccountsDemo from '../components/demo/CustomerAccountsDemo'
 import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import HomeFlowVisual from '../components/hero/HomeFlowVisual'
-import { FitToFrame, PortalBalanceCard, PortalConvertCard, PORTAL_PAGE_BG } from '../components/portal/PortalUI'
+import { FitToFrame } from '../components/portal/PortalUI'
+import { ENTITIES } from '../lib/entities'
+import Intro from '../components/SectionHeader'
+import { PortalDashboard, PortalIncome, PortalTransactions } from '../components/demo/PortalScreens'
 import DarkBackdrop from '../components/DarkBackdrop'
 import { LIVE_MARKETS } from '../lib/schema'
 import { SOLUTIONS, solutionPath } from '../lib/solutions'
@@ -28,8 +31,18 @@ import { SOLUTIONS, solutionPath } from '../lib/solutions'
 const REGULATED = 'Ezeebit is regulated by the FSCA as a Crypto Asset Service Provider, FSP No. 53664.'
 
 /** As the contact page lists it: email around the clock, phone and WhatsApp in office hours. */
-const SUPPORT = 'Support 24/7 by email, and by phone or WhatsApp Mon–Fri, 8am–6pm SAST.'
+const SUPPORT = 'Support 24/7 by email, and by phone or WhatsApp Monday to Friday, 8am to 6pm SAST.'
 
+/** Ways to reach the team, as the Contact page lists them, each one a link that starts the conversation. */
+const CONTACTS: { icon: LucideIcon; label: string; value: string; href: string; hours: string }[] = [
+  { icon: Mail, label: 'Email', value: 'support@ezeebit.com', href: 'mailto:support@ezeebit.com', hours: '24/7' },
+  { icon: Phone, label: 'Phone', value: '+27 21 879 5074', href: 'tel:+27218795074', hours: 'Mon to Fri, 8am to 6pm SAST' },
+  { icon: MessageCircle, label: 'WhatsApp', value: '+27 79 443 9375', href: 'https://wa.me/27794439375', hours: 'Mon to Fri, 8am to 6pm SAST' },
+]
+
+
+/** The small grey label over a row or group, as over the entities and the investors. */
+const ROW_LABEL = 'mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500'
 
 /** Logos cropped to their marks, with each file's size, so the carousel can give them equal weight. */
 const PARTNERS_A: { name: string; logo: string; size: [number, number]; boost?: number }[] = [
@@ -82,7 +95,10 @@ const TESTIMONIALS = [
   },
 ]
 
-type Fact = [string, string]
+/** A wallet's logo, a coin, or a flag shown with a fact. Its label is its alt text and tooltip. */
+type Mark = { src: string; label: string; shape?: 'round' | 'square' }
+/** A term and its detail, with any marks behind it in groups set apart from each other. */
+type Fact = [string, string, Mark[][]?]
 /** A small card beside the demo, calling out one thing the screen does. */
 type Side = { icon: typeof Lock; caption: string; value: string; sub?: string; ok?: string }
 /** A photo of the hardware beside the demo, with its name and what it does. */
@@ -92,12 +108,16 @@ type Screen = { id: string; label: string; sides?: [Side[] | Shot[], Side[] | Sh
 type Stop = {
   id: string
   label: string
+  /** A shorter label for the tab on a phone, where four tabs share one row. */
+  short?: string
   heading: string
   body: string
   facts: Fact[]
   links: { label: string; to: string }[]
-  /** The demos under this tab. More than one gets its own switch above the demo. */
+  /** The demos under this tab. More than one makes the tab a menu of them. */
   screens: Screen[]
+  /** What the tab's menu lists, for screen readers, where it has one. */
+  menuTitle?: string
   /** Headings over the cards either side of the demo, where they need saying. */
   sideTitles?: [string, string]
   /**
@@ -113,24 +133,61 @@ const CHECKOUT_SIDES: Side[] = [
   { icon: ShieldCheck, caption: 'Chargebacks', value: 'None', sub: 'Crypto payments are final' },
 ]
 
+/** What a customer can pay from: any wallet through WalletConnect, or straight from an exchange. */
+const PAY_WITH: Mark[][] = [[
+  { src: '/walletconnect-pay.svg', label: 'Any wallet, through WalletConnect', shape: 'square' },
+  { src: '/marks/valr.webp', label: 'VALR', shape: 'square' },
+  { src: '/marks/luno.webp', label: 'Luno', shape: 'square' },
+  { src: '/marks/binance.webp', label: 'Binance', shape: 'square' },
+]]
+
+const COINS: Mark[][] = [[
+  { src: '/btc-logo.svg', label: 'Bitcoin (BTC)' },
+  { src: '/marks/eth.webp', label: 'Ether (ETH)' },
+  { src: '/usdt-round.svg', label: 'Tether (USDT)' },
+  { src: '/usdc-logo.svg', label: 'USD Coin (USDC)' },
+]]
+
+/** The local currencies settled the next business day, then the stablecoin settled the same day. */
+const SETTLES_IN: Mark[][] = [
+  [
+    { src: '/za-flag.svg', label: 'South African rand (ZAR)' },
+    { src: '/ke-flag.svg', label: 'Kenyan shilling (KES)' },
+    { src: '/ng-flag.svg', label: 'Nigerian naira (NGN)' },
+    { src: '/us-flag.svg', label: 'US dollar (USD)' },
+  ],
+  [{ src: '/usdt-round.svg', label: 'Tether (USDT)' }],
+]
+
 const PAY_INS: Stop = {
   id: 'pay-ins',
   label: 'Pay-ins',
   heading: 'One checkout, wherever your customers pay',
-  body: 'In your store, on your website or on your platform, customers land on the same checkout and pay from the wallet they already use.',
+  body: 'On your platform, in your store, or on your website, customers land on the same checkout and pay from the wallet they already use.',
   facts: [
-    ['Pay with', 'Any wallet, plus VALR, Luno and Binance'],
-    ['Coins', 'BTC, ETH, USDT, USDC and more'],
-    ['Settlement', 'Local currency next business day, or stablecoin same day'],
+    ['Pay with', 'Any wallet, plus VALR, Luno and Binance', PAY_WITH],
+    ['Coins', 'BTC, ETH, USDT, USDC and more', COINS],
+    ['Settlement', 'Local currency next business day, or stablecoin same day', SETTLES_IN],
     ['Setup', 'No setup fees'],
   ],
   links: [
+    { label: 'Crypto for platforms', to: '/platforms' },
     { label: 'In-store payments', to: '/in-store' },
     { label: 'Online checkout', to: '/online' },
-    { label: 'Crypto for platforms', to: '/platforms' },
   ],
   sideTitles: ['How they get there', 'Same on every channel'],
   screens: [
+    {
+      id: 'platforms',
+      label: 'Platforms',
+      sides: [
+        [
+          { icon: Code, caption: 'API', value: 'Opens from your cashier', sub: 'With the amount and the user' },
+          { icon: UserCheck, caption: 'Attribution', value: 'Every deposit to its user', sub: 'No matching payments by hand' },
+        ],
+        CHECKOUT_SIDES,
+      ],
+    },
     {
       id: 'in-store',
       label: 'In-store',
@@ -147,17 +204,6 @@ const PAY_INS: Stop = {
         [
           { icon: Plug, caption: 'Plugins', value: 'Shopify, WooCommerce, Magento', sub: 'Or the API' },
           { icon: MousePointerClick, caption: 'Checkout', value: 'Opens from Pay with crypto', sub: 'With the order total carried over' },
-        ],
-        CHECKOUT_SIDES,
-      ],
-    },
-    {
-      id: 'platforms',
-      label: 'Platforms',
-      sides: [
-        [
-          { icon: Code, caption: 'API', value: 'Opens from your cashier', sub: 'With the amount and the user' },
-          { icon: UserCheck, caption: 'Attribution', value: 'Every deposit to its user', sub: 'No matching payments by hand' },
         ],
         CHECKOUT_SIDES,
       ],
@@ -199,8 +245,9 @@ const PAY_OUT: Stop = {
 const ACCOUNTS: Stop = {
   id: 'accounts',
   label: 'Customer accounts',
+  short: 'Accounts',
   heading: 'A USDT wallet for every customer, under your account',
-  body: 'Open a wallet for each customer with one API call. Their deposits are credited to them rather than to your balance, and you move funds between your wallet and theirs instantly.',
+  body: 'Open a USDT wallet for each customer with one API call, with USDC coming soon. Their deposits are credited to them rather than to your balance, and you move funds between your wallet and theirs instantly.',
   facts: [
     ['Deposit networks', 'Ethereum, BSC, Tron, and Solana'],
     ['Transfers', 'Instant book transfers, with no fee'],
@@ -215,33 +262,28 @@ const ACCOUNTS: Stop = {
   screens: [{ id: 'accounts', label: 'Customer accounts' }],
 }
 
-const HOLD: Stop = {
-  id: 'hold',
-  label: 'Your balance',
-  heading: 'A fiat wallet and a USDT wallet, on one balance',
-  body: 'Pay-ins, payouts and conversions land on one ledger. Withdraw to your bank or your own wallet.',
+/**
+ * The Merchant Portal: three of its pages, after the portal's Figma. The
+ * figures are illustrative and shared across the three, so they agree.
+ */
+const PORTAL: Stop = {
+  id: 'portal',
+  label: 'Portal',
+  menuTitle: 'Merchant Portal pages',
+  heading: 'Your balance, your payments, and your income, in one portal',
+  body: 'Pay-ins, payouts, and conversions land on one ledger. Filter your transactions by channel, see what each month brings in, and withdraw to your bank or your own wallet.',
   facts: [
-    ['Wallets', 'Fiat and USDT'],
-    ['Records', 'A reference and timestamp on every movement'],
+    ['Wallets', 'Fiat and USDT, with USDC coming soon'],
+    ['Reports', 'Income by channel, store, and day'],
     ['Access', 'The Merchant Portal or the API'],
-    ['Safeguarding', 'Held with an FSCA-regulated Crypto Asset Service Provider, FSP No. 53664'],
+    ['Safeguarding', 'MPC wallets on SOC 2 audited infrastructure, with every key split'],
   ],
   links: [{ label: 'Wallets', to: '/wallets' }],
+  wide: true,
   screens: [
-    {
-      id: 'hold',
-      label: 'Merchant Portal',
-      sides: [
-        [
-          { icon: ArrowDownLeft, caption: 'Pay-ins', value: 'Land on one ledger', sub: 'Each with a reference and timestamp' },
-          { icon: ArrowLeftRight, caption: 'Convert', value: 'At a quoted rate', sub: 'Between fiat and USDT' },
-        ],
-        [
-          { icon: ArrowUpRight, caption: 'Payouts', value: 'From the same balance', sub: 'No second provider to pre-fund' },
-          { icon: Banknote, caption: 'Withdraw', value: 'To your bank or wallet', sub: 'Fiat next business day, stablecoin same day' },
-        ],
-      ],
-    },
+    { id: 'portal-dashboard', label: 'Dashboard' },
+    { id: 'portal-transactions', label: 'Transactions' },
+    { id: 'portal-income', label: 'Monthly income' },
   ],
 }
 
@@ -299,7 +341,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: 'Do you provide customer support?',
-    a: `Yes. ${SUPPORT} Email support@ezeebit.com, phone +27 21 879 5074 or WhatsApp +27 79 443 9375.`,
+    a: `Yes. ${SUPPORT} Email support@ezeebit.com, phone +27 21 879 5074, or WhatsApp +27 79 443 9375.`,
   },
 ]
 
@@ -311,27 +353,39 @@ function onTabKeys(e: KeyboardEvent, index: number, ids: string[], set: (id: str
   document.getElementById(`${prefix}-${ids[next]}`)?.focus()
 }
 
-/** A section's label, two-line heading and lead. `aside` sets it beside the content on wide screens. */
-function Intro({ eyebrow, title, intro, aside }: { eyebrow: string; title: ReactNode; intro?: ReactNode; aside?: boolean }) {
-  return (
-    <div className={`max-w-3xl w-full text-left ${aside ? 'mb-8 lg:mb-0 lg:col-span-5' : 'mb-8 lg:mb-12'}`}>
-      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-600 mb-3">{eyebrow}</p>
-      <h2 className="text-3xl lg:text-5xl font-display font-bold text-neutral-900 leading-[1.08] tracking-[-0.02em]">
-        {title}
-      </h2>
-      {intro && <p className="mt-4 text-lg text-neutral-600 leading-relaxed">{intro}</p>}
-    </div>
-  )
-}
-
-/** The facts as a boxed grid, two to a row; an odd last fact takes the full row. */
+/**
+ * The facts as a boxed grid, two to a row; an odd last fact takes the full row.
+ * A fact's marks sit under its words, so the words line up across a row even
+ * where only one of the pair has marks.
+ */
 function Facts({ facts }: { facts: Fact[] }) {
   return (
-    <dl className="grid grid-cols-1 sm:grid-cols-2 gap-px overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-200">
-      {facts.map(([term, detail], i) => (
-        <div key={term} className={`bg-white p-4 ${facts.length % 2 === 1 && i === facts.length - 1 ? 'sm:col-span-2' : ''}`}>
-          <dt className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-500 mb-1">{term}</dt>
+    <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-200 text-left">
+      {facts.map(([term, detail, marks], i) => (
+        <div key={term} className={`bg-white p-3.5 sm:p-4 ${facts.length % 2 === 1 && i === facts.length - 1 ? 'col-span-2' : ''}`}>
+          <dt className="text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-500 mb-1">{term}</dt>
           <dd className="text-sm text-neutral-800 leading-relaxed">{detail}</dd>
+          {marks && (
+            <dd className="mt-3 flex flex-wrap items-center gap-2.5">
+              {marks.map((group, g) => (
+                <ul key={g} className={`flex items-center gap-1.5 ${g > 0 ? 'border-l border-neutral-200 pl-2.5' : ''}`}>
+                  {group.map((m) => (
+                    <li key={m.label} className="leading-none">
+                      <img
+                        src={m.src}
+                        alt={m.label}
+                        title={m.label}
+                        width={24}
+                        height={24}
+                        loading="lazy"
+                        className={`size-6 !mx-0 object-cover ring-1 ring-black/5 ${m.shape === 'square' ? 'rounded-[7px]' : 'rounded-full'}`}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              ))}
+            </dd>
+          )}
         </div>
       ))}
     </dl>
@@ -342,10 +396,10 @@ function Facts({ facts }: { facts: Fact[] }) {
 function StopCopy({ stop }: { stop: Stop }) {
   return (
     <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
-      <div className="lg:col-span-7">
+      <div className="text-center lg:col-span-7 lg:text-left">
         <h3 className="text-2xl lg:text-3xl font-display font-bold text-neutral-900 leading-tight mb-3 [text-wrap:balance]">{stop.heading}</h3>
-        <p className="text-neutral-600 leading-relaxed max-w-xl">{stop.body}</p>
-        <div className="mt-6 flex flex-wrap gap-x-5 gap-y-3">
+        <p className="mx-auto max-w-xl text-neutral-600 leading-relaxed lg:mx-0">{stop.body}</p>
+        <div className="mt-6 flex flex-wrap justify-center gap-x-5 gap-y-3 lg:justify-start">
           {stop.links.map((l) => {
             const cls = 'inline-flex items-center gap-1.5 font-semibold text-primary-600 hover:text-primary-700'
             const body = (
@@ -373,7 +427,7 @@ const SideCard = ({ side }: { side: Side }) => {
   const Icon = side.icon
   return (
     <div className="w-full max-w-[250px] rounded-2xl border border-neutral-200/80 bg-white p-4 shadow-[0_14px_36px_-18px_rgba(0,26,54,0.3)]">
-      <p className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-neutral-500 mb-1.5">
+      <p className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-500 mb-1.5">
         <Icon className="w-3.5 h-3.5 text-primary-600" />
         {side.caption}
       </p>
@@ -386,56 +440,29 @@ const SideCard = ({ side }: { side: Side }) => {
   )
 }
 
-/** The figures under the hero, each with what is behind it. One marked soon is not live yet. */
+/** The figures under the hero, each with what is behind it: what is live today first, and the one marked soon, not live yet, last. */
 const STATS: { n: string; l: string; detail: string; soon?: boolean }[] = [
-  { n: '140', l: 'Payout countries', soon: true, detail: 'Bank, mobile wallet and cash pickup · crypto worldwide today' },
-  { n: '6', l: 'Currencies held and converted', detail: 'ZAR, KES, NGN, USD, USDT and USDC · up to 90 with global rails' },
-  { n: '9', l: 'Cryptocurrencies accepted', detail: 'BTC, ETH, USDT, USDC, BNB, DAI, PAXG, ZARP and ZARU on 5 networks' },
-  { n: '60+', l: 'Platforms and businesses', detail: 'Today' },
   { n: '$25M+', l: 'Moved every year', detail: "Today's run rate" },
+  { n: '100+', l: 'Platforms and businesses', detail: 'Today' },
+  { n: '9', l: 'Cryptocurrencies accepted', detail: 'BTC, ETH, USDT, USDC, BNB, DAI, PAXG, ZARP and ZARU on 5 networks' },
+  { n: '6', l: 'Currencies held and converted', detail: 'ZAR, KES, NGN, USD, USDT and USDC · up to 90 with global rails' },
+  { n: '140', l: 'Payout countries', soon: true, detail: 'Bank, mobile wallet and cash pickup · crypto worldwide today' },
 ]
 
 /** The pricing section's figures, each with what it covers. */
 const PRICE_SUMMARY = [
   { value: '1%', label: 'Crypto In, or less per payment' },
   { value: '$0.65', label: 'Crypto Out, per payout' },
-  { value: 'R0', label: 'Setup and monthly platform fees' },
+  { value: '$0', label: 'Setup and monthly platform fees' },
 ]
 
-/** The company behind Ezeebit in each country, and what it operates under. */
-const ENTITIES: { flag: string; country: string; entity: string; reg?: string; points: ReactNode[]; check?: { label: string; href: string } }[] = [
-  {
-    flag: '/za-flag.svg',
-    country: 'South Africa',
-    entity: 'Ezee Solutions Group (Pty) Ltd',
-    reg: '2022/250578/07',
-    points: [
-      <>Regulated by the FSCA as a Crypto Asset Service Provider, <b>FSP No. 53664</b></>,
-      'FIC compliant, with KYC, KYB, AML and POPIA handled by Ezeebit',
-    ],
-  },
-  {
-    flag: '/ke-flag.svg',
-    country: 'Kenya',
-    entity: 'Ezee Solutions Group (Kenya) Limited',
-    reg: 'PVT-RQ13JL95',
-    points: ['Operates under the transitional provisions of the Virtual Asset Service Providers Act, 2025'],
-  },
-  {
-    flag: '/ca-flag.svg',
-    country: 'Canada',
-    entity: 'Kinetic Payments Ltd., changing its name to Ezeebit Canada Ltd.',
-    points: [<>On FINTRAC&apos;s money services business registry, <b>MSB No. N300001912</b>, for foreign exchange, money transfers, virtual currency and payment services</>],
-    check: { label: 'Check the FINTRAC registry', href: 'https://fintrac-canafe.canada.ca/msb-esm/reg-eng' },
-  },
-]
-
-/** Every stop in the tour, in the order money moves: in, out, your customers' wallets, and your balance. */
-const TOUR: Stop[] = [PAY_INS, PAY_OUT, ACCOUNTS, HOLD]
+/** Every stop in the tour, in the order money moves: in, out, your customers' wallets, and your own portal. */
+const TOUR: Stop[] = [PAY_INS, PAY_OUT, ACCOUNTS, PORTAL]
 
 /**
- * Every demo in the tour, with its stop. Pay-ins' three channels are each a
- * page under the Pay-ins menu; the other stops have one demo each.
+ * Every demo in the tour, with its stop. Pay-ins' three channels and the
+ * portal's three pages are each one under their tab's menu; the other stops
+ * have one demo each.
  */
 const TABS = TOUR.flatMap((stop) => stop.screens.map((screen) => ({ id: screen.id, stop, label: stop.screens.length > 1 ? screen.label : stop.label })))
 
@@ -450,8 +477,18 @@ const fade = (on: boolean) => `[grid-area:1/1] transition-opacity duration-300 $
  */
 const DEMO_FRAME = 'h-[640px]'
 
-/** Customer accounts in the Merchant Portal, at the portal's mobile width, with a restart that starts it afresh. */
-function AccountsDemo() {
+/**
+ * A page of the Merchant Portal in the tour's frame: laid out as the desktop
+ * page where there is room and as the portal's phone layout where there is
+ * not, then scaled to fit. Each layout has a fixed design size, so the scale
+ * holds still while the page changes. A restart starts it afresh.
+ */
+function PortalPanel({ wide, phone, restart = false, children }: {
+  wide: [number, number]
+  phone: [number, number]
+  restart?: boolean
+  children: (compact: boolean) => ReactNode
+}) {
   const [run, setRun] = useState(0)
   const box = useRef<HTMLDivElement>(null)
   const [width, setWidth] = useState(0)
@@ -463,27 +500,28 @@ function AccountsDemo() {
     return () => ro.disconnect()
   }, [])
   const compact = width < 600
+  const [design, height] = compact ? phone : wide
   return (
     <DemoPanel
       fixed
       label="Merchant Portal"
       action={
-        <button
-          type="button"
-          onClick={() => setRun((r) => r + 1)}
-          className="flex items-center gap-1.5 -my-2 py-2 -mr-1.5 pr-1.5 pl-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-primary-500 hover:text-primary-700"
-        >
-          <RotateCcw className="w-3.5 h-3.5" />
-          Restart
-        </button>
+        restart ? (
+          <button
+            type="button"
+            onClick={() => setRun((r) => r + 1)}
+            className="flex items-center gap-1.5 -my-2 py-2 -mr-1.5 pr-1.5 pl-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-primary-500 hover:text-primary-700"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            Restart
+          </button>
+        ) : undefined
       }
     >
       <div ref={box} className="flex-1 min-h-0 overflow-hidden rounded-[20px]">
         {width > 0 && (
-          // The portal's section where there is room for it; its compact page on a phone. A fixed
-          // design height locks the scale, so choosing another customer never resizes the demo.
-          <FitToFrame design={compact ? 390 : 820} height={compact ? 600 : 660} background="bg-[#f8f9fb]">
-            <CustomerAccountsDemo key={`${run}-${compact}`} compact={compact} />
+          <FitToFrame design={design} height={height} background="bg-[#f8f9fb]">
+            <Fragment key={`${run}-${compact}`}>{children(compact)}</Fragment>
           </FitToFrame>
         )}
       </div>
@@ -501,36 +539,13 @@ function TourDemo({ id }: { id: string }) {
     case 'pay-out':
       return <FlowDemo fixed src="/demos/pay-out.html" flow="payout" label="Payout claim" title="Interactive demo of an Ezeebit payout" />
     case 'accounts':
-      return <AccountsDemo />
+      return <PortalPanel wide={[820, 660]} phone={[390, 600]} restart>{(c) => <CustomerAccountsDemo compact={c} />}</PortalPanel>
+    case 'portal-dashboard':
+      return <PortalPanel wide={[820, 660]} phone={[390, 740]}>{(c) => <PortalDashboard compact={c} />}</PortalPanel>
+    case 'portal-transactions':
+      return <PortalPanel wide={[820, 660]} phone={[390, 700]}>{(c) => <PortalTransactions compact={c} />}</PortalPanel>
     default:
-      return (
-        <DemoPanel fixed label="Merchant Portal">
-          <div className="flex-1 min-h-0 overflow-hidden rounded-[20px]">
-          <FitToFrame design={430} background={PORTAL_PAGE_BG}>
-            <div className="p-3 space-y-3">
-              <div className="rounded-[12px] border border-neutral-200/70 overflow-hidden">
-                <PortalBalanceCard
-                  total="R 1,637,102.25"
-                  fiatShare={43.65}
-                  fiat={{ mark: '/za-flag.svg', amount: 'R714,602.25', label: 'Fiat wallet' }}
-                  stable={{ amount: '50,000.00 USDT', label: 'USDT wallet' }}
-                />
-              </div>
-              <div className="rounded-[12px] border border-neutral-200/70 overflow-hidden">
-                <PortalConvertCard
-                  from="Fiat (ZAR)"
-                  fromMark="/za-flag.svg"
-                  fromAmount="50,000.00"
-                  balance="714,602"
-                  toAmount="2,710.03"
-                  rate="Exchange rate: 1 ZAR = 0.0542 USDT"
-                />
-              </div>
-            </div>
-          </FitToFrame>
-          </div>
-        </DemoPanel>
-      )
+      return <PortalPanel wide={[820, 660]} phone={[390, 740]}>{(c) => <PortalIncome compact={c} />}</PortalPanel>
   }
 }
 
@@ -574,7 +589,7 @@ function SideColumn({ stop, col, showing }: { stop: Stop; col: 0 | 1; showing: s
         // The heading goes in with each set, so it sits on top of whichever is showing, however tall
         <div key={i} className={`${fade(cards === shown)} flex flex-col justify-center gap-3 ${align}`}>
           {/* Set against the edge nearest the demo */}
-          {stop.sideTitles && !isShots(cards) && <p className={`w-full text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-500 ${col === 0 ? 'text-right' : ''}`}>{stop.sideTitles[col]}</p>}
+          {stop.sideTitles && !isShots(cards) && <p className={`w-full text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-500 ${col === 0 ? 'text-right' : ''}`}>{stop.sideTitles[col]}</p>}
           <div className={`w-full flex flex-col gap-4 ${align}`}>
             {isShots(cards) ? <Shots shots={cards} /> : cards.map((side) => <SideCard key={side.caption} side={side} />)}
           </div>
@@ -584,19 +599,24 @@ function SideColumn({ stop, col, showing }: { stop: Stop; col: 0 | 1; showing: s
   )
 }
 
-/** What each pay-in channel is, for the Pay-ins menu. */
-const CHANNEL_NOTES: Record<string, { icon: LucideIcon; note: string }> = {
+/** What each screen in a tab's menu is: the Pay-ins channels and the portal's pages. */
+const SCREEN_NOTES: Record<string, { icon: LucideIcon; note: string }> = {
   'in-store': { icon: Store, note: 'On the Ezeebit ePOS or an Ezeebit Pay QR code' },
   online: { icon: ShoppingCart, note: 'Shopify, WooCommerce, Magento, or the API' },
   platforms: { icon: Wallet, note: 'Deposits from your own cashier' },
+  'portal-dashboard': { icon: LayoutDashboard, note: 'Your balance and the payments coming in' },
+  'portal-transactions': { icon: Receipt, note: 'Every payment, by channel, store, and order' },
+  'portal-income': { icon: TrendingUp, note: 'What each month brings in, day by day' },
 }
 
 /**
- * The product tour. Pay-ins is a menu button: hovering it (or tapping it on a
- * phone) opens its three channels, In-store, Online checkout and Platforms,
- * each a page of its own. Payouts, Customer accounts and Your balance are
- * plain buttons beside it. The live demo sits on a stage with what it does
- * called out either side, and the copy and facts follow underneath.
+ * The product tour. Pay-ins and Portal are menu buttons: hovering one (or
+ * tapping it on a phone) opens its screens, Pay-ins' three channels (Platforms,
+ * In-store, and Online checkout) and the
+ * portal's three pages, each a page of its own. Payouts and Customer accounts
+ * are plain buttons between them. The live demo sits on a stage with what it
+ * does called out either side, or across the stage for a portal page, and
+ * the copy and facts follow underneath.
  */
 function ProductTour() {
   const [tab, setTab] = useState(TABS[0].id)
@@ -614,28 +634,29 @@ function ProductTour() {
     setSeen((s) => (s.includes(id) ? s : [...s, id]))
   }
 
-  const [menu, setMenu] = useState(false)
-  const menuBox = useRef<HTMLDivElement>(null)
+  // The stop whose menu is open, if any
+  const [menu, setMenu] = useState<string | null>(null)
+  const menuBoxes = useRef<Record<string, HTMLDivElement | null>>({})
   const closing = useRef<number>()
-  // How the last press on the Pay-ins button was made, so a mouse click doesn't close what hovering opened
+  // How the last press on a menu button was made, so a mouse click doesn't close what hovering opened
   const pointer = useRef('')
-  // Hover opens and closes the menu for a mouse only; a short delay lets the pointer cross to it
-  const hoverOpen = (e: PointerEvent) => {
+  // Hover opens and closes a menu for a mouse only; a short delay lets the pointer cross to it
+  const hoverOpen = (id: string) => (e: PointerEvent) => {
     if (e.pointerType !== 'mouse') return
     window.clearTimeout(closing.current)
-    setMenu(true)
+    setMenu(id)
   }
   const hoverClose = (e: PointerEvent) => {
     if (e.pointerType !== 'mouse') return
-    closing.current = window.setTimeout(() => setMenu(false), 160)
+    closing.current = window.setTimeout(() => setMenu(null), 160)
   }
   useEffect(() => {
     if (!menu) return
-    const outside = (e: MouseEvent) => { if (!menuBox.current?.contains(e.target as Node)) setMenu(false) }
+    const outside = (e: MouseEvent) => { if (!menuBoxes.current[menu]?.contains(e.target as Node)) setMenu(null) }
     const escape = (e: globalThis.KeyboardEvent) => {
       if (e.key !== 'Escape') return
-      setMenu(false)
-      document.getElementById(`tour-tab-${PAY_INS.id}`)?.focus()
+      setMenu(null)
+      document.getElementById(`tour-tab-${menu}`)?.focus()
     }
     document.addEventListener('mousedown', outside)
     document.addEventListener('keydown', escape)
@@ -646,20 +667,43 @@ function ProductTour() {
   }, [menu])
   useEffect(() => () => window.clearTimeout(closing.current), [])
 
+  // Fetch the checkout and payout demos as the tour comes near, so they open at once when asked for
+  const section = useRef<HTMLElement>(null)
+  useEffect(() => {
+    const el = section.current
+    if (!el) return
+    const io = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return
+      prefetchDemos()
+      io.disconnect()
+    }, { rootMargin: '800px 0px' })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
   const pick = (id: string) => {
     select(id)
-    setMenu(false)
+    setMenu(null)
   }
   const topIds = TOUR.map((s) => s.id)
   const goTop = (id: string) => {
     const stop = TOUR.find((s) => s.id === id)!
     select(current(stop))
   }
-  const item = 'min-h-[44px] whitespace-nowrap rounded-full px-4 sm:px-5 py-2 text-sm font-semibold transition-colors'
-  const channel = TABS.find((t) => t.id === current(PAY_INS))!
+  const item = 'min-h-[44px] min-w-0 whitespace-nowrap rounded-full px-1 sm:px-5 py-2 text-[13px] sm:text-sm font-semibold transition-colors'
+  /** A tab's name: the short one on a phone, where there is one, and the full one from a tablet up. */
+  const tabLabel = (stop: Stop) =>
+    stop.short ? (
+      <>
+        <span className="sm:hidden" aria-hidden="true">{stop.short}</span>
+        <span className="sr-only sm:not-sr-only">{stop.label}</span>
+      </>
+    ) : (
+      stop.label
+    )
 
   return (
-    <section id="how-it-works" className="scroll-mt-24 section-padding bg-white">
+    <section ref={section} id="how-it-works" className="scroll-mt-24 section-padding bg-white">
       <div className="container-custom">
         <Intro
           eyebrow="Product tour"
@@ -667,7 +711,8 @@ function ProductTour() {
           intro="The screens your customers and your team use, with the details buyers ask about. Click through them."
         />
 
-        <div role="toolbar" aria-label="Product screens" className="relative z-20 mb-6 grid w-full grid-cols-2 gap-1 rounded-[24px] bg-neutral-950 p-1 lg:mx-auto lg:w-fit lg:grid-cols-none lg:grid-flow-col lg:auto-cols-fr lg:rounded-full">
+        {/* One row at every width: four equal segments in a pill on a phone, sized to the longest label on a wide screen */}
+        <div role="toolbar" aria-label="Product screens" className="relative z-20 mb-6 grid w-full grid-cols-4 gap-1 rounded-full bg-neutral-950 p-1 lg:mx-auto lg:w-fit lg:grid-cols-none lg:grid-flow-col lg:auto-cols-fr">
           {TOUR.map((stop, index) => {
             const on = open === stop
             if (stop.screens.length === 1)
@@ -682,45 +727,56 @@ function ProductTour() {
                   onKeyDown={(e) => onTabKeys(e, index, topIds, goTop, 'tour-tab')}
                   className={`${item} w-full ${on ? 'bg-primary-500 text-white' : 'text-neutral-300 hover:text-white'}`}
                 >
-                  {stop.label}
+                  {tabLabel(stop)}
                 </button>
               )
+            const shown = TABS.find((x) => x.id === current(stop))!
+            const isOpen = menu === stop.id
+            const menuId = `tour-menu-${stop.id}`
             return (
-              // Wide enough for the longest channel name, so picking one never shifts the buttons beside it;
+              // Wide enough for the longest screen name, so picking one never shifts the buttons beside it;
               // the bar's equal columns give the other buttons the same width
-              <div key={stop.id} ref={menuBox} className="relative lg:w-[232px]" onPointerEnter={hoverOpen} onPointerLeave={hoverClose}>
+              <div
+                key={stop.id}
+                ref={(el) => { menuBoxes.current[stop.id] = el }}
+                className="relative lg:w-[232px]"
+                onPointerEnter={hoverOpen(stop.id)}
+                onPointerLeave={hoverClose}
+              >
                 <button
                   type="button"
                   id={`tour-tab-${stop.id}`}
                   aria-haspopup="menu"
-                  aria-expanded={menu}
-                  aria-controls="tour-channels"
+                  aria-expanded={isOpen}
+                  aria-controls={menuId}
                   onPointerDown={(e) => { pointer.current = e.pointerType }}
                   onClick={() => {
                     if (!on) goTop(stop.id)
                     // A mouse has already opened it by hovering, so its click keeps it open; a tap or a key toggles it
-                    setMenu((m) => (pointer.current === 'mouse' || !on ? true : !m))
+                    setMenu((m) => (pointer.current === 'mouse' || !on ? stop.id : m === stop.id ? null : stop.id))
                     pointer.current = ''
                   }}
                   onKeyDown={(e) => {
                     if (e.key === 'ArrowDown') {
                       e.preventDefault()
-                      setMenu(true)
-                      requestAnimationFrame(() => document.querySelector<HTMLButtonElement>('#tour-channels [role=menuitemradio]')?.focus())
+                      setMenu(stop.id)
+                      requestAnimationFrame(() => document.querySelector<HTMLButtonElement>(`#${menuId} [role=menuitemradio]`)?.focus())
                     } else onTabKeys(e, index, topIds, goTop, 'tour-tab')
                   }}
-                  className={`${item} flex w-full items-center justify-center gap-1.5 ${on ? 'bg-primary-500 text-white' : 'text-neutral-300 hover:text-white'}`}
+                  className={`${item} flex w-full items-center justify-center gap-1 sm:gap-1.5 ${on ? 'bg-primary-500 text-white' : 'text-neutral-300 hover:text-white'}`}
                 >
-                  {stop.label}
-                  <span className={`hidden sm:inline font-medium ${on ? 'text-white/75' : 'text-neutral-500'}`}>· {channel.label}</span>
-                  <ChevronDown className={`w-4 h-4 transition-transform ${menu ? 'rotate-180' : ''}`} />
+                  {tabLabel(stop)}
+                  {/* The screen showing is named beside the tab only where the tab is wide enough for it */}
+                  <span className={`hidden lg:inline font-medium ${on ? 'text-white/75' : 'text-neutral-500'}`}>· {shown.label}</span>
+                  <ChevronDown className={`w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {/* The padding, not a margin, bridges the gap to the menu so hover holds while the pointer crosses */}
-                <div className={`absolute left-0 top-full pt-2 transition-all duration-150 ${menu ? 'visible opacity-100 translate-y-0' : 'invisible opacity-0 -translate-y-1'}`}>
+                {/* The last tab's menu opens leftwards, so it stays on the page */}
+                <div className={`absolute top-full pt-2 transition-all duration-150 ${index === TOUR.length - 1 ? 'right-0' : 'left-0'} ${isOpen ? 'visible opacity-100 translate-y-0' : 'invisible opacity-0 -translate-y-1'}`}>
                   <div
-                    id="tour-channels"
+                    id={menuId}
                     role="menu"
-                    aria-label={`${stop.label} channels`}
+                    aria-label={stop.menuTitle ?? stop.label}
                     className="w-[min(320px,calc(100vw-2rem))] rounded-2xl bg-white p-2 ring-1 ring-neutral-200 shadow-[0_24px_60px_-20px_rgba(0,26,54,0.45)]"
                     onKeyDown={(e) => {
                       const items = [...e.currentTarget.querySelectorAll<HTMLButtonElement>('[role=menuitemradio]')]
@@ -732,7 +788,7 @@ function ProductTour() {
                     }}
                   >
                     {stop.screens.map((s) => {
-                      const { icon: Icon, note } = CHANNEL_NOTES[s.id]
+                      const { icon: Icon, note } = SCREEN_NOTES[s.id]
                       const chosen = tab === s.id
                       return (
                         <button
@@ -792,8 +848,12 @@ function ProductTour() {
                 ))}
 
                 {t.wide ? (
-                  <div className={`relative mx-auto w-full max-w-[920px] ${DEMO_FRAME}`}>
-                    {seen.includes(t.screens[0].id) && <TourDemo id={t.screens[0].id} />}
+                  <div className={`relative mx-auto grid w-full max-w-[920px] grid-cols-1 grid-rows-1 ${DEMO_FRAME}`}>
+                    {t.screens.map((s) => (
+                      <div key={s.id} className={`${fade(current(t) === s.id)} min-h-0 ${DEMO_FRAME}`}>
+                        {seen.includes(s.id) && <TourDemo id={s.id} />}
+                      </div>
+                    ))}
                   </div>
                 ) : (
                 // Each demo and its cards are stacked in place too, so switching between them moves nothing
@@ -846,7 +906,7 @@ const Home = () => {
         <PageHero
           id="hero"
           stacked
-          kicker="Payments infrastructure for Africa"
+          kicker="Crypto and stablecoin payment infrastructure"
           // Wraps between the two phrases first, and "pay-ins" never splits at its hyphen
           title={<><span className="inline-block">Stablecoin <span className="whitespace-nowrap">pay-ins</span></span> <span className="inline-block">and payouts,</span></>}
           accent="made Ezee."
@@ -865,7 +925,7 @@ const Home = () => {
           trust={[
             { icon: <ThumbsUp />, label: 'No setup fees' },
             { icon: <ShieldCheck />, label: 'No chargebacks' },
-            { icon: <Headphones />, label: '24/7 chat support' },
+            { icon: <Headphones />, label: '24/7 support' },
           ]}
           wideVisual={<HomeFlowVisual />}
         />
@@ -878,7 +938,7 @@ const Home = () => {
                   <div className="text-4xl xl:text-5xl whitespace-nowrap font-display font-bold tracking-[-0.03em] text-primary-400 leading-none mb-3">{s.n}</div>
                   <p className="flex flex-wrap items-center gap-2 text-[15px] text-neutral-200">
                     {s.l}
-                    {s.soon && <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold text-amber-800">Soon</span>}
+                    {s.soon && <span className="rounded-full bg-warning-100 px-2 py-0.5 text-[11px] font-semibold text-warning-700">Soon</span>}
                   </p>
                   <p className="mt-1.5 text-[13px] leading-relaxed text-neutral-400">{s.detail}</p>
                 </div>
@@ -894,9 +954,12 @@ const Home = () => {
               title={<>Names your customers<br />already trust.</>}
               intro="Merchants that take payments with Ezeebit, and the exchanges, wallets, platforms and stablecoin issuers we work with."
             />
-            <div className="partner-carousel-container mb-6">
+            {/* Customers and the companies we integrate with are named apart, so neither reads as the other */}
+            <p className={ROW_LABEL}>Merchants</p>
+            <div className="partner-carousel-container mb-8">
               <PartnerCarousel partners={PARTNERS_A} direction="left" speed={40} />
             </div>
+            <p className={ROW_LABEL}>Works with</p>
             <div className="partner-carousel-container">
               <PartnerCarousel partners={PARTNERS_B} direction="right" speed={40} />
             </div>
@@ -912,11 +975,12 @@ const Home = () => {
               title={<>For anyone who accepts,<br />holds, and sends money.</>}
               intro="Start with the flow you need. Pay-ins, payouts and the balance are the same underneath."
             />
-            <div className="home-grid-4">
+            {/* Two to a row on a phone, so several show at once; four across on a wide screen */}
+            <div className="grid w-full grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
               {SOLUTIONS.map((s) => (
-                <Link key={s.slug} to={solutionPath(s)} className="rounded-2xl border border-neutral-200 bg-white p-5 hover:border-neutral-300 block h-full">
-                  <h3 className="text-lg font-semibold text-neutral-900 mb-2">{s.name}</h3>
-                  <p className="text-sm text-neutral-600 leading-relaxed">{s.card}</p>
+                <Link key={s.slug} to={solutionPath(s)} className="rounded-2xl border border-neutral-200 bg-white p-4 lg:p-5 text-center lg:text-left hover:border-neutral-300 block h-full">
+                  <h3 className="text-[15px] lg:text-lg font-semibold text-neutral-900 leading-snug mb-1.5 lg:mb-2">{s.name}</h3>
+                  <p className="text-[13px] lg:text-sm text-neutral-600 leading-relaxed">{s.card}</p>
                 </Link>
               ))}
             </div>
@@ -1013,14 +1077,13 @@ const Home = () => {
           </div>
         </section>
 
-        <section id="security" className="section-padding bg-white">
+        <section id="entities" className="section-padding bg-white">
           <div className="container-custom">
             <Intro
-              eyebrow="Security and compliance"
+              eyebrow="Our entities"
               title={<>Regulated where<br />we operate.</>}
-              intro="The companies behind Ezeebit, how funds are held, and how every payment is checked before it reaches you."
+              intro="The company behind Ezeebit in each country, and what it operates under."
             />
-            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500">Our entities</p>
             <div className="grid gap-4 lg:grid-cols-3">
               {ENTITIES.map((e) => (
                 <article key={e.country} className="flex gap-4 rounded-2xl border border-neutral-200 bg-neutral-50 p-5 lg:p-6">
@@ -1035,26 +1098,30 @@ const Home = () => {
                     <ul className="list-disc space-y-1.5 pl-4 text-sm leading-relaxed text-neutral-600 marker:text-neutral-300 [&_b]:font-semibold [&_b]:text-neutral-900">
                       {e.points.map((point, i) => <li key={i}>{point}</li>)}
                     </ul>
-                    {e.check && (
-                      <a href={e.check.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 mt-3 text-sm font-semibold text-primary-600 hover:text-primary-700">
-                        {e.check.label}
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </a>
-                    )}
                   </div>
                 </article>
               ))}
             </div>
-            <div className="home-grid-3 mt-4">
-              <article className="rounded-2xl border border-neutral-200 p-6">
+          </div>
+        </section>
+
+        <section id="security" className="section-padding bg-neutral-50">
+          <div className="container-custom">
+            <Intro
+              eyebrow="Security"
+              title={<>Every payment checked,<br />every key split.</>}
+              intro="How funds are held, and how every payment is checked before it reaches you."
+            />
+            <div className="home-grid-3">
+              <article className="rounded-2xl border border-neutral-200 bg-white p-5 lg:p-6 text-center lg:text-left">
                 <h3 className="text-lg font-semibold text-neutral-900 mb-2">Custody</h3>
-                <p className="text-neutral-600 text-sm leading-relaxed">Balances sit with an FSCA-regulated Crypto Asset Service Provider. Crypto moves through MPC wallets, which split every key so no single person can move funds.</p>
+                <p className="text-neutral-600 text-sm leading-relaxed">Ezeebit holds your balances as a Crypto Asset Service Provider regulated by the FSCA. Crypto sits in MPC wallets on SOC 2 audited infrastructure, where every key is split so no single person can move funds.</p>
               </article>
-              <article className="rounded-2xl border border-neutral-200 p-6">
+              <article className="rounded-2xl border border-neutral-200 bg-white p-5 lg:p-6 text-center lg:text-left">
                 <h3 className="text-lg font-semibold text-neutral-900 mb-2">Screening</h3>
                 <p className="text-neutral-600 text-sm leading-relaxed">Every payer, payee and wallet is checked. Travel Rule data is captured on transfers, and addresses are screened before funds move.</p>
               </article>
-              <article className="rounded-2xl border border-neutral-200 p-6">
+              <article className="rounded-2xl border border-neutral-200 bg-white p-5 lg:p-6 text-center lg:text-left">
                 <h3 className="text-lg font-semibold text-neutral-900 mb-2">No chargebacks</h3>
                 <p className="text-neutral-600 text-sm leading-relaxed">A confirmed crypto payment is final. The rate is locked and hedged at the point of payment, so the sale stays settled.</p>
               </article>
@@ -1067,9 +1134,9 @@ const Home = () => {
         </section>
 
         {/* The full plans are on /pricing; here, just the figures a first visit asks about */}
-        <section id="pricing" className="bg-neutral-50 py-14 lg:py-20">
+        <section id="pricing" className="bg-white py-14 lg:py-20">
           <div className="container-custom">
-            <div className="grid gap-8 rounded-3xl border border-neutral-200 bg-white p-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-12 lg:p-10">
+            <div className="grid gap-8 rounded-3xl border border-neutral-200 bg-neutral-50 p-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-12 lg:p-10">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-600 mb-3">Pricing</p>
                 <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 leading-[1.08] tracking-[-0.02em]">Pay when money moves.</h2>
@@ -1081,7 +1148,7 @@ const Home = () => {
                     </div>
                   ))}
                 </dl>
-                <p className="mt-6 text-[13px] text-neutral-500">Excluding VAT. The ePOS is optional, at R150 a month per device. Platforms get volume pricing.</p>
+                <p className="mt-6 text-[13px] text-neutral-500">Excluding VAT. In a shop, the optional ePOS rents at R150 a month per device. Enterprise pricing is based on your volumes.</p>
               </div>
               <Link to="/pricing" className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-neutral-950 text-white font-semibold px-5 py-3 hover:bg-neutral-800">
                 See pricing
@@ -1091,7 +1158,7 @@ const Home = () => {
           </div>
         </section>
 
-        <section id="faq" className="section-padding bg-white">
+        <section id="faq" className="section-padding bg-neutral-50">
           <div className="container-custom lg:grid lg:grid-cols-12 lg:gap-12">
             <Intro
               aside
@@ -1122,7 +1189,8 @@ const Home = () => {
         <section id="talk-to-us" className="relative overflow-hidden bg-neutral-950 py-14 lg:py-20">
           <DarkBackdrop glow="left" />
           <div className="container-custom relative">
-            <div className="home-grid-2 items-start">
+            <div className="home-grid-2 lg:items-center">
+              {/* Signing up: the steps, then the button that starts them */}
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-400 mb-3">Get started</p>
                 <h2 className="text-3xl lg:text-5xl font-display font-bold text-white leading-[1.08] tracking-[-0.02em] mb-4">
@@ -1143,26 +1211,50 @@ const Home = () => {
                     </li>
                   ))}
                 </ol>
+                <a
+                  href="https://merchant.ezeebit.com/#/signup"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${HERO_PRIMARY} mt-8 w-full sm:w-auto sm:inline-flex`}
+                >
+                  Get started free
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </a>
               </div>
+
+              {/* Talking first: every way to reach the team, each one a link */}
               <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 lg:p-8">
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-400 mb-3">Talk to us</p>
-                <h3 className="text-2xl font-display font-bold text-white mb-3">Talk to a person on the team</h3>
+                <h3 className="text-2xl font-display font-bold text-white mb-3">Rather talk it through first?</h3>
                 <p className="text-neutral-300 leading-relaxed mb-6">
-                  Bring your use case. We’ll walk through pay-ins, payouts and which plan fits.
+                  Bring your use case. We’ll walk through pay-ins, payouts, and which plan fits.
                 </p>
-                <p className="text-sm text-neutral-300 mb-6">{SUPPORT}</p>
-                <div className="flex flex-col gap-3">
-                  <Link to="/contact" className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary-500 text-white font-semibold px-5 py-3 hover:bg-primary-600">
-                    Contact the team
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                  <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 text-white font-semibold px-5 py-3 hover:bg-white/5">
-                    Get started free
-                  </a>
-                </div>
-                <p className="mt-5 text-sm text-neutral-400">
-                  +27 21 879 5074 · support@ezeebit.com · Cape Town
-                </p>
+                <ul className="divide-y divide-white/10 border-y border-white/10 mb-6">
+                  {CONTACTS.map(({ icon: Icon, label, value, href, hours }) => (
+                    <li key={label}>
+                      <a
+                        href={href}
+                        {...(href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                        className="group flex items-center gap-4 py-3.5"
+                      >
+                        <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-white/[0.06] text-primary-400">
+                          <Icon className="w-5 h-5" />
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className="block text-white font-semibold group-hover:text-primary-300">{value}</span>
+                          <span className="block text-sm text-neutral-400">{label} · {hours}</span>
+                        </span>
+                        <ArrowRight className="w-4 h-4 shrink-0 text-neutral-500 transition-transform group-hover:translate-x-0.5 group-hover:text-primary-300" />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  to="/book-a-call"
+                  className={`${HERO_SECONDARY} w-full`}
+                >
+                  Book a call
+                </Link>
               </div>
             </div>
           </div>

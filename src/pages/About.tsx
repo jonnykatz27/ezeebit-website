@@ -5,14 +5,14 @@ import {
   ArrowRight, Heart
 } from 'lucide-react'
 import SEO from '../components/SEO'
-import PageHero from '../components/hero/PageHero'
+import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import DarkBackdrop from '../components/DarkBackdrop'
 
 const About = () => {
   const stats = [
     { number: "100,000+", label: "Transactions processed", icon: <TrendingUp className="w-6 h-6" /> },
-    { number: "150+", label: "Active stores", icon: <Users className="w-6 h-6" /> },
-    { number: "7+", label: "Supported cryptocurrencies", icon: <Globe className="w-6 h-6" /> },
+    { number: "100+", label: "Platforms and businesses", icon: <Users className="w-6 h-6" /> },
+    { number: "9", label: "Supported cryptocurrencies", icon: <Globe className="w-6 h-6" /> },
     { number: "99.99%", label: "Uptime", icon: <Shield className="w-6 h-6" /> }
   ]
 
@@ -94,13 +94,14 @@ const About = () => {
       >
       {/* Hero Section */}
       <PageHero
+        kicker="About us"
         title="Pioneering stablecoin"
         accent="payments in Africa"
         description="We're on a mission to make stablecoin payments as simple and secure as traditional ones — money in, money held and money out — so African businesses can move value as easily as information."
         trust={[
           { icon: <Award />, label: 'FSCA regulated' },
           { icon: <Shield />, label: 'Bank-grade security' },
-          { icon: <Users />, label: '150+ stores' },
+          { icon: <Users />, label: '100+ platforms and businesses' },
         ]}
       />
 
@@ -116,7 +117,7 @@ const About = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="text-center"
               >
-                <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4 text-primary-500">
+                <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center mx-auto mb-4 text-primary-400 [&_svg]:w-6 [&_svg]:h-6">
                   {stat.icon}
                 </div>
                 <div className="text-3xl lg:text-4xl font-bold text-gradient mb-2">
@@ -167,9 +168,9 @@ const About = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-16"
+            className="section-head"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+            <h2 className="section-title">
               Our core values
             </h2>
             <p className="text-base lg:text-xl text-neutral-600 max-w-3xl mx-auto">
@@ -177,22 +178,22 @@ const About = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="feature-grid feature-grid-4">
             {values.map((value, index) => (
               <motion.div
                 key={value.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="card p-6 text-center hover:scale-105 transition-transform"
+                className="card feature-card"
               >
-                <div className="w-16 h-16 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4 text-primary-500">
+                <div className="bg-neutral-950 rounded-xl flex items-center justify-center text-primary-400 [&_svg]:w-5 [&_svg]:h-5 lg:[&_svg]:w-6 lg:[&_svg]:h-6">
                   {value.icon}
                 </div>
-                <h3 className="text-xl font-semibold text-neutral-900 mb-3">
+                <h3 className="feature-title">
                   {value.title}
                 </h3>
-                <p className="text-neutral-600">
+                <p className="feature-text">
                   {value.description}
                 </p>
               </motion.div>
@@ -201,15 +202,15 @@ const About = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="card p-6 text-center hover:scale-105 transition-transform"
+              className="card feature-card"
             >
-              <div className="w-16 h-16 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4 text-primary-500">
+              <div className="bg-neutral-950 rounded-xl flex items-center justify-center text-primary-400 [&_svg]:w-5 [&_svg]:h-5 lg:[&_svg]:w-6 lg:[&_svg]:h-6">
                 <Globe className="w-8 h-8" />
               </div>
-              <h3 className="text-xl font-semibold text-neutral-900 mb-3">
+              <h3 className="feature-title">
                 Access for all
               </h3>
-              <p className="text-neutral-600">
+              <p className="feature-text">
                 We're here to democratise stablecoin payments — not just for the privileged few, but for every business and customer across Africa and beyond.
               </p>
             </motion.div>
@@ -223,9 +224,9 @@ const About = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-16"
+            className="section-head"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+            <h2 className="section-title">
               Our journey
             </h2>
             <p className="text-base lg:text-xl text-neutral-600 max-w-3xl mx-auto">
@@ -269,9 +270,9 @@ const About = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-12"
+            className="section-head"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+            <h2 className="section-title">
               Our co-founders
             </h2>
             <p className="text-base lg:text-xl text-neutral-600 max-w-3xl mx-auto">
@@ -322,9 +323,9 @@ const About = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-8 lg:mb-12"
+            className="section-head"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">Backed by world-class investors</h2>
+            <h2 className="section-title">Backed by world-class investors</h2>
             <p className="text-lg text-neutral-600 max-w-2xl mx-auto leading-relaxed">
               Supported by leading global funds and industry veterans who share our belief in building the future of payments in Africa
             </p>
@@ -337,7 +338,7 @@ const About = () => {
               transition={{ delay: 0.1 }}
               className="mb-12"
             >
-              <p className="text-xs font-semibold text-neutral-500 uppercase tracking-widest text-center mb-6">
+              <p className="text-xs font-semibold text-neutral-500 uppercase tracking-[0.14em] text-center mb-6">
                 Lead Investors
               </p>
               <div className="flex flex-wrap justify-center items-center gap-10 md:gap-16">
@@ -374,7 +375,7 @@ const About = () => {
               transition={{ delay: 0.15 }}
               className="border-t border-neutral-200 pt-10 mb-12"
             >
-              <p className="text-xs font-semibold text-neutral-500 uppercase tracking-widest text-center mb-6">
+              <p className="text-xs font-semibold text-neutral-500 uppercase tracking-[0.14em] text-center mb-6">
                 Strategic Investors
               </p>
               <div className="flex justify-center items-center">
@@ -399,7 +400,7 @@ const About = () => {
               transition={{ delay: 0.2 }}
               className="border-t border-neutral-200 pt-10"
             >
-              <p className="text-xs font-semibold text-neutral-500 uppercase tracking-widest text-center mb-8">
+              <p className="text-xs font-semibold text-neutral-500 uppercase tracking-[0.14em] text-center mb-8">
                 Angel Investors
               </p>
               <div className="max-w-2xl mx-auto">
@@ -524,13 +525,13 @@ const About = () => {
                 href="https://merchant.ezeebit.com/#/signup"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+                className={HERO_PRIMARY}
               >
-                Get Started Today
+                Get started today
                 <ArrowRight className="w-5 h-5 ml-2" />
               </a>
-              <Link to="/contact" className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center">
-                Contact Our Team
+              <Link to="/contact" className={HERO_SECONDARY}>
+                Contact our team
               </Link>
             </div>
           </motion.div>

@@ -9,7 +9,7 @@ import { SOLUTIONS, solutionPath } from './solutions'
  */
 const DARK_HERO_PATHS = new Set([
   '/', '/in-store', '/online', '/platforms', '/payouts', '/wallets', '/otc', '/pricing', '/developers',
-  '/contact', '/careers', '/resources', '/resources/about', '/resources/faq', '/resources/blog',
+  '/contact', '/book-a-call', '/careers', '/resources', '/resources/about', '/resources/faq', '/resources/blog',
   '/resources/user-manual', '/resources/where-to-spend',
   ...SOLUTIONS.map(solutionPath),
 ])

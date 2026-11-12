@@ -8,8 +8,7 @@ import { hasDarkHero } from './lib/darkHero'
 import {
   Home, InStore, Online, OTC, Payouts, Platforms, Wallets, Pricing, Developers,
   Resources, About, FAQ, Legal, Blog, UserManual, SignUp, Contact, BlogPost,
-  EzeebitResources, WhereToSpend, StoreDetail, Careers, NotFound, Solution,
-} from './routePages'
+  EzeebitResources, WhereToSpend, StoreDetail, Careers, NotFound, Solution, BookCall } from './routePages'
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation()
@@ -51,6 +50,7 @@ function App() {
             <Route path="/blog/:slug" element={<Suspense fallback={<PageLoader />}><BlogPost /></Suspense>} />
             <Route path="/signup" element={<Suspense fallback={<PageLoader />}><SignUp /></Suspense>} />
             <Route path="/contact" element={<Suspense fallback={<PageLoader />}><Contact /></Suspense>} />
+            <Route path="/book-a-call" element={<Suspense fallback={<PageLoader />}><BookCall /></Suspense>} />
             <Route path="/ezeebit-resources" element={<Suspense fallback={<PageLoader />}><EzeebitResources /></Suspense>} />
             <Route path="/resources/where-to-spend" element={<Suspense fallback={<PageLoader />}><WhereToSpend /></Suspense>} />
             <Route path="/resources/stores/:slug" element={<Suspense fallback={<PageLoader />}><StoreDetail /></Suspense>} />

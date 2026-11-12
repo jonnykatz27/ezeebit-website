@@ -1,7 +1,7 @@
 import { motion } from '../lib/motion'
 import { MapPin, Clock, Briefcase, ExternalLink, Zap, Compass, ShieldCheck, Sparkles, Coffee } from 'lucide-react'
 import SEO from '../components/SEO'
-import PageHero from '../components/hero/PageHero'
+import PageHero, { HERO_PRIMARY } from '../components/hero/PageHero'
 import DarkBackdrop from '../components/DarkBackdrop'
 
 const jobPostings = [
@@ -59,9 +59,10 @@ const Careers = () => {
       >
         {/* Hero */}
         <PageHero
+          kicker="Careers"
           title="Build the future of"
           accent="African payments"
-          description="We're a small team in Cape Town building the rails that let merchants across Africa accept stablecoins and crypto — instantly hedged, settled the next business day. 150+ stores already run on Ezeebit. We're just getting started."
+          description="We're a small team in Cape Town building the rails that let merchants across Africa accept stablecoins and crypto — instantly hedged, settled the next business day. 100+ platforms and businesses already run on Ezeebit. We're just getting started."
         />
 
         {/* How we work */}
@@ -70,27 +71,27 @@ const Careers = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="text-center mb-12"
+              className="section-head"
             >
-              <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 mb-3">How we work</h2>
-              <p className="text-neutral-600 max-w-xl mx-auto">
+              <h2 className="section-title">How we work</h2>
+              <p className="section-lead">
                 FSCA-regulated, backed by Founder Collective, Raba, and DCG — and small enough that what you build reaches real merchants this week. These are the principles we actually run on.
               </p>
             </motion.div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            <div className="feature-grid">
               {principles.map((principle, index) => (
                 <motion.div
                   key={principle.title}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className="card p-6 text-center hover:scale-105 transition-transform"
+                  className="card feature-card"
                 >
-                  <div className="w-16 h-16 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4 text-primary-500">
+                  <div className="bg-neutral-950 rounded-xl flex items-center justify-center text-primary-400 [&_svg]:w-5 [&_svg]:h-5 lg:[&_svg]:w-6 lg:[&_svg]:h-6">
                     <principle.icon className="w-8 h-8" />
                   </div>
-                  <h3 className="text-xl font-semibold text-neutral-900 mb-3">{principle.title}</h3>
-                  <p className="text-neutral-600">{principle.description}</p>
+                  <h3 className="feature-title">{principle.title}</h3>
+                  <p className="feature-text">{principle.description}</p>
                 </motion.div>
               ))}
             </div>
@@ -105,7 +106,7 @@ const Careers = () => {
               whileInView={{ opacity: 1, y: 0 }}
               className="card p-8 md:p-12 max-w-4xl mx-auto text-center"
             >
-              <div className="w-16 h-16 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4 text-primary-500">
+              <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center mx-auto mb-4 text-primary-400 [&_svg]:w-6 [&_svg]:h-6">
                 <Coffee className="w-8 h-8" />
               </div>
               <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 mb-4">
@@ -149,7 +150,7 @@ const Careers = () => {
                           <span className="bg-primary-100 text-primary-700 text-xs font-medium px-2.5 py-1 rounded-full">
                             {job.department}
                           </span>
-                          <span className="bg-green-100 text-green-700 text-xs font-medium px-2.5 py-1 rounded-full">
+                          <span className="bg-success-100 text-success-700 text-xs font-medium px-2.5 py-1 rounded-full">
                             {job.level}
                           </span>
                         </div>
@@ -226,9 +227,9 @@ const Careers = () => {
               </p>
               <a
                 href="mailto:careers@ezeebit.com"
-                className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl inline-flex items-center gap-2"
+                className={`${HERO_PRIMARY} gap-2`}
               >
-                Get in Touch
+                Get in touch
               </a>
             </motion.div>
           </div>

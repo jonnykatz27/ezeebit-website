@@ -5,8 +5,9 @@ import { Plus } from 'lucide-react'
  * Customer accounts in the Merchant Portal, for the homepage's product tour.
  *
  * One page, no steps: the accounts on the left, the selected account's wallet
- * on the right. Clicking a row opens it in place; sending, withdrawing and
- * opening an account are each one click, and a deposit arrives on its own.
+ * on the right. Clicking a row opens it in place; sending, converting to
+ * fiat, withdrawing, and opening an account are each one click, and a deposit
+ * arrives on its own.
  * It shows the portal's Customer accounts section on its own, without the
  * portal's navigation; compact, for a phone, the accounts become a row of
  * tabs over the wallet.
@@ -19,6 +20,7 @@ import { Plus } from 'lucide-react'
  * merchant's own customer ID; deposit addresses on Tron, Ethereum, BSC and
  * Solana, with Ethereum and BSC sharing one; deposits credited to the
  * customer; instant, no-fee book transfers from the merchant's USDT wallet;
+ * conversions from a customer account into the merchant's own fiat wallet;
  * withdrawals to whitelisted addresses, held until they complete; frozen
  * accounts that receive deposits but can't move funds; and a ledger with the
  * balance after every entry. Names, balances and addresses are illustrative.
@@ -39,6 +41,7 @@ const T = {
 
 const RATE = 18.42 // ZAR per USDT, the same placeholder as the checkout demos
 const SEND = 50
+const CONVERT = 50
 const WITHDRAW = 100
 
 type Net = 'tron' | 'evm' | 'sol'
@@ -96,7 +99,7 @@ const seed = (): Account[] => [
 
 const NEW_ACCOUNT: Account = {
   id: 'cust-1004',
-  name: 'New customer',
+  name: 'Lerato Dlamini',
   balance: 0,
   held: 0,
   addresses: { tron: 'TWq5Hn8Kc2Rv7Lx4Pm9Jd3Yb6Gs1Fz5Tk8A', evm: '0x6b8d0f2a4c6e8a1b3d5f7a9c2e4b6d8f0a1c3e5b', sol: '7Rk2Wp9Lx4Tm6Hq3Vn8Jc5Bd1Fz7Gs4Ny2Ka9Pe3Q' },
@@ -109,6 +112,9 @@ const LEDGER_ROW = 52
 const fmt = (n: number) => n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 const available = (a: Account) => a.balance - a.held
 
+const ACTION = 'h-9 flex-auto whitespace-nowrap rounded-full px-3 text-[13px] font-semibold disabled:cursor-not-allowed disabled:opacity-40'
+const ACTION_OUTLINE = 'border border-[#0074e3] bg-white text-[#0074e3] hover:bg-[#f5f9ff]'
+
 const Chip = ({ frozen }: { frozen?: boolean }) => (
   <span className="rounded-[4px] px-1.5 py-0.5 text-[10px] font-semibold" style={frozen ? { background: '#f1f2f4', color: T.subtle } : { background: T.greenBg, color: T.green }}>
     {frozen ? 'Frozen' : 'Active'}
@@ -119,10 +125,11 @@ const ICON = {
   credit: { bg: '#dcfff1', src: '/portal/check.svg' },
   transfer: { bg: '#f3f0ff', src: '/portal/file-text.svg' },
   pending: { bg: '#ffecf8', src: '/portal/arrow-counter-clockwise.svg' },
+  convert: { bg: '#e9f2ff', src: '/portal/arrows-counter-clockwise.svg' },
 }
 
 const LedgerRow = ({ e, fresh }: { e: Entry; fresh: boolean }) => {
-  const icon = e.state ? ICON.pending : e.title.startsWith('Transfer') ? ICON.transfer : ICON.credit
+  const icon = e.state ? ICON.pending : e.title.startsWith('Transfer') ? ICON.transfer : e.title.startsWith('Converted') ? ICON.convert : ICON.credit
   return (
     <div className={`-mx-2 flex items-center gap-3 rounded-lg px-2 transition-colors duration-700 ${fresh ? 'bg-[#f5f9ff]' : ''}`} style={{ height: LEDGER_ROW }}>
       <span className="flex size-8 shrink-0 items-center justify-center rounded-full" style={{ background: icon.bg }}>
@@ -146,6 +153,8 @@ export default function CustomerAccountsDemo({ compact = false }: { compact?: bo
   const [accounts, setAccounts] = useState(seed)
   const [selected, setSelected] = useState('cust-1001')
   const [merchant, setMerchant] = useState(3350)
+  // The merchant's own fiat wallet, which a conversion from a customer account pays into
+  const [fiat, setFiat] = useState(714_602.25)
   const [net, setNet] = useState<Net>('tron')
   const [toast, setToast] = useState<string | null>(null)
   const [fresh, setFresh] = useState<number | null>(null)
@@ -180,6 +189,7 @@ export default function CustomerAccountsDemo({ compact = false }: { compact?: bo
 
   const account = accounts.find((a) => a.id === selected)!
   const canSend = !account.frozen && merchant >= SEND
+  const canConvert = !account.frozen && available(account) >= CONVERT
   const canWithdraw = !account.frozen && !!account.whitelist && available(account) >= WITHDRAW
 
   const send = () => {
@@ -193,6 +203,20 @@ export default function CustomerAccountsDemo({ compact = false }: { compact?: bo
     setMerchant((m) => m - SEND)
     flash(id)
     say('Sent instantly, with no fee')
+  }
+  /** A conversion quotes the customer's USDT against rand and pays the rand into the merchant's own fiat wallet. */
+  const convert = () => {
+    if (!canConvert) return
+    const id = Date.now()
+    const zar = CONVERT * RATE
+    update(account.id, (a) => ({
+      ...a,
+      balance: a.balance - CONVERT,
+      ledger: [{ id, title: 'Converted to ZAR', sub: `R ${fmt(zar)} to your fiat wallet`, amount: CONVERT, credit: false, after: a.balance - CONVERT }, ...a.ledger],
+    }))
+    setFiat((f) => f + zar)
+    flash(id)
+    say(`Converted at R${RATE.toFixed(2)} · R ${fmt(zar)} to your fiat wallet`)
   }
   const withdraw = () => {
     if (!canWithdraw || !account.whitelist) return
@@ -210,6 +234,12 @@ export default function CustomerAccountsDemo({ compact = false }: { compact?: bo
       }))
       flash(id)
     }, 3000)
+  }
+  /** A new account has nowhere to withdraw to until one of its addresses is screened and whitelisted. */
+  const whitelist = () => {
+    if (account.frozen || account.whitelist) return
+    update(account.id, (a) => ({ ...a, whitelist: { label: `${a.name.split(' ')[0]}'s wallet`, network: 'Tron' } }))
+    say('Address screened and whitelisted')
   }
   const create = () => {
     if (accounts.some((a) => a.id === NEW_ACCOUNT.id)) return
@@ -246,20 +276,33 @@ export default function CustomerAccountsDemo({ compact = false }: { compact?: bo
         </div>
       </div>
 
+      {/* One row of actions, each sized to its label; the unit is the USDT of the balance above */}
       <div className="mt-4 flex gap-2">
-        <button type="button" onClick={send} disabled={!canSend} className="h-9 flex-1 rounded-full bg-[#0074e3] px-3 text-[13px] font-semibold text-white hover:bg-[#0062c2] disabled:cursor-not-allowed disabled:opacity-40">
-          Send {SEND} USDT
+        <button type="button" onClick={send} disabled={!canSend} className={`${ACTION} bg-[#0074e3] text-white hover:bg-[#0062c2]`}>
+          Send {SEND}
         </button>
-        <button type="button" onClick={withdraw} disabled={!canWithdraw} className="h-9 flex-1 rounded-full border border-[#0074e3] bg-white px-3 text-[13px] font-semibold text-[#0074e3] hover:bg-[#f5f9ff] disabled:cursor-not-allowed disabled:opacity-40">
-          Withdraw {WITHDRAW} USDT
+        <button type="button" onClick={convert} disabled={!canConvert} className={`${ACTION} ${ACTION_OUTLINE}`}>
+          Convert {CONVERT}
         </button>
+        {/* Without a whitelisted address the button adds one, so a new account is never a dead end */}
+        {!account.frozen && !account.whitelist ? (
+          <button type="button" onClick={whitelist} className={`${ACTION} ${ACTION_OUTLINE}`}>
+            Whitelist address
+          </button>
+        ) : (
+          <button type="button" onClick={withdraw} disabled={!canWithdraw} className={`${ACTION} ${ACTION_OUTLINE}`}>
+            Withdraw {WITHDRAW}
+          </button>
+        )}
       </div>
       <p className="mt-1.5 h-[30px] text-[10px] leading-[15px]" style={{ color: T.subtlest }}>
         {account.frozen
           ? "Frozen: it still receives deposits, but can't send or withdraw"
-          : account.whitelist
-            ? `Sends come from your USDT wallet, instantly and free. Withdrawals go to ${account.whitelist.label}, a whitelisted address.`
-            : 'Sends come from your USDT wallet, instantly and free. No whitelisted address to withdraw to yet.'}
+          : !account.whitelist
+            ? 'Sends come from your USDT wallet, instantly and free. Whitelist an address before this account can withdraw.'
+            : available(account) < WITHDRAW
+              ? `Withdrawals go to ${account.whitelist.label}, a whitelisted address. Send funds first: a withdrawal needs ${WITHDRAW} USDT available.`
+              : `Sends come from your USDT wallet, free. Converting pays rand into your fiat wallet. Withdrawals go to ${account.whitelist.label}.`}
       </p>
 
       <div className="mt-4">
@@ -331,7 +374,7 @@ export default function CustomerAccountsDemo({ compact = false }: { compact?: bo
         <div className="mx-4 flex items-center justify-between gap-3">
           <div>
             <p className="font-display text-[20px] font-bold leading-tight" style={{ color: T.heading }}>Customer accounts</p>
-            <p className="text-[11px]" style={{ color: T.subtle }}>Your USDT wallet: {fmt(merchant)}</p>
+            <p className="text-[11px] tabular-nums" style={{ color: T.subtle }}>R {fmt(fiat)} · {fmt(merchant)} USDT</p>
           </div>
           {newButton}
         </div>
@@ -360,12 +403,12 @@ export default function CustomerAccountsDemo({ compact = false }: { compact?: bo
         <div className="flex items-center justify-between gap-4 rounded-[12px] bg-white px-6 py-4">
           <div>
             <p className="font-display text-[22px] font-bold leading-tight" style={{ color: T.heading }}>Customer accounts</p>
-            <p className="mt-1 text-[12px]" style={{ color: T.subtle }}>A USDT wallet for each of your customers, held under your merchant account</p>
+            <p className="mt-1 text-[12px]" style={{ color: T.subtle }}>A USDT wallet for each customer, under your merchant account</p>
           </div>
           <div className="flex items-center gap-4">
             <div className="text-right">
-              <p className="text-[11px]" style={{ color: T.subtlest }}>Your USDT wallet</p>
-              <p className="text-[14px] font-semibold tabular-nums" style={{ color: T.heading }}>{fmt(merchant)} USDT</p>
+              <p className="text-[11px]" style={{ color: T.subtlest }}>Your fiat and USDT wallets</p>
+              <p className="whitespace-nowrap text-[14px] font-semibold tabular-nums" style={{ color: T.heading }}>R {fmt(fiat)} · {fmt(merchant)} USDT</p>
             </div>
             {newButton}
           </div>

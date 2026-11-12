@@ -57,7 +57,7 @@ export type Solution = Base &
   )
 
 const SIGNUP = { label: 'Get started free', to: 'https://merchant.ezeebit.com/#/signup' }
-const TALK = { label: 'Talk to the team', to: '/contact' }
+const TALK = { label: 'Talk to the team', to: '/book-a-call' }
 
 const SETTLE = 'Settle in ZAR, KES, NGN, or USD the next business day, or in stablecoin the same day.'
 
@@ -117,7 +117,7 @@ export const SOLUTIONS: Solution[] = [
         intro: 'Send winnings and withdrawals as stablecoin, funded from your fiat balance. You never buy, hold, or move the stablecoin yourself.',
         steps: [
           { title: 'Create the payout', body: 'Call the Payout Gateway with the amount in your currency. We reserve it against your fiat balance and return a link.' },
-          { title: 'The player claims it', body: 'They pick the stablecoin and network and enter their own wallet address, so you never collect or check addresses.' },
+          { title: 'The player claims it', body: 'They pick the network and enter their own wallet address, so you never collect or check addresses.' },
           { title: 'We convert and send', body: 'We screen the address, convert at the quoted rate, and send the stablecoin on-chain, usually within minutes.' },
           { title: 'You reconcile', body: 'A signed webhook confirms the final status and the transaction hash.' },
         ],
@@ -197,7 +197,7 @@ export const SOLUTIONS: Solution[] = [
       { icon: Users, title: 'Sub-merchants through the API', body: 'Create, read, and remove sub-merchants from your own systems, with no manual onboarding.' },
       { icon: Layers, title: 'Their own stores and history', body: 'Each merchant has its own stores, fees, and transaction history, kept apart from the rest.' },
       { icon: Globe, title: 'Every channel', body: 'In store, online checkout, and platform deposits all open the same checkout.' },
-      { icon: ShieldCheck, title: 'Compliance handled', body: 'KYC and KYB, AML, address screening, and the Travel Rule, as an FSCA-regulated Crypto Asset Service Provider.' },
+      { icon: ShieldCheck, title: 'Compliance handled', body: 'KYC and KYB, AML, address screening, and the Travel Rule are handled by Ezeebit, which is regulated by the FSCA as a Crypto Asset Service Provider.' },
     ],
     steps: [
       { title: 'Onboard the merchant', body: 'Create them as a sub-merchant through the API.' },

@@ -121,7 +121,7 @@ function DesktopDropdown({
           focusMenu.current = true
           onOpen()
         }}
-        className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-base font-medium transition-colors ${linkClass}`}
+        className={`flex items-center space-x-1 px-2.5 xl:px-3 py-2 rounded-lg text-base font-medium transition-colors ${linkClass}`}
       >
         <span>{item.name}</span>
         <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
@@ -260,11 +260,11 @@ const Header = () => {
             { name: 'User Manual', href: '/resources/user-manual', description: 'How-to guides and tutorials' },
             { name: 'Where to Spend Crypto', href: '/resources/where-to-spend', description: 'Verified merchants accepting crypto' },
             { name: 'Careers', href: '/careers', description: 'Open roles at Ezeebit' },
+            { name: 'Contact', href: '/contact', description: 'Get in touch with our team' },
           ],
         },
       ]
     },
-    { name: 'Contact', href: '/contact' },
   ]
 
   const isActive = (href: string) => {
@@ -302,7 +302,7 @@ const Header = () => {
       }`}
     >
       <nav className="container-custom">
-        <div className="flex items-center justify-between h-16 lg:h-20 px-1 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 lg:h-20 px-1 sm:px-6 lg:px-2 xl:px-8">
           <Link to="/" className="flex items-center space-x-2">
             {/* The brand's own white-wordmark logo on dark, the black one on light; never one recoloured */}
             <img
@@ -313,7 +313,8 @@ const Header = () => {
           </Link>
 
           <div className="hidden lg:flex items-center space-x-1">
-            {navigation.map((item) => (
+            {/* The logo stands in for Home on a wide screen, leaving room for Talk to sales; the phone menu keeps it */}
+            {navigation.filter((item) => item.href !== '/').map((item) => (
               <div key={item.name} className="relative">
                 {item.dropdown ? (
                   <DesktopDropdown
@@ -326,7 +327,7 @@ const Header = () => {
                 ) : (
                   <Link
                     to={item.href}
-                    className={`px-3 py-2 rounded-lg text-base font-medium transition-colors ${navLink(isActive(item.href))}`}
+                    className={`px-2.5 xl:px-3 py-2 rounded-lg text-base font-medium transition-colors ${navLink(isActive(item.href))}`}
                   >
                     {item.name}
                   </Link>
@@ -335,20 +336,32 @@ const Header = () => {
             ))}
           </div>
 
-          <div className="hidden lg:flex items-center space-x-3">
+          <div className="hidden lg:flex items-center space-x-1 xl:space-x-3">
             <a
               href="https://merchant.ezeebit.com/#/login"
               target="_blank"
               rel="noopener noreferrer"
-              className={`text-base font-medium transition-colors px-3 py-2 rounded-lg ${navLink(false)}`}
+              className={`text-base font-medium transition-colors px-2.5 xl:px-3 py-2 rounded-lg ${navLink(false)}`}
             >
               Login
             </a>
+            {/*
+              Same size as Get Started beside it, outlined so Get Started stays the main call.
+              Below 1180px there is no room for it; Contact is under Resources there.
+            */}
+            <Link
+              to="/book-a-call"
+              className={`hidden min-[1180px]:inline-flex min-h-[44px] items-center whitespace-nowrap rounded-xl border px-5 py-2.5 text-base font-medium transition-colors ${
+                onDark ? 'border-white/25 text-white hover:border-white/50 hover:bg-white/5' : 'border-neutral-300 text-neutral-900 hover:border-neutral-400 hover:bg-neutral-50'
+              }`}
+            >
+              Talk to sales
+            </Link>
             <a
               href="https://merchant.ezeebit.com/#/signup"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary !py-2.5 !px-5 text-base"
+              className="btn-primary !py-2.5 !px-5 text-base whitespace-nowrap"
             >
               Get Started
             </a>
@@ -466,6 +479,13 @@ const Header = () => {
                   >
                     Login
                   </a>
+                  <Link
+                    to="/book-a-call"
+                    className="flex min-h-[48px] w-full items-center justify-center rounded-xl border border-neutral-300 text-base font-medium text-neutral-900 hover:bg-neutral-50"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Talk to sales
+                  </Link>
                   <a
                     href="https://merchant.ezeebit.com/#/signup"
                     target="_blank"

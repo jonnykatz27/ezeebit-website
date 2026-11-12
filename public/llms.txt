@@ -13,7 +13,7 @@ Ezeebit does not offer retail crypto trading and this site does not give investm
 - **In-store ePOS** — an Android point of sale for physical stores, plus ezeebit Pay static QR. <https://ezeebit.com/in-store>
 - **Online payments** — plugins for Shopify, WooCommerce and Magento, and hosted checkout. <https://ezeebit.com/online>
 - **Platforms** — crypto pay-ins and stablecoin payouts for gaming, trading, wallet and payment platforms. <https://ezeebit.com/platforms>
-- **Payouts** — pay customers from an Ezeebit balance in USDT or other crypto. Recipients choose the asset and network. <https://ezeebit.com/payouts>
+- **Payouts** — pay customers from an Ezeebit balance in USDT, with more stablecoins coming soon. Recipients choose the network. <https://ezeebit.com/payouts>
 - **Wallets** — hold fiat and USDT, convert between them, fund payouts, and withdraw to a bank or a wallet. <https://ezeebit.com/wallets>
 - **Developer API** — signed REST endpoints for payments, payouts and wallets, with webhooks. <https://ezeebit.com/developers>
 - **Pricing** — Crypto In is 1% or less per payment and Crypto Out is $0.65 per payout, both excluding VAT. No setup fees and no monthly platform fees; the optional ePOS is R150 a month per device. <https://ezeebit.com/pricing>
@@ -60,7 +60,7 @@ Supported assets include BTC, ETH, USDT, USDC, BNB, DAI and PAXG, on Bitcoin, Et
 - [Shops and hospitality](https://ezeebit.com/solutions/shops-and-hospitality): Crypto at the counter, with an ePOS or a QR code
 - [Marketplaces](https://ezeebit.com/solutions/marketplaces): Stablecoin payouts to sellers, drivers, and creators
 - [Large trades](https://ezeebit.com/solutions/large-trades): Firm prices from the OTC desk
-- [Payouts](https://ezeebit.com/payouts): Pay customers in USDT or other crypto
+- [Payouts](https://ezeebit.com/payouts): Pay customers in USDT, with more stablecoins coming soon
 - [Wallets](https://ezeebit.com/wallets): Fiat and USDT balances
 - [Pricing](https://ezeebit.com/pricing): Merchant pricing
 - [Developer API](https://ezeebit.com/developers): Payments, payouts and wallets

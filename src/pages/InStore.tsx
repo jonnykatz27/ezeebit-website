@@ -68,7 +68,7 @@ const InStore = () => {
   const deviceSpecs = [
     { label: "Network Support", value: "WiFi, 4G, SIM Card ports" },
     { label: "Payment Methods", value: "QR Scan" },
-    { label: "Supported Currencies", value: "7+ Cryptocurrencies" },
+    { label: "Supported Currencies", value: "9 cryptocurrencies" },
     { label: "Settlement", value: "Stablecoin same day, local currency next business day" },
     { label: "Receipt", value: "Printed receipts" }
   ]
@@ -90,16 +90,17 @@ const InStore = () => {
     >
       {/* Hero Section */}
       <PageHero
+        kicker="In-store payments"
         title="Accept stablecoins"
         accent="at the counter."
-        description="Take stablecoin and crypto payments in your store with an ePOS device or an Ezeebit Pay QR code. Every payment is hedged on the spot and settled in ZAR, KES, NGN or USD. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+        description="Take stablecoin and crypto payments in your store with an ePOS device or an Ezeebit Pay QR code. Every payment is hedged on the spot and settled in ZAR, KES, NGN or USD."
         actions={
           <>
           <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
             Get your ePOS device
             <ArrowRight className="w-5 h-5 ml-2" />
           </a>
-          <Link to="/contact" className={HERO_SECONDARY}>
+          <Link to="/book-a-call" className={HERO_SECONDARY}>
             Book a demo
           </Link>
           </>
@@ -134,22 +135,22 @@ const InStore = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="feature-grid feature-grid-4">
             {features.map((feature, index) => (
               <motion.div
                 key={feature.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="card p-6 text-center hover:scale-105 transition-transform"
+                className="card feature-card"
               >
-                <div className="w-12 h-12 bg-neutral-950 rounded-lg flex items-center justify-center mx-auto mb-4 text-primary-400">
+                <div className="bg-neutral-950 rounded-xl flex items-center justify-center text-primary-400 [&_svg]:w-5 [&_svg]:h-5 lg:[&_svg]:w-6 lg:[&_svg]:h-6">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-semibold text-neutral-900 mb-3">
+                <h3 className="feature-title">
                   {feature.title}
                 </h3>
-                <p className="text-neutral-600">
+                <p className="feature-text">
                   {feature.description}
                 </p>
               </motion.div>
@@ -263,7 +264,7 @@ const InStore = () => {
                   { icon: <CheckCircle className="w-5 h-5" />, text: 'Print or embed codes' },
                   { icon: <CheckCircle className="w-5 h-5" />, text: 'Minimal training' },
                   { icon: <CheckCircle className="w-5 h-5" />, text: 'All wallet compatible' },
-                  { icon: <CheckCircle className="w-5 h-5" />, text: '7+ cryptocurrencies' }
+                  { icon: <CheckCircle className="w-5 h-5" />, text: '9 cryptocurrencies' }
                 ].map((feature, index) => (
                   <div key={index} className="flex items-center">
                     <div className="text-primary-500 mr-3">
@@ -282,7 +283,7 @@ const InStore = () => {
                 className="btn-primary flex md:inline-flex items-center justify-center mx-auto md:mx-0"
               >
                 <span className="inline-flex items-center">
-                  GET STARTED
+                  Get started
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </span>
               </a>
@@ -320,12 +321,12 @@ const InStore = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-16"
+            className="section-head"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+            <h2 className="section-title">
               How in-store crypto payments work
             </h2>
-            <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+            <p className="section-lead">
               Take payment with an Android ePOS, or with a static QR code.
             </p>
           </motion.div>
@@ -376,23 +377,23 @@ const InStore = () => {
               Ready to accept stablecoin and crypto payments?
             </h2>
             <p className="text-xl text-neutral-300 mb-8 max-w-2xl mx-auto">
-              Get started with no setup fees. Ezeebit is authorised and regulated by the FSCA, and has applied for its CASP licence (FSP 53664).
+              Get started with no setup fees. Ezeebit is regulated by the FSCA as a Crypto Asset Service Provider, FSP No. 53664.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="https://merchant.ezeebit.com/#/signup"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+                className={HERO_PRIMARY}
               >
-                Start Free Trial
+                Get started free
                 <ArrowRight className="w-5 h-5 ml-2 inline" />
               </a>
               <Link
-                to="/contact"
-                className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
+                to="/book-a-call"
+                className={HERO_SECONDARY}
               >
-                Talk to Sales
+                Talk to sales
               </Link>
             </div>
           </motion.div>

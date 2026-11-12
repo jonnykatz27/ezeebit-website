@@ -89,18 +89,19 @@ const Solution = () => {
             {/* What Ezeebit does for this kind of business */}
             <section className="section-padding bg-white">
               <div className="container-custom">
-                <div className="max-w-3xl mb-10 lg:mb-14">
+                <div className="section-head">
                   <Eyebrow>Why Ezeebit</Eyebrow>
-                  <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 leading-tight">What you get</h2>
+                  <h2 className="section-title">What you get</h2>
                 </div>
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="feature-grid feature-grid-4">
                   {s.points.map(({ icon: Icon, title, body }) => (
-                    <div key={title} className="rounded-2xl border border-neutral-200 bg-white p-6">
-                      <span className="mb-4 flex size-11 items-center justify-center rounded-xl bg-primary-50 text-primary-600">
-                        <Icon className="w-5 h-5" />
+                    <div key={title} className="card feature-card">
+                      {/* The site's dark icon tile, as on the product pages */}
+                      <span className="flex items-center justify-center rounded-xl bg-neutral-950 text-primary-400 [&_svg]:w-5 [&_svg]:h-5 lg:[&_svg]:w-6 lg:[&_svg]:h-6">
+                        <Icon className="w-6 h-6" />
                       </span>
-                      <h3 className="text-lg font-semibold text-neutral-900 mb-2">{title}</h3>
-                      <p className="text-[15px] text-neutral-600 leading-relaxed">{body}</p>
+                      <h3 className="feature-title">{title}</h3>
+                      <p className="feature-text">{body}</p>
                     </div>
                   ))}
                 </div>
@@ -149,11 +150,11 @@ const Solution = () => {
                 : 'Sign up free and pay only when money moves, or talk to us first.'}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Go to={s.primary.to} className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center">
+              <Go to={s.primary.to} className={HERO_PRIMARY}>
                 {s.primary.label}
                 <ArrowRight className="w-5 h-5 ml-2 inline" />
               </Go>
-              <Go to={s.secondary.to} className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center">
+              <Go to={s.secondary.to} className={HERO_SECONDARY}>
                 {s.secondary.label}
               </Go>
             </div>

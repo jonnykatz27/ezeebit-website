@@ -1,5 +1,5 @@
-import { forwardRef, memo, useEffect, useRef, useState, type ReactNode } from 'react'
-import { animate, useInView, useReducedMotion } from 'framer-motion'
+import { forwardRef, memo, useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react'
+import { animate, useInView } from 'framer-motion'
 import { motion } from '../../lib/motion'
 
 /**
@@ -38,7 +38,7 @@ export const coinLogo = (ticker: string) =>
   ticker === 'usdt' ? '/usdt-round.svg' : ticker === 'zarp' || ticker === 'zaru' ? `/${ticker}-logo.png` : `/${ticker}-logo.svg`
 
 /** Small caps label at the top of a floating card. */
-export const LABEL = 'text-[11px] font-semibold uppercase tracking-[0.1em] text-neutral-600'
+export const LABEL = 'text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-600'
 
 /** Content that is replaced in place: the old copy lifts away as the new one settles. */
 export const SWAP = {
@@ -61,13 +61,30 @@ export const money = (v: number, dp = 2) =>
   v.toLocaleString('en-US', { minimumFractionDigits: dp, maximumFractionDigits: dp })
 export const rands = (v: number) => `R${money(v)}`
 
+const REDUCED_MOTION = '(prefers-reduced-motion: reduce)'
+const watchReducedMotion = (notify: () => void) => {
+  const query = window.matchMedia(REDUCED_MOTION)
+  query.addEventListener('change', notify)
+  return () => query.removeEventListener('change', notify)
+}
+
+/**
+ * Whether the visitor has asked for reduced motion. It answers no on the
+ * server and while the pre-rendered page hydrates, so the first render matches
+ * the HTML, and React re-renders with the real answer straight after. Reading
+ * the setting on the first render instead drew the illustrations' last frame
+ * over a page pre-rendered at their first, and React threw the page away.
+ */
+export const usePrefersStill = () =>
+  useSyncExternalStore(watchReducedMotion, () => window.matchMedia(REDUCED_MOTION).matches, () => false)
+
 /**
  * Drives an illustration's story: a step counter that ticks every `ms`, but
  * only while the illustration is on screen and the tab is visible, and never
  * for anyone who prefers reduced motion.
  */
 export function useHeroLoop(ms: number) {
-  const still = useReducedMotion() ?? false
+  const still = usePrefersStill()
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { margin: '-10% 0px' })
   const [step, setStep] = useState(0)
@@ -264,7 +281,7 @@ export const Flash = ({ on, id }: { on: boolean; id: number }) =>
 
 /** The pulsing green "Live" tag. */
 export const LiveTag = ({ still, dark = false, children = 'Live' }: { still: boolean; dark?: boolean; children?: ReactNode }) => (
-  <span className={`flex items-center gap-1.5 text-[11px] font-semibold rounded-full px-2 py-0.5 ${dark ? 'text-emerald-300 bg-emerald-400/10 ring-1 ring-inset ring-emerald-400/20' : 'text-success-700 bg-success-50'}`}>
+  <span className={`flex items-center gap-1.5 text-[11px] font-semibold rounded-full px-2 py-0.5 ${dark ? 'text-success-400 bg-success-400/10 ring-1 ring-inset ring-success-400/20' : 'text-success-700 bg-success-50'}`}>
     <span className="relative flex w-1.5 h-1.5">
       {!still && <span className="absolute inset-0 rounded-full bg-success-500 animate-ping" />}
       <span className="relative w-1.5 h-1.5 rounded-full bg-success-500" />

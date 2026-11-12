@@ -55,6 +55,7 @@ export const EzeebitResources = lazyPage(() => import('./pages/EzeebitResources'
 export const WhereToSpend = lazyPage(() => import('./pages/WhereToSpend'))
 export const StoreDetail = lazyPage(() => import('./pages/StoreDetail'))
 export const Careers = lazyPage(() => import('./pages/Careers'))
+export const BookCall = lazyPage(() => import('./pages/BookCall'))
 export const Solution = lazyPage(() => import('./pages/Solution'))
 export const NotFound = lazyPage(() => import('./pages/NotFound'))
 
@@ -76,6 +77,7 @@ const exact: Record<string, RoutePage> = {
   '/resources/user-manual': UserManual,
   '/signup': SignUp,
   '/contact': Contact,
+  '/book-a-call': BookCall,
   '/ezeebit-resources': EzeebitResources,
   '/resources/where-to-spend': WhereToSpend,
   '/careers': Careers,

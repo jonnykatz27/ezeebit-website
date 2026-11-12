@@ -34,7 +34,7 @@ const Platforms = () => {
     {
       icon: ShieldCheck,
       title: "We handle the rest",
-      body: "Compliance, volatility and the movement of funds are on us, as an FSCA-regulated CASP: KYC and AML, the Travel Rule, address screening, hedging and on-chain settlement."
+      body: "Compliance, volatility and the movement of funds are on us. Ezeebit is regulated by the FSCA as a Crypto Asset Service Provider and handles KYC and AML, the Travel Rule, address screening, hedging and on-chain settlement."
     }
   ]
 
@@ -97,7 +97,7 @@ const Platforms = () => {
     },
     {
       title: "Your user completes it",
-      body: "They pick the stablecoin and network and enter their own wallet address, so you never collect or check addresses."
+      body: "They pick the network and enter their own wallet address, so you never collect or check addresses."
     },
     {
       title: "We convert and send",
@@ -145,12 +145,13 @@ const Platforms = () => {
       >
         {/* Hero Section */}
         <PageHero
+          kicker="Platforms"
           title="Pay-ins and payouts"
           accent="for your platform."
-          description="Take deposits in crypto and pay your users out in stablecoin, without holding either. Ezeebit handles the compliance, the volatility and the movement of funds, and you choose your exposure: settle in stablecoin, or in ZAR, KES, NGN or USD. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+          description="Take deposits in crypto and pay your users out in stablecoin, without holding either. Ezeebit handles the compliance, the volatility and the movement of funds, and you choose your exposure: settle in stablecoin, or in ZAR, KES, NGN or USD."
           actions={
             <>
-            <Link to="/contact" className={HERO_PRIMARY}>
+            <Link to="/book-a-call" className={HERO_PRIMARY}>
               Talk to the team
               <ArrowRight className="w-5 h-5 ml-2" />
             </Link>
@@ -198,12 +199,12 @@ const Platforms = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="text-center mb-16"
+              className="section-head"
             >
-              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+              <h2 className="section-title">
                 For any platform that moves user balances
               </h2>
-              <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+              <p className="section-lead">
                 Wherever money goes into an account and comes back out, the same rails apply.
               </p>
             </motion.div>
@@ -245,15 +246,15 @@ const Platforms = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
-                  to="/contact"
-                  className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+                  to="/book-a-call"
+                  className={HERO_PRIMARY}
                 >
                   Talk to the team
                   <ArrowRight className="w-5 h-5 ml-2 inline" />
                 </Link>
                 <Link
                   to="/developers"
-                  className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
+                  className={HERO_SECONDARY}
                 >
                   View the API
                 </Link>

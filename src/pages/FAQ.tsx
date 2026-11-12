@@ -7,7 +7,7 @@ import {
   Shield, CreditCard, Zap, Users, ArrowRight
 } from 'lucide-react'
 import SEO from '../components/SEO'
-import PageHero, { HeroSearch } from '../components/hero/PageHero'
+import PageHero, { HeroSearch, HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import DarkBackdrop from '../components/DarkBackdrop'
 import { faqPageNode } from '../lib/faqSchema'
 
@@ -28,7 +28,7 @@ const FAQ = () => {
       id: '2',
       category: 'getting-started',
       question: 'What documents are required?',
-      answer: 'We need your South African business registration, proof of address, bank account details, and ID documents for directors. This ensures FSCA and FIC compliance for seamless onboarding.',
+      answer: 'We need your business registration, proof of address, bank account details, and ID documents for directors. This ensures FSCA and FIC compliance for seamless onboarding.',
       popular: false
     },
     {
@@ -56,7 +56,7 @@ const FAQ = () => {
       id: '6',
       category: 'security',
       question: 'Is Ezeebit regulated?',
-      answer: 'Yes. Ezeebit is authorised and regulated by the FSCA, and has applied for its CASP licence (FSP 53664). The FSCA is South Africa\'s Financial Sector Conduct Authority.',
+      answer: 'Yes. Ezeebit is regulated by the FSCA as a Crypto Asset Service Provider, FSP No. 53664. The FSCA is South Africa\'s Financial Sector Conduct Authority.',
       popular: true
     },
     {
@@ -98,7 +98,7 @@ const FAQ = () => {
       id: '12',
       category: 'technical',
       question: 'Do you provide customer support?',
-      answer: 'Yes! We offer 24/7 support for all plans. Our average response time is under an hour.',
+      answer: 'Yes. Support is available 24/7 by email, and by phone or WhatsApp Monday to Friday, 8am to 6pm SAST. Email support@ezeebit.com, phone +27 21 879 5074, or WhatsApp +27 79 443 9375.',
       popular: true
     },
     {
@@ -126,7 +126,7 @@ const FAQ = () => {
       id: '16',
       category: 'payments',
       question: 'Are there any monthly fees or hidden costs?',
-      answer: 'None. There are no monthly subscriptions, no setup fees for ePOS and Ezeebit Pay, and no hidden charges. You only pay a small percentage when a transaction completes successfully.',
+      answer: 'There are no setup fees, no monthly platform fees, and no hidden charges. The only monthly charge is the optional ePOS rental, at R150 a month per device, and an Ezeebit Pay QR code is free. Otherwise you pay a small percentage only when a transaction completes.',
       popular: true
     },
     {
@@ -154,7 +154,7 @@ const FAQ = () => {
       id: '21',
       category: 'payments',
       question: 'Are there minimum payout thresholds?',
-      answer: 'No. We settle what you\'re owed without holding funds to arbitrary minimums. Payouts land in your account the next business day (T+1).',
+      answer: 'No. We settle what you\'re owed without holding funds to arbitrary minimums. Settlement lands in your account the next business day (T+1) in local currency, or the same day in stablecoin.',
       popular: false
     },
     {
@@ -168,7 +168,7 @@ const FAQ = () => {
       id: '23',
       category: 'technical',
       question: 'Which wallets can my customers pay from?',
-      answer: 'Over 700 wallets are supported via WalletConnect, plus direct integrations with Africa\'s most popular exchanges such as VALR, and soon to be more. Whether your customer uses MetaMask, Trust Wallet, or their exchange app—they can pay.',
+      answer: 'Over 700 wallets are supported via WalletConnect, plus direct payments from Luno, VALR, and Binance. Whether your customer uses MetaMask, Trust Wallet, or their exchange app, they can pay.',
       popular: true
     },
     {
@@ -288,7 +288,7 @@ const FAQ = () => {
     const parts = text.split(regex)
     return parts.map((part, i) =>
       regex.test(part) ? (
-        <mark key={i} className="bg-yellow-200 px-1 rounded">
+        <mark key={i} className="bg-warning-200 px-1 rounded">
           {part}
         </mark>
       ) : (
@@ -314,6 +314,7 @@ const FAQ = () => {
     >
       {/* Hero Section */}
       <PageHero
+        kicker="FAQ"
         title="Frequently asked"
         accent="questions"
         description="Find answers to common questions about Ezeebit's cryptocurrency payment solutions. Can't find what you're looking for? Our support team is here to help."
@@ -337,7 +338,7 @@ const FAQ = () => {
               >
                 {category.icon}
                 <span>{category.name}</span>
-                <span className="bg-gray-200 text-neutral-600 px-2 py-0.5 rounded-full text-xs">
+                <span className="bg-neutral-100 text-neutral-600 px-2 py-0.5 rounded-full text-xs">
                   {category.count}
                 </span>
               </button>
@@ -366,7 +367,7 @@ const FAQ = () => {
                     className="w-full px-3 md:px-4 py-2 md:py-2.5 text-left flex items-center justify-between hover:bg-neutral-50 transition-colors"
                   >
                     <div className="flex items-center flex-1 min-w-0">
-                      {item.popular && <Star className="w-3.5 h-3.5 text-yellow-500 mr-1.5 flex-shrink-0" />}
+                      {item.popular && <Star className="w-3.5 h-3.5 text-warning-500 mr-1.5 flex-shrink-0" />}
                       <span className="font-medium text-neutral-900 text-sm md:text-base text-left leading-tight">
                         {highlightText(item.question, searchTerm)}
                       </span>
@@ -386,7 +387,7 @@ const FAQ = () => {
 
             {filteredFAQs.length === 0 && (
               <div className="text-center py-12">
-                <HelpCircle className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                <HelpCircle className="w-16 h-16 text-neutral-300 mx-auto mb-4" />
                 <h3 className="text-xl font-semibold text-neutral-900 mb-2">No questions found</h3>
                 <p className="text-neutral-600 mb-6">
                   Try adjusting your search terms or browse different categories.
@@ -409,26 +410,26 @@ const FAQ = () => {
       {/* Contact Support */}
       <section className="section-padding bg-white">
         <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-display font-bold text-neutral-900 mb-4">
+          <div className="section-head">
+            <h2 className="section-title">
               Multiple ways to reach us
             </h2>
-            <p className="text-lg md:text-xl text-neutral-600 max-w-2xl mx-auto px-4 md:px-0">
+            <p className="section-lead">
               Choose the contact method that works best for you. We're available across multiple channels.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="card p-6 text-center hover:scale-105 transition-transform flex flex-col h-full"
+              className="card p-6 text-center flex flex-col h-full"
             >
-              <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4 text-primary-600">
+              <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center mx-auto mb-4 text-primary-400 [&_svg]:w-6 [&_svg]:h-6">
                 <Phone className="w-6 h-6" />
               </div>
               <h3 className="text-lg font-semibold text-neutral-900 mb-2">
-                Phone Support
+                Phone support
               </h3>
               <p className="text-neutral-600 text-sm mb-3 flex-1">
                 Speak directly with our support team
@@ -437,18 +438,18 @@ const FAQ = () => {
                 +27 21 879 5074
               </div>
               <div className="text-xs text-neutral-500 mb-4">
-                Mon-Fri, 8AM-6PM SAST
+                Monday to Friday, 8am to 6pm SAST
               </div>
               <a
                 href="tel:+27218795074"
                 className="btn-primary w-full flex items-center justify-center mt-auto"
               >
-                Start Chat
+                Call us
               </a>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="card p-6 text-center hover:scale-105 transition-transform flex flex-col h-full">
-              <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4 text-primary-600">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="card p-6 text-center flex flex-col h-full">
+              <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center mx-auto mb-4 text-primary-400 [&_svg]:w-6 [&_svg]:h-6">
                 <Mail className="w-6 h-6" />
               </div>
               <h3 className="text-lg font-semibold text-neutral-900 mb-2">Email support</h3>
@@ -459,18 +460,18 @@ const FAQ = () => {
                 support@ezeebit.com
               </div>
               <div className="text-xs text-neutral-500 mb-4">
-                24/7 response within 2 hours
+                24/7
               </div>
               <a
                 href="mailto:support@ezeebit.com"
                 className="btn-primary w-full flex items-center justify-center mt-auto"
               >
-                Start Chat
+                Send an email
               </a>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="card p-6 text-center hover:scale-105 transition-transform flex flex-col h-full">
-              <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4 text-primary-600">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="card p-6 text-center flex flex-col h-full">
+              <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center mx-auto mb-4 text-primary-400 [&_svg]:w-6 [&_svg]:h-6">
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.515"/>
                 </svg>
@@ -483,7 +484,7 @@ const FAQ = () => {
                 +27 79 443 9375
               </div>
               <div className="text-xs text-neutral-500 mb-4">
-                Mon-Fri, 8AM-6PM SAST
+                Monday to Friday, 8am to 6pm SAST
               </div>
               <a
                 href="https://wa.me/27794439375"
@@ -491,7 +492,7 @@ const FAQ = () => {
                 rel="noopener noreferrer"
                 className="btn-primary w-full flex items-center justify-center mt-auto"
               >
-                Start Chat
+                Start a chat
               </a>
             </motion.div>
           </div>
@@ -516,13 +517,13 @@ const FAQ = () => {
                 href="https://merchant.ezeebit.com/#/signup"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+                className={HERO_PRIMARY}
               >
-                Get Started
+                Get started
                 <ArrowRight className="w-5 h-5 ml-2" />
               </a>
-              <Link to="/contact" className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center">
-                Contact Support
+              <Link to="/contact" className={HERO_SECONDARY}>
+                Contact support
               </Link>
             </div>
           </motion.div>

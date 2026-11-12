@@ -39,7 +39,7 @@ const Wallets = () => {
     {
       icon: <ShieldCheck className="w-6 h-6" />,
       title: "Regulated by the FSCA",
-      description: "Balances sit with an FSCA-regulated Crypto Asset Service Provider, FSP No. 53664, with FIC and POPIA obligations built in."
+      description: "Ezeebit holds your balances as a Crypto Asset Service Provider regulated by the FSCA, FSP No. 53664, with FIC and POPIA obligations built in."
     }
   ]
 
@@ -77,9 +77,10 @@ const Wallets = () => {
       >
         {/* Hero Section */}
         <PageHero
+          kicker="Wallets"
           title="Your money,"
           accent="in fiat or stablecoin."
-          description="Hold fiat and USDT in one place, convert between them when it suits you, fund your customer payouts from the same balance, and withdraw to your bank or your own wallet. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+          description="Hold fiat and USDT in one place, convert between them when it suits you, fund your customer payouts from the same balance, and withdraw to your bank or your own wallet."
           actions={
             <>
             <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
@@ -101,33 +102,33 @@ const Wallets = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="text-center mb-16"
+              className="section-head"
             >
-              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+              <h2 className="section-title">
                 The account underneath everything
               </h2>
-              <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+              <p className="section-lead">
                 Wallets are where your pay-ins land and where your payouts are funded from,
                 in the currency you choose to hold.
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="feature-grid feature-grid-3">
               {features.map((feature, index) => (
                 <motion.div
                   key={feature.title}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="card px-5 py-4 text-center hover:scale-[1.03] transition-transform"
+                  className="card feature-card"
                 >
-                  <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center mx-auto mb-2 text-primary-400">
+                  <div className="bg-neutral-950 rounded-xl flex items-center justify-center text-primary-400 [&_svg]:w-5 [&_svg]:h-5 lg:[&_svg]:w-6 lg:[&_svg]:h-6">
                     {feature.icon}
                   </div>
-                  <h3 className="text-lg font-semibold text-neutral-900 mb-1">
+                  <h3 className="feature-title">
                     {feature.title}
                   </h3>
-                  <p className="text-neutral-600 text-sm leading-relaxed">
+                  <p className="feature-text">
                     {feature.description}
                   </p>
                 </motion.div>
@@ -142,17 +143,17 @@ const Wallets = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="text-center mb-16"
+              className="section-head"
             >
-              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+              <h2 className="section-title">
                 How it works
               </h2>
-              <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+              <p className="section-lead">
                 Money in, held how you want it, money out.
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="feature-grid md:grid-cols-3">
               {steps.map((step, index) => (
                 <motion.div
                   key={step.number}
@@ -161,14 +162,14 @@ const Wallets = () => {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="relative"
                 >
-                  <div className="card p-8 h-full">
-                    <div className="text-4xl font-display font-bold text-gradient mb-4">
+                  <div className="card step-card h-full">
+                    <div className="font-display font-bold text-gradient">
                       {step.number}
                     </div>
-                    <h3 className="text-xl font-semibold text-neutral-900 mb-3">
+                    <h3 className="feature-title">
                       {step.title}
                     </h3>
-                    <p className="text-neutral-600">
+                    <p className="feature-text">
                       {step.description}
                     </p>
                   </div>
@@ -197,9 +198,9 @@ const Wallets = () => {
                   href="https://merchant.ezeebit.com/#/signup"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+                  className={HERO_PRIMARY}
                 >
-                  Sign Up
+                  Sign up
                   <ArrowRight className="w-5 h-5 ml-2 inline" />
                 </a>
               </div>

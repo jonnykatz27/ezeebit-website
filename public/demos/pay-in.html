@@ -645,7 +645,9 @@ function go(id){
    Tapping out a number is the least interesting part of the flow and costs the
    reader a screen before anything happens, so the keypad is left behind the
    back button rather than in front of the demo. */
-const PARAMS = new URLSearchParams(location.search);
+/* Options arrive in the query or after the #. The embedding page puts its own
+   after the #, so every embed shares one URL and the browser fetches the demo once. */
+const PARAMS = new URLSearchParams(location.search.slice(1) + '&' + location.hash.slice(1));
 const FIT = PARAMS.has('fit') && window.parent !== window;
 if (FIT) document.body.classList.add('fit');
 /* A page that leads into the checkout from a screen of its own (a till, a
@@ -741,6 +743,15 @@ function fit(){
 window.addEventListener('resize', fit);
 window.addEventListener('load', fit);
 start();
+/* Web fonts swap in after the first layout and change every height, so fit
+   again once they are in, then tell the embedding page the demo is ready to
+   show. Waiting is capped, so a slow font never holds the demo back. */
+function ready(){
+  fit();
+  try{ if (window.parent !== window) window.parent.postMessage({type:'ezeebit:ready', flow:'payin'}, location.origin); }catch(e){}
+}
+var fontsIn = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+Promise.race([fontsIn, new Promise(function(r){ setTimeout(r, 1200); })]).then(ready);
 </script>
 </body>
 </html>

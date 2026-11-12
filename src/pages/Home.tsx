@@ -910,16 +910,16 @@ const Home = () => {
           // Wraps between the two phrases first, and "pay-ins" never splits at its hyphen
           title={<><span className="inline-block">Stablecoin <span className="whitespace-nowrap">pay-ins</span></span> <span className="inline-block">and payouts,</span></>}
           accent="made Ezee."
-          description="Your customers pay in and cash out in crypto, in-store, online, or on your platform, while you settle in ZAR, KES, NGN, USD, or stablecoin. One balance and one API, with compliance built in."
+          description="Your customers pay in and cash out in crypto, on your platform, in-store, or online, while you settle in ZAR, KES, NGN, USD, or stablecoin. One balance and one API, with compliance built in."
           actions={
             <>
               <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
                 Get started free
                 <ArrowRight className="w-5 h-5 ml-2" />
               </a>
-              <button type="button" onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })} className={HERO_SECONDARY}>
-                See how it works
-              </button>
+              <Link to="/book-a-call" className={HERO_SECONDARY}>
+                Talk to sales
+              </Link>
             </>
           }
           trust={[

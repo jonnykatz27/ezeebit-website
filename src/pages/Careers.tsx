@@ -17,6 +17,18 @@ const jobPostings = [
     description: "We're looking for a Senior Software Engineer to help build the infrastructure powering Africa's stablecoin payment rails. You'll work across our core backend services — designing APIs, integrating with blockchain networks, and building the reliability guarantees that merchants and users depend on.",
     skills: ['Java', 'Spring Boot', 'REST APIs', 'Microservices', 'PostgreSQL', 'Docker'],
   },
+  {
+    id: 'junior-intermediate-software-engineer',
+    title: 'Junior/Intermediate Software Engineer',
+    subtitle: 'Java & Spring',
+    department: 'Engineering',
+    location: 'Cape Town, South Africa (hybrid)',
+    type: 'Full-time',
+    level: 'Junior to intermediate',
+    notionUrl: 'https://ezeebit.notion.site/Ezeebit-Junior-Intermediate-Software-Engineer-414f9736dc0c813f9bafcf0b3210372c',
+    description: "We're looking for a Junior or Intermediate Software Engineer to build backend services and APIs on our Java and Spring Boot microservices, for payments, merchant integrations, settlement, reconciliation, and ledgers. You'll ship to live payments infrastructure within your first few weeks, with senior engineers reviewing your code and pairing with you as you grow.",
+    skills: ['Java', 'Spring Boot', 'REST APIs', 'SQL', 'Git', 'AWS'],
+  },
 ]
 
 const principles = [

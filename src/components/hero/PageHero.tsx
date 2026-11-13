@@ -87,7 +87,7 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
         one line at 390px.
       */}
       {kicker && (
-        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-400 mb-4">
+        <p className="hero-kicker text-xs font-semibold uppercase tracking-[0.14em] text-primary-400 mb-4">
           {kicker}
         </p>
       )}

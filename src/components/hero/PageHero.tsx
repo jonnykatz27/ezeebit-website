@@ -93,7 +93,8 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
       )}
       <h1
         itemProp={itemProps ? 'name' : undefined}
-        className={`hero-title font-display font-bold text-white mb-5 sm:mb-6 !leading-[1.04] tracking-[-0.03em] ${
+        // Balanced, so a line that wraps splits evenly instead of leaving one word behind
+        className={`hero-title font-display font-bold text-white mb-5 sm:mb-6 !leading-[1.04] tracking-[-0.03em] [text-wrap:balance] ${
           split
             ? 'text-[clamp(1.7rem,8.2vw,2.15rem)] sm:text-6xl lg:text-[3rem] xl:text-[3.75rem]'
             : stacked

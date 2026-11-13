@@ -37,7 +37,7 @@ const SignUp = () => {
           </p>
           <p className="mt-4 text-sm text-neutral-600">
             <Link to="/resources/legal#terms" className="text-primary-600 hover:text-primary-700 font-medium">
-              Terms of Service
+              Terms of Use
             </Link>
             {' · '}
             <Link to="/resources/legal#privacy" className="text-primary-600 hover:text-primary-700 font-medium">

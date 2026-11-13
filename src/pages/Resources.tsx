@@ -28,10 +28,10 @@ const Resources = () => {
     },
     {
       title: 'Legal',
-      description: 'Terms of service, privacy policy, and regulatory compliance information',
+      description: 'Terms of use, privacy policy, and regulatory compliance information',
       icon: <FileText className="w-8 h-8" />,
       href: '/resources/legal',
-      items: ['Terms of Service', 'Privacy Policy', 'Compliance', 'Security']
+      items: ['Terms of Use', 'Privacy Policy', 'Compliance', 'Security']
     },
     {
       title: 'Blog',

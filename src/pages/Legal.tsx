@@ -20,7 +20,7 @@ const Legal = () => {
   }, [location.hash])
 
   const legalSections = [
-    { id: 'terms', name: 'Terms of Service', icon: <FileText className="w-5 h-5" /> },
+    { id: 'terms', name: 'Terms of Use', icon: <FileText className="w-5 h-5" /> },
     { id: 'privacy', name: 'Privacy Policy', icon: <Eye className="w-5 h-5" /> },
     { id: 'compliance', name: 'Compliance', icon: <Shield className="w-5 h-5" /> }
   ]
@@ -49,339 +49,226 @@ const Legal = () => {
     }
   ]
 
+  /* The Terms of Use, word for word as issued (version 1.0, effective 13 November 2026). Legal text: change it only from a new issued version. */
   const renderTermsOfService = () => (
     <div className="max-w-none">
-      <h2 className="!text-2xl font-bold text-neutral-900 mb-4">Terms of Service</h2>
-      <p className="text-neutral-600 mb-6">Last updated: January 1, 2024</p>
-      
+      <h2 className="!text-2xl font-bold text-neutral-900 mb-4">Ezeebit Terms of Use</h2>
+      <p className="text-neutral-600 mb-6">Version 1.0. Effective 13 November 2026.</p>
+
       <div className="space-y-6">
         <section>
-          <h3 className="text-xl font-semibold text-neutral-900 mb-3">1. Acceptance of Terms</h3>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">1. About these Terms</h3>
           <div className="space-y-3">
-            <p className="text-neutral-700">
-              <strong>1.1</strong> By using the website located on https://www.ezeebit.com together with all its webpages (the "Website") whether as a visitor or a registered user for any reason whatsoever, the visitor or use of the Website (hereinafter referred to as "you\" or \"your") agrees to be bound by and comply with the terms and conditions that se terms and conditions ("Terms and Conditions") agrees to be bound by and comply with these terms and conditions ("Terms and Conditions").
-            </p>
-            <p className="text-neutral-700">
-              <strong>1.2</strong> If you do not agree with these Terms and Conditions, you must immediately desist from further use of the Website. Your continued use of the Website, notwithstanding the provisions of this clause, constitutes substantive agreement with the terms and conditions setout in these Terms and Conditions, as may be amended from time to time.
-            </p>
-            <p className="text-neutral-700">
-              <strong>1.3</strong> The Website is owned and operated by Ezee Solutions. Ezee Solutions Group (Proprietary) Limited, a company registered in terms of South African law with registration number: 2022/250578/07, domiciled on 135 Beach Road Mouille Point, Cape Town, Western Cape, 8005 (hereinafter referred to as "Ezee Solutions", "us", "we\" or \"our").
-            </p>
-          </div>
-        </section>
-
-        <section>
-          <h3 className="text-xl font-semibold text-neutral-900 mb-3">2. Term, Accessibility and Termination</h3>
-          <div className="space-y-3">
-            <p className="text-neutral-700">
-              <strong>2.1</strong> These Terms and Conditions shall commence from the date on which they are published on the Website and continue indefinitely, as amended by Ezee Solutions from time to time.
-            </p>
-            <p className="text-neutral-700">
-              <strong>2.2</strong> Ezee Solutions reserves the right to:
-            </p>
+            <p className="text-neutral-700"><strong>1.1</strong> These Terms of Use (<strong>Terms</strong>) govern your access to and use of the Ezeebit website at www.ezeebit.com, the Ezeebit merchant portal, our APIs and any other Ezeebit platform (the <strong>Platform</strong>), and the services we provide through it (the <strong>Services</strong>).</p>
+            <p className="text-neutral-700"><strong>1.2</strong> "<strong>Ezeebit</strong>", "<strong>we</strong>" and "<strong>us</strong>" mean the Ezeebit company that provides the Service to you under clause 2. "<strong>You</strong>" means the business that registers for an account, and each person who uses the Platform on its behalf.</p>
+            <p className="text-neutral-700"><strong>1.3</strong> You accept these Terms when you tick the acceptance box, create an account or use any Service, whichever happens first. If you do not agree, do not use the Platform.</p>
+            <p className="text-neutral-700"><strong>1.4</strong> The person who accepts these Terms for a business confirms that they are at least 18 and are authorised to bind that business.</p>
+            <p className="text-neutral-700"><strong>1.5</strong> The Services are for businesses only. They are not offered to consumers.</p>
+            <p className="text-neutral-700"><strong>1.6</strong> Our website, documentation and marketing material describe the Services in general terms. They are for information only and are not promises, warranties or part of these Terms. If they differ from these Terms, these Terms prevail. In particular:</p>
             <ul className="list-disc list-outside text-neutral-700 ml-8 space-y-1">
-              <li><strong>2.2.1</strong> change or to discontinue any aspect or feature of the Website at any time including, but not limited to content, availability and access requirements; and</li>
-              <li><strong>2.2.2</strong> amend or terminate these Terms and Conditions and/or shutdown the Website at any time.</li>
+              <li><strong>Timing.</strong> Settlement and payout times are targets that we usually meet. They are not guaranteed, and they do not run while a bank, network or compliance review delays a transaction.</li>
+              <li><strong>Rates.</strong> A locked rate applies only to a payment that arrives in full, in the correct asset and on the correct network, within the validity period of its quote. An underpayment, overpayment or late payment is credited at the rate that applies when we process it.</li>
+              <li><strong>Finality.</strong> Statements that crypto payments are final or carry no chargebacks mean that they are not subject to card-scheme chargebacks. They do not limit our rights under these Terms to reject, hold, freeze, reverse or deduct.</li>
+              <li><strong>Pricing.</strong> Prices shown are indicative. The fees that apply to you are those in the portal, your fee schedule or your signed agreement, and they exclude the conversion spread, network fees and VAT.</li>
+              <li><strong>Coverage.</strong> A country, currency, asset, network or feature shown on the website may not be available to you, and showing it is not a commitment to provide it.</li>
+              <li><strong>Regulatory status.</strong> Statements about our licences and registrations describe our status when they were published. They are not a promise that the status will continue, or that any Service is regulated or protected in your country.</li>
+              <li><strong>Security.</strong> Descriptions of our security and safeguarding measures are not a guarantee against loss.</li>
             </ul>
           </div>
         </section>
 
         <section>
-          <h3 className="text-xl font-semibold text-neutral-900 mb-3">3. Notice</h3>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">2. Who you contract with</h3>
           <div className="space-y-3">
-            <p className="text-neutral-700">
-              <strong>3.1</strong> These Terms and Conditions contain provisions which appear in a similar text style to this clause in order to draw your attention to such clauses because they:
-            </p>
+            <p className="text-neutral-700"><strong>2.1</strong> The Services on the Platform, including every South African rand (<strong>ZAR</strong>) and Tether (<strong>USDT</strong>) Service, are provided by <strong>Ezee Solutions Group (Pty) Ltd</strong>, trading as Ezeebit, registration no. 2022/250578/07, of 135 Beach Road, Mouille Point, Cape Town, 8005, South Africa. It performs those Services in South Africa. It is an authorised crypto asset service provider (FSP no. 53664) and a registered accountable institution under the Financial Intelligence Centre Act, 2001.</p>
+            <p className="text-neutral-700"><strong>2.2</strong> Two other Ezeebit group companies provide Services only where we have confirmed this to you in writing:</p>
             <ul className="list-disc list-outside text-neutral-700 ml-8 space-y-1">
-              <li><strong>3.1.1</strong> may limit the risk or liability of Ezee Solutions or a third party; and/or</li>
-              <li><strong>3.1.2</strong> may create risk or liability for you; and/or</li>
-              <li><strong>3.1.3</strong> may compel you to indemnify Ezee Solutions or a third party; and/or</li>
-              <li><strong>3.1.4</strong> serve as an acknowledgement, by you, of a fact.</li>
+              <li><strong>Ezee Solutions Group (Kenya) Limited</strong>, registration no. PVT-RQ13JL95, for Services performed in Kenya; and</li>
+              <li><strong>Ezeebit Canada Ltd.</strong> (formerly Kinetic Payments Ltd.), Ontario corporation no. 1001629407, of 6840-222 Somerset Street West, Ottawa, Ontario, K2P 2G3, Canada, for Services performed in Canada. It is registered with FINTRAC as a money services business (registration no. N300001912). Registration is not a licence or an endorsement by FINTRAC.</li>
             </ul>
-            <p className="text-neutral-700">
-              <strong>3.2</strong> If there is any provision in these Terms and Conditions that you do not understand, it is your responsibility to ask Ezee Solutions to explain it to you before you accept the Terms and Conditions or continue using the Website.
-            </p>
-            <p className="text-neutral-700">
-              <strong>3.3</strong> These Terms and Conditions apply to users who are consumers for purposes of the Consumer Protection Act, 68 of 2008 (the "CPA").
-            </p>
-            <p className="text-neutral-700">
-              <strong>3.4</strong> Nothing in these Terms and Conditions is intended or must be understood to unlawfully restrict, limit or avoid any right or obligation, as the case may be, created for either you or Ezee Solutions in terms of the CPA.
-            </p>
-            <p className="text-neutral-700">
-              <strong>3.5</strong> Ezee Solutions permits the use of this Website subject to the Terms and Conditions. By using this Website in any way, you shall be deemed to have accepted all the Terms and Conditions unconditionally. You must not use this Website or any part thereof if you do not agree to the Terms and Conditions.
-            </p>
+            <p className="text-neutral-700"><strong>2.3</strong> You contract only with the Ezeebit company that provides the Service to you. Each company is responsible only for the Services it provides, and no Ezeebit company, shareholder or director is liable for the obligations of another.</p>
+            <p className="text-neutral-700"><strong>2.4</strong> USDT balances are held only by Ezee Solutions Group (Pty) Ltd or Ezee Solutions Group (Kenya) Limited. Ezeebit Canada Ltd. does not hold crypto-asset balances for clients.</p>
+            <p className="text-neutral-700"><strong>2.5</strong> Being regulated in one country does not mean that we are licensed, or that a Service is available, in any other country. A Service described as "early access" or "coming soon" is not a commitment to provide it.</p>
           </div>
         </section>
 
         <section>
-          <h3 className="text-xl font-semibold text-neutral-900 mb-3">4. Use of the Website</h3>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">3. Signed agreements come first</h3>
           <div className="space-y-3">
-            <p className="text-neutral-700">
-              <strong>4.1</strong> You may only use the Website for lawful purposes and you warrant that you shall not use the Website:
-            </p>
+            <p className="text-neutral-700"><strong>3.1</strong> If you have signed a Master Services Agreement or a Statement of Work with us, it applies to the Services it covers and prevails over these Terms if they conflict.</p>
+            <p className="text-neutral-700"><strong>3.2</strong> In every other case, these Terms are the whole agreement between you and us for your use of the Platform.</p>
+            <p className="text-neutral-700"><strong>3.3</strong> Registering does not oblige us to onboard you or to provide any Service. No Service is available until we confirm that your account is active.</p>
+          </div>
+        </section>
+
+        <section>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">4. Onboarding and your account</h3>
+          <div className="space-y-3">
+            <p className="text-neutral-700"><strong>4.1</strong> We must verify you before and while we provide Services. You must give us the information and documents we ask for about you, your directors, owners, authorised users, customers, bank accounts and wallets. They must be true, complete and current, and you must tell us within 10 business days if anything changes.</p>
+            <p className="text-neutral-700"><strong>4.2</strong> We may refuse an application, or decline any Service, without giving reasons.</p>
+            <p className="text-neutral-700"><strong>4.3</strong> You may use the Services only for the business you disclosed to us, and only for your own account.</p>
+            <p className="text-neutral-700"><strong>4.4</strong> You are responsible for holding every licence and approval that your own business needs.</p>
+            <p className="text-neutral-700"><strong>4.5</strong> You must keep your passwords, API keys and authentication devices secure, use two-factor authentication where we offer it, and tell us immediately at support@ezeebit.com if you suspect unauthorised access.</p>
+            <p className="text-neutral-700"><strong>4.6</strong> We may rely on any instruction given with your credentials. You are responsible for those instructions unless the loss was caused by our fraud, wilful misconduct or gross negligence.</p>
+          </div>
+        </section>
+
+        <section>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">5. Deposits, conversion and withdrawals</h3>
+          <div className="space-y-3">
+            <p className="text-neutral-700"><strong>5.1 Balances.</strong> Your balance is our record of the ZAR or USDT we hold for you. It is not a bank deposit, we are not a bank, and it is not covered by deposit insurance. We hold client ZAR in bank accounts, and client USDT in wallets, that are separate from our own operating funds. No interest is paid to you, and we may keep any interest or other benefit we earn on funds we hold. We control the private keys to the wallets in which USDT is held.</p>
+            <p className="text-neutral-700"><strong>5.2 ZAR deposits.</strong> You may deposit ZAR only by electronic transfer from a verified South African bank account in your own name, using the reference shown in the portal. We do not accept cash or third-party deposits and may return them, less bank charges. We credit a deposit once we have received cleared funds, matched them to you and completed our checks. If a bank reverses a deposit after we credit it, we may debit your balance and you must pay any shortfall.</p>
+            <p className="text-neutral-700"><strong>5.3 USDT deposits.</strong> You may deposit USDT only to the address shown for your account, on Ethereum, Tron, Solana or BNB Smart Chain. We credit it after the confirmations and screening we require. If you send another asset, use another network or use a wrong address, the asset may be permanently lost and we are not obliged to recover it. A deposit we reject on compliance grounds is not credited. Where the law permits we return it to the sender, less network fees, and in some cases we must hold or report it.</p>
+            <p className="text-neutral-700"><strong>5.4 Conversion.</strong> When you convert between ZAR and USDT, we show you a quote with the rate and the amounts. The quote is valid only for the period shown. Once you accept a valid quote and we confirm it, the conversion is final and cannot be cancelled. We act as principal and are your counterparty. Our rate includes a spread and may differ from other providers' rates. You must hold enough balance before you accept. We need not give a quote, and we may set minimum and maximum amounts. If a quote or conversion contains an obvious error, we may cancel or correct it.</p>
+            <p className="text-neutral-700"><strong>5.5 ZAR withdrawals.</strong> We pay ZAR withdrawals only to a verified South African bank account in your own name. Payment times depend on banks and are not guaranteed. If you give us wrong bank details, we are not liable for a payment made to them.</p>
+            <p className="text-neutral-700"><strong>5.6 USDT withdrawals.</strong> We send USDT withdrawals on Ethereum only, to an address you have whitelisted, that you confirm you control and that passes our screening. You must give us any sender and recipient details we need for the Travel Rule. Blockchain transfers are irreversible. Once we broadcast a withdrawal we cannot cancel or recall it, and you are solely responsible for the address you choose.</p>
+            <p className="text-neutral-700"><strong>5.7 Limits, holds and corrections.</strong> We may set and change limits, cut-off times and waiting periods, and show them in the portal. We may delay, limit, refuse or reverse any transaction where clause 7 or 8 applies, where we suspect fraud or error, or where a bank, liquidity provider or network is unavailable. We may correct any error in your account and reverse any amount credited to you by mistake, without notice. If your balance becomes negative for any reason, you must pay us the shortfall on demand, with interest at the prime rate of our bankers plus 2% a year from the date of demand. We may deduct or set off any amount you owe us, or owe any Ezeebit group company, against any balance or payment due to you, in any currency and at our conversion rate. You may not set off or withhold any amount you owe us.</p>
+            <p className="text-neutral-700"><strong>5.8 Supported assets.</strong> The portal and docs.ezeebit.com show the assets and networks we support. We may add, suspend or remove any of them, and we decide whether to support any fork or upgrade.</p>
+            <p className="text-neutral-700"><strong>5.9 Exchange control.</strong> If you are a South African resident, you alone are responsible for complying with South African exchange control rules in everything you do through the Platform, including holding USDT and moving it outside South Africa. We do not apply for approval for you or advise you on it, and we may report transactions where the law requires.</p>
+            <p className="text-neutral-700"><strong>5.10 Statements.</strong> You must check your statements and tell us within 30 days of any entry you believe is wrong.</p>
+            <p className="text-neutral-700"><strong>5.11 Closing your account.</strong> You may close your account at any time once pending transactions have settled. We will pay your remaining balance to your verified bank account or whitelisted address, less anything you owe us, unless the law prevents us.</p>
+            <p className="text-neutral-700"><strong>5.12 Payments from your customers.</strong> Where we accept crypto-asset payments from your customers for you, you are solely responsible for your customers, for the goods or services you sell them, and for any refund or dispute with them. We credit you only for payments that we actually receive and that pass our screening. We are not a party to your sale and give your customers no undertaking.</p>
+            <p className="text-neutral-700"><strong>5.13 Payouts you instruct.</strong> Where we send a payout on your instruction, you are solely responsible for the accuracy of the recipient, amount, address, network and bank details, for your right to make the payment, and for your own obligations to the recipient. We may refuse or delay a payout under clause 5.7, and a payout that has been sent cannot be recalled.</p>
+          </div>
+        </section>
+
+        <section>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">6. Fees</h3>
+          <div className="space-y-3">
+            <p className="text-neutral-700"><strong>6.1</strong> You must pay the fees shown in the portal, in your fee schedule or agreed with us in writing. Fees for a transaction are shown before you confirm it. You must dispute any fee within 30 days of it appearing in your account, after which it is treated as accepted.</p>
+            <p className="text-neutral-700"><strong>6.2</strong> Each USDT withdrawal carries a network fee, shown in USDT before you confirm. It is an estimate of blockchain costs and may be more or less than the cost we incur. It can change at any time, is separate from any other fee, and is not refundable once the withdrawal is broadcast.</p>
+            <p className="text-neutral-700"><strong>6.3</strong> When USDT is sent to us, the sender pays the network fee and we credit the amount that arrives. Charges levied by your bank, wallet provider or exchange are for your account.</p>
+            <p className="text-neutral-700"><strong>6.4</strong> Fees exclude VAT. Fees do not include the conversion spread.</p>
+            <p className="text-neutral-700"><strong>6.5</strong> We may change our fees at any time by giving you notice in the portal or by email. A change takes effect on the date stated in the notice, or immediately if no date is stated, and applies to transactions you confirm from then on. The fee shown before you confirm a transaction is the fee you pay. If you do not agree to a change, you may stop using the Services and close your account. Using the Services after a change takes effect means you accept it.</p>
+            <p className="text-neutral-700"><strong>6.6</strong> You are responsible for your own taxes.</p>
+          </div>
+        </section>
+
+        <section>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">7. Sanctions and prohibited use</h3>
+          <div className="space-y-3">
+            <p className="text-neutral-700"><strong>7.1 Sanctions.</strong> "<strong>Sanctions</strong>" means the sanctions, targeted financial sanctions and asset freezes imposed by the United Nations Security Council, South Africa, Kenya, Canada, the United States (including OFAC), the European Union, the United Kingdom, and any other authority whose sanctions apply to us, our banking, liquidity or stablecoin partners, or a transaction. We apply all of them to every client.</p>
+            <p className="text-neutral-700"><strong>7.2 Restricted persons and places.</strong> We do not provide Services to, or process transactions connected with:</p>
             <ul className="list-disc list-outside text-neutral-700 ml-8 space-y-1">
-              <li><strong>4.1.1</strong> to receive or transmit material which is in violation of any law or regulation, which is obscene, threatening, racist, menacing, offensive, defamatory, in breach of confidence, in breach of any intellectual property rights, or otherwise objectionable or unlawful;</li>
-              <li><strong>4.1.2</strong> for the transmission of "junk mail", "spam", "chain letters", or unsolicited mass distribution of SMS;</li>
-              <li><strong>4.1.3</strong> other than for your personal and non-commercial use.</li>
+              <li>any person named on a Sanctions list, or owned 50% or more or controlled by such a person;</li>
+              <li>any country or territory subject to comprehensive Sanctions, which currently are Cuba, Iran, North Korea, and the Crimea, Donetsk, Luhansk, Kherson and Zaporizhzhia regions of Ukraine;</li>
+              <li>any jurisdiction that the Financial Action Task Force identifies as high-risk and subject to a call for action, which currently are Iran, North Korea and Myanmar; or</li>
+              <li>any other jurisdiction we designate as restricted on our website.</li>
             </ul>
-            <p className="text-neutral-700">
-              <strong>4.2</strong> You agree that you will not in any way use any device, software or other instrument to interfere or attempt to interfere with the proper working of the Website. In addition, you agree that you will not in any way use any robot, spider, other automatic device, or manual process to monitor, copy, distribute or modify the Website or the information contained herein, without the prior written consent from an authorised Ezee Solutions representative (such consent is deemed given for standard search engine technology employed by Internet search websites to direct Internet users to this Website).
-            </p>
-            <p className="text-neutral-700">
-              <strong>4.3</strong> You may not in any way display, publish, copy, print, post or otherwise use the Website and/or the information contained therein without the express prior written consent of an authorised Ezee Solutions representative.
-            </p>
-            <p className="text-neutral-700">
-              <strong>4.4</strong> You remain personally liable for the consequences of any contravention of these provisions and/or failure to comply with law and hereby indemnify and hold Ezee Solutions harmless against any losses and/or damages, whether direct and/or indirect, which you may suffer as a result of a contravention of these provisions.
-            </p>
-            <p className="text-neutral-700">
-              <strong>4.5</strong> Should you become aware of any unacceptable use of the Ezee Solutions Website or related email functionality, please contact compliance@pundixsa.co.za.
-            </p>
-          </div>
-        </section>
-
-        <section>
-          <h3 className="text-xl font-semibold text-neutral-900 mb-3">5. Disclaimer</h3>
-          <div className="space-y-3">
-            <p className="text-neutral-700">
-              <strong>5.1</strong> Whilst every effort has been made by Ezee Solutions and its suppliers of information, to ensure the proper performance of the Website, the accuracy of the information/images and the reliability of the binary data on the Website, Ezee Solutions, its affiliated companies, suppliers, or any of their employees, do not, to the full extent permitted by law, guarantee the availability or accuracy of the services, content and/or information offered on the Website.
-            </p>
-            <p className="text-neutral-700">
-              <strong>5.2</strong> Ezee Solutions makes no representations or warranties, whether express or implied, and assumes no liability or responsibility for the proper performance of the Website and you thus use the Website at your own risk. In particular Ezee Solutions makes no warranty that the Website will meet your requirements, be uninterrupted, complete, timely, secure or error free.
-            </p>
-            <p className="text-neutral-700">
-              <strong>5.3</strong> Ezee Solutions disclaims liability for any damage, loss or expenses, whether direct, indirect or consequential in nature, arising out of or in connection with your access to or use of the Website and/or any content therein unless otherwise provided by law.
-            </p>
-            <p className="text-neutral-700">
-              <strong>5.4</strong> The Website and all information provided on the Website is provided "as is" without warranty of any kind, either express or implied, including, but not limited to, the implied warranties of merchantability, fitness for a particular purpose, completeness, or non-infringement, as may be allowed in law.
-            </p>
-            <p className="text-neutral-700">
-              <strong>5.5</strong> Any views or statements made or expressed on the Website are not necessarily the views of Ezee Solutions, its directors, employees and/or agents.
-            </p>
-            <p className="text-neutral-700">
-              <strong>5.6</strong> In addition to the disclaimers contained elsewhere in these Terms and Conditions, Ezee Solutions also makes no warranty or representation, whether express or implied, that the information or files available on the Website are free of viruses, spyware, malware, Trojans, destructive materials or any other data or code which is able to corrupt, destroy, compromise, disrupt, disable, harm, jeopardise or otherwise impede in any manner the operation, stability, security functionality or content of your computer system, computer network, hardware or software in any way. You accept all risk associated with the existence of such viruses, destructive materials or any other data or code which is able to corrupt, compromise, jeopardise, disrupt, disable, harm or otherwise impede in any manner the operation or content of a computer system, computer network, any handset or mobile device, or your hardware or software, save where such risks arise due to the gross negligence or wilful misconduct of Ezee Solutions, its employees, agents or authorised representatives. Ezee Solutions thus disclaims all liability for any damage, loss or liability of any nature whatsoever arising out of or in connection with your access to or use of the Website.
-            </p>
-          </div>
-        </section>
-
-        <section>
-          <h3 className="text-xl font-semibold text-neutral-900 mb-3">6. Third Party Content/Websites</h3>
-          <div className="space-y-3">
-            <p className="text-neutral-700">
-              <strong>6.1</strong> Third party information such as but not limited to, product catalogues, product description and specifications, lists of dealers, reports on news, entertainment, technology and features, advertisements including videos, images and photographs of the products, links to third party websites and other data from external sources is made available on the Website ("Third-Party Content"). The provision of Third-Party Content is for general informational purposes only.
-            </p>
-            <p className="text-neutral-700">
-              <strong>6.2</strong> You hereby acknowledge that the Third-Party Content provided to you is obtained from sources believed to be reliable or provided by the sellers in the process of advertising, exhibiting and offering to sell the products on the Website. All Third-Party Content is provided on an 'As Is' basis. Ezee Solutions does not own / have the rights and title to any such Third-Party Content, Ezee Solutions does not provide any guarantee or make any representations with regards to the accuracy, title, merchantability, non-infringement or fitness for a particular purpose of any Third-Party Content. Ezee Solutions shall not be held liable for any loss suffered by you in any way whatsoever based on your reliance on or use of such Third-Party Content.
-            </p>
-            <p className="text-neutral-700">
-              <strong>6.3</strong> This Website may contain links or references to other websites ("Third Party Websites") which are outside of our control, including those of advertisers. These Terms and Conditions do not apply to those Third-Party Websites and Ezee Solutions is not responsible for the practices and/or privacy policies of those Third-Party Websites or the "cookies\" that those sites may use.
-            </p>
-            <p className="text-neutral-700">
-              <strong>6.4</strong> In the event any Third-Party Content contains links to Third Party Websites, and you visit any such external link, you agree to do so at your own risk, responsibility and liability. Ezee Solutions makes no warranty or representation regarding, and does not endorse, any website linked to the Website or the information appearing thereon or any of the products or services described thereon.
-            </p>
-          </div>
-        </section>
-
-        <section>
-          <h3 className="text-xl font-semibold text-neutral-900 mb-3">7. Password and/or One Time PIN</h3>
-          <p className="text-neutral-700 mb-4">
-            If you have a password or One Time PIN (OTP) for using the Website, you undertake to keep it secure and warrant that no other person shall use the Website utilising your password or OTP, and you acknowledge further that you are responsible for ensuring that no unauthorised access to the Website is obtained using your password or OTP, and that you will be liable for all such activities conducted pursuant to such use, whether authorised or not.
-          </p>
-        </section>
-
-        <section>
-          <h3 className="text-xl font-semibold text-neutral-900 mb-3">8. Intellectual Property Rights</h3>
-          <div className="space-y-3">
-            <p className="text-neutral-700">
-              <strong>8.1</strong> The contents of the Website, including any material, information, data, software, icons, text, graphics, lay-outs, images, sound clips, advertisements, video clips, trade names, the word or mark "Ezee Solutions Group", logos, trade-marks, designs and service marks which are displayed on or incorporated in this Website ("Intellectual Property") are protected by law, including but not limited to copyright and trade mark law. The Intellectual Property is the property of Ezee Solutions, its advertisers and/or sponsors and/or is licensed to Ezee Solutions.
-            </p>
-            <p className="text-neutral-700">
-              <strong>8.2</strong> You will not acquire any right, title or interest in or to the Website or the Intellectual Property.
-            </p>
-            <p className="text-neutral-700">
-              <strong>8.3</strong> You may not in any form or by any means, without the prior written consent of Ezee Solutions:
-            </p>
+            <p className="text-neutral-700"><strong>7.3 Restricted platforms.</strong> We screen the wallet behind every payment. We do not accept payments from, or send funds to:</p>
             <ul className="list-disc list-outside text-neutral-700 ml-8 space-y-1">
-              <li><strong>8.3.1</strong> commercially process, exploit, reproduce, distribute, display, transmit, publish or broadcast any Intellectual Property;</li>
-              <li><strong>8.3.2</strong> claim ownership of all or any part of the Intellectual Property;</li>
-              <li><strong>8.3.3</strong> modify or repost the Intellectual Property;</li>
-              <li><strong>8.3.4</strong> create a link to the Website from another website; or</li>
-              <li><strong>8.3.5</strong> copy, incorporate, store, frame or embed all or any part of the Intellectual Property on another website or retrieval system.</li>
+              <li>an exchange, payment processor or other platform that is named on a Sanctions list or is owned or controlled by a person named on one;</li>
+              <li>a platform established in, or mainly serving, a restricted jurisdiction;</li>
+              <li>a mixer, tumbler or similar service, or a darknet market; or</li>
+              <li>any other platform that we or our screening providers identify as an unacceptable sanctions, money laundering, terrorist financing or fraud risk.</li>
             </ul>
-            <p className="text-neutral-700">
-              <strong>8.4</strong> Any use, distribution or reproduction of the Intellectual Property is prohibited unless expressly authorised in terms of these Terms and Conditions or otherwise provided for in law.
-            </p>
-            <p className="text-neutral-700">
-              <strong>8.5</strong> Where any of the Intellectual Property has been licensed to Ezee Solutions or belongs to any third party, your rights of use will also be subject to any terms and conditions which that licensor or third party imposes from time to time and you agree to comply with such third-party terms and conditions.
-            </p>
-          </div>
-        </section>
-
-        <section>
-          <h3 className="text-xl font-semibold text-neutral-900 mb-3">9. Protection of Personal Information</h3>
-          <div className="space-y-3">
-            <p className="text-neutral-700">
-              <strong>9.1</strong> You hereby acknowledge that these terms and Conditions are subject to the Ezee Solutions Privacy Policy on [www.pundixsa.co.za/privacy-policy] (the "Privacy Policy").
-            </p>
-            <p className="text-neutral-700">
-              <strong>9.2</strong> The Privacy Policy is incorporated by reference into these Terms and Conditions and by using the Website you acknowledge that you have reviewed and accepted our Privacy Policy.
-            </p>
-          </div>
-        </section>
-
-        <section>
-          <h3 className="text-xl font-semibold text-neutral-900 mb-3">10. Electronic Communications</h3>
-          <div className="space-y-3">
-            <p className="text-neutral-700">
-              All electronic communications, including any attachments thereto that are transmitted to you by Ezee Solutions, shall be on the following terms and conditions:
-            </p>
-            <p className="text-neutral-700">
-              <strong>10.1</strong> When you visit the Website or send e-mails to Ezee Solutions, you consent to receiving communications from Ezee Solutions electronically and agree that all agreements, notices, disclosures and other communications sent by Ezee Solutions satisfy any legal requirements, including but not limited to the requirement that such communications should be "in writing".
-            </p>
-            <p className="text-neutral-700">
-              <strong>10.2</strong> Before any purported agreement, that has been negotiated either wholly or partly by electronic means shall be considered binding on Ezee Solutions, the following terms and conditions shall apply:
-            </p>
+            <p className="text-neutral-700">This also covers businesses, domains and wallet addresses connected to those platforms. We may publish an indicative list on our website. It is a guide only, and a platform may be restricted before it appears there.</p>
+            <p className="text-neutral-700"><strong>7.4 Your undertakings.</strong> Each time you use the Services you confirm that:</p>
             <ul className="list-disc list-outside text-neutral-700 ml-8 space-y-1">
-              <li><strong>10.2.1</strong> An advanced electronic signature, (as defined in the Electronic Communications and Transactions Act 25 of 2002), of a duly authorized member of the Board of Directors of Ezee Solutions shall be required to be used and attached to any electronic communication containing any offer and/or acceptance by Ezee Solutions, as the case may be.</li>
-              <li><strong>10.2.2</strong> Where Ezee Solutions is acting as the offeror, the agreement shall be deemed to have been concluded at the time when and place where the acceptance of the offer was actually received by an Ezee Solutions representative, and upon such Ezee Solutions representative acknowledging receipt of such acceptance.</li>
-              <li><strong>10.2.3</strong> Any electronic communications shall be considered to have been sent by a Director as aforesaid only if:
-                <ul className="list-disc list-outside ml-8 space-y-1">
-                  <li><strong>10.2.3.1</strong> an Ezee Solutions representative sent it personally; or</li>
-                  <li><strong>10.2.3.2</strong> it was sent by a person who had the required authority to act on behalf of Ezee Solutions.</li>
-                </ul>
-              </li>
+              <li>neither you nor any of your directors, owners or authorised users is a restricted person;</li>
+              <li>you will not use the Services with, for the benefit of, or to send funds to or from a restricted person, place or platform;</li>
+              <li>you will not use a VPN or other tool to hide your location or identity;</li>
+              <li>you have reasonable controls to make sure your own customers are not restricted persons; and</li>
+              <li>you will tell us immediately if any of this stops being true.</li>
             </ul>
-            <p className="text-neutral-700">
-              <strong>10.3</strong> Ezee Solutions is not responsible for the proper and/or complete transmission of the information contained in the electronic communication or of the electronic communication itself nor in any delay in its receipt.
-            </p>
-            <p className="text-neutral-700">
-              <strong>10.4</strong> You will always have the choice to:
-            </p>
+            <p className="text-neutral-700"><strong>7.5 Prohibited use.</strong> You must not use the Services:</p>
             <ul className="list-disc list-outside text-neutral-700 ml-8 space-y-1">
-              <li><strong>10.4.1</strong> inform us in writing that you do not wish to continue receiving communications, or;</li>
-              <li><strong>10.4.2</strong> block any communications by registering on the Do Not Contact Registry as contemplated in the CPA.</li>
+              <li>for money laundering, terrorist financing, proliferation financing, fraud or dealing with the proceeds of crime;</li>
+              <li>to evade Sanctions, exchange controls, tax or any reporting requirement;</li>
+              <li>to split or disguise transactions to avoid limits, screening or monitoring;</li>
+              <li>for Ponzi, pyramid or unlicensed investment schemes, illegal or unlicensed gambling, narcotics, weapons, stolen or counterfeit goods, content that exploits children, ransomware or hacking;</li>
+              <li>for gambling, forex or trading platforms, money transmission, exchange or payment services for third parties, lending, investment management, charities or adult services, unless we approved this in writing at onboarding; or</li>
+              <li>in any way that breaches the law.</li>
             </ul>
-            <p className="text-neutral-700">
-              <strong>10.5</strong> Whilst Ezee Solutions does employ virus filtering; it provides no guarantees or warrantees that the electronic communication is virus-free.
-            </p>
+            <p className="text-neutral-700"><strong>7.6 What we may do.</strong> If we know or reasonably suspect a breach of this clause, or a connection to a restricted person, place or platform, we may immediately and without notice block or reject the transaction, freeze the affected funds or balance, suspend or close your account, and report the matter to any authority. Where the law requires us to freeze assets, we cannot release them until the authority permits, and no interest or compensation is payable. We may be prohibited from telling you what we have done or why.</p>
+            <p className="text-neutral-700"><strong>7.7 Issuer freezes.</strong> Stablecoin issuers and blockchain networks can freeze or destroy tokens at an address. We do not control this. If an issuer freezes USDT that relates to your transactions, we may make a matching deduction or hold against your balance.</p>
+            <p className="text-neutral-700"><strong>7.8 Your liability.</strong> You indemnify us, our group companies and our directors, officers and employees against all losses, fines, penalties and costs arising from your breach of this clause. We are not liable for any loss you suffer because we act under this clause in good faith.</p>
           </div>
         </section>
 
         <section>
-          <h3 className="text-xl font-semibold text-neutral-900 mb-3">11. Cookies</h3>
-          <p className="text-neutral-700 mb-4">
-            Ezee Solutions may store some information (commonly known as a "cookie") on your computer when you visit the Website. This enables Ezee Solutions to recognise you during subsequent visits. The type of information gathered is non-personal (such as: the IP address of your computer, the date and time of your visit, which pages you browsed and whether the pages have been delivered successfully. Apart from merely establishing basic connectivity and communications, Ezee Solutions may also use this data in aggregate form to develop customised services - tailored to your individual interests and needs. Should you choose to do so, it is possible (depending on the browser you are using), to be prompted before accepting any cookies, or to prevent your browser from accepting any cookies at all. This will however cause certain features of the web site not to be accessible.
-          </p>
-        </section>
-
-        <section>
-          <h3 className="text-xl font-semibold text-neutral-900 mb-3">12. Security</h3>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">8. Compliance and monitoring</h3>
           <div className="space-y-3">
-            <p className="text-neutral-700">
-              <strong>12.1</strong> Any person that delivers or attempts to deliver any damaging code to this Website or attempts to gain unauthorised access to any page on this Website shall be prosecuted and civil damages shall be claimed in the event that Ezee Solutions suffers any damage or loss.
-            </p>
-            <p className="text-neutral-700">
-              <strong>12.2</strong> You authorise Ezee Solutions to take all reasonable steps to ensure the integrity and security of the Website and back-office applications. All credit card transactions are Secure Socket Layers encrypted Ezee Solutions's registration documents and the Website's registered domain name are checked and verified.
-            </p>
+            <p className="text-neutral-700"><strong>8.1</strong> We monitor transactions and may ask you at any time about a transaction, your customers, a counterparty or the source or destination of funds. You must answer promptly and accurately.</p>
+            <p className="text-neutral-700"><strong>8.2</strong> We may delay, block, reject or reverse a transaction, or suspend your account, where you have not given us information we asked for, our checks are incomplete, screening shows a risk we do not accept, we suspect unlawful activity, or processing might breach the law. No processing time applies during a compliance review.</p>
+            <p className="text-neutral-700"><strong>8.3</strong> We report to regulators, financial intelligence units, tax authorities and law enforcement where the law requires or permits. We do not need your consent and may be prohibited from telling you.</p>
+            <p className="text-neutral-700"><strong>8.4</strong> We process personal information as set out in the Privacy Policy published on our website and in line with applicable data protection law. We may share it within the Ezeebit group and with our service providers, including across borders, to provide the Services and comply with the law. You must be entitled to give us any personal information you share about other people.</p>
           </div>
         </section>
 
         <section>
-          <h3 className="text-xl font-semibold text-neutral-900 mb-3">13. Indemnification</h3>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">9. Risks you accept</h3>
           <div className="space-y-3">
-            <p className="text-neutral-700">
-              <strong>13.1</strong> To the fullest extent permissible in law, you hereby unconditionally, irrevocably and unreservedly indemnify and hold Ezee Solutions, its public officers, directors, employees, consultants, agents, licensors and service providers, harmless against all loss, damages, claims, liability and/or costs, of whatsoever nature, howsoever and whenever arising, as a result of and without limitation, the following:
-            </p>
+            <p className="text-neutral-700">By using the Services you accept that:</p>
             <ul className="list-disc list-outside text-neutral-700 ml-8 space-y-1">
-              <li><strong>13.1.1</strong> visiting or using the Ezee Solutions Website;</li>
-              <li><strong>13.1.2</strong> downloading data, text, images;</li>
-              <li><strong>13.1.3</strong> reliance on the Website content;</li>
-              <li><strong>13.1.4</strong> links to other Ezee Solutions or third-party websites;</li>
-              <li><strong>13.1.5</strong> hardware, software, system or network malfunction;</li>
-              <li><strong>13.1.6</strong> any purchases of Ezee Solutions service offerings made on the Website;</li>
-              <li><strong>13.1.7</strong> any breach of the terms of these Terms and Conditions by you; or</li>
-              <li><strong>13.1.8</strong> any other cause whatsoever arising from or relating to visiting or using the Website.</li>
+              <li>crypto-assets are not legal tender and are not backed by any government or central bank;</li>
+              <li>USDT is issued by a third party we do not control, and we do not guarantee its value, its redemption or the issuer's solvency;</li>
+              <li>the ZAR value of USDT moves with exchange rates and market conditions;</li>
+              <li>blockchain transfers are irreversible, and assets sent to a wrong address or network are usually lost;</li>
+              <li>blockchains can be congested, delayed, forked or attacked, and we do not control them;</li>
+              <li>while we hold a balance for you, you rely on us and on our banks, custodians and liquidity providers;</li>
+              <li>laws on crypto-assets, exchange control and tax are changing, and a change may limit or end a Service at short notice; and</li>
+              <li>we do not give investment, legal or tax advice.</li>
             </ul>
           </div>
         </section>
 
         <section>
-          <h3 className="text-xl font-semibold text-neutral-900 mb-3">14. Limitation of Liability</h3>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">10. Our Platform and liability</h3>
           <div className="space-y-3">
-            <p className="text-neutral-700">
-              <strong>14.1</strong> Ezee Solutions cannot be held liable for any inaccurate information published on the Website and/or any incorrect prices displayed on the Website, save where such liability arises from the gross negligence or wilful misconduct of Ezee Solutions, its employees, agents or authorised representatives.
-            </p>
-            <p className="text-neutral-700">
-              <strong>14.2</strong> Ezee Solutions shall not be liable for any direct, indirect, incidental, special or consequential loss or damages which might arise from your use of, or reliance upon, the Website or the content contained in the Website; or your inability to use the Website, and/or unlawful activity on the Website and/or any linked Third-Party Website.
-            </p>
-            <p className="text-neutral-700">
-              <strong>14.3</strong> You hereby indemnify Ezee Solutions against any loss, claim or damage which may be suffered by yourself or any third party arising in any way from your use of this Website and/or any linked Third-Party Website.
-            </p>
+            <p className="text-neutral-700"><strong>10.1</strong> We own or license all intellectual property in the Platform. You may use it only for your own business while your account is active. You must not copy, reverse engineer, scrape, resell or interfere with it, or use our name or logo without our written consent.</p>
+            <p className="text-neutral-700"><strong>10.2</strong> We will provide the Services with reasonable care and skill. Otherwise, to the fullest extent the law allows, the Platform and Services are provided "as is" and "as available", and we do not promise that they will be uninterrupted, error-free or secure.</p>
+            <p className="text-neutral-700"><strong>10.3</strong> We are not liable to you for any indirect, special or consequential loss, or for any loss of profit, revenue, business, opportunity, goodwill or data, however it arises and whether or not we were told it was possible.</p>
+            <p className="text-neutral-700"><strong>10.4</strong> Our total liability to you in any 12-month period, for all claims of any kind taken together, is limited to the fees you paid us in the 6 months before the event giving rise to the claim. Your liability to us is not limited.</p>
+            <p className="text-neutral-700"><strong>10.5</strong> We are not liable for loss, including the loss of a balance, caused by the act, failure or insolvency of banks, custodians, liquidity providers, payment systems, blockchain networks, stablecoin issuers or other third parties we do not control, by a cyber-attack or security breach that occurs despite our reasonable precautions, by scheduled or emergency downtime, by instructions given with your credentials, by wrong details you gave us, by market movements, by action we take in good faith under clause 5.7, 7 or 8, or by events beyond our reasonable control. This clause does not exclude loss caused by our own fraud, wilful misconduct or gross negligence.</p>
+            <p className="text-neutral-700"><strong>10.6</strong> Clauses 10.3 and 10.4 do not apply to our fraud or wilful misconduct, or to any liability that cannot lawfully be limited. They also do not apply to our obligation to return a balance that is not frozen or on hold, but that obligation is limited to the amount of the balance and is subject to clause 10.5.</p>
+            <p className="text-neutral-700"><strong>10.7</strong> You indemnify us, our group companies and our directors, officers, employees and service providers against all losses, liabilities, fines, penalties, taxes and costs, including legal costs on the attorney and own client scale, that arise from:</p>
+            <ul className="list-disc list-outside text-neutral-700 ml-8 space-y-1">
+              <li>your business, your products or services, or any claim or dispute involving your customers or recipients;</li>
+              <li>your breach of these Terms or of the law;</li>
+              <li>any transaction or instruction given with your credentials, including one that was unauthorised, fraudulent, unlawful or inaccurate;</li>
+              <li>any information you gave us that was false, incomplete or misleading;</li>
+              <li>any reversal, recall or chargeback of funds you deposited; or</li>
+              <li>any enquiry, investigation or action by a regulator or authority that relates to you or your transactions.</li>
+            </ul>
+            <p className="text-neutral-700"><strong>10.8</strong> You must notify us in writing of any claim within 6 months of the date you became aware, or should have become aware, of the facts behind it. After that, the claim lapses to the extent the law allows.</p>
+            <p className="text-neutral-700"><strong>10.9</strong> <strong>Clauses 1.6, 5.7, 5.12, 5.13, 7.6, 7.8, 10.2 to 10.13 and 12.8 limit our liability to you and place risk and liability on you. Please read them carefully before you accept these Terms.</strong></p>
+            <p className="text-neutral-700"><strong>10.10</strong> Our records of your account, balances, transactions, instructions and acceptance of these Terms are proof of their contents unless you prove otherwise. A certificate signed by one of our directors stating an amount you owe us is sufficient proof of that amount for any legal proceedings, unless you prove otherwise.</p>
+            <p className="text-neutral-700"><strong>10.11</strong> We do not act as your trustee, fiduciary, adviser or agent, and we owe you no duties beyond those set out in these Terms.</p>
+            <p className="text-neutral-700"><strong>10.12</strong> The remedies in these Terms are your only remedies against us. You may bring a claim only against the Ezeebit company that provided the Service, and not against any other group company or any director, officer, employee or shareholder.</p>
+            <p className="text-neutral-700"><strong>10.13</strong> You must pay all costs we incur in recovering amounts you owe us or enforcing these Terms, including legal costs on the attorney and own client scale, collection commission and tracing fees. We may take over the defence and settlement of any claim for which you must indemnify us, at your cost.</p>
           </div>
         </section>
 
         <section>
-          <h3 className="text-xl font-semibold text-neutral-900 mb-3">15. Monitoring, Interception and Access to Information</h3>
-          <p className="text-neutral-700 mb-4">
-            To comply with law and in line with international standards and best practice relating to the use of information technology in its business, Ezee Solutions may at its discretion, monitor and/or intercept, live communications such as email and website activity in compliance with the Regulation of Interception of Communications and Provision of Communication-related Information Act, 70 of 2002.
-          </p>
-        </section>
-
-        <section>
-          <h3 className="text-xl font-semibold text-neutral-900 mb-3">16. Complaints and Notices</h3>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">11. Suspension and termination</h3>
           <div className="space-y-3">
-            <p className="text-neutral-700">
-              <strong>16.1</strong> You agree to submit all complaints relating to these Terms and Conditions to Ezee Solutions first in order to afford us an opportunity to resolve the complaint within a reasonable period before you proceed to refer any formal complaints to any relevant authority.
-            </p>
-            <p className="text-neutral-700">
-              <strong>16.2</strong> Ezee Solutions chooses as its address at which it will receive all correspondence or legal notices for all purposes under these Terms and Conditions, whether in respect of court process, notice, or other documents or communication of whatsoever nature, the following address: In this regard, please direct all complaints to: Physical and postal address: 135 Beach Road Mouille Point, Cape Town, Western Cape, 8005 e-mail: compliance@pundixsa.co.za.
-            </p>
+            <p className="text-neutral-700"><strong>11.1</strong> You may stop using the Services and close your account at any time under clause 5.11.</p>
+            <p className="text-neutral-700"><strong>11.2</strong> We may end our agreement with you, or change, limit or withdraw any Service, at any time on written notice.</p>
+            <p className="text-neutral-700"><strong>11.3</strong> We may suspend or end it immediately, without notice, if you breach clause 4, 7 or 8, if the law, a regulator, a court or one of our banking or liquidity partners requires it, if you become insolvent or stop trading, or if we reasonably suspect fraud, unlawful activity or a security compromise.</p>
+            <p className="text-neutral-700"><strong>11.4</strong> Clauses 5.11, 7, 8, 10 and 12 continue after termination.</p>
           </div>
         </section>
 
         <section>
-          <h3 className="text-xl font-semibold text-neutral-900 mb-3">17. Governing Law and Jurisdiction</h3>
-          <p className="text-neutral-700 mb-4">
-            This Website is hosted, controlled and operated from the Republic of South Africa and therefore governed by South African law and you submit to the jurisdiction of the South African courts.
-          </p>
-        </section>
-
-        <section>
-          <h3 className="text-xl font-semibold text-neutral-900 mb-3">18. General</h3>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">12. Law, disputes and changes</h3>
           <div className="space-y-3">
-            <p className="text-neutral-700">
-              <strong>18.1</strong> These Terms and Conditions are severable, in that if any provision is determined to be illegal or unenforceable by any court of competent jurisdiction, then such provision shall be deemed to have been deleted without affecting the remaining provisions of the Terms and Conditions unless such invalidity, un-enforceability or illegality goes to the root of these Terms and Conditions.
-            </p>
-            <p className="text-neutral-700">
-              <strong>18.2</strong> Ezee Solutions' failure to exercise any particular rights or provision of these terms and conditions shall not constitute a waiver of such right or provision, unless acknowledged and agreed to by us in writing.
-            </p>
-            <p className="text-neutral-700">
-              <strong>18.3</strong> You may not cede, assign or otherwise transfer your rights and obligations in terms of these Terms and Conditions to any third party.
-            </p>
-            <p className="text-neutral-700">
-              <strong>18.4</strong> No indulgence, extension of time, relaxation or latitude which any party (the "grantor") may show grant or allow to the other (the "grantee") shall constitute a waiver by the grantor of any of the grantor's rights and the grantor shall not thereby be prejudiced or stopped from exercising any of its rights against the grantee which may have arisen in the past or which might arise in the future.
-            </p>
-            <p className="text-neutral-700">
-              <strong>18.5</strong> These Terms and Conditions contain the whole agreement between you and Ezee Solutions and no other warranty or undertaking is valid, unless contained in these Terms and Conditions.
-            </p>
+            <p className="text-neutral-700"><strong>12.1</strong> These Terms are governed by the laws of South Africa. This does not remove any protection that mandatory local law gives you where another Ezeebit company provides the Service.</p>
+            <p className="text-neutral-700"><strong>12.2</strong> The parties will first try to resolve a dispute by negotiation. If it is not resolved within 10 business days of written notice, either party may refer it to arbitration administered by the Arbitration Foundation of Southern Africa under its Commercial Rules, before a single arbitrator, in Cape Town and in English. Either party may approach a court for urgent relief. We may instead choose to bring proceedings in any court that has jurisdiction, including a Magistrate's Court, to recover any amount you owe us. You may bring a claim only in your own name, and not as part of a class or representative action.</p>
+            <p className="text-neutral-700"><strong>12.3</strong> Send complaints to support@ezeebit.com. We will acknowledge them promptly and work to resolve them.</p>
+            <p className="text-neutral-700"><strong>12.4</strong> We may change these Terms by posting a new version on our website with its effective date. We will give at least 7 days' notice of a material change, other than a fee change under clause 6.5, unless the law, a regulator, security or Sanctions require it sooner. Using the Services after a change takes effect means you accept it.</p>
+            <p className="text-neutral-700"><strong>12.5</strong> You agree to receive notices electronically, in the portal or by email. Electronic acceptance of these Terms is as binding as a signature.</p>
+            <p className="text-neutral-700"><strong>12.6</strong> You may not transfer your rights or obligations without our written consent. We may transfer ours to another Ezeebit group company on notice to you.</p>
+            <p className="text-neutral-700"><strong>12.7</strong> If any part of these Terms is unenforceable, the rest continues. A delay in enforcing a right is not a waiver of it.</p>
+            <p className="text-neutral-700"><strong>12.8</strong> These Terms, together with any signed agreement under clause 3, are the whole agreement between you and us about the Platform. You confirm that you have not relied on any statement, promise or representation that is not set out in them, including anything on our website or said by our staff. To the fullest extent the law allows, all warranties and terms implied by law are excluded.</p>
+            <p className="text-neutral-700"><strong>12.9</strong> Nothing in these Terms makes either party the partner or agent of the other, or gives any right to a person who is not a party to them, including your customers.</p>
           </div>
         </section>
 
         <section>
-          <h3 className="text-xl font-semibold text-neutral-900 mb-3">19. Ezee Solutions Information</h3>
-          <div className="bg-neutral-50 p-6 rounded-lg">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-              <div>
-                <p><strong>Company Name:</strong> Ezee Solutions Group (Proprietary) Limited</p>
-                <p><strong>Legal Status:</strong> Private Company</p>
-                <p><strong>Registration Number:</strong> 2022/250578/07</p>
-                <p><strong>Place of Registration:</strong> Republic of South Africa</p>
-              </div>
-              <div>
-                <p><strong>Phone:</strong> +27 (21) 879-5074</p>
-                <p><strong>Website:</strong> https://www.ezeebit.com</p>
-                <p><strong>Email:</strong> compliance@ezeebit.com</p>
-              </div>
-            </div>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">13. Company information</h3>
+          <div className="space-y-3">
+            <p className="text-neutral-700">This website is operated by Ezee Solutions Group (Pty) Ltd, trading as Ezeebit, a private company registered in South Africa (registration no. 2022/250578/07). Registered address: 135 Beach Road, Mouille Point, Cape Town, 8005, South Africa. Email: support@ezeebit.com. Telephone: +27 21 879 5074. Website: www.ezeebit.com.</p>
           </div>
         </section>
       </div>
@@ -854,7 +741,7 @@ const Legal = () => {
     <>
       <SEO
         title="Legal: terms, privacy, and compliance"
-        description="Terms of service, privacy policy and compliance information for Ezeebit, operated by Ezee Solutions Group (Pty) Ltd."
+        description="Terms of use, privacy policy and compliance information for Ezeebit, operated by Ezee Solutions Group (Pty) Ltd."
         canonicalUrl="/resources/legal"
         crumbs={[{ name: 'Legal', path: '/resources/legal' }]}
       />

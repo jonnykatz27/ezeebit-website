@@ -25,7 +25,7 @@ const Footer = () => {
     ],
     Legal: [
       { name: 'Privacy Policy', href: '/resources/legal#privacy' },
-      { name: 'Terms & Conditions', href: '/resources/legal#terms' },
+      { name: 'Terms of Use', href: '/resources/legal#terms' },
       { name: 'Compliance', href: '/resources/legal#compliance' },
       { name: 'Trust Centre', href: 'https://trust.ezeebit.com/' },
     ],

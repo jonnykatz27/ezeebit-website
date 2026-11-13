@@ -143,7 +143,7 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
   )
 
   return (
-    <section id={id} className={`relative overflow-hidden ${stacked ? 'hero-stacked pt-40 lg:pt-44' : 'pt-40 lg:pt-48'} ${split ? 'pb-14 lg:pb-24' : 'pb-12 lg:pb-20'}`}>
+    <section id={id} className={`relative overflow-hidden ${stacked ? 'hero-stacked pt-[9.5rem] lg:pt-[10.5rem]' : 'pt-[9.5rem] lg:pt-[11.5rem]'} ${split ? 'pb-14 lg:pb-24' : 'pb-12 lg:pb-20'}`}>
       <HeroBackdrop glow={stacked ? 'top' : 'side'} />
       <div className="container-custom relative z-10">
         {split ? (

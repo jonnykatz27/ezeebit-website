@@ -37,7 +37,7 @@ const WhereToSpend = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="overflow-hidden -mt-20"
+      className="overflow-clip -mt-20"
     >
       {/* Hero Section */}
       <PageHero
@@ -50,8 +50,8 @@ const WhereToSpend = () => {
       </PageHero>
 
       {/* Categories Filter */}
-      <section className="bg-white border-b border-neutral-200 sticky top-20 z-40">
-        <div className="container-custom px-4">
+      <section className="bg-white border-b border-neutral-200 sticky top-14 lg:top-[4.5rem] z-40">
+        <div className="container-custom">
           <div className="flex items-center justify-between py-3 md:py-4">
             <div className="flex space-x-2 md:space-x-4 overflow-x-auto scrollbar-hide">
               {categories.map((category) => (
@@ -80,7 +80,7 @@ const WhereToSpend = () => {
 
       {/* Store Grid */}
       <section className="py-8 md:py-16 bg-white">
-        <div className="container-custom px-4">
+        <div className="container-custom">
           {filteredStores.length === 0 ? (
             <div className="text-center py-12">
               <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center mx-auto mb-4 text-primary-400">
@@ -173,7 +173,7 @@ const WhereToSpend = () => {
       {/* CTA Section */}
       <section className="py-12 md:py-16 relative overflow-hidden bg-neutral-950 text-white">
         <DarkBackdrop glow="left" />
-        <div className="relative container-custom text-center px-4">
+        <div className="relative container-custom text-center">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}

@@ -3,9 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <!--
-      Marks a real browser before first paint. Pre-rendered HTML stays
-      visible for clients that do not run this script. The class lets
-      entrance elements start hidden only when JavaScript will animate them.
+      Marks a real browser before first paint. Page copy is never hidden: the
+      pre-rendered HTML paints as it arrives. Only a hero illustration, which
+      has to be measured before it is drawn at the right size, waits for
+      JavaScript (see HeroStage); clients that never run this script see it.
     -->
     <script>
       document.documentElement.classList.add('js')
@@ -22,10 +23,12 @@
 
       gtag('config', 'G-L4585555QD');
     </script>
-    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <!-- The same mark as ezeebit.com: the SVG where a browser takes it, PNGs and the ICO where it does not -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32 48x48" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="/favicon-192.png" sizes="192x192" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ezeebit | Crypto and stablecoin payment infrastructure</title>

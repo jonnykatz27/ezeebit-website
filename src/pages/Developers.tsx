@@ -702,7 +702,7 @@ app.post(
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2 }}
-            className="max-w-6xl mx-auto"
+            className="w-full"
           >
             <div className="flex flex-wrap items-center justify-center gap-3 mb-4 lg:mb-6">
               <span className="px-2 py-1 bg-success-600 text-white rounded text-xs font-medium">
@@ -804,7 +804,8 @@ app.post(
       {/* Merchant hierarchy */}
       <section className="section-padding bg-white">
         <div className="container-custom">
-          <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Full width, so its heading starts on the same edge as every other section's */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div
             >
               <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-6">
@@ -881,7 +882,7 @@ app.post(
           </div>
 
           {/* One compact panel: two coins to a row on a phone, three from md, each with its networks beside it */}
-          <div className="mx-auto grid max-w-4xl grid-cols-[repeat(2,minmax(0,1fr))] gap-px overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-200 md:grid-cols-[repeat(3,minmax(0,1fr))]">
+          <div className="grid max-w-4xl grid-cols-[repeat(2,minmax(0,1fr))] gap-px overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-200 md:grid-cols-[repeat(3,minmax(0,1fr))]">
             {supportedAssets.map((asset) => (
               <div key={`${asset.asset}-${asset.network}`} className="flex items-center gap-2.5 bg-white px-3 py-2.5 text-left lg:gap-3 lg:px-4 lg:py-3 max-md:[&:last-child:nth-child(odd)]:col-span-2">
                 <img src={asset.logo} alt="" width={28} height={28} className="size-6 lg:size-7 shrink-0 rounded-full object-contain !mx-0" />

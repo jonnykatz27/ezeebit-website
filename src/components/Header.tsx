@@ -300,7 +300,8 @@ const Header = () => {
       }`}
     >
       <nav className="container-custom">
-        <div className="flex items-center justify-between h-16 lg:h-20 px-1 sm:px-6 lg:px-2 xl:px-8">
+        {/* No padding of its own, so the logo and the last button sit on the page's content edges at every width */}
+        <div className="flex items-center justify-between h-14 lg:h-[4.5rem]">
           <Link to="/" className="flex items-center space-x-2">
             {/* The brand's own white-wordmark logo on dark, the black one on light; never one recoloured */}
             <img
@@ -383,7 +384,7 @@ const Header = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="lg:hidden fixed inset-x-0 bottom-0 top-16 -z-10 bg-neutral-900/30"
+              className="lg:hidden fixed inset-x-0 bottom-0 top-14 -z-10 bg-neutral-900/30"
               onClick={() => setIsMenuOpen(false)}
               aria-hidden="true"
             />

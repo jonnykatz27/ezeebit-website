@@ -72,7 +72,7 @@ const StoreDetail = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="pt-20"
+        className="pt-14 lg:pt-[4.5rem]"
       >
       {/* Back Navigation */}
       <section className="bg-white border-b border-neutral-100">
@@ -154,8 +154,9 @@ const StoreDetail = () => {
 
       {/* About Section */}
       <section className="section-padding bg-neutral-50">
+        {/* On the container's edge, like the store name above and How to pay below; section-head sets the reading width */}
         <div className="container-custom">
-          <div className="max-w-4xl mx-auto">
+          <div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -247,7 +248,7 @@ const StoreDetail = () => {
 
           {storeDetails ? (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto mb-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                 {storeDetails.locations.map((location, index) => (
                   <motion.div
                     key={index}

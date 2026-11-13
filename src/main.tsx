@@ -5,12 +5,17 @@ import { HelmetProvider } from 'react-helmet-async'
 import { MotionConfig } from 'framer-motion'
 import App from './App.tsx'
 import { preloadRoute } from './routePages'
+import { startPrefetching } from './lib/prefetch'
 import './index.css'
 
 const tree = (
   <React.StrictMode>
     <HelmetProvider>
-      <BrowserRouter>
+      {/*
+        Navigations run as transitions, so while the next page's chunk loads
+        the current page stays on screen instead of the full-screen loader.
+      */}
+      <BrowserRouter future={{ v7_startTransition: true }}>
         {/* Every animation, not just the hero illustrations, honours a reader's reduced-motion setting */}
         <MotionConfig reducedMotion="user">
           <App />
@@ -33,6 +38,7 @@ async function boot() {
   } else {
     createRoot(rootEl!).render(tree)
   }
+  startPrefetching()
 }
 
 boot()

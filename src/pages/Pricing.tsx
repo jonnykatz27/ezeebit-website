@@ -13,7 +13,7 @@ const INCLUDED = ['Merchant Portal', 'Ezeebit Pay QR codes', 'E-commerce plugins
 const pricingFaqs = [
   {
     question: 'What does Ezeebit cost?',
-    answer: 'Crypto In is 1% or less per payment and Crypto Out is $0.65 per payout, both excluding VAT. Converting between your fiat and USDT wallets is at a quoted rate, shown before you convert. Enterprise pricing is based on your volumes.',
+    answer: 'Crypto In is 1% or less per payment and Crypto Out is $0.75 or less per payout, both excluding VAT. Converting between your fiat and USDT wallets is at a quoted rate, shown before you convert. Enterprise pricing is based on your volumes.',
   },
   {
     question: 'Are there setup or monthly fees?',
@@ -36,8 +36,8 @@ const pricingFaqs = [
 const Pricing = () => (
   <>
     <SEO
-      title="Pricing: 1% or less per payment, $0.65 per payout"
-      description="Crypto In is 1% or less per payment and Crypto Out is $0.65 per payout, excluding VAT. No setup fees and no monthly platform fees."
+      title="Pricing: 1% or less per payment, $0.75 or less per payout"
+      description="Crypto In is 1% or less per payment and Crypto Out is $0.75 or less per payout, excluding VAT. No setup fees and no monthly platform fees."
       canonicalUrl="/pricing"
       crumbs={[{ name: 'Pricing', path: '/pricing' }]}
       faqs={pricingFaqs}

@@ -324,7 +324,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: 'What does Ezeebit cost?',
-    a: 'Crypto In is 1% or less per payment and Crypto Out is $0.65 per payout, both excluding VAT. There are no setup fees or monthly platform fees. The only monthly charge is the optional ePOS rental, at R150 a month per device. Platforms get volume pricing.',
+    a: 'Crypto In is 1% or less per payment and Crypto Out is $0.75 or less per payout, both excluding VAT. There are no setup fees or monthly platform fees. The only monthly charge is the optional ePOS rental, at R150 a month per device. Platforms get volume pricing.',
   },
   {
     q: 'Are there chargebacks with crypto payments?',
@@ -493,7 +493,7 @@ const SOLUTION_ICONS: Record<string, LucideIcon> = {
 /** The pricing section's figures, each with what it covers. */
 const PRICE_SUMMARY = [
   { value: '1%', label: 'Crypto In, or less per payment' },
-  { value: '$0.65', label: 'Crypto Out, per payout' },
+  { value: '$0.75', label: 'Crypto Out, or less per payout' },
   { value: '$0', label: 'Setup and monthly platform fees' },
 ]
 

@@ -113,7 +113,7 @@ const Payouts = () => {
     <>
       <SEO
         title="Stablecoin payouts for your customers"
-        description="Pay customers, sellers, and players in USDT from your fiat balance. They claim a link with their own wallet and funds arrive in minutes. $0.65 per payout."
+        description="Pay customers, sellers, and players in USDT from your fiat balance. They claim a link with their own wallet and get paid in minutes. $0.75 or less per payout."
         canonicalUrl="/payouts"
         crumbs={[{ name: 'Payouts', path: '/payouts' }]}
         extraNodes={[faqPageNode('https://ezeebit.com/payouts#faq', payoutFaqs)]}

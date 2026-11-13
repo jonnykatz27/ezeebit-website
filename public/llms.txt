@@ -22,7 +22,7 @@ Ezeebit does not offer retail crypto trading and this site does not give investm
 ## Pricing
 
 - Crypto In: 1% or less per payment, excluding VAT.
-- Crypto Out: $0.65 per payout, excluding VAT.
+- Crypto Out: $0.75 or less per payout, excluding VAT.
 - No setup fees and no monthly platform fees.
 - The Ezeebit ePOS is optional, at R150 a month per device. An Ezeebit Pay QR code is free.
 - Enterprise pricing is based on volume.
@@ -51,7 +51,7 @@ Supported assets are BTC, ETH, USDT, USDC, BNB, DAI, PAXG, ZARP, and ZARU, on Bi
 
 **Which countries does Ezeebit operate in?** It is live in South Africa, Kenya, and Nigeria, with more markets to follow.
 
-**What does Ezeebit cost?** Crypto In is 1% or less per payment and Crypto Out is $0.65 per payout, both excluding VAT, with no setup fees or monthly platform fees.
+**What does Ezeebit cost?** Crypto In is 1% or less per payment and Crypto Out is $0.75 or less per payout, both excluding VAT, with no setup fees or monthly platform fees.
 
 **How fast is settlement?** The same day, in local currency (ZAR, KES, NGN), in USD, or in stablecoin.
 

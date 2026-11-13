@@ -27,8 +27,8 @@ const PLANS: Plan[] = [
   },
   {
     name: 'Crypto Out',
-    price: '$0.65',
-    unit: 'per payout',
+    price: '$0.75',
+    unit: 'or less per payout',
     fee: 'Excluding VAT',
     body: 'Converted at a quoted rate that your customer accepts before the payout goes out to their wallet.',
     points: ['A payout link per order', 'USDT today, more stablecoins soon', 'Funded straight from your Crypto In balance'],

@@ -99,6 +99,8 @@ const Solution = () => {
         description={s.seo.description}
         canonicalUrl={solutionPath(s)}
         crumbs={[{ name: s.name, path: solutionPath(s) }]}
+        faqs={s.faqs}
+        service={{ name: s.seo.title, serviceType: s.group === 'platforms' ? 'Crypto payment infrastructure' : 'Crypto payments' }}
       />
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="overflow-hidden -mt-20">
         <PageHero

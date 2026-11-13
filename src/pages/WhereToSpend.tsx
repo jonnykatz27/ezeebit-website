@@ -28,9 +28,10 @@ const WhereToSpend = () => {
     <>
       <SEO
         title="Where to spend crypto in South Africa"
-        description="Stores in South Africa where you can pay with stablecoins and cryptocurrency through Ezeebit."
+        description="Stores in South Africa where you can pay with Bitcoin, USDT, and other crypto through Ezeebit, in-store and online."
         crumbs={[{ name: 'Where to spend', path: '/resources/where-to-spend' }]}
         canonicalUrl="/resources/where-to-spend"
+        pageType="CollectionPage"
       />
       <motion.div
       initial={{ opacity: 0 }}
@@ -100,6 +101,8 @@ const WhereToSpend = () => {
               </button>
             </div>
           ) : (
+            <>
+            <h2 className="sr-only">Stores that accept crypto</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
               {filteredStores.map((store, index) => (
                 <motion.div
@@ -162,6 +165,7 @@ const WhereToSpend = () => {
                 </motion.div>
               ))}
             </div>
+            </>
           )}
         </div>
       </section>

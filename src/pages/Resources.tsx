@@ -99,10 +99,11 @@ const Resources = () => {
   return (
     <>
       <SEO
-        title="Guides and support"
-        description="Guides, FAQ, legal information and the blog for merchants using Ezeebit stablecoin and crypto payments."
+        title="Guides, FAQs, and support for merchants"
+        description="Guides, FAQs, legal information, and the blog for merchants and platforms using Ezeebit for crypto and stablecoin payments."
         canonicalUrl="/resources"
         crumbs={[{ name: 'Guides and support', path: '/resources' }]}
+        pageType="CollectionPage"
       />
       <motion.div
         initial={{ opacity: 0 }}
@@ -123,6 +124,7 @@ const Resources = () => {
       {/* Resource Categories */}
       <section className="section-padding bg-white">
         <div className="container-custom">
+          <h2 className="sr-only">Browse by topic</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {needle && visibleCategories.length === 0 && (
               <p className="col-span-full text-center text-neutral-600">No guides match “{query.trim()}”.</p>

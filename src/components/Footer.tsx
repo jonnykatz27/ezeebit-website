@@ -85,7 +85,8 @@ const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-6 md:mb-10 text-center">
           {Object.entries(footerLinks).map(([title, links]) => (
             <div key={title}>
-              <h3 className="font-semibold mb-3 text-xs md:text-sm tracking-wide uppercase text-neutral-300">{title}</h3>
+              {/* A label over a list of links, not a heading in the page's outline */}
+              <p className="font-semibold leading-tight mb-3 text-xs md:text-sm tracking-wide uppercase text-neutral-300">{title}</p>
               <ul className="space-y-1.5 md:space-y-2">
                 {links.map((link) => (
                   <li key={link.name}>
@@ -132,7 +133,7 @@ const Footer = () => {
 
         {/* The group's companies, with each one's registration and what it operates under */}
         <div className="mt-6 pt-5 border-t border-neutral-800">
-          <h3 className="mb-3 text-center font-semibold text-[10px] md:text-[11px] tracking-[0.14em] uppercase text-neutral-500">The Ezeebit group of companies</h3>
+          <p className="mb-3 text-center font-semibold leading-tight text-[10px] md:text-[11px] tracking-[0.14em] uppercase text-neutral-500">The Ezeebit group of companies</p>
           <ul className="mx-auto grid max-w-4xl gap-3 md:grid-cols-3 md:gap-5">
             {ENTITIES.map((e) => (
               <li key={e.country} className="text-center text-[11px] leading-snug text-neutral-500">

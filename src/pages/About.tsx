@@ -81,10 +81,11 @@ const About = () => {
   return (
     <>
       <SEO
-        title="About Ezeebit"
-        description="Ezeebit builds stablecoin and crypto payment infrastructure for merchants and platforms in Africa and beyond. Based in Cape Town."
+        title="About Ezeebit: crypto and stablecoin payments"
+        description="Ezeebit builds crypto and stablecoin payment infrastructure for merchants and platforms in Africa and beyond. Founded in 2023 and based in Cape Town."
         canonicalUrl="/resources/about"
         crumbs={[{ name: 'About', path: '/resources/about' }]}
+        pageType="AboutPage"
       />
       <motion.div
         initial={{ opacity: 0 }}

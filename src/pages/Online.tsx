@@ -6,9 +6,19 @@ import {
   CheckCircle, ArrowRight, ExternalLink
 } from 'lucide-react'
 import SEO from '../components/SEO'
+import FaqBlock from '../components/FaqBlock'
 import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import OnlineHeroVisual from '../components/hero/OnlineHeroVisual'
 import DarkBackdrop from '../components/DarkBackdrop'
+
+/** The questions this page answers, shown above the closing section and emitted as FAQPage data. */
+const onlineFaqs = [
+  { question: "Which store platforms have plugins?", answer: "Shopify, WooCommerce, and Magento. Anything else can use the API." },
+  { question: "How do customers pay?", answer: "They choose crypto at checkout and pay from any wallet on-chain, through WalletConnect, or directly from Luno, VALR, or Binance. The order total carries over and the rate is locked when they pay." },
+  { question: "What does it cost?", answer: "1% or less per payment, excluding VAT. There are no setup fees and no monthly platform fees." },
+  { question: "When do I get paid?", answer: "The same day, in local currency or in stablecoin." },
+  { question: "Are there chargebacks?", answer: "No. A confirmed crypto payment is final, so there are no chargebacks to fight." },
+]
 
 const Online = () => {
   const [activeTab, setActiveTab] = useState('shopify')
@@ -66,10 +76,12 @@ const Online = () => {
   return (
     <>
       <SEO
-        title="Online payments for Shopify, WooCommerce and Magento"
-        description="Online stablecoin and crypto checkout. Ezeebit is live in South Africa, Kenya and Nigeria, with more markets to follow."
+        title="Crypto checkout for Shopify, WooCommerce, and Magento"
+        description="Add crypto and stablecoin checkout to your website with a plugin for Shopify, WooCommerce, or Magento, or the API. 1% or less per payment, with no chargebacks."
         canonicalUrl="/online"
         crumbs={[{ name: 'Online payments', path: '/online' }]}
+        service={{ name: 'Online crypto checkout', serviceType: 'Crypto payment gateway' }}
+        faqs={onlineFaqs}
       />
       <motion.div
         initial={{ opacity: 0 }}
@@ -288,6 +300,9 @@ const Online = () => {
           </motion.div>
         </div>
       </section>
+
+      <FaqBlock heading="Online payments: frequently asked questions" items={onlineFaqs} tone="white" />
+
 
       {/* CTA Section */}
       <section className="section-padding relative overflow-hidden bg-neutral-950 text-white">

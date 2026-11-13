@@ -345,7 +345,7 @@ const UserManual = () => {
     <>
       <SEO
         title="Merchant user manual"
-        description="Guides for Ezeebit merchants: Merchant Portal setup, in-store ePOS, ezeebit Pay QR and online checkout."
+        description="Guides for Ezeebit merchants: Merchant Portal setup, the in-store ePOS, Ezeebit Pay QR codes, and online checkout."
         crumbs={[{ name: 'User manual', path: '/resources/user-manual' }]}
         canonicalUrl="/resources/user-manual"
       />

@@ -48,7 +48,7 @@ const PLANS: Plan[] = [
     price: 'Custom',
     fee: 'Based on your volumes',
     body: 'For gaming operators, PSPs and platforms moving money both ways at scale.',
-    points: ['Crypto In and Crypto Out on one balance', 'Dedicated account manager', 'Custom integrations and white-label options'],
+    points: ['Crypto In and Crypto Out in one account', 'Dedicated account manager', 'Custom integrations and white-label options'],
     cta: { label: 'Book a call', href: '/book-a-call' },
   },
 ]

@@ -50,7 +50,7 @@ const StoreDetail = () => {
   return (
     <>
       <SEO
-        title={`${store.name} — pay with crypto`}
+        title={`Pay with crypto at ${store.name}`}
         description={`Pay with Bitcoin, Ethereum or stablecoins at ${store.name} in South Africa through Ezeebit.`}
         canonicalUrl={`/resources/stores/${store.slug}`}
         crumbs={[

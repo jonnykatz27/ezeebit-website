@@ -5,16 +5,26 @@ import {
   Receipt, ShieldCheck, Database
 } from 'lucide-react'
 import SEO from '../components/SEO'
+import FaqBlock from '../components/FaqBlock'
 import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import WalletsHeroVisual from '../components/hero/WalletsHeroVisual'
 import DarkBackdrop from '../components/DarkBackdrop'
+
+/** The questions this page answers, shown above the closing section and emitted as FAQPage data. */
+const walletFaqs = [
+  { question: "What can I hold in my Ezeebit wallets?", answer: "Fiat and USDT, each in its own wallet, with USDC coming soon." },
+  { question: "Can I convert between fiat and USDT?", answer: "Yes, at a quoted rate that is shown before you convert." },
+  { question: "How do I withdraw?", answer: "Fiat goes to your bank account, and USDT goes to your own wallet." },
+  { question: "Can I fund payouts from my wallets?", answer: "Yes. What you take in funds what you pay out, so pay-ins and payouts run through the same wallets." },
+  { question: "How are funds kept safe?", answer: "Crypto sits in MPC wallets where every key is split, so no single person can move funds. Ezeebit is regulated by the FSCA as a Crypto Asset Service Provider, FSP No. 53664." },
+]
 
 const Wallets = () => {
   const features = [
     {
       icon: <Wallet className="w-6 h-6" />,
-      title: "One balance, both directions",
-      description: "Money you take in funds the money you pay out. Pay-ins and payouts draw on the same balance instead of sitting in separate systems."
+      title: "One account, both directions",
+      description: "Money you take in funds the money you pay out. Pay-ins and payouts run through the same wallets instead of sitting in separate systems."
     },
     {
       icon: <ArrowLeftRight className="w-6 h-6" />,
@@ -57,7 +67,7 @@ const Wallets = () => {
     {
       number: "03",
       title: "Pay out or withdraw",
-      description: "Fund customer payouts from the same balance, or withdraw to your bank account or your own wallet."
+      description: "Fund customer payouts from the same wallets, or withdraw to your bank account or your own wallet."
     }
   ]
 
@@ -65,9 +75,11 @@ const Wallets = () => {
     <>
       <SEO
         title="Business wallets for fiat and stablecoin"
-        description="Business wallets for fiat and stablecoin. Ezeebit is live in South Africa, Kenya and Nigeria, with more markets to follow."
+        description="Hold fiat and USDT with Ezeebit, convert between them at a quoted rate, fund payouts, and withdraw to your bank account or your own wallet."
         canonicalUrl="/wallets"
         crumbs={[{ name: 'Wallets', path: '/wallets' }]}
+        service={{ name: 'Business wallets', serviceType: 'Business crypto and fiat wallets' }}
+        faqs={walletFaqs}
       />
       <motion.div
         initial={{ opacity: 0 }}
@@ -80,7 +92,7 @@ const Wallets = () => {
           kicker="Wallets"
           title="Your money,"
           accent="in fiat or stablecoin."
-          description="Hold fiat and USDT in one place, convert between them when it suits you, fund your customer payouts from the same balance, and withdraw to your bank or your own wallet."
+          description="Hold fiat and USDT in one place, convert between them when it suits you, fund your customer payouts from the same wallets, and withdraw to your bank or your own wallet."
           actions={
             <>
             <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
@@ -178,6 +190,9 @@ const Wallets = () => {
             </div>
           </div>
         </section>
+
+        <FaqBlock heading="Wallets: frequently asked questions" items={walletFaqs} tone="white" />
+
 
         {/* CTA Section */}
         <section className="section-padding relative overflow-hidden bg-neutral-950 text-white">

@@ -36,10 +36,11 @@ const pricingFaqs = [
 const Pricing = () => (
   <>
     <SEO
-      title="Pricing"
+      title="Pricing: 1% or less per payment, $0.65 per payout"
       description="Crypto In is 1% or less per payment and Crypto Out is $0.65 per payout, excluding VAT. No setup fees and no monthly platform fees."
       canonicalUrl="/pricing"
       crumbs={[{ name: 'Pricing', path: '/pricing' }]}
+      faqs={pricingFaqs}
     />
     <motion.div
       initial={{ opacity: 0 }}

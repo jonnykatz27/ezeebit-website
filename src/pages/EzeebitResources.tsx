@@ -39,6 +39,7 @@ const EzeebitResources = () => (
       description="Jump to the Ezeebit user manual, merchant sign-up, and stores in South Africa that accept crypto payments."
       crumbs={[{ name: 'Quick links', path: '/ezeebit-resources' }]}
       canonicalUrl="/ezeebit-resources"
+      noindex
     />
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="overflow-hidden -mt-20">
       <section className="relative overflow-hidden bg-neutral-950 pt-40 pb-16 lg:pt-48 lg:pb-24">

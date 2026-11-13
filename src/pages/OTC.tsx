@@ -5,9 +5,18 @@ import {
   TrendingUp, Lock
 } from 'lucide-react'
 import SEO from '../components/SEO'
+import FaqBlock from '../components/FaqBlock'
 import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import OTCHeroVisual from '../components/hero/OTCHeroVisual'
 import DarkBackdrop from '../components/DarkBackdrop'
+
+/** The questions this page answers, shown above the closing section and emitted as FAQPage data. */
+const otcFaqs = [
+  { question: "What is the OTC desk for?", answer: "Large crypto trades that would move the market on an exchange. It is a desk rather than a self-serve product, so it starts with a conversation." },
+  { question: "How is the price set?", answer: "Your dealer gives you a firm quote for the full size, and it is locked the moment you accept it." },
+  { question: "When do we settle?", answer: "The same day, in ZAR, KES, NGN, or USD." },
+  { question: "Who handles the trade?", answer: "A dedicated dealer, from quote to settlement." },
+]
 
 const OTC = () => {
   const features = [
@@ -64,10 +73,12 @@ const OTC = () => {
   return (
     <>
       <SEO
-        title="OTC desk for large trades"
-        description="An OTC desk for large crypto trades. Ezeebit is live in South Africa, Kenya and Nigeria, with more markets to follow."
+        title="OTC desk for large crypto trades"
+        description="Buy or sell crypto at scale through Ezeebit's OTC desk. A named dealer gives a firm quote, the rate locks when you accept, and you settle the same day."
         canonicalUrl="/otc"
         crumbs={[{ name: 'OTC desk', path: '/otc' }]}
+        service={{ name: 'OTC desk', serviceType: 'OTC crypto trading' }}
+        faqs={otcFaqs}
       />
       <motion.div
         initial={{ opacity: 0 }}
@@ -179,6 +190,9 @@ const OTC = () => {
 
           </div>
         </section>
+
+        <FaqBlock heading="OTC desk: frequently asked questions" items={otcFaqs} tone="white" />
+
 
         {/* CTA Section */}
         <section className="section-padding relative overflow-hidden bg-neutral-950 text-white">

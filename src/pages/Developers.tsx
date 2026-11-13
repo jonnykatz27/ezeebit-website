@@ -511,8 +511,8 @@ app.post(
   return (
     <>
       <SEO
-        title="Developer API"
-        description="Ezeebit API for payments, payouts and wallets. Signed REST requests, hosted checkout and signed webhooks."
+        title="Developer API for crypto payments and payouts"
+        description="The Ezeebit API for crypto payments, stablecoin payouts, wallets, and customer accounts. Signed REST requests, hosted checkout, and signed webhooks."
         canonicalUrl="/developers"
         crumbs={[{ name: 'Developer API', path: '/developers' }]}
       />

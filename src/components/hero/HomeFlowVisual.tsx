@@ -184,7 +184,7 @@ const Glow = ({ on, id }: { on: boolean; id: number }) =>
   ) : null
 
 /**
- * The homepage hero: crypto paid in on the left lands on one balance in the
+ * The homepage hero: crypto paid in on the left lands in one account in the
  * Merchant Portal, and goes back out as stablecoin payouts on the right. One
  * thing happens at a time, with a pause between, and every loop is another
  * merchant in another settlement currency.
@@ -241,7 +241,7 @@ const HomeFlowVisual = () => {
     <div
       ref={ref}
       role="img"
-      aria-label="Crypto payments arriving in-store, online and on platforms, landing on one balance in the Ezeebit Merchant Portal in ZAR, KES, NGN or USD, and going back out as payouts in USDT, with USDC, ZARP, and ZARU payouts coming soon."
+      aria-label="Crypto payments arriving in-store, online and on platforms, landing in one account in the Ezeebit Merchant Portal in ZAR, KES, NGN or USD, and going back out as payouts in USDT, with USDC, ZARP, and ZARU payouts coming soon."
       className="mx-auto max-w-6xl [&_img]:!mx-0"
     >
       <div className="grid grid-cols-1 max-w-md mx-auto lg:max-w-none lg:grid-cols-[minmax(0,1fr)_80px_minmax(0,1.3fr)_80px_minmax(0,1fr)]">

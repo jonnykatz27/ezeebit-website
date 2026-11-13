@@ -66,7 +66,7 @@ const Blog = () => {
     {
       id: 'most-comprehensive-crypto-payment-gateway-africa',
       title: "Africa's most comprehensive crypto checkout",
-      excerpt: "A single integration that accepts payments from any wallet, 700+ wallets via WalletConnect, and directly from Luno, VALR, and Binance. Merchants settle in stablecoins (T+0) or local currency (T+1), with zero crypto volatility exposure.",
+      excerpt: "A single integration that accepts payments from any wallet, 700+ wallets via WalletConnect, and directly from Luno, VALR, and Binance. Merchants settle the same day, in stablecoins or local currency, with zero crypto volatility exposure.",
       author: 'Jonathan Katz',
       date: '2026-05-13',
       readTime: '5 min read',
@@ -168,10 +168,11 @@ const Blog = () => {
   return (
     <>
       <SEO
-        title="Blog"
-        description="News and product notes from Ezeebit on stablecoin and crypto payments for merchants across Africa."
+        title="Ezeebit blog: crypto and stablecoin payment news"
+        description="News, product notes, and guides from Ezeebit on crypto and stablecoin payments for merchants and platforms."
         canonicalUrl="/resources/blog"
         crumbs={[{ name: 'Blog', path: '/resources/blog' }]}
+        pageType="CollectionPage"
       />
       <motion.div
         initial={{ opacity: 0 }}

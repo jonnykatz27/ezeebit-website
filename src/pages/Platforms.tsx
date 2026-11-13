@@ -5,6 +5,7 @@ import {
   UserCheck, Zap, RefreshCw, Wallet, Ban, Lock
 } from 'lucide-react'
 import SEO from '../components/SEO'
+import FaqBlock from '../components/FaqBlock'
 import {
   PillarsSection, PayinsSection, DepositSection, PayoutSection, CaseStudiesSection,
   type Feature, type Step,
@@ -13,6 +14,16 @@ import { CASE_STUDIES } from '../lib/caseStudies'
 import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import PlatformsHeroVisual from '../components/hero/PlatformsHeroVisual'
 import DarkBackdrop from '../components/DarkBackdrop'
+
+/** The questions this page answers, shown above the closing section and emitted as FAQPage data. */
+const platformFaqs = [
+  { question: "How do users deposit crypto on our platform?", answer: "Your platform creates a deposit through the API and opens the checkout link it returns. The user pays on-chain from any wallet, through WalletConnect, or from Luno, VALR, or Binance, at a rate locked when they pay." },
+  { question: "How are deposits matched to the right user?", answer: "Each deposit is created for one user, with a reference that carries through to the signed webhook, so you credit the right balance automatically." },
+  { question: "Do we have to hold crypto?", answer: "No. Every deposit is hedged the moment it lands. You settle the same day, in ZAR, KES, NGN, or USD, or in stablecoin." },
+  { question: "How do users withdraw?", answer: "You create a payout in your own currency, funded from your fiat balance. The user opens the payout link, adds their own wallet, and receives USDT, usually within minutes." },
+  { question: "How long does an integration take?", answer: "Days, not months. It is one API call, one checkout link, and one signed webhook back." },
+  { question: "What does it cost?", answer: "Platforms get volume pricing, based on their volumes. Book a call and we will put a price together." },
+]
 
 const Platforms = () => {
   const pillars: Feature[] = [
@@ -132,10 +143,12 @@ const Platforms = () => {
     <>
       <SEO
         title="Crypto pay-ins and payouts for platforms"
-        description="Accept crypto deposits and pay users in stablecoin. Ezeebit is live in South Africa, Kenya and Nigeria, with more markets to follow."
+        description="Take crypto deposits and pay users out in stablecoin through one API. Each deposit is matched to its user, hedged on arrival, and settled the same day."
         canonicalUrl="/platforms"
         ogImage="/og-platforms.jpg"
         crumbs={[{ name: 'Platforms', path: '/platforms' }]}
+        service={{ name: 'Crypto pay-ins and payouts for platforms', serviceType: 'Crypto payment infrastructure' }}
+        faqs={platformFaqs}
       />
       <motion.div
         initial={{ opacity: 0 }}
@@ -229,6 +242,9 @@ const Platforms = () => {
             </div>
           </div>
         </section>
+
+        <FaqBlock heading="Platforms: frequently asked questions" items={platformFaqs} tone="white" />
+
 
         {/* CTA Section */}
         <section className="section-padding relative overflow-hidden bg-neutral-950 text-white">

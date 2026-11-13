@@ -51,12 +51,12 @@ const Legal = () => {
 
   const renderTermsOfService = () => (
     <div className="max-w-none">
-      <h3 className="text-2xl font-bold text-neutral-900 mb-4">Terms of Service</h3>
+      <h2 className="!text-2xl font-bold text-neutral-900 mb-4">Terms of Service</h2>
       <p className="text-neutral-600 mb-6">Last updated: January 1, 2024</p>
       
       <div className="space-y-6">
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">1. Acceptance of Terms</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">1. Acceptance of Terms</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               <strong>1.1</strong> By using the website located on https://www.ezeebit.com together with all its webpages (the "Website") whether as a visitor or a registered user for any reason whatsoever, the visitor or use of the Website (hereinafter referred to as "you\" or \"your") agrees to be bound by and comply with the terms and conditions that se terms and conditions ("Terms and Conditions") agrees to be bound by and comply with these terms and conditions ("Terms and Conditions").
@@ -71,7 +71,7 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">2. Term, Accessibility and Termination</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">2. Term, Accessibility and Termination</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               <strong>2.1</strong> These Terms and Conditions shall commence from the date on which they are published on the Website and continue indefinitely, as amended by Ezee Solutions from time to time.
@@ -87,7 +87,7 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">3. Notice</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">3. Notice</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               <strong>3.1</strong> These Terms and Conditions contain provisions which appear in a similar text style to this clause in order to draw your attention to such clauses because they:
@@ -114,7 +114,7 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">4. Use of the Website</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">4. Use of the Website</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               <strong>4.1</strong> You may only use the Website for lawful purposes and you warrant that you shall not use the Website:
@@ -140,7 +140,7 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">5. Disclaimer</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">5. Disclaimer</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               <strong>5.1</strong> Whilst every effort has been made by Ezee Solutions and its suppliers of information, to ensure the proper performance of the Website, the accuracy of the information/images and the reliability of the binary data on the Website, Ezee Solutions, its affiliated companies, suppliers, or any of their employees, do not, to the full extent permitted by law, guarantee the availability or accuracy of the services, content and/or information offered on the Website.
@@ -164,7 +164,7 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">6. Third Party Content/Websites</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">6. Third Party Content/Websites</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               <strong>6.1</strong> Third party information such as but not limited to, product catalogues, product description and specifications, lists of dealers, reports on news, entertainment, technology and features, advertisements including videos, images and photographs of the products, links to third party websites and other data from external sources is made available on the Website ("Third-Party Content"). The provision of Third-Party Content is for general informational purposes only.
@@ -182,14 +182,14 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">7. Password and/or One Time PIN</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">7. Password and/or One Time PIN</h3>
           <p className="text-neutral-700 mb-4">
             If you have a password or One Time PIN (OTP) for using the Website, you undertake to keep it secure and warrant that no other person shall use the Website utilising your password or OTP, and you acknowledge further that you are responsible for ensuring that no unauthorised access to the Website is obtained using your password or OTP, and that you will be liable for all such activities conducted pursuant to such use, whether authorised or not.
           </p>
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">8. Intellectual Property Rights</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">8. Intellectual Property Rights</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               <strong>8.1</strong> The contents of the Website, including any material, information, data, software, icons, text, graphics, lay-outs, images, sound clips, advertisements, video clips, trade names, the word or mark "Ezee Solutions Group", logos, trade-marks, designs and service marks which are displayed on or incorporated in this Website ("Intellectual Property") are protected by law, including but not limited to copyright and trade mark law. The Intellectual Property is the property of Ezee Solutions, its advertisers and/or sponsors and/or is licensed to Ezee Solutions.
@@ -217,7 +217,7 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">9. Protection of Personal Information</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">9. Protection of Personal Information</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               <strong>9.1</strong> You hereby acknowledge that these terms and Conditions are subject to the Ezee Solutions Privacy Policy on [www.pundixsa.co.za/privacy-policy] (the "Privacy Policy").
@@ -229,7 +229,7 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">10. Electronic Communications</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">10. Electronic Communications</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               All electronic communications, including any attachments thereto that are transmitted to you by Ezee Solutions, shall be on the following terms and conditions:
@@ -267,14 +267,14 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">11. Cookies</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">11. Cookies</h3>
           <p className="text-neutral-700 mb-4">
             Ezee Solutions may store some information (commonly known as a "cookie") on your computer when you visit the Website. This enables Ezee Solutions to recognise you during subsequent visits. The type of information gathered is non-personal (such as: the IP address of your computer, the date and time of your visit, which pages you browsed and whether the pages have been delivered successfully. Apart from merely establishing basic connectivity and communications, Ezee Solutions may also use this data in aggregate form to develop customised services - tailored to your individual interests and needs. Should you choose to do so, it is possible (depending on the browser you are using), to be prompted before accepting any cookies, or to prevent your browser from accepting any cookies at all. This will however cause certain features of the web site not to be accessible.
           </p>
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">12. Security</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">12. Security</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               <strong>12.1</strong> Any person that delivers or attempts to deliver any damaging code to this Website or attempts to gain unauthorised access to any page on this Website shall be prosecuted and civil damages shall be claimed in the event that Ezee Solutions suffers any damage or loss.
@@ -286,7 +286,7 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">13. Indemnification</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">13. Indemnification</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               <strong>13.1</strong> To the fullest extent permissible in law, you hereby unconditionally, irrevocably and unreservedly indemnify and hold Ezee Solutions, its public officers, directors, employees, consultants, agents, licensors and service providers, harmless against all loss, damages, claims, liability and/or costs, of whatsoever nature, howsoever and whenever arising, as a result of and without limitation, the following:
@@ -305,7 +305,7 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">14. Limitation of Liability</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">14. Limitation of Liability</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               <strong>14.1</strong> Ezee Solutions cannot be held liable for any inaccurate information published on the Website and/or any incorrect prices displayed on the Website, save where such liability arises from the gross negligence or wilful misconduct of Ezee Solutions, its employees, agents or authorised representatives.
@@ -320,14 +320,14 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">15. Monitoring, Interception and Access to Information</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">15. Monitoring, Interception and Access to Information</h3>
           <p className="text-neutral-700 mb-4">
             To comply with law and in line with international standards and best practice relating to the use of information technology in its business, Ezee Solutions may at its discretion, monitor and/or intercept, live communications such as email and website activity in compliance with the Regulation of Interception of Communications and Provision of Communication-related Information Act, 70 of 2002.
           </p>
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">16. Complaints and Notices</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">16. Complaints and Notices</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               <strong>16.1</strong> You agree to submit all complaints relating to these Terms and Conditions to Ezee Solutions first in order to afford us an opportunity to resolve the complaint within a reasonable period before you proceed to refer any formal complaints to any relevant authority.
@@ -339,14 +339,14 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">17. Governing Law and Jurisdiction</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">17. Governing Law and Jurisdiction</h3>
           <p className="text-neutral-700 mb-4">
             This Website is hosted, controlled and operated from the Republic of South Africa and therefore governed by South African law and you submit to the jurisdiction of the South African courts.
           </p>
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">18. General</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">18. General</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               <strong>18.1</strong> These Terms and Conditions are severable, in that if any provision is determined to be illegal or unenforceable by any court of competent jurisdiction, then such provision shall be deemed to have been deleted without affecting the remaining provisions of the Terms and Conditions unless such invalidity, un-enforceability or illegality goes to the root of these Terms and Conditions.
@@ -367,7 +367,7 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">19. Ezee Solutions Information</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">19. Ezee Solutions Information</h3>
           <div className="bg-neutral-50 p-6 rounded-lg">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
               <div>
@@ -390,12 +390,12 @@ const Legal = () => {
 
   const renderPrivacyPolicy = () => (
     <div className="max-w-none">
-      <h3 className="text-2xl font-bold text-neutral-900 mb-4">Privacy Policy</h3>
+      <h2 className="!text-2xl font-bold text-neutral-900 mb-4">Privacy Policy</h2>
       <p className="text-neutral-600 mb-6">Last updated: January 1, 2024</p>
       
       <div className="space-y-6">
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">1. Definitions</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">1. Definitions</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               The following words and expressions bear the meanings assigned to them and cognate expressions bear corresponding meanings:
@@ -440,7 +440,7 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">2. Purpose of the Policy</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">2. Purpose of the Policy</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               <strong>2.1</strong> The purpose of this Policy is to inform Data Subjects about how Ezee Solutions Processes their Personal Information.
@@ -458,7 +458,7 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">3. Process of Collecting Personal Information</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">3. Process of Collecting Personal Information</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               <strong>3.1</strong> Ezee Solutions collects Personal Information directly from Data Subjects as and when required for a defined purpose, unless an exception is applicable (such as, for example, where the Data Subject has made the Personal Information public or the Personal Information is contained in or derived from a public record).
@@ -476,7 +476,7 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">4. Lawful Processing of Personal Information</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">4. Lawful Processing of Personal Information</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               <strong>4.1</strong> Where Ezee Solutions is the Responsible Party, it will only Process a Data Subject's Personal Information (other than for Special Personal Information) where:
@@ -504,7 +504,7 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">5. Special Personal Information and Personal Information of Children</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">5. Special Personal Information and Personal Information of Children</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               <strong>5.1</strong> Special Personal Information is sensitive Personal Information of a Data Subject and Ezee Solutions acknowledges that it will generally not Process Special Personal Information unless:
@@ -523,7 +523,7 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">6. Purpose for Processing Personal Information</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">6. Purpose for Processing Personal Information</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               <strong>6.1</strong> Ezee Solutions understands its obligation to make Data Subjects aware of the fact that it is Processing their Personal Information and inform them of the purpose for which Ezee Solutions Processes such Personal Information.
@@ -556,7 +556,7 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">7. Keeping Personal Information Accurate</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">7. Keeping Personal Information Accurate</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               <strong>7.1</strong> Ezee Solutions will take reasonable steps to ensure that all Personal Information is kept as accurate, complete and up to date as reasonably possible depending on the purpose for which Personal Information is collected or further Processed.
@@ -571,7 +571,7 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">8. Storage And Processing of Personal Information</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">8. Storage And Processing of Personal Information</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               <strong>8.1</strong> Ezee Solutions may store the Data Subject's Personal Information in hard copy format and/or in electronic format using Ezee Solutions' own secure on-site servers or other internally hosted technology. The Data Subject\'s Personal Information may also be stored by third parties, via cloud services or other technology, with whom Ezee Solutions has contracted with, to support Ezee Solutions' operations.
@@ -592,7 +592,7 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">9. Personal Information for Direct Marketing Purposes</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">9. Personal Information for Direct Marketing Purposes</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               <strong>9.1</strong> To the extent that Ezee Solutions acts in its capacity as a direct marketer, it shall strive to observe, and comply with its obligations under Data Privacy Laws when implementing principles and practices in relation to direct marketing.
@@ -616,7 +616,7 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">10. Retention of Personal Information</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">10. Retention of Personal Information</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               <strong>10.1</strong> Ezee Solutions may keep records of the Personal Information, correspondence, or comments it has collected in an electronic or hard copy file format.
@@ -644,14 +644,14 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">11. Failure to Provide Personal Information</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">11. Failure to Provide Personal Information</h3>
           <p className="text-neutral-700 mb-4">
             Should Ezee Solutions need to collect Personal Information by Applicable Laws or under its obligations as a service provider, and the Data Subject fails to provide the Personal Information when requested, Ezee Solutions may be unable to perform its duties as a service provider in terms of the Data Protection Laws.
           </p>
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">12. Safe-Keeping of Personal Information</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">12. Safe-Keeping of Personal Information</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               <strong>12.1</strong> Ezee Solutions shall preserve the security of Personal Information and, in particular, prevent its alteration, loss and damage, or access by non-authorised third parties.
@@ -666,7 +666,7 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">13. Breaches of Personal Information</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">13. Breaches of Personal Information</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               <strong>13.1</strong> Ezee Solutions will address any Data Breach in accordance with the terms of Data Privacy Laws.
@@ -684,7 +684,7 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">14. Provision of Personal Information to Third Party Service Providers</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">14. Provision of Personal Information to Third Party Service Providers</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               <strong>14.1</strong> Ezee Solutions may disclose Personal Information to third parties and will enter into written agreements with such third parties to ensure that they Process any Personal Information in accordance with the provisions of this Policy, and Data Privacy Laws.
@@ -714,7 +714,7 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">15. Access to Personal Information</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">15. Access to Personal Information</h3>
           <div className="space-y-3">
             <p className="text-neutral-700">
               <strong>15.1</strong> Data Privacy Laws read with the relevant provisions of the Promotion of Access to Information Act, No. 2 of 2000 ("PAIA") confers certain access rights on Data Subjects.
@@ -757,14 +757,14 @@ const Legal = () => {
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">16. Responses</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">16. Responses</h3>
           <p className="text-neutral-700 mb-4">
             Ezee Solutions will respond to each written request of a Data Subject not later than 30 (thirty) days after receipt of such requests. Under certain circumstances, Ezee Solutions may, however, extend the original period of 30 days once for a further period of not more than 30 (thirty) days.
           </p>
         </section>
 
         <section>
-          <h4 className="text-xl font-semibold text-neutral-900 mb-3">17. Ezee Solutions Privacy Information Officer</h4>
+          <h3 className="text-xl font-semibold text-neutral-900 mb-3">17. Ezee Solutions Privacy Information Officer</h3>
           <p className="text-neutral-700 mb-4">
             Ezee Solutions has appointed a dedicated Privacy Information Officer who is responsible for the Processing and protection of Personal Information.
           </p>
@@ -781,7 +781,7 @@ const Legal = () => {
   const renderCompliance = () => (
     <div className="space-y-8">
       <div>
-        <h3 className="text-2xl font-bold text-neutral-900 mb-4">Regulatory Compliance</h3>
+        <h2 className="!text-2xl font-bold text-neutral-900 mb-4">Regulatory Compliance</h2>
         <p className="text-neutral-600 mb-8">
           Ezeebit operates under full regulatory compliance with South African financial authorities. 
           We maintain the highest standards of regulatory adherence to ensure safe and legal operations.
@@ -805,7 +805,7 @@ const Legal = () => {
                 {item.status}
               </span>
             </div>
-            <h4 className="text-lg font-semibold text-neutral-900 mb-2">{item.title}</h4>
+            <h3 className="text-lg font-semibold text-neutral-900 mb-2">{item.title}</h3>
             <p className="text-neutral-600 mb-3">{item.description}</p>
             <p className="text-sm text-neutral-500 font-mono">{item.number}</p>
           </motion.div>
@@ -819,7 +819,7 @@ const Legal = () => {
         className="mt-8 border border-primary-100 bg-primary-50/50 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
       >
         <div>
-          <h4 className="text-lg font-semibold text-neutral-900 mb-1">Trust Centre</h4>
+          <h3 className="text-lg font-semibold text-neutral-900 mb-1">Trust Centre</h3>
           <p className="text-neutral-600 text-sm leading-relaxed">
             View Ezeebit's security posture, compliance certifications, and data protection controls — powered by Vanta.
           </p>
@@ -853,7 +853,7 @@ const Legal = () => {
   return (
     <>
       <SEO
-        title="Legal"
+        title="Legal: terms, privacy, and compliance"
         description="Terms of service, privacy policy and compliance information for Ezeebit, operated by Ezee Solutions Group (Pty) Ltd."
         canonicalUrl="/resources/legal"
         crumbs={[{ name: 'Legal', path: '/resources/legal' }]}

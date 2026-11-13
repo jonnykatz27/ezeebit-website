@@ -56,7 +56,7 @@ const FAQ = () => {
       id: '6',
       category: 'security',
       question: 'Is Ezeebit regulated?',
-      answer: 'Yes, in each country it operates from. In South Africa, Ezee Solutions Group (Pty) Ltd is regulated by the FSCA, the Financial Sector Conduct Authority, as a Crypto Asset Service Provider, FSP No. 53664. In Kenya, Ezee Solutions Group (Kenya) Limited operates under the transitional provisions of the Virtual Asset Service Providers Act, 2025. In Canada, Ezeebit Canada Ltd. is on FINTRAC\'s money services business registry, MSB No. N300001912.',
+      answer: 'Yes. Ezeebit is regulated by the FSCA as a Crypto Asset Service Provider, FSP No. 53664. The FSCA is South Africa\'s Financial Sector Conduct Authority. That covers the South African company, Ezee Solutions Group (Pty) Ltd. In Kenya, Ezee Solutions Group (Kenya) Limited operates under the transitional provisions of the Virtual Asset Service Providers Act, 2025. In Canada, Ezeebit Canada Ltd. is on FINTRAC\'s money services business registry, MSB No. N300001912.',
       popular: true
     },
     {
@@ -210,7 +210,7 @@ const FAQ = () => {
       id: '29',
       category: 'payments',
       question: 'Can I hold a balance with Ezeebit?',
-      answer: 'Yes. Your Ezeebit wallets hold both fiat and USDT, and you can convert between them at a quoted rate. What you take in funds what you pay out, so pay-ins and payouts draw on the same balance. Withdraw fiat to your bank account, or stablecoin to your own wallet.',
+      answer: 'Yes. Your Ezeebit wallets hold both fiat and USDT, and you can convert between them at a quoted rate. What you take in funds what you pay out, so pay-ins and payouts run through the same wallets. Withdraw fiat to your bank account, or stablecoin to your own wallet.',
       popular: true
     },
     {
@@ -300,8 +300,8 @@ const FAQ = () => {
   return (
     <>
       <SEO
-        title="FAQ"
-        description="Answers about Ezeebit payments, payouts, wallets, settlement and fees. Ezeebit is live in South Africa, Kenya and Nigeria, with more markets to follow."
+        title="Ezeebit FAQ: crypto payments, fees, and settlement"
+        description="Answers about Ezeebit: which coins and wallets are supported, fees, same-day settlement, payouts, regulation, and how to get started."
         canonicalUrl="/resources/faq"
         crumbs={[{ name: 'FAQ', path: '/resources/faq' }]}
         extraNodes={[faqPageNode('https://ezeebit.com/resources/faq#faq', faqItems)]}

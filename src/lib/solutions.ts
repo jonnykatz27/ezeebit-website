@@ -189,7 +189,7 @@ export const SOLUTIONS: Solution[] = [
       { title: 'Profits go out in stablecoin', body: 'Create a payout; the trader claims it to their own wallet in minutes.' },
     ],
     products: [
-      { name: 'Platforms', to: '/platforms', body: 'Pay-ins and payouts for any platform, on one balance.' },
+      { name: 'Platforms', to: '/platforms', body: 'Pay-ins and payouts for any platform, in one account.' },
       { name: 'Payouts', to: '/payouts', body: 'Stablecoin withdrawals your traders claim themselves.' },
       { name: 'Wallets', to: '/wallets', body: 'Hold fiat and USDT, and convert between them.' },
     ],
@@ -234,7 +234,7 @@ export const SOLUTIONS: Solution[] = [
       { title: 'Everyone gets settled', body: SETTLE },
     ],
     products: [
-      { name: 'Platforms', to: '/platforms', body: 'Pay-ins and payouts for any platform, on one balance.' },
+      { name: 'Platforms', to: '/platforms', body: 'Pay-ins and payouts for any platform, in one account.' },
       { name: 'Developers', to: '/developers', body: 'The API, webhooks, and sandbox.' },
       { name: 'Pricing', to: '/pricing', body: 'Volume pricing for platforms.' },
     ],
@@ -279,7 +279,7 @@ export const SOLUTIONS: Solution[] = [
       { title: 'They cash out', body: 'To a whitelisted address, screened before it goes.' },
     ],
     products: [
-      { name: 'Platforms', to: '/platforms', body: 'Pay-ins and payouts for any platform, on one balance.' },
+      { name: 'Platforms', to: '/platforms', body: 'Pay-ins and payouts for any platform, in one account.' },
       { name: 'Payouts', to: '/payouts', body: 'Stablecoin cash-outs your users claim themselves.' },
       { name: 'Wallets', to: '/wallets', body: 'Hold fiat and USDT, and convert between them.' },
     ],
@@ -415,7 +415,7 @@ export const SOLUTIONS: Solution[] = [
     ],
     products: [
       { name: 'Payouts', to: '/payouts', body: 'Stablecoin payouts your recipients claim themselves.' },
-      { name: 'Wallets', to: '/wallets', body: 'Hold fiat and USDT, and fund payouts from the same balance.' },
+      { name: 'Wallets', to: '/wallets', body: 'Hold fiat and USDT, and fund payouts from your own wallets.' },
     ],
     faqs: [
       { question: 'Do recipients need an Ezeebit account?', answer: 'No. They open the payout link in any mobile browser and enter their own wallet address. They need a crypto wallet that supports the network they choose.' },
@@ -430,7 +430,7 @@ export const SOLUTIONS: Solution[] = [
     nav: 'Firm prices from the OTC desk',
     card: 'Firm prices on large trades from the OTC desk.',
     seo: {
-      title: 'OTC desk for large crypto trades',
+      title: 'Large crypto trades at a firm price',
       description: 'Buy or sell crypto at scale with a firm price from a named dealer, locked when you accept it, and settle the same day.',
     },
     hero: {

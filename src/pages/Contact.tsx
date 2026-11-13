@@ -74,10 +74,11 @@ const Contact = () => {
   return (
     <>
       <SEO
-        title="Contact"
-        description="Talk to Ezeebit about in-store ePOS, online payments, payouts or the API. Cape Town, with support by phone and email."
+        title="Contact Ezeebit: phone, email, and WhatsApp"
+        description="Talk to Ezeebit about in-store payments, online checkout, payouts, or the API. Support by email 24/7, and by phone or WhatsApp on weekdays, from Cape Town."
         canonicalUrl="/contact"
         crumbs={[{ name: 'Contact', path: '/contact' }]}
+        pageType="ContactPage"
       />
       <motion.div
       initial={{ opacity: 0 }}

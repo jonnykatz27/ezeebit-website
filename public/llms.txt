@@ -1,35 +1,67 @@
 # Ezeebit
 
-> Ezeebit is stablecoin and crypto payment infrastructure for merchants across Africa. It lets merchants accept stablecoin and cryptocurrency payments in-store and online. It is not a retail cryptocurrency exchange, and it is not an Australian exchange.
+> Ezeebit is crypto and stablecoin payment infrastructure for merchants and platforms. Businesses use it to accept crypto and stablecoin payments in-store, online, and on their own platforms, and to pay customers out in stablecoin. It is not a retail cryptocurrency exchange, and it is not an Australian exchange.
 
-Ezeebit (Ezee Solutions Group (Pty) Ltd) builds the checkout, conversion and settlement layer. A customer pays from a crypto wallet. The merchant can be settled the same day, on every plan, in a stablecoin (USDT or USDC) or in ZAR, KES, NGN or USD. The company is based in Cape Town, South Africa. Ezeebit is live in South Africa, Kenya and Nigeria, with more markets to follow.
+Ezeebit (Ezee Solutions Group (Pty) Ltd) builds the checkout, conversion, and settlement layer. A customer pays from a crypto wallet or an exchange account. The business is settled the same day, on every plan, in a stablecoin (USDT or USDC) or in ZAR, KES, NGN or USD, at the rate locked when the customer paid. The company is based in Cape Town, South Africa. Ezeebit is live in South Africa, Kenya and Nigeria, with more markets to follow.
 
-Ezeebit is regulated by South Africa's Financial Sector Conduct Authority (FSCA).
+Ezeebit is regulated by the FSCA as a Crypto Asset Service Provider, FSP No. 53664. The FSCA is South Africa's Financial Sector Conduct Authority.
 
 Ezeebit does not offer retail crypto trading and this site does not give investment advice.
 
 ## Products
 
-- **In-store ePOS** — an Android point of sale for physical stores, plus ezeebit Pay static QR. <https://ezeebit.com/in-store>
-- **Online payments** — plugins for Shopify, WooCommerce and Magento, and hosted checkout. <https://ezeebit.com/online>
-- **Platforms** — crypto pay-ins and stablecoin payouts for gaming, trading, wallet and payment platforms. <https://ezeebit.com/platforms>
-- **Payouts** — pay customers from an Ezeebit balance in USDT, with more stablecoins coming soon. Recipients choose the network. <https://ezeebit.com/payouts>
-- **Wallets** — hold fiat and USDT, convert between them, fund payouts, and withdraw to a bank or a wallet. <https://ezeebit.com/wallets>
-- **Developer API** — signed REST endpoints for payments, payouts and wallets, with webhooks. <https://ezeebit.com/developers>
-- **Pricing** — Crypto In is 1% or less per payment and Crypto Out is $0.65 per payout, both excluding VAT. No setup fees and no monthly platform fees; the optional ePOS is R150 a month per device. <https://ezeebit.com/pricing>
-- **OTC desk** — large crypto-to-fiat trades quoted by a dealer, settled in ZAR, KES, NGN or USD. <https://ezeebit.com/otc>
+- **Platforms**: crypto pay-ins and stablecoin payouts for gaming, trading, wallet, and payment platforms, through one API. <https://ezeebit.com/platforms>
+- **In-store**: the Ezeebit ePOS, an Android point of sale for physical stores, and free Ezeebit Pay QR codes. <https://ezeebit.com/in-store>
+- **Online**: plugins for Shopify, WooCommerce, and Magento, and a hosted checkout through the API. <https://ezeebit.com/online>
+- **Payouts**: pay customers from a fiat balance in USDT, with more stablecoins coming soon. The recipient opens a link, chooses the network, and adds their own wallet. <https://ezeebit.com/payouts>
+- **Wallets**: hold fiat and USDT, convert between them at a quoted rate, fund payouts, and withdraw to a bank account or a wallet. <https://ezeebit.com/wallets>
+- **Customer accounts**: a USDT wallet for each of a platform's customers, with deposit addresses on Ethereum, BNB Smart Chain, Tron, and Solana. <https://docs.ezeebit.com/customer-accounts/overview>
+- **OTC desk**: large crypto-to-fiat trades quoted by a named dealer, settled the same day in ZAR, KES, NGN or USD. <https://ezeebit.com/otc>
+- **Developer API**: signed REST endpoints for payments, payouts, wallets, and customer accounts, with signed webhooks. <https://ezeebit.com/developers>
+
+## Pricing
+
+- Crypto In: 1% or less per payment, excluding VAT.
+- Crypto Out: $0.65 per payout, excluding VAT.
+- No setup fees and no monthly platform fees.
+- The Ezeebit ePOS is optional, at R150 a month per device. An Ezeebit Pay QR code is free.
+- Enterprise pricing is based on volume.
+- Full details: <https://ezeebit.com/pricing>
 
 ## Who it is for
 
-Chief operating officers, chief financial officers and heads of payments at multi-store retailers. Heads of product at e-commerce, iGaming and payment platforms.
+- Platforms that take deposits and pay users out: gaming and betting operators, trading and investment platforms, payment gateways, wallets, and neobanks.
+- Merchants: online stores, shops, hospitality, and multi-store retailers.
+- Marketplaces that pay sellers, drivers, and creators.
+- Businesses making large crypto-to-fiat trades.
 
 ## How a payment works
 
-1. The customer pays in-store (ePOS or static QR) or online (plugin or checkout).
-2. Ezeebit converts the payment at the rate locked at checkout, so the merchant does not hold a volatile asset.
-3. The merchant is settled in USDT or USDC, or in ZAR, KES, NGN or USD.
+1. The customer pays in-store (ePOS or Ezeebit Pay QR code), online (plugin or hosted checkout), or on a platform (a deposit created through the API).
+2. Ezeebit locks the rate at checkout and hedges the payment, so the business does not hold a volatile asset.
+3. The business is settled the same day in USDT or USDC, or in ZAR, KES, NGN or USD.
 
-Supported assets include BTC, ETH, USDT, USDC, BNB, DAI and PAXG, on Bitcoin, Ethereum, TRON, BNB Smart Chain and Solana. Customers can pay from a wallet, including via WalletConnect, or from Luno, VALR or Binance where those connections are switched on.
+Supported assets are BTC, ETH, USDT, USDC, BNB, DAI, PAXG, ZARP, and ZARU, on Bitcoin, Ethereum, Tron, BNB Smart Chain, and Solana. Customers can pay from any wallet on-chain, through WalletConnect Pay, or directly from Luno, VALR, or Binance where those connections are switched on.
+
+## Common questions
+
+**What is Ezeebit?** Crypto and stablecoin payment infrastructure for businesses. It is not a consumer crypto exchange.
+
+**Is Ezeebit regulated?** Yes. Ezeebit is regulated by the FSCA as a Crypto Asset Service Provider, FSP No. 53664. In Kenya, Ezee Solutions Group (Kenya) Limited operates under the transitional provisions of the Virtual Asset Service Providers Act, 2025. In Canada, Ezeebit Canada Ltd. is on FINTRAC's money services business registry, MSB No. N300001912.
+
+**Which countries does Ezeebit operate in?** It is live in South Africa, Kenya, and Nigeria, with more markets to follow.
+
+**What does Ezeebit cost?** Crypto In is 1% or less per payment and Crypto Out is $0.65 per payout, both excluding VAT, with no setup fees or monthly platform fees.
+
+**How fast is settlement?** The same day, in local currency (ZAR, KES, NGN), in USD, or in stablecoin.
+
+**Are there chargebacks?** No. A confirmed crypto payment is final.
+
+**Does the business have to hold crypto?** No. Each payment is hedged when it is made, and the business can settle entirely in fiat.
+
+**Do customers need an Ezeebit account or app?** No. They pay from the wallet or exchange app they already use.
+
+**Can a business pay its customers out?** Yes, in USDT, from its fiat balance. The recipient claims a payout link with their own wallet, and funds usually arrive within minutes.
 
 ## Markets
 
@@ -38,20 +70,30 @@ Supported assets include BTC, ETH, USDT, USDC, BNB, DAI and PAXG, on Bitcoin, Et
 
 ## Company
 
-- Legal name: Ezee Solutions Group (Pty) Ltd
+- Legal name: Ezee Solutions Group (Pty) Ltd, registration 2022/250578/07
+- Group companies: Ezee Solutions Group (Kenya) Limited, and Ezeebit Canada Ltd.
 - Website: <https://ezeebit.com/>
 - Headquarters: Cape Town, South Africa
 - Founders: Daniel Katz (CEO), Jonathan Katz (COO), David Katz (co-founder)
-- Contact: support@ezeebit.com, +27 21 879 5074
-- Merchant portal: <https://merchant.ezeebit.com/>
-- Merchants that accept payments with Ezeebit include iStore, Diesel, Amiri, Le Creuset, Tintswalo, Goodman Gallery, Luxity and The Scoin Shop.
+- Investors: Founder Collective, Raba Partnership, and Digital Currency Group
+- Contact: support@ezeebit.com, +27 21 879 5074, WhatsApp +27 79 443 9375
+- Talk to sales: <https://ezeebit.com/book-a-call>
+- Merchant Portal: <https://merchant.ezeebit.com/>
+- API documentation: <https://docs.ezeebit.com/>
+- Trust Centre: <https://trust.ezeebit.com/>
+- Merchants that accept payments with Ezeebit include Sunbet, iStore, Diesel, Amiri, Le Creuset, Tintswalo, Goodman Gallery, Luxity, and The Scoin Shop.
 
 ## Key pages
 
-- [Home](https://ezeebit.com/): Stablecoin and crypto payments for merchants across Africa
-- [In-store ePOS](https://ezeebit.com/in-store): Android till and static QR
-- [Online payments](https://ezeebit.com/online): Shopify, WooCommerce and Magento
+- [Home](https://ezeebit.com/): Crypto and stablecoin payment infrastructure for merchants and platforms
 - [Platforms](https://ezeebit.com/platforms): Crypto pay-ins and payouts for platforms
+- [In-store](https://ezeebit.com/in-store): The Ezeebit ePOS and Ezeebit Pay QR codes
+- [Online](https://ezeebit.com/online): Checkout for Shopify, WooCommerce, and Magento
+- [Payouts](https://ezeebit.com/payouts): Pay customers in USDT, with more stablecoins coming soon
+- [Wallets](https://ezeebit.com/wallets): Fiat and USDT balances
+- [OTC desk](https://ezeebit.com/otc): Large trades
+- [Pricing](https://ezeebit.com/pricing): Fees for pay-ins, payouts, and the ePOS
+- [Developer API](https://ezeebit.com/developers): Payments, payouts, wallets, and customer accounts
 - [Gaming and betting](https://ezeebit.com/solutions/gaming-and-betting): Crypto deposits and stablecoin withdrawals for gaming and betting
 - [Trading and investment](https://ezeebit.com/solutions/trading-and-investment): Top-ups and withdrawals in stablecoin for trading platforms
 - [Payment gateways](https://ezeebit.com/solutions/payment-gateways): Crypto pay-ins and payouts for the merchants on a gateway
@@ -60,16 +102,12 @@ Supported assets include BTC, ETH, USDT, USDC, BNB, DAI and PAXG, on Bitcoin, Et
 - [Shops and hospitality](https://ezeebit.com/solutions/shops-and-hospitality): Crypto at the counter, with an ePOS or a QR code
 - [Marketplaces](https://ezeebit.com/solutions/marketplaces): Stablecoin payouts to sellers, drivers, and creators
 - [Large trades](https://ezeebit.com/solutions/large-trades): Firm prices from the OTC desk
-- [Payouts](https://ezeebit.com/payouts): Pay customers in USDT, with more stablecoins coming soon
-- [Wallets](https://ezeebit.com/wallets): Fiat and USDT balances
-- [Pricing](https://ezeebit.com/pricing): Merchant pricing
-- [Developer API](https://ezeebit.com/developers): Payments, payouts and wallets
-- [OTC desk](https://ezeebit.com/otc): Large trades
-- [About](https://ezeebit.com/resources/about): Company background
+- [About](https://ezeebit.com/resources/about): Company background, team, and investors
 - [FAQ](https://ezeebit.com/resources/faq): Common questions
-- [Contact](https://ezeebit.com/contact): Phone, email and Cape Town
+- [Book a call](https://ezeebit.com/book-a-call): Talk to sales
+- [Contact](https://ezeebit.com/contact): Phone, email, and WhatsApp
 - [Blog](https://ezeebit.com/resources/blog): Product and company notes
-- [Where to spend](https://ezeebit.com/resources/where-to-spend): Stores in South Africa
+- [Where to spend](https://ezeebit.com/resources/where-to-spend): Stores in South Africa that accept crypto through Ezeebit
 
 ## Profiles
 

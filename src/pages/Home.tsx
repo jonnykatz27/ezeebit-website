@@ -344,7 +344,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: 'Is Ezeebit regulated?',
-    a: "Yes, in each country it operates from. In South Africa, Ezee Solutions Group (Pty) Ltd is regulated by the FSCA, the Financial Sector Conduct Authority, as a Crypto Asset Service Provider, FSP No. 53664. In Kenya, Ezee Solutions Group (Kenya) Limited operates under the transitional provisions of the Virtual Asset Service Providers Act, 2025. In Canada, Ezeebit Canada Ltd. is on FINTRAC's money services business registry, MSB No. N300001912.",
+    a: "Yes. Ezeebit is regulated by the FSCA as a Crypto Asset Service Provider, FSP No. 53664. The FSCA is South Africa's Financial Sector Conduct Authority. That covers the South African company, Ezee Solutions Group (Pty) Ltd. In Kenya, Ezee Solutions Group (Kenya) Limited operates under the transitional provisions of the Virtual Asset Service Providers Act, 2025. In Canada, Ezeebit Canada Ltd. is on FINTRAC's money services business registry, MSB No. N300001912.",
   },
   {
     q: 'Which countries does Ezeebit operate in?',
@@ -475,7 +475,7 @@ const STATS: { n: string; l: string; detail: string }[] = [
   { n: '$25M+', l: 'Moved every year', detail: "Today's run rate" },
   { n: '100+', l: 'Platforms and businesses', detail: 'Today' },
   { n: '9', l: 'Cryptocurrencies accepted', detail: 'BTC, ETH, USDT, USDC, BNB, DAI, PAXG, ZARP and ZARU on 5 networks' },
-  { n: '5', l: 'Currencies held and converted', detail: 'ZAR, KES, NGN, USD, and USDT, with USDC coming soon · up to 90 with global rails' },
+  { n: '5', l: 'Currencies held and converted', detail: 'ZAR, KES, NGN, USD, and USDT, with USDC coming soon' },
 ]
 
 /** An icon for each solution's card, by its slug. */
@@ -878,10 +878,11 @@ const Home = () => {
   return (
     <>
       <SEO
-        title="Ezeebit | Stablecoin and crypto payments for Africa"
+        title="Ezeebit | Crypto and stablecoin payment infrastructure"
         exactTitle
-        description="Stablecoin and crypto payments across Africa. Ezeebit is live in South Africa, Kenya and Nigeria, with more markets to follow."
+        description="Accept crypto and stablecoin payments in-store, online, or on your platform, and pay customers out in stablecoin. Settle the same day in ZAR, KES, NGN, or USD."
         canonicalUrl="/"
+        faqs={FAQS.map((f) => ({ question: f.q, answer: f.a }))}
       />
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="overflow-hidden -mt-20">
         <PageHero
@@ -915,7 +916,8 @@ const Home = () => {
                   <div className="text-[2rem] sm:text-4xl xl:text-5xl whitespace-nowrap font-display font-bold tracking-[-0.03em] text-primary-400 leading-none mb-3">{s.n}</div>
                   <div>
                     <p className="text-[15px] text-neutral-200">{s.l}</p>
-                    <p className="mt-1 lg:mt-1.5 text-[13px] leading-relaxed text-neutral-400">{s.detail}</p>
+                    {/* Narrower than its column and balanced, so a second line is never one or two words */}
+                    <p className="mx-auto mt-1 lg:mt-1.5 max-w-[17rem] text-[13px] leading-relaxed text-neutral-400 [text-wrap:balance]">{s.detail}</p>
                   </div>
                 </div>
               ))}
@@ -947,7 +949,7 @@ const Home = () => {
             <Intro
               eyebrow="Solutions"
               title={<>For anyone who accepts,<br />holds, and sends money.</>}
-              intro="Pick the flow you need. Every one runs on the same balance."
+              intro="Pick the flow you need. Every one runs from the same account."
             />
             {/* Two to a row on a phone, so several show at once; four across on a wide screen */}
             <div className="grid w-full grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">

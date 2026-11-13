@@ -76,11 +76,12 @@ const InStore = () => {
   return (
     <>
       <SEO
-        title="In-store ePOS and static QR"
-        description="In-store stablecoin and crypto payments. Ezeebit is live in South Africa, Kenya and Nigeria, with more markets to follow."
+        title="In-store crypto payments: ePOS and QR codes"
+        description="Take crypto and stablecoin payments at the till with the Ezeebit ePOS or a free Ezeebit Pay QR code. The rate is locked at checkout and you settle the same day."
         canonicalUrl="/in-store"
         crumbs={[{ name: 'In-store ePOS', path: '/in-store' }]}
         extraNodes={[faqPageNode('https://ezeebit.com/in-store#faq', inStoreFaqs)]}
+        service={{ name: 'In-store crypto payments', serviceType: 'Crypto point of sale' }}
       />
       <motion.div
       initial={{ opacity: 0 }}
@@ -116,6 +117,8 @@ const InStore = () => {
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center mb-16"
           >
+            {/* The logo stands in for the heading on screen; the outline still needs one */}
+            <h2 className="sr-only">The Ezeebit ePOS</h2>
             <div className="flex justify-center mb-4">
               <img
                 src="/epos-logo.png"

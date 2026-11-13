@@ -112,11 +112,12 @@ const Payouts = () => {
   return (
     <>
       <SEO
-        title="Stablecoin payouts"
-        description="Pay customers from an Ezeebit balance in USDT, with more stablecoins coming soon. Ezeebit is live in South Africa, Kenya and Nigeria, with more markets to follow."
+        title="Stablecoin payouts for your customers"
+        description="Pay customers, sellers, and players in USDT from your fiat balance. They claim a link with their own wallet and funds arrive in minutes. $0.65 per payout."
         canonicalUrl="/payouts"
         crumbs={[{ name: 'Payouts', path: '/payouts' }]}
         extraNodes={[faqPageNode('https://ezeebit.com/payouts#faq', payoutFaqs)]}
+        service={{ name: 'Stablecoin payouts', serviceType: 'Stablecoin payouts' }}
       />
       <motion.div
         initial={{ opacity: 0 }}

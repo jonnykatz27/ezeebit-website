@@ -242,8 +242,75 @@ const restrictedWalletsContent = (
   </>
 )
 
+/** The questions two of the articles end on, kept here so each article's FAQPage data reads from the same list. */
+const SUNBET_FAQS: { q: string; a: string }[] = [
+            {
+              q: 'How is a crypto deposit different from a crypto checkout?',
+              a: 'A checkout pays a merchant a fixed amount for goods. A deposit funds the paying user\'s own account, so every payment must be attributed to a specific account and credited to their balance in real time, then reconciled to an auditable ledger. The attribution, instant crediting, and compliance controls are what make deposits harder.'
+            },
+            {
+              q: 'Which wallets and exchanges can users deposit from?',
+              a: 'Any wallet holding a supported asset (BTC, ETH, USDT, USDC, BNB, DAI, PAXG) on a supported chain (Bitcoin, Ethereum, TRON, BSC, Solana). On-chain works with every wallet including hardware wallets, WalletConnect adds 700+ wallets, and users on Luno, VALR, or Binance can deposit from inside their exchange app.'
+            },
+            {
+              q: 'How fast is the user credited?',
+              a: 'In seconds. Ezeebit confirms finality on the relevant network and fires a signed callback to the platform the moment the deposit is final, so the user\'s balance updates almost immediately.'
+            },
+            {
+              q: 'Does the platform carry any crypto price risk?',
+              a: 'No. The fiat value of each deposit is locked at the moment of payment and hedged instantly. The platform receives a fixed amount, settled the same day, in stablecoin or local currency.'
+            },
+            {
+              q: 'Is this compliant for a regulated operator?',
+              a: 'Yes. Ezeebit is regulated by the FSCA as a Crypto Asset Service Provider, FSP No. 53664, and operates with FIC compliance, POPIA compliance, and Travel Rule infrastructure — with KYC, AML, and source-of-funds controls applied to deposits.'
+            },
+            {
+              q: 'Can this be used for platforms other than iGaming?',
+              a: 'Yes. The same deposit rail applies to FX and CFD trading platforms, stockbroking and investment apps, neobanks and e-wallets, remittance services, lending platforms, and any business where users fund an account.'
+            },
+          ]
+
+const CHECKOUT_FAQS: { q: string; a: string }[] = [
+            {
+              q: 'Which wallets can my customers pay with?',
+              a: 'Any wallet that holds a supported asset (BTC, ETH, USDT, USDC, BNB, DAI, PAXG) on a supported chain (Bitcoin, Ethereum, TRON, BSC, Solana). On-chain payments work with every wallet, including hardware wallets like Ledger and Trezor. WalletConnect adds direct support for 700+ wallets. Customers on Luno, VALR, or Binance can pay from inside their exchange app.'
+            },
+            {
+              q: 'How fast is settlement?',
+              a: 'The same day. Stablecoin settles within minutes, and fiat (ZAR, KES, NGN or USD) reaches the merchant\'s bank account the same day.'
+            },
+            {
+              q: 'What happens if the crypto price moves between payment and settlement?',
+              a: 'Nothing for the merchant. Ezeebit locks the rate at the point of sale and hedges the position instantly. The merchant always receives 100% of the agreed sale value.'
+            },
+            {
+              q: 'Do I need to hold any crypto?',
+              a: 'No. Merchants who choose fiat settlement never hold crypto on their balance sheet. Merchants who choose stablecoin settlement hold USDT or USDC, which are designed to track the US dollar.'
+            },
+            {
+              q: 'Is Ezeebit regulated?',
+              a: 'Yes. Ezeebit (Ezee Solutions Group Pty Ltd) is regulated by the FSCA as a Crypto Asset Service Provider, FSP No. 53664. The company is FIC compliant, POPIA compliant, and operates under Travel Rule infrastructure.'
+            },
+            {
+              q: 'What does it cost?',
+              a: '1% per transaction or lower depending on volume (excluding VAT). The same rate applies across Ezeebit Pay, ePOS, Checkout, and API. Roughly 68% cheaper than card processing. No setup fees. No chargebacks.'
+            },
+            {
+              q: 'How long does integration take?',
+              a: 'Days, not months. Static QR codes can be deployed the same day. ePOS terminals ship pre-configured. Shopify integration is plug-and-play. Custom API integrations vary depending on the merchant\'s systems.'
+            },
+            {
+              q: 'Which countries does Ezeebit operate in?',
+              a: 'South Africa, Kenya, and Nigeria. Merchants can settle in fiat (ZAR, KES, NGN or USD) or in stablecoins.'
+            },
+          ]
+
 const blogPostsData: Record<string, {
   title: string
+  /** A shorter title for the browser tab and search results, where the headline runs long. */
+  seoTitle?: string
+  /** The questions the article answers at its end, where it has them. */
+  faqs?: { q: string; a: string }[]
   subtitle: string
   author: string
   role: string
@@ -256,6 +323,7 @@ const blogPostsData: Record<string, {
 }> = {
   'restricted-wallets-and-platforms': {
     title: "Which wallets and platforms can't Ezeebit accept payments from or send funds to?",
+    seoTitle: "Restricted wallets and platforms: what Ezeebit can't accept",
     subtitle: "Most crypto payments go through without any issues. A small number can't, because the wallet or platform is linked to sanctions or other serious financial-crime risks. Here's why, what we check, and how to check a counterparty yourself.",
     author: 'Jonathan Katz',
     role: 'COO & Co-Founder of Ezeebit',
@@ -271,6 +339,7 @@ const blogPostsData: Record<string, {
     subtitle: "Sunbet — a subsidiary of JSE-listed Sun International — is one of the first online gaming platforms in South Africa to accept crypto deposits. Here's the complexity behind letting any user fund their account from any wallet, how we kept compliance and innovation at the forefront, and why the same deposit rail extends to FX, trading, and any platform that takes deposits.",
     author: 'Daniel Katz',
     role: 'CEO & Co-Founder of Ezeebit',
+    faqs: SUNBET_FAQS,
     date: '2026-07-03',
     readTime: '6 min read',
     category: 'Product',
@@ -308,19 +377,19 @@ const blogPostsData: Record<string, {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
           <div className="bg-neutral-50 p-6 rounded-lg">
-            <h4 className="font-semibold text-neutral-900 mb-2">Per-user attribution</h4>
+            <h3 className="text-[1.375rem] font-semibold text-neutral-900 mb-2">Per-user attribution</h3>
             <p className="text-neutral-700 text-sm">Each deposit is tied to a single account through a unique payment reference, so funds land in exactly the right player's balance — across many concurrent deposits, networks, and assets.</p>
           </div>
           <div className="bg-neutral-50 p-6 rounded-lg">
-            <h4 className="font-semibold text-neutral-900 mb-2">Real-time crediting</h4>
+            <h3 className="text-[1.375rem] font-semibold text-neutral-900 mb-2">Real-time crediting</h3>
             <p className="text-neutral-700 text-sm">Ezeebit watches the relevant chains, applies the right confirmation rules per network, and fires a signed callback to Sunbet the instant a deposit is final — so the player's balance updates in seconds, not minutes.</p>
           </div>
           <div className="bg-neutral-50 p-6 rounded-lg">
-            <h4 className="font-semibold text-neutral-900 mb-2">Idempotency & reconciliation</h4>
+            <h3 className="text-[1.375rem] font-semibold text-neutral-900 mb-2">Idempotency & reconciliation</h3>
             <p className="text-neutral-700 text-sm">Every event is processed exactly once. Under-payments, over-payments, late confirmations, and retries are handled deterministically and reconciled to a single auditable ledger.</p>
           </div>
           <div className="bg-neutral-50 p-6 rounded-lg">
-            <h4 className="font-semibold text-neutral-900 mb-2">Volatility hedging</h4>
+            <h3 className="text-[1.375rem] font-semibold text-neutral-900 mb-2">Volatility hedging</h3>
             <p className="text-neutral-700 text-sm">The fiat value of each deposit is locked at the moment of payment, so the credited amount is fixed and the platform never carries crypto price risk on its balance sheet.</p>
           </div>
         </div>
@@ -352,8 +421,8 @@ const blogPostsData: Record<string, {
         </p>
 
         <ul className="list-disc pl-6 mb-4 space-y-2">
-          <li><strong>Fiat (ZAR, KES, NGN, USD), T+1:</strong> funds land in the platform's bank account the next business day, at the rate locked when the player deposited. No crypto ever touches the balance sheet.</li>
-          <li><strong>Stablecoins (USDT or USDC), T+0:</strong> settlement within minutes, for platforms running dollar-pegged treasury or operating across multiple markets.</li>
+          <li><strong>Fiat (ZAR, KES, NGN, USD), same day:</strong> funds land in the platform's bank account the same day, at the rate locked when the player deposited. No crypto ever touches the balance sheet.</li>
+          <li><strong>Stablecoins (USDT or USDC), same day:</strong> settlement within minutes, for platforms running dollar-pegged treasury or operating across multiple markets.</li>
         </ul>
 
         <p>
@@ -383,7 +452,7 @@ const blogPostsData: Record<string, {
             { step: '03', text: 'The payment is broadcast or executed instantly, and Ezeebit hedges the crypto at the locked rate.' },
             { step: '04', text: 'Ezeebit confirms finality on the relevant network and attributes the deposit to the correct account.' },
             { step: '05', text: 'A signed callback credits the player\'s balance in real time — they\'re ready to play in seconds.' },
-            { step: '06', text: 'Settlement to Sunbet: T+0 in stablecoin, or T+1 in local currency, fully reconciled.' },
+            { step: '06', text: 'Settlement to Sunbet: the same day, in stablecoin or local currency, fully reconciled.' },
           ].map(({ step, text }) => (
             <div key={step} className="flex items-start gap-4">
               <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary-50 text-xs font-semibold text-primary-600 shrink-0 mt-0.5">{step}</span>
@@ -404,27 +473,27 @@ const blogPostsData: Record<string, {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
           <div className="bg-neutral-50 p-6 rounded-lg">
-            <h4 className="font-semibold text-neutral-900 mb-2">FX &amp; CFD trading platforms</h4>
+            <h3 className="text-[1.375rem] font-semibold text-neutral-900 mb-2">FX &amp; CFD trading platforms</h3>
             <p className="text-neutral-700 text-sm">Traders top up margin accounts instantly from any wallet, instead of waiting on card deposits or international wires that take days and attract steep fees.</p>
           </div>
           <div className="bg-neutral-50 p-6 rounded-lg">
-            <h4 className="font-semibold text-neutral-900 mb-2">Stockbroking &amp; investment apps</h4>
+            <h3 className="text-[1.375rem] font-semibold text-neutral-900 mb-2">Stockbroking &amp; investment apps</h3>
             <p className="text-neutral-700 text-sm">Investors fund brokerage and savings accounts from stablecoins they already hold, with funds credited and ready to allocate in seconds.</p>
           </div>
           <div className="bg-neutral-50 p-6 rounded-lg">
-            <h4 className="font-semibold text-neutral-900 mb-2">Neobanks &amp; e-wallets</h4>
+            <h3 className="text-[1.375rem] font-semibold text-neutral-900 mb-2">Neobanks &amp; e-wallets</h3>
             <p className="text-neutral-700 text-sm">Digital banks and wallet apps offer crypto as a first-class top-up method, capturing users who hold value on-chain rather than in a traditional account.</p>
           </div>
           <div className="bg-neutral-50 p-6 rounded-lg">
-            <h4 className="font-semibold text-neutral-900 mb-2">Remittance &amp; cross-border services</h4>
+            <h3 className="text-[1.375rem] font-semibold text-neutral-900 mb-2">Remittance &amp; cross-border services</h3>
             <p className="text-neutral-700 text-sm">Recipients and senders fund accounts with stablecoins, turning crypto into a fast, low-cost on-ramp for diaspora and intra-African flows.</p>
           </div>
           <div className="bg-neutral-50 p-6 rounded-lg">
-            <h4 className="font-semibold text-neutral-900 mb-2">Lending &amp; credit platforms</h4>
+            <h3 className="text-[1.375rem] font-semibold text-neutral-900 mb-2">Lending &amp; credit platforms</h3>
             <p className="text-neutral-700 text-sm">Borrowers repay and fund accounts from any wallet, while the platform receives reconciled fiat or stablecoin with no volatility exposure.</p>
           </div>
           <div className="bg-neutral-50 p-6 rounded-lg">
-            <h4 className="font-semibold text-neutral-900 mb-2">Gaming, esports &amp; prepaid wallets</h4>
+            <h3 className="text-[1.375rem] font-semibold text-neutral-900 mb-2">Gaming, esports &amp; prepaid wallets</h3>
             <p className="text-neutral-700 text-sm">Users load in-app balances, prepaid credit, and top-ups instantly — the same any-wallet deposit experience, in any app.</p>
           </div>
         </div>
@@ -450,7 +519,7 @@ const blogPostsData: Record<string, {
         <ul className="list-disc pl-6 mb-6 space-y-2">
           <li><strong>Deposit API:</strong> per-user deposit requests, real-time crediting callbacks, and full reconciliation</li>
           <li><strong>Any-wallet coverage:</strong> on-chain, WalletConnect (700+ wallets), and Exchange Pay (Luno, VALR, Binance) out of the box</li>
-          <li><strong>Settlement on your terms:</strong> T+0 stablecoin or T+1 fiat (ZAR, KES, NGN, USD), always hedged</li>
+          <li><strong>Settlement on your terms:</strong> the same day, in stablecoin or fiat (ZAR, KES, NGN, USD), always hedged</li>
         </ul>
 
         <p>
@@ -462,32 +531,7 @@ const blogPostsData: Record<string, {
         <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-6">Frequently asked questions</h2>
 
         <div className="space-y-6">
-          {[
-            {
-              q: 'How is a crypto deposit different from a crypto checkout?',
-              a: 'A checkout pays a merchant a fixed amount for goods. A deposit funds the paying user\'s own account, so every payment must be attributed to a specific account and credited to their balance in real time, then reconciled to an auditable ledger. The attribution, instant crediting, and compliance controls are what make deposits harder.'
-            },
-            {
-              q: 'Which wallets and exchanges can users deposit from?',
-              a: 'Any wallet holding a supported asset (BTC, ETH, USDT, USDC, BNB, DAI, PAXG) on a supported chain (Bitcoin, Ethereum, TRON, BSC, Solana). On-chain works with every wallet including hardware wallets, WalletConnect adds 700+ wallets, and users on Luno, VALR, or Binance can deposit from inside their exchange app.'
-            },
-            {
-              q: 'How fast is the user credited?',
-              a: 'In seconds. Ezeebit confirms finality on the relevant network and fires a signed callback to the platform the moment the deposit is final, so the user\'s balance updates almost immediately.'
-            },
-            {
-              q: 'Does the platform carry any crypto price risk?',
-              a: 'No. The fiat value of each deposit is locked at the moment of payment and hedged instantly. The platform receives a fixed amount, settled T+0 in stablecoin or T+1 in local currency.'
-            },
-            {
-              q: 'Is this compliant for a regulated operator?',
-              a: 'Yes. Ezeebit is regulated by the FSCA as a Crypto Asset Service Provider, FSP No. 53664, and operates with FIC compliance, POPIA compliance, and Travel Rule infrastructure — with KYC, AML, and source-of-funds controls applied to deposits.'
-            },
-            {
-              q: 'Can this be used for platforms other than iGaming?',
-              a: 'Yes. The same deposit rail applies to FX and CFD trading platforms, stockbroking and investment apps, neobanks and e-wallets, remittance services, lending platforms, and any business where users fund an account.'
-            },
-          ].map(({ q, a }) => (
+          {SUNBET_FAQS.map(({ q, a }) => (
             <div key={q} className="border-b border-neutral-100 pb-6">
               <h3 className="text-base font-semibold text-neutral-900 mb-2">{q}</h3>
               <p className="text-neutral-600">{a}</p>
@@ -501,6 +545,7 @@ const blogPostsData: Record<string, {
   },
   'ezeebit-raises-r35-million': {
     title: 'We Just Raised $2.05M to Build Africa\'s Stablecoin Payment Infrastructure',
+    seoTitle: 'Ezeebit raises $2.05M for stablecoin payments in Africa',
     subtitle: 'A personal note from our CEO on our seed funding round and what it means for the future of payments in Africa.',
     author: 'Daniel Katz',
     role: 'CEO & Co-Founder of Ezeebit',
@@ -546,7 +591,7 @@ const blogPostsData: Record<string, {
         <p className="mt-4 text-lg font-semibold text-neutral-900">We bridge that gap.</p>
 
         <p className="mt-4">
-          Ezeebit connects decentralised and traditional finance with a compliant stablecoin settlement layer. Our merchants enjoy fees of <strong>1% or lower</strong> — 68% cheaper than credit cards—with instant stablecoin settlement and next-business-day local fiat payouts. No volatility risk. No waiting days for your money.
+          Ezeebit connects decentralised and traditional finance with a compliant stablecoin settlement layer. Our merchants enjoy fees of <strong>1% or lower</strong> — 68% cheaper than credit cards—with instant stablecoin settlement and same-day local fiat payouts. No volatility risk. No waiting days for your money.
         </p>
 
         <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-4">The timing is no accident</h2>
@@ -632,6 +677,7 @@ const blogPostsData: Record<string, {
   },
   'capital-flow-management-regulations': {
     title: "Ezeebit's position on the draft Capital Flow Management Regulations",
+    seoTitle: 'Ezeebit on the draft Capital Flow Management Regulations',
     subtitle: "South Africa is replacing its Exchange Control framework for the first time in 65 years — and for the first time, crypto assets are explicitly part of that picture.",
     author: 'Daniel Katz',
     role: 'CEO & Co-Founder of Ezeebit',
@@ -689,6 +735,7 @@ const blogPostsData: Record<string, {
     subtitle: "A single integration that accepts payments from any wallet, 700+ wallets via WalletConnect, and directly from Luno, VALR, and Binance — with settlement in local currency or stablecoin, and zero crypto exposure.",
     author: 'Jonathan Katz',
     role: 'COO & Co-Founder of Ezeebit',
+    faqs: CHECKOUT_FAQS,
     date: '2026-05-13',
     readTime: '5 min read',
     category: 'Product',
@@ -697,7 +744,7 @@ const blogPostsData: Record<string, {
     content: (
       <>
         <p className="text-lg font-semibold text-neutral-900 mb-8">
-          Ezeebit has launched Africa's most comprehensive crypto checkout: a single integration that accepts payments from any wallet, 700+ wallets via WalletConnect, and directly from Luno, VALR, and Binance. Merchants choose whether to settle in stablecoins (T+0) or local currency (T+1), with zero exposure to crypto volatility. The product is live across 130+ stores in South Africa, including iStore, Diesel, Le Creuset, and Sunbet.
+          Ezeebit has launched Africa's most comprehensive crypto checkout: a single integration that accepts payments from any wallet, 700+ wallets via WalletConnect, and directly from Luno, VALR, and Binance. Merchants choose whether to settle in stablecoins or local currency, both the same day, with zero exposure to crypto volatility. The product is live across 130+ stores in South Africa, including iStore, Diesel, Le Creuset, and Sunbet.
         </p>
 
         <p className="text-lg text-neutral-600 mb-8">
@@ -785,17 +832,17 @@ const blogPostsData: Record<string, {
           Every Ezeebit transaction is hedged at the point of sale. The moment a customer pays, the fiat value is locked. Merchants receive 100% of the sale value regardless of what happens to crypto prices in the seconds, minutes, or days that follow.
         </p>
 
-        <h3 className="text-xl font-semibold text-neutral-900 mt-6 mb-3">Fiat (ZAR, KES, NGN, USD), T+1</h3>
+        <h3 className="text-xl font-semibold text-neutral-900 mt-6 mb-3">Fiat (ZAR, KES, NGN, USD), same day</h3>
 
         <p className="mb-4">
-          Fiat settlement lands in the merchant's bank account the next business day, in their local currency or in dollars: South African rand (ZAR), Kenyan shilling (KES), Nigerian naira (NGN) or US dollar (USD). No crypto ever touches the balance sheet.
+          Fiat settlement lands in the merchant's bank account the same day, in their local currency or in dollars: South African rand (ZAR), Kenyan shilling (KES), Nigerian naira (NGN) or US dollar (USD). No crypto ever touches the balance sheet.
         </p>
 
         <p>
-          For most retail merchants this is the default. It's how merchants like iStore and Le Creuset receive their payouts, and it's how a merchant in Cape Town or Nairobi can take a USDT payment and have rand or shillings land in their bank account the next day, at the rate locked at the till. Multi-market operators can settle each store in the currency of the country it sits in, without juggling crypto balances or moving funds across borders.
+          For most retail merchants this is the default. It's how merchants like iStore and Le Creuset receive their payouts, and it's how a merchant in Cape Town or Nairobi can take a USDT payment and have rand or shillings land in their bank account the same day, at the rate locked at the till. Multi-market operators can settle each store in the currency of the country it sits in, without juggling crypto balances or moving funds across borders.
         </p>
 
-        <h3 className="text-xl font-semibold text-neutral-900 mt-6 mb-3">Stablecoins (USDT or USDC), T+0</h3>
+        <h3 className="text-xl font-semibold text-neutral-900 mt-6 mb-3">Stablecoins (USDT or USDC), same day</h3>
 
         <p>
           Some merchants prefer to receive payouts in stablecoins, particularly those operating across multiple African markets or running treasury in dollar-pegged assets. Settlement is instant. Funds land in the merchant's nominated wallet within minutes of the customer's payment.
@@ -826,7 +873,7 @@ const blogPostsData: Record<string, {
             { step: '03', text: 'The transaction is broadcast or executed instantly.' },
             { step: '04', text: 'Ezeebit detects the payment and hedges the crypto at the locked rate.' },
             { step: '05', text: 'The merchant sees the payment confirmed in real time on the Merchant Portal.' },
-            { step: '06', text: 'Settlement: T+0 in stablecoin, or T+1 in fiat (ZAR, KES, NGN or USD) to the merchant\'s bank account.' },
+            { step: '06', text: 'Settlement: the same day, in stablecoin or in fiat (ZAR, KES, NGN or USD) to the merchant\'s bank account.' },
           ].map(({ step, text }) => (
             <div key={step} className="flex items-start gap-4">
               <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary-50 text-xs font-semibold text-primary-600 shrink-0 mt-0.5">{step}</span>
@@ -879,40 +926,7 @@ const blogPostsData: Record<string, {
         <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-6">Frequently asked questions</h2>
 
         <div className="space-y-6">
-          {[
-            {
-              q: 'Which wallets can my customers pay with?',
-              a: 'Any wallet that holds a supported asset (BTC, ETH, USDT, USDC, BNB, DAI, PAXG) on a supported chain (Bitcoin, Ethereum, TRON, BSC, Solana). On-chain payments work with every wallet, including hardware wallets like Ledger and Trezor. WalletConnect adds direct support for 700+ wallets. Customers on Luno, VALR, or Binance can pay from inside their exchange app.'
-            },
-            {
-              q: 'How fast is settlement?',
-              a: 'T+0 in stablecoin (within minutes). T+1 in fiat (ZAR, KES, NGN or USD) to the merchant\'s bank account, next business day.'
-            },
-            {
-              q: 'What happens if the crypto price moves between payment and settlement?',
-              a: 'Nothing for the merchant. Ezeebit locks the rate at the point of sale and hedges the position instantly. The merchant always receives 100% of the agreed sale value.'
-            },
-            {
-              q: 'Do I need to hold any crypto?',
-              a: 'No. Merchants who choose fiat settlement never hold crypto on their balance sheet. Merchants who choose stablecoin settlement hold USDT or USDC, which are designed to track the US dollar.'
-            },
-            {
-              q: 'Is Ezeebit regulated?',
-              a: 'Yes. Ezeebit (Ezee Solutions Group Pty Ltd) is regulated by the FSCA as a Crypto Asset Service Provider, FSP No. 53664. The company is FIC compliant, POPIA compliant, and operates under Travel Rule infrastructure.'
-            },
-            {
-              q: 'What does it cost?',
-              a: '1% per transaction or lower depending on volume (excluding VAT). The same rate applies across Ezeebit Pay, ePOS, Checkout, and API. Roughly 68% cheaper than card processing. No setup fees. No chargebacks.'
-            },
-            {
-              q: 'How long does integration take?',
-              a: 'Days, not months. Static QR codes can be deployed the same day. ePOS terminals ship pre-configured. Shopify integration is plug-and-play. Custom API integrations vary depending on the merchant\'s systems.'
-            },
-            {
-              q: 'Which countries does Ezeebit operate in?',
-              a: 'South Africa, Kenya, and Nigeria. Merchants can settle in fiat (ZAR, KES, NGN or USD) or in stablecoins.'
-            },
-          ].map(({ q, a }) => (
+          {CHECKOUT_FAQS.map(({ q, a }) => (
             <div key={q} className="border-b border-neutral-100 pb-6">
               <h3 className="text-base font-semibold text-neutral-900 mb-2">{q}</h3>
               <p className="text-neutral-600">{a}</p>
@@ -926,6 +940,7 @@ const blogPostsData: Record<string, {
   },
   'pundi-x-rebrand': {
     title: 'Pundi X South Africa Rebrands To Ezeebit And Makes Key Acquisitions',
+    seoTitle: 'Pundi X South Africa rebrands to Ezeebit',
     subtitle: 'Pundi X South Africa Rebrands to Ezeebit and Acquires Advanced Cryptocurrency Wallet, Payment, and Exchange Infrastructure, Pioneering a New Era for Crypto Adoption in Africa and Beyond',
     author: 'Daniel Katz',
     role: 'CEO & Co-Founder of Ezeebit',
@@ -984,19 +999,19 @@ const blogPostsData: Record<string, {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
           <div className="bg-neutral-50 p-6 rounded-lg">
-            <h4 className="font-semibold text-neutral-900 mb-2">Cutting-Edge POS Devices</h4>
+            <h3 className="text-[1.375rem] font-semibold text-neutral-900 mb-2">Cutting-Edge POS Devices</h3>
             <p className="text-neutral-700 text-sm">Android-based point-of-sale terminals that enable merchants to accept stablecoin and crypto payments in-store, while mitigating cryptocurrency price-volatility risk.</p>
           </div>
           <div className="bg-neutral-50 p-6 rounded-lg">
-            <h4 className="font-semibold text-neutral-900 mb-2">Flexible Payment APIs</h4>
+            <h3 className="text-[1.375rem] font-semibold text-neutral-900 mb-2">Flexible Payment APIs</h3>
             <p className="text-neutral-700 text-sm">Streamlined integration options for websites, mobile apps, and e-commerce platforms, catering to the checkout preferences of crypto users.</p>
           </div>
           <div className="bg-neutral-50 p-6 rounded-lg">
-            <h4 className="font-semibold text-neutral-900 mb-2">Online Payment Links</h4>
+            <h3 className="text-[1.375rem] font-semibold text-neutral-900 mb-2">Online Payment Links</h3>
             <p className="text-neutral-700 text-sm">Dynamic invoicing and remote payment capabilities that accommodate transactions anytime, anywhere.</p>
           </div>
           <div className="bg-neutral-50 p-6 rounded-lg">
-            <h4 className="font-semibold text-neutral-900 mb-2">Instant Conversions & Stable Transactions</h4>
+            <h3 className="text-[1.375rem] font-semibold text-neutral-900 mb-2">Instant Conversions & Stable Transactions</h3>
             <p className="text-neutral-700 text-sm">Proprietary backend technology instantly converts stablecoin and crypto payments to stable forms, safeguarding merchants and customers from market and price fluctuations.</p>
           </div>
         </div>
@@ -1018,21 +1033,21 @@ const blogPostsData: Record<string, {
           <div className="flex items-start">
             <div className="w-2 h-2 bg-primary-500 rounded-full mt-[9px] mr-3 flex-shrink-0"></div>
             <div>
-              <h4 className="font-semibold text-neutral-900 text-base">Expand Distribution</h4>
+              <h3 className="font-semibold text-neutral-900 text-base">Expand Distribution</h3>
               <p className="text-neutral-700 mt-1">Form partnerships with enterprises and financial providers to broaden its market reach across Africa and beyond.</p>
             </div>
           </div>
           <div className="flex items-start">
             <div className="w-2 h-2 bg-primary-500 rounded-full mt-[9px] mr-3 flex-shrink-0"></div>
             <div>
-              <h4 className="font-semibold text-neutral-900 text-base">Launch New Technologies</h4>
+              <h3 className="font-semibold text-neutral-900 text-base">Launch New Technologies</h3>
               <p className="text-neutral-700 mt-1">Introduce solutions to further improve transaction speed, user experience, and stability, including additional fiat and crypto functionalities.</p>
             </div>
           </div>
           <div className="flex items-start">
             <div className="w-2 h-2 bg-primary-500 rounded-full mt-[9px] mr-3 flex-shrink-0"></div>
             <div>
-              <h4 className="font-semibold text-neutral-900 text-base">Strengthen Regional Presence</h4>
+              <h3 className="font-semibold text-neutral-900 text-base">Strengthen Regional Presence</h3>
               <p className="text-neutral-700 mt-1">Deliver secure, inclusive digital payments to underserved communities, driving greater financial inclusion.</p>
             </div>
           </div>
@@ -1125,11 +1140,12 @@ const BlogPost = () => {
   return (
     <>
       <SEO
-        title={post.title}
+        title={post.seoTitle ?? post.title}
         description={articleDescription}
         canonicalUrl={`/blog/${slug}`}
         ogImage={post.image}
         ogType="article"
+        faqs={post.faqs?.map((f) => ({ question: f.q, answer: f.a }))}
         publishedTime={post.date}
         modifiedTime={post.date}
         crumbs={[
@@ -1143,7 +1159,8 @@ const BlogPost = () => {
           description: articleDescription,
           datePublished: post.date,
           dateModified: post.date,
-          author: { '@type': 'Person', name: post.author },
+          author: { '@type': 'Person', name: post.author, worksFor: { '@id': ORG_ID } },
+          isPartOf: { '@id': `${canonicalUrl('/resources/blog')}#webpage` },
           image: absoluteUrl(post.image),
           mainEntityOfPage: canonicalUrl(`/blog/${slug}`),
           publisher: { '@id': ORG_ID },

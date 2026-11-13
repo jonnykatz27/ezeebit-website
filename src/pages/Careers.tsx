@@ -46,8 +46,8 @@ const Careers = () => {
   return (
     <>
       <SEO
-        title="Careers"
-        description="Open roles at Ezeebit in Cape Town. The team builds stablecoin and crypto payment infrastructure for merchants."
+        title="Careers at Ezeebit in Cape Town"
+        description="Open roles at Ezeebit in Cape Town. The team builds crypto and stablecoin payment infrastructure for merchants and platforms."
         crumbs={[{ name: 'Careers', path: '/careers' }]}
         canonicalUrl="/careers"
       />

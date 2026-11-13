@@ -98,7 +98,8 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
           split
             ? 'text-[clamp(1.7rem,8.2vw,2.15rem)] sm:text-6xl lg:text-[3rem] xl:text-[3.75rem]'
             : stacked
-              ? 'text-[clamp(2.1rem,10vw,2.6rem)] sm:text-6xl lg:text-7xl xl:text-[5.25rem]'
+              // Sized so "Stablecoin payments," holds one line on a phone
+              ? 'text-[clamp(1.9rem,9vw,2.6rem)] sm:text-6xl lg:text-7xl xl:text-[5.25rem]'
               : 'text-[clamp(1.7rem,8.2vw,2.15rem)] sm:text-[3.25rem] lg:text-[3.75rem]'
         }`}
       >

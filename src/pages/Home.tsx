@@ -889,8 +889,7 @@ const Home = () => {
           id="hero"
           stacked
           kicker="Crypto and stablecoin payment infrastructure"
-          // Wraps between the two phrases first, and "pay-ins" never splits at its hyphen
-          title={<><span className="inline-block">Stablecoin <span className="whitespace-nowrap">pay-ins</span></span> <span className="inline-block">and payouts,</span></>}
+          title="Stablecoin payments,"
           accent="made Ezee."
           description="Your customers pay in and cash out in crypto, on your platform, in-store, or online, while you settle in ZAR, KES, NGN, USD, or stablecoin. One account and one API, with compliance built in."
           actions={

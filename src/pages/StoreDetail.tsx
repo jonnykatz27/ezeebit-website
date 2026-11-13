@@ -50,7 +50,7 @@ const StoreDetail = () => {
   return (
     <>
       <SEO
-        title={`${store.name} — pay with crypto`}
+        title={`Pay with crypto at ${store.name}`}
         description={`Pay with Bitcoin, Ethereum or stablecoins at ${store.name} in South Africa through Ezeebit.`}
         canonicalUrl={`/resources/stores/${store.slug}`}
         crumbs={[
@@ -159,9 +159,9 @@ const StoreDetail = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="text-center mb-12"
+              className="section-head"
             >
-              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-6">
+              <h2 className="section-title">
                 About {store.name}
               </h2>
               <div className="prose prose-lg max-w-none text-neutral-600">
@@ -190,12 +190,12 @@ const StoreDetail = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-16"
+            className="section-head"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+            <h2 className="section-title">
               How to pay with Ezeebit
             </h2>
-            <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+            <p className="section-lead">
               Paying with cryptocurrency at {store.name} is simple, secure, and fast. 
               Follow these easy steps to complete your purchase.
             </p>
@@ -210,11 +210,11 @@ const StoreDetail = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="text-center"
               >
-                <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4 text-primary-500">
-                  {index === 0 && <CreditCard className="w-8 h-8" />}
-                  {index === 1 && <QrCode className="w-8 h-8" />}
-                  {index === 2 && <Smartphone className="w-8 h-8" />}
-                  {index === 3 && <CheckCircle className="w-8 h-8" />}
+                <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center mx-auto mb-4 text-primary-400">
+                  {index === 0 && <CreditCard className="w-6 h-6" />}
+                  {index === 1 && <QrCode className="w-6 h-6" />}
+                  {index === 2 && <Smartphone className="w-6 h-6" />}
+                  {index === 3 && <CheckCircle className="w-6 h-6" />}
                 </div>
                 <div className="text-sm font-semibold text-primary-500 mb-2">STEP {index + 1}</div>
                 <p className="text-neutral-700">
@@ -232,12 +232,12 @@ const StoreDetail = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-12"
+            className="section-head"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+            <h2 className="section-title">
               Visit {store.name}
             </h2>
-            <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+            <p className="section-lead">
               {storeDetails && storeDetails.locations.length > 1
                 ? `Find us at our ${storeDetails.locations.length} locations and enjoy the seamless cryptocurrency payment experience.`
                 : 'Find us at our convenient location and enjoy the seamless cryptocurrency payment experience.'
@@ -257,7 +257,7 @@ const StoreDetail = () => {
                     className="card p-8 hover:shadow-lg transition-shadow"
                   >
                     <div className="flex items-start">
-                      <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-4">
+                      <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center flex-shrink-0 mr-4">
                         <MapPin className="w-6 h-6 text-primary-500" />
                       </div>
                       <div>
@@ -270,7 +270,7 @@ const StoreDetail = () => {
                           South Africa
                         </p>
                         {location.phone && (
-                          <p className="text-sm text-gray-500">
+                          <p className="text-sm text-neutral-500">
                             Phone: {location.phone}
                           </p>
                         )}
@@ -295,7 +295,7 @@ const StoreDetail = () => {
           href={store.websiteUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-primary-500 hover:bg-primary-700 text-white font-medium px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center"
+          className="btn-primary !shadow-lg flex items-center"
         >
           Visit Store
           <ExternalLink className="w-4 h-4 ml-2" />

@@ -1,3 +1,5 @@
+import { SOLUTIONS, solutionPath } from './solutions'
+
 /**
  * Pages that open on the dark PageHero. On them the header is light-on-dark,
  * and the page's root is Near Black, so the fade-in on arrival happens over
@@ -7,8 +9,9 @@
  */
 const DARK_HERO_PATHS = new Set([
   '/', '/in-store', '/online', '/platforms', '/payouts', '/wallets', '/otc', '/pricing', '/developers',
-  '/contact', '/careers', '/resources', '/resources/about', '/resources/faq', '/resources/blog',
-  '/resources/user-manual', '/resources/where-to-spend',
+  '/contact', '/book-a-call', '/careers', '/resources', '/resources/about', '/resources/faq', '/resources/blog',
+  '/resources/user-manual', '/resources/where-to-spend', '/ezeebit-resources',
+  ...SOLUTIONS.map(solutionPath),
 ])
 
 export const hasDarkHero = (pathname: string) => DARK_HERO_PATHS.has(pathname.replace(/\/+$/, '') || '/')

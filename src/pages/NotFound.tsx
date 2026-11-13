@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Home, ArrowRight, HelpCircle, CreditCard, Mail } from 'lucide-react'
+import { Home, ArrowRight, HelpCircle, CreditCard, Mail, Store, Globe } from 'lucide-react'
 import { motion } from '../lib/motion'
 import SEO from '../components/SEO'
 
@@ -56,7 +56,7 @@ const NotFound = () => {
                 to="/pricing"
                 className="flex items-center p-4 border border-neutral-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group"
               >
-                <CreditCard className="w-6 h-6 text-primary-500 mr-3 flex-shrink-0" />
+                <span className="w-10 h-10 mr-3 flex-shrink-0 flex items-center justify-center rounded-xl bg-neutral-950 text-primary-400"><CreditCard className="w-5 h-5" /></span>
                 <div className="text-left">
                   <div className="font-semibold text-neutral-900 group-hover:text-primary-500">
                     Pricing
@@ -72,7 +72,7 @@ const NotFound = () => {
                 to="/resources/faq"
                 className="flex items-center p-4 border border-neutral-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group"
               >
-                <HelpCircle className="w-6 h-6 text-primary-500 mr-3 flex-shrink-0" />
+                <span className="w-10 h-10 mr-3 flex-shrink-0 flex items-center justify-center rounded-xl bg-neutral-950 text-primary-400"><HelpCircle className="w-5 h-5" /></span>
                 <div className="text-left">
                   <div className="font-semibold text-neutral-900 group-hover:text-primary-500">
                     FAQ
@@ -88,9 +88,7 @@ const NotFound = () => {
                 to="/in-store"
                 className="flex items-center p-4 border border-neutral-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group"
               >
-                <div className="w-6 h-6 text-primary-500 mr-3 flex-shrink-0 flex items-center justify-center font-bold">
-                  🏪
-                </div>
+                <span className="w-10 h-10 mr-3 flex-shrink-0 flex items-center justify-center rounded-xl bg-neutral-950 text-primary-400"><Store className="w-5 h-5" /></span>
                 <div className="text-left">
                   <div className="font-semibold text-neutral-900 group-hover:text-primary-500">
                     In-Store Payments
@@ -106,9 +104,7 @@ const NotFound = () => {
                 to="/online"
                 className="flex items-center p-4 border border-neutral-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group"
               >
-                <div className="w-6 h-6 text-primary-500 mr-3 flex-shrink-0 flex items-center justify-center font-bold">
-                  🌐
-                </div>
+                <span className="w-10 h-10 mr-3 flex-shrink-0 flex items-center justify-center rounded-xl bg-neutral-950 text-primary-400"><Globe className="w-5 h-5" /></span>
                 <div className="text-left">
                   <div className="font-semibold text-neutral-900 group-hover:text-primary-500">
                     Online Payments

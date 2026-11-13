@@ -5,8 +5,16 @@ import {
   Calendar, Clock, ArrowRight
 } from 'lucide-react'
 import SEO from '../components/SEO'
-import PageHero, { HeroSearch } from '../components/hero/PageHero'
+import PageHero, { HeroSearch, HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import DarkBackdrop from '../components/DarkBackdrop'
+
+/**
+ * A post's date as the post itself shows it, "November 10, 2026". The locale
+ * and time zone are fixed, so the pre-rendered page and the visitor's browser
+ * print the same thing and React keeps the pre-rendered page.
+ */
+const postDate = (date: string) =>
+  new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })
 
 const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState('all')
@@ -30,6 +38,19 @@ const Blog = () => {
 
   const blogPosts: BlogPostItem[] = [
     {
+      id: 'restricted-wallets-and-platforms',
+      title: "Which wallets and platforms can't Ezeebit accept payments from or send funds to?",
+      excerpt: "Most crypto payments go through without any issues. A small number can't, because the wallet or platform is linked to sanctions or other serious financial-crime risks. Here's why, what we check, and how to check a counterparty yourself.",
+      author: 'Jonathan Katz',
+      date: '2026-11-10',
+      readTime: '5 min read',
+      category: 'Policy & Regulation',
+      categoryId: 'policy',
+      image: '/blog/restricted-wallets-cover.webp',
+      views: '0',
+      featured: false
+    },
+    {
       id: 'crypto-deposits-igaming-sunbet',
       title: "Crypto deposits for iGaming: inside the Sunbet integration",
       excerpt: "Sunbet — a subsidiary of JSE-listed Sun International — is one of the first online gaming platforms in South Africa to accept crypto deposits. Here's the complexity behind letting any user fund their account from any wallet, how we kept compliance and innovation at the forefront, and why the same deposit rail extends to FX, trading, and any platform that takes deposits.",
@@ -45,7 +66,7 @@ const Blog = () => {
     {
       id: 'most-comprehensive-crypto-payment-gateway-africa',
       title: "Africa's most comprehensive crypto checkout",
-      excerpt: "A single integration that accepts payments from any wallet, 700+ wallets via WalletConnect, and directly from Luno, VALR, and Binance. Merchants settle in stablecoins (T+0) or local currency (T+1), with zero crypto volatility exposure.",
+      excerpt: "A single integration that accepts payments from any wallet, 700+ wallets via WalletConnect, and directly from Luno, VALR, and Binance. Merchants settle the same day, in stablecoins or local currency, with zero crypto volatility exposure.",
       author: 'Jonathan Katz',
       date: '2026-05-13',
       readTime: '5 min read',
@@ -147,10 +168,11 @@ const Blog = () => {
   return (
     <>
       <SEO
-        title="Blog"
-        description="News and product notes from Ezeebit on stablecoin and crypto payments for merchants across Africa."
+        title="Ezeebit blog: crypto and stablecoin payment news"
+        description="News, product notes, and guides from Ezeebit on crypto and stablecoin payments for merchants and platforms."
         canonicalUrl="/resources/blog"
         crumbs={[{ name: 'Blog', path: '/resources/blog' }]}
+        pageType="CollectionPage"
       />
       <motion.div
         initial={{ opacity: 0 }}
@@ -160,6 +182,7 @@ const Blog = () => {
     >
       {/* Hero Section */}
       <PageHero
+        kicker="Blog"
         title="News and insights"
         accent="from Ezeebit"
         description="Stay updated with the latest news, insights, and tutorials from the world of stablecoin and cryptocurrency payments and African fintech."
@@ -183,7 +206,7 @@ const Blog = () => {
                   }`}
                 >
                   <span>{category.name}</span>
-                  <span className="bg-gray-200 text-neutral-600 px-1.5 md:px-2 py-0.5 rounded-full text-xs">
+                  <span className="bg-neutral-100 text-neutral-600 px-1.5 md:px-2 py-0.5 rounded-full text-xs">
                     {category.count}
                   </span>
                 </button>
@@ -221,7 +244,7 @@ const Blog = () => {
                   <div className="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm text-neutral-500 mb-3 md:mb-4">
                     <span className="flex items-center">
                       <Calendar className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                      {new Date(featuredPost.date).toLocaleDateString()}
+                      {postDate(featuredPost.date)}
                     </span>
                     <span className="flex items-center">
                       <Clock className="w-3 h-3 md:w-4 md:h-4 mr-1" />
@@ -326,7 +349,7 @@ const Blog = () => {
                   <div className="flex flex-wrap items-center gap-3 text-xs text-neutral-500 mb-3">
                     <span className="flex items-center">
                       <Calendar className="w-3 h-3 mr-1" />
-                      {new Date(post.date).toLocaleDateString()}
+                      {postDate(post.date)}
                     </span>
                     <span className="flex items-center">
                       <Clock className="w-3 h-3 mr-1" />
@@ -366,6 +389,7 @@ const Blog = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="mt-4 inline-flex items-center text-primary-500 hover:text-primary-700 font-medium text-sm group"
+                      aria-label={`Read more: ${post.title}`}
                     >
                       Read More
                       <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
@@ -374,6 +398,7 @@ const Blog = () => {
                     <Link
                       to={`/blog/${post.id}`}
                       className="mt-4 inline-flex items-center text-primary-500 hover:text-primary-700 font-medium text-sm group"
+                      aria-label={`Read more: ${post.title}`}
                     >
                       Read More
                       <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
@@ -405,13 +430,13 @@ const Blog = () => {
                 href="https://merchant.ezeebit.com/#/signup"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+                className={HERO_PRIMARY}
               >
-                Get Started
+                Get started
                 <ArrowRight className="w-5 h-5 ml-2" />
               </a>
-              <Link to="/contact" className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center">
-                Talk to Sales
+              <Link to="/book-a-call" className={HERO_SECONDARY}>
+                Talk to sales
               </Link>
             </div>
           </motion.div>

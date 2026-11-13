@@ -212,6 +212,10 @@ button{font-family:inherit;border:0;background:none;cursor:pointer;color:inherit
 
 /* ---------- E: done ---------- */
 .done{padding:140px 32px 60px;display:flex;flex-direction:column;align-items:center;gap:32px;min-height:1100px}
+/* Fit mode drops the screens' minimum heights, so each is scaled by its own content */
+body.fit{overflow:hidden}
+body.fit .screen.on,body.fit #screenA{min-height:0}
+body.fit .done{min-height:0;padding-top:72px}
 .done .ring{width:160px;height:160px;border-radius:50%;background:#E6F4EA;display:flex;align-items:center;justify-content:center}
 .done .ring .ic{width:88px;height:88px;color:#1F845A}
 .done h2{font-size:48px;font-weight:600;text-align:center}
@@ -641,16 +645,37 @@ function go(id){
    Tapping out a number is the least interesting part of the flow and costs the
    reader a screen before anything happens, so the keypad is left behind the
    back button rather than in front of the demo. */
-const START_AMOUNT = '4000';
+/* Options arrive in the query or after the #. The embedding page puts its own
+   after the #, so every embed shares one URL and the browser fetches the demo once. */
+const PARAMS = new URLSearchParams(location.search.slice(1) + '&' + location.hash.slice(1));
+const FIT = PARAMS.has('fit') && window.parent !== window;
+if (FIT) document.body.classList.add('fit');
+/* A page that leads into the checkout from a screen of its own (a till, a
+   store's checkout, a platform's deposit) passes the amount it was paying, and
+   takes the reader back to that screen when they start again. */
+const HANDOFF = PARAMS.has('handoff');
+const START_AMOUNT = /^\d{1,7}(\.\d{1,2})?$/.test(PARAMS.get('amount') || '') ? PARAMS.get('amount') : '4000';
+/* In a store there is no cart to bring an amount with it, so the in-store
+   handoff opens on the keypad, where the cashier or the customer keys it in. */
+const KEYPAD_FIRST = PARAMS.get('start') === 'amount';
 function start(){
-  amount = START_AMOUNT; picked = null; pickedNet = null;
+  picked = null; pickedNet = null;
+  clearInterval(timerId);
+  if (KEYPAD_FIRST) { amount = ''; paintAmount(); go('A'); return; }
+  amount = START_AMOUNT;
   paintAmount();
   document.getElementById('methodAmt').textContent = 'R' + money(parseFloat(amount));
   document.querySelectorAll('.acard').forEach(c=>c.classList.remove('sel'));
   clearInterval(timerId);
   go('B');
 }
-function reset(){ clearTimeout(settleId); start(); }
+function reset(){
+  clearTimeout(settleId);
+  if (HANDOFF && window.parent !== window) {
+    try{ window.parent.postMessage({type:'ezeebit:again',flow:'payin'},location.origin); return; }catch(e){}
+  }
+  start();
+}
 function fit(){
   const frame = document.getElementById('frame');
   const stage = document.getElementById('stage');
@@ -665,6 +690,24 @@ function fit(){
    */
   stage.style.height = 'auto';
   const content = active ? active.offsetHeight : 1171;
+  /*
+   * Fit mode, for a frame held at a fixed size (the homepage tour, the ePOS
+   * screen): the whole screen always shows, scaled down to the frame's height
+   * when it is taller than the frame, so the reader never scrolls inside it.
+   */
+  if (FIT) {
+    const vw = document.documentElement.clientWidth;
+    const vh = document.documentElement.clientHeight;
+    const kf = Math.min(1, vw / 640, vh / content);
+    frame.style.maxWidth = 'none';
+    frame.style.width = (640 * kf) + 'px';
+    stage.style.transform = 'scale(' + kf + ')';
+    // Fill the frame, so a bottom sheet sits at the bottom of what shows
+    stage.style.height = (vh / kf) + 'px';
+    frame.style.height = vh + 'px';
+    try { window.parent.postMessage({type:'ezeebit:resize', flow:'payin', height:vh}, location.origin); } catch(e) {}
+    return;
+  }
   /* Fill the viewport when the content is shorter than it. The network sheet is
      anchored to the bottom of the screen, so if the screen stops short of the
      frame the sheet floats above a band of dead space instead of sitting at the
@@ -700,6 +743,15 @@ function fit(){
 window.addEventListener('resize', fit);
 window.addEventListener('load', fit);
 start();
+/* Web fonts swap in after the first layout and change every height, so fit
+   again once they are in, then tell the embedding page the demo is ready to
+   show. Waiting is capped, so a slow font never holds the demo back. */
+function ready(){
+  fit();
+  try{ if (window.parent !== window) window.parent.postMessage({type:'ezeebit:ready', flow:'payin'}, location.origin); }catch(e){}
+}
+var fontsIn = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+Promise.race([fontsIn, new Promise(function(r){ setTimeout(r, 1200); })]).then(ready);
 </script>
 </body>
 </html>

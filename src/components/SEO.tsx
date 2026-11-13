@@ -5,9 +5,12 @@ import {
   breadcrumbNode,
   canonicalUrl,
   organizationNode,
+  serviceNode,
+  webPageNode,
   websiteNode,
   type Crumb,
 } from '../lib/schema'
+import { faqPageNode, type FaqItem } from '../lib/faqSchema'
 
 interface SEOProps {
   title: string
@@ -20,6 +23,12 @@ interface SEOProps {
   /** Use `title` exactly, without appending "| Ezeebit". */
   exactTitle?: boolean
   crumbs?: Crumb[]
+  /** What kind of page this is, for its WebPage node. */
+  pageType?: 'WebPage' | 'AboutPage' | 'ContactPage' | 'CollectionPage'
+  /** The questions the page shows, emitted as FAQPage so answer engines can quote them. */
+  faqs?: FaqItem[]
+  /** On a product page: the service Ezeebit provides there. */
+  service?: { name: string; serviceType: string }
   extraNodes?: object[]
   publishedTime?: string
   modifiedTime?: string
@@ -42,17 +51,24 @@ const SEO = ({
   noindex = false,
   exactTitle = false,
   crumbs,
+  pageType,
+  faqs,
+  service,
   extraNodes,
   publishedTime,
   modifiedTime,
 }: SEOProps) => {
-  const fullTitle = exactTitle || title.startsWith('Ezeebit') ? title : `${title} | Ezeebit`
+  // The brand goes on the end unless the title already names it, or would run past what a results page shows
+  const fullTitle = exactTitle || title.includes('Ezeebit') || title.length > 50 ? title : `${title} | Ezeebit`
   const summary = clampDescription(description)
   const url = canonicalUrl(path)
   const image = absoluteUrl(ogImage)
 
   const graph: object[] = [organizationNode, websiteNode]
+  graph.push(webPageNode({ path, name: fullTitle, description: summary, type: pageType, hasCrumbs: !!crumbs?.length }))
   if (crumbs && crumbs.length > 0) graph.push(breadcrumbNode(crumbs))
+  if (service) graph.push(serviceNode({ path, description: summary, ...service }))
+  if (faqs && faqs.length > 0) graph.push(faqPageNode(`${url}#faq`, faqs))
   if (extraNodes) graph.push(...extraNodes)
 
   return (
@@ -68,6 +84,7 @@ const SEO = ({
         <meta property="og:title" content={fullTitle} />
         <meta property="og:description" content={summary} />
         <meta property="og:image" content={image} />
+        <meta property="og:image:alt" content={fullTitle} />
         {ogImage === '/og-default.png' && <meta property="og:image:width" content="1200" />}
         {ogImage === '/og-default.png' && <meta property="og:image:height" content="630" />}
         <meta property="og:url" content={url} />
@@ -82,6 +99,7 @@ const SEO = ({
         <meta name="twitter:title" content={fullTitle} />
         <meta name="twitter:description" content={summary} />
         <meta name="twitter:image" content={image} />
+        <meta name="twitter:image:alt" content={fullTitle} />
 
         <meta
           name="robots"

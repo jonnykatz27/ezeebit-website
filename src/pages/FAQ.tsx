@@ -7,7 +7,7 @@ import {
   Shield, CreditCard, Zap, Users, ArrowRight
 } from 'lucide-react'
 import SEO from '../components/SEO'
-import PageHero, { HeroSearch } from '../components/hero/PageHero'
+import PageHero, { HeroSearch, HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import DarkBackdrop from '../components/DarkBackdrop'
 import { faqPageNode } from '../lib/faqSchema'
 
@@ -28,35 +28,35 @@ const FAQ = () => {
       id: '2',
       category: 'getting-started',
       question: 'What documents are required?',
-      answer: 'We need your South African business registration, proof of address, bank account details, and ID documents for directors. This ensures FSCA and FIC compliance for seamless onboarding.',
+      answer: 'We need your business registration, proof of address, bank account details, and ID documents for directors. This ensures FSCA and FIC compliance for seamless onboarding.',
       popular: false
     },
     {
       id: '3',
       category: 'payments',
       question: 'Which cryptocurrencies are supported?',
-      answer: 'Accept Bitcoin (BTC), Ethereum (ETH), USDT, USDC, BNB, DAI, PAXG, and the rand-backed stablecoins ZARP and ZARU, which settle on Ethereum and Solana. All transactions are instantly hedged to stablecoins at checkout to shield you from volatility, then settled in fiat (ZAR, KES, NGN or USD).',
+      answer: 'Accept Bitcoin (BTC), Ethereum (ETH), USDT, USDC, BNB, DAI, PAXG, and the rand-backed stablecoins ZARP and ZARU, which settle on Ethereum and Solana. Every payment is hedged at checkout to shield you from volatility, then settled in fiat (ZAR, KES, NGN or USD) or in stablecoin.',
       popular: true
     },
     {
       id: '4',
       category: 'payments',
       question: 'How fast are payments processed?',
-      answer: 'The rate is locked at checkout and the payment is confirmed on-chain. Settlement is the next business day in local currency, or the same day in stablecoin.',
+      answer: 'The rate is locked at checkout and the payment is confirmed on-chain. Settlement is the same day, in local currency or in stablecoin.',
       popular: true
     },
     {
       id: '5',
       category: 'payments',
       question: 'How does settlement work?',
-      answer: 'The rate is locked at checkout and the payment is hedged on the spot. Local currency settles the next business day. Stablecoin settles the same day.',
+      answer: 'The rate is locked at checkout and the payment is hedged on the spot. Local currency and stablecoin both settle the same day.',
       popular: false
     },
     {
       id: '6',
       category: 'security',
       question: 'Is Ezeebit regulated?',
-      answer: 'Yes. Ezeebit is authorised and regulated by the FSCA, and has applied for its CASP licence (FSP 53664). The FSCA is South Africa\'s Financial Sector Conduct Authority.',
+      answer: 'Yes. Ezeebit is regulated by the FSCA as a Crypto Asset Service Provider, FSP No. 53664. The FSCA is South Africa\'s Financial Sector Conduct Authority. That covers the South African company, Ezee Solutions Group (Pty) Ltd. In Kenya, Ezee Solutions Group (Kenya) Limited operates under the transitional provisions of the Virtual Asset Service Providers Act, 2025. In Canada, Ezeebit Canada Ltd. is on FINTRAC\'s money services business registry, MSB No. N300001912.',
       popular: true
     },
     {
@@ -83,7 +83,7 @@ const FAQ = () => {
     {
       id: '10',
       category: 'technical',
-      question: "The device won't power on—what should I do?",
+      question: "The device won't power on. What should I do?",
       answer: 'If the docked device doesn\'t charge, unplug the cable and insert it directly into the device. A red light in the top-right indicates charging.',
       popular: false
     },
@@ -98,7 +98,7 @@ const FAQ = () => {
       id: '12',
       category: 'technical',
       question: 'Do you provide customer support?',
-      answer: 'Yes! We offer 24/7 support for all plans. Our average response time is under an hour.',
+      answer: 'Yes. Support is available 24/7 by email, and by phone or WhatsApp Monday to Friday, 8am to 6pm SAST. Email support@ezeebit.com, phone +27 21 879 5074, or WhatsApp +27 79 443 9375.',
       popular: true
     },
     {
@@ -112,7 +112,7 @@ const FAQ = () => {
       id: '14',
       category: 'technical',
       question: 'Can I integrate with my existing e-commerce platform?',
-      answer: 'We have plugins for Shopify, and soon to be WooCommerce, Magento, and other major platforms. For custom integrations, our API makes it easy to add stablecoin and crypto payments to any website or application.',
+      answer: 'We have plugins for Shopify, WooCommerce, and Magento. For anything else, our API makes it easy to add stablecoin and crypto payments to any website or application.',
       popular: true
     },
     {
@@ -126,7 +126,7 @@ const FAQ = () => {
       id: '16',
       category: 'payments',
       question: 'Are there any monthly fees or hidden costs?',
-      answer: 'None. There are no monthly subscriptions, no setup fees for ePOS and Ezeebit Pay, and no hidden charges. You only pay a small percentage when a transaction completes successfully.',
+      answer: 'There are no setup fees, no monthly platform fees, and no hidden charges. The only monthly charge is the optional ePOS rental, at R150 a month per device, and an Ezeebit Pay QR code is free. Otherwise you pay a small percentage only when a transaction completes.',
       popular: true
     },
     {
@@ -154,21 +154,21 @@ const FAQ = () => {
       id: '21',
       category: 'payments',
       question: 'Are there minimum payout thresholds?',
-      answer: 'No. We settle what you\'re owed without holding funds to arbitrary minimums. Payouts land in your account the next business day (T+1).',
+      answer: 'No. We settle what you\'re owed without holding funds to arbitrary minimums. Settlement lands in your account the same day, in local currency or in stablecoin.',
       popular: false
     },
     {
       id: '22',
       category: 'security',
       question: 'Are there chargebacks with crypto payments?',
-      answer: 'No—and that\'s one of the biggest advantages. Crypto payments are irreversible, which means no fraudulent chargebacks, no disputes months after a sale, and no fees for transactions you\'ve already fulfilled.',
+      answer: 'No, and that\'s one of the biggest advantages. Crypto payments are irreversible, which means no fraudulent chargebacks, no disputes months after a sale, and no fees for transactions you\'ve already fulfilled.',
       popular: true
     },
     {
       id: '23',
       category: 'technical',
       question: 'Which wallets can my customers pay from?',
-      answer: 'Over 700 wallets are supported via WalletConnect, plus direct integrations with Africa\'s most popular exchanges such as VALR, and soon to be more. Whether your customer uses MetaMask, Trust Wallet, or their exchange app—they can pay.',
+      answer: 'Any wallet can pay on-chain, over 700 wallets are supported through WalletConnect, and customers can pay directly from Luno, VALR, and Binance. Whether your customer uses MetaMask, Trust Wallet, or their exchange app, they can pay.',
       popular: true
     },
     {
@@ -182,21 +182,21 @@ const FAQ = () => {
       id: '25',
       category: 'technical',
       question: 'What blockchain networks do you support?',
-      answer: 'We support Bitcoin Mainnet, Ethereum (ERC-20), Tron (TRC-20), BNB Smart Chain (BEP-20), and Solana (SPL)—covering the vast majority of crypto holders worldwide.',
+      answer: 'We support Bitcoin Mainnet, Ethereum (ERC-20), Tron (TRC-20), BNB Smart Chain (BEP-20), and Solana (SPL), covering the vast majority of crypto holders worldwide.',
       popular: true
     },
     {
       id: '26',
       category: 'payments',
       question: 'How do refunds work with crypto payments?',
-      answer: 'Ezeebit does not currently process refunds on behalf of merchants—all refunds are handled directly by the store.\n\nFor customers: If you paid with crypto and need a refund, contact the store directly with your proof or confirmation of payment. The merchant will refund you in ZAR (via cash or bank transfer) or offer store credit, depending on their refund policy.\n\nFor merchants: When a customer requests a refund on a crypto payment, request their proof or confirmation of payment, then simply refund them in ZAR or offer store credit as you normally would. The original crypto payment is still settled to your account as usual. This approach avoids the complexity of crypto-to-crypto refunds, wallet address verification, and blockchain fees—keeping the process simple for everyone.',
+      answer: 'Ezeebit does not currently process refunds on behalf of merchants. All refunds are handled directly by the store.\n\nFor customers: If you paid with crypto and need a refund, contact the store directly with your proof or confirmation of payment. The merchant will refund you in ZAR (via cash or bank transfer) or offer store credit, depending on their refund policy.\n\nFor merchants: When a customer requests a refund on a crypto payment, request their proof or confirmation of payment, then simply refund them in ZAR or offer store credit as you normally would. The original crypto payment is still settled to your account as usual. This approach avoids the complexity of crypto-to-crypto refunds, wallet address verification, and blockchain fees—keeping the process simple for everyone.',
       popular: true
     },
     {
       id: '27',
       category: 'payments',
       question: 'Can I pay my customers out in stablecoin?',
-      answer: 'Yes. Our Payout Gateway lets you send payouts from your fiat balance without collecting a single wallet address. You create the payout with an amount and your own reference, we reserve the fiat and hand back a link, and your customer enters their own wallet address to claim it. Payouts settle on-chain in minutes, at any hour.',
+      answer: 'Yes. Our Payout Gateway lets you send payouts from your fiat balance without collecting a single wallet address. You create the payout with an amount and your own reference, we reserve the fiat and hand back a link, and your customer enters their own wallet address to claim it. Payouts settle on-chain in minutes, at any hour. Payouts are available in USDT today, with more stablecoin options coming soon.',
       popular: true
     },
     {
@@ -210,7 +210,7 @@ const FAQ = () => {
       id: '29',
       category: 'payments',
       question: 'Can I hold a balance with Ezeebit?',
-      answer: 'Yes. Your Ezeebit wallets hold both fiat and USDT, and you can convert between them at a quoted rate. What you take in funds what you pay out, so pay-ins and payouts draw on the same balance. Withdraw fiat to your bank account, or stablecoin to your own wallet.',
+      answer: 'Yes. Your Ezeebit wallets hold both fiat and USDT, and you can convert between them at a quoted rate. What you take in funds what you pay out, so pay-ins and payouts run through the same wallets. Withdraw fiat to your bank account, or stablecoin to your own wallet.',
       popular: true
     },
     {
@@ -224,7 +224,7 @@ const FAQ = () => {
       id: '31',
       category: 'about',
       question: 'Which countries does Ezeebit operate in?',
-      answer: 'Ezeebit provides stablecoin and crypto payment infrastructure for merchants and platforms across Africa. It is live in South Africa, Kenya and Nigeria, with more African markets to follow.',
+      answer: 'Ezeebit provides stablecoin and crypto payment infrastructure for merchants and platforms across Africa. It is live in South Africa, Kenya and Nigeria, with more markets to follow, and the group also has a company in Canada.',
       popular: true
     },
     {
@@ -288,7 +288,7 @@ const FAQ = () => {
     const parts = text.split(regex)
     return parts.map((part, i) =>
       regex.test(part) ? (
-        <mark key={i} className="bg-yellow-200 px-1 rounded">
+        <mark key={i} className="bg-warning-200 px-1 rounded">
           {part}
         </mark>
       ) : (
@@ -300,8 +300,8 @@ const FAQ = () => {
   return (
     <>
       <SEO
-        title="FAQ"
-        description="Answers about Ezeebit payments, payouts, wallets, settlement and fees. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+        title="Ezeebit FAQ: crypto payments, fees, and settlement"
+        description="Answers about Ezeebit: which coins and wallets are supported, fees, same-day settlement, payouts, regulation, and how to get started."
         canonicalUrl="/resources/faq"
         crumbs={[{ name: 'FAQ', path: '/resources/faq' }]}
         extraNodes={[faqPageNode('https://ezeebit.com/resources/faq#faq', faqItems)]}
@@ -314,6 +314,7 @@ const FAQ = () => {
     >
       {/* Hero Section */}
       <PageHero
+        kicker="FAQ"
         title="Frequently asked"
         accent="questions"
         description="Find answers to common questions about Ezeebit's cryptocurrency payment solutions. Can't find what you're looking for? Our support team is here to help."
@@ -322,61 +323,62 @@ const FAQ = () => {
       </PageHero>
 
       {/* Categories */}
+      {/* The same dark pill bar as the homepage's product tour; it scrolls sideways on a phone */}
       <section className="bg-white border-b border-neutral-200 sticky top-20 z-40">
-        <div className="container-custom px-4">
-          <div className="flex space-x-2 md:space-x-4 overflow-x-auto py-4 scrollbar-hide">
-            {categories.map(category => (
-              <button
-                key={category.id}
-                onClick={() => setActiveCategory(category.id)}
-                className={`flex items-center space-x-1 md:space-x-2 px-3 md:px-4 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-sm md:text-base ${
-                  activeCategory === category.id
-                    ? 'bg-primary-100 text-primary-700'
-                    : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100'
-                }`}
-              >
-                {category.icon}
-                <span>{category.name}</span>
-                <span className="bg-gray-200 text-neutral-600 px-2 py-0.5 rounded-full text-xs">
-                  {category.count}
-                </span>
-              </button>
-            ))}
+        <div className="container-custom px-4 py-3">
+          <div className="mx-auto flex w-fit max-w-full gap-1 overflow-x-auto rounded-full bg-neutral-950 p-1 scrollbar-hide [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {categories.map(category => {
+              const on = activeCategory === category.id
+              return (
+                <button
+                  key={category.id}
+                  type="button"
+                  aria-pressed={on}
+                  onClick={() => setActiveCategory(category.id)}
+                  className={`flex min-h-[40px] items-center gap-1.5 rounded-full px-3.5 text-sm font-semibold whitespace-nowrap transition-colors [&_svg]:w-4 [&_svg]:h-4 ${
+                    on ? 'bg-primary-500 text-white' : 'text-neutral-300 hover:text-white'
+                  }`}
+                >
+                  {category.icon}
+                  <span>{category.name}</span>
+                  <span className={`text-xs font-medium ${on ? 'text-white/80' : 'text-neutral-500'}`}>{category.count}</span>
+                </button>
+              )
+            })}
           </div>
         </div>
       </section>
 
 
       {/* FAQ List */}
-      <section className="section-padding bg-neutral-50">
+      <section className="section-padding bg-white">
         <div className="container-custom px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="space-y-1.5 md:space-y-2">
+          <div className="max-w-3xl mx-auto">
+            {/* One list with hairlines between the questions, as on the homepage */}
+            <div className="border-t border-neutral-200">
               {filteredFAQs.map((item, index) => (
                 <motion.div
                   key={item.id}
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.02 }}
-                  className="bg-white rounded-lg shadow-sm border border-neutral-200 overflow-hidden"
-                  style={{ padding: 0 }}
+                  className="border-b border-neutral-200"
                 >
                   <button
+                    type="button"
+                    aria-expanded={openItems.includes(item.id)}
                     onClick={() => toggleItem(item.id)}
-                    className="w-full px-3 md:px-4 py-2 md:py-2.5 text-left flex items-center justify-between hover:bg-neutral-50 transition-colors"
+                    className="w-full py-4 text-left flex items-center justify-between gap-4"
                   >
-                    <div className="flex items-center flex-1 min-w-0">
-                      {item.popular && <Star className="w-3.5 h-3.5 text-yellow-500 mr-1.5 flex-shrink-0" />}
-                      <span className="font-medium text-neutral-900 text-sm md:text-base text-left leading-tight">
-                        {highlightText(item.question, searchTerm)}
-                      </span>
-                    </div>
-                    <ChevronDown className={`w-4 h-4 text-neutral-400 flex-shrink-0 ml-2 transition-transform duration-200 ${
+                    <span className="font-medium text-neutral-900 text-left">
+                      {highlightText(item.question, searchTerm)}
+                    </span>
+                    <ChevronDown className={`w-4 h-4 text-neutral-500 flex-shrink-0 transition-transform duration-200 ${
                       openItems.includes(item.id) ? 'rotate-180' : ''
                     }`} />
                   </button>
-                  <div className={openItems.includes(item.id) ? 'px-3 md:px-4 pb-2.5 border-t border-neutral-100' : 'hidden'}>
-                    <p className="text-neutral-600 pt-2.5 text-sm text-left leading-relaxed whitespace-pre-line">
+                  <div className={openItems.includes(item.id) ? 'pb-4' : 'hidden'}>
+                    <p className="text-neutral-600 text-sm text-left leading-relaxed whitespace-pre-line">
                       {highlightText(item.answer, searchTerm)}
                     </p>
                   </div>
@@ -386,7 +388,7 @@ const FAQ = () => {
 
             {filteredFAQs.length === 0 && (
               <div className="text-center py-12">
-                <HelpCircle className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center mx-auto mb-4 text-primary-400"><HelpCircle className="w-6 h-6" /></div>
                 <h3 className="text-xl font-semibold text-neutral-900 mb-2">No questions found</h3>
                 <p className="text-neutral-600 mb-6">
                   Try adjusting your search terms or browse different categories.
@@ -407,28 +409,28 @@ const FAQ = () => {
       </section>
 
       {/* Contact Support */}
-      <section className="section-padding bg-white">
+      <section className="section-padding bg-neutral-50">
         <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-display font-bold text-neutral-900 mb-4">
+          <div className="section-head">
+            <h2 className="section-title">
               Multiple ways to reach us
             </h2>
-            <p className="text-lg md:text-xl text-neutral-600 max-w-2xl mx-auto px-4 md:px-0">
+            <p className="section-lead">
               Choose the contact method that works best for you. We're available across multiple channels.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="card p-6 text-center hover:scale-105 transition-transform flex flex-col h-full"
+              className="card p-6 text-center flex flex-col h-full"
             >
-              <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4 text-primary-600">
+              <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center mx-auto mb-4 text-primary-400 [&_svg]:w-6 [&_svg]:h-6">
                 <Phone className="w-6 h-6" />
               </div>
               <h3 className="text-lg font-semibold text-neutral-900 mb-2">
-                Phone Support
+                Phone support
               </h3>
               <p className="text-neutral-600 text-sm mb-3 flex-1">
                 Speak directly with our support team
@@ -437,18 +439,18 @@ const FAQ = () => {
                 +27 21 879 5074
               </div>
               <div className="text-xs text-neutral-500 mb-4">
-                Mon-Fri, 8AM-6PM SAST
+                Monday to Friday, 8am to 6pm SAST
               </div>
               <a
                 href="tel:+27218795074"
                 className="btn-primary w-full flex items-center justify-center mt-auto"
               >
-                Start Chat
+                Call us
               </a>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="card p-6 text-center hover:scale-105 transition-transform flex flex-col h-full">
-              <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4 text-primary-600">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="card p-6 text-center flex flex-col h-full">
+              <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center mx-auto mb-4 text-primary-400 [&_svg]:w-6 [&_svg]:h-6">
                 <Mail className="w-6 h-6" />
               </div>
               <h3 className="text-lg font-semibold text-neutral-900 mb-2">Email support</h3>
@@ -459,18 +461,18 @@ const FAQ = () => {
                 support@ezeebit.com
               </div>
               <div className="text-xs text-neutral-500 mb-4">
-                24/7 response within 2 hours
+                24/7
               </div>
               <a
                 href="mailto:support@ezeebit.com"
                 className="btn-primary w-full flex items-center justify-center mt-auto"
               >
-                Start Chat
+                Send an email
               </a>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="card p-6 text-center hover:scale-105 transition-transform flex flex-col h-full">
-              <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4 text-primary-600">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="card p-6 text-center flex flex-col h-full">
+              <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center mx-auto mb-4 text-primary-400 [&_svg]:w-6 [&_svg]:h-6">
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.515"/>
                 </svg>
@@ -483,7 +485,7 @@ const FAQ = () => {
                 +27 79 443 9375
               </div>
               <div className="text-xs text-neutral-500 mb-4">
-                Mon-Fri, 8AM-6PM SAST
+                Monday to Friday, 8am to 6pm SAST
               </div>
               <a
                 href="https://wa.me/27794439375"
@@ -491,7 +493,7 @@ const FAQ = () => {
                 rel="noopener noreferrer"
                 className="btn-primary w-full flex items-center justify-center mt-auto"
               >
-                Start Chat
+                Start a chat
               </a>
             </motion.div>
           </div>
@@ -516,13 +518,13 @@ const FAQ = () => {
                 href="https://merchant.ezeebit.com/#/signup"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+                className={HERO_PRIMARY}
               >
-                Get Started
+                Get started
                 <ArrowRight className="w-5 h-5 ml-2" />
               </a>
-              <Link to="/contact" className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center">
-                Contact Support
+              <Link to="/contact" className={HERO_SECONDARY}>
+                Contact support
               </Link>
             </div>
           </motion.div>

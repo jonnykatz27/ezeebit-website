@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { motion } from '../lib/motion'
 import { Link } from 'react-router-dom'
 import {
@@ -5,17 +6,17 @@ import {
   ArrowRight, Clock
 } from 'lucide-react'
 import SEO from '../components/SEO'
-import PageHero, { HeroSearch } from '../components/hero/PageHero'
+import PageHero, { HeroSearch, HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import DarkBackdrop from '../components/DarkBackdrop'
 
 const Resources = () => {
+  const [query, setQuery] = useState('')
   const resourceCategories = [
     {
       title: 'About Us',
       description: 'Learn about our mission, team, and journey in transforming African payments',
       icon: <Users className="w-8 h-8" />,
       href: '/resources/about',
-      color: 'bg-blue-100 text-blue-600',
       items: ['Company Story', 'Our Team', 'Mission & Values', 'Pundi X Partnership']
     },
     {
@@ -23,23 +24,20 @@ const Resources = () => {
       description: 'Find answers to the most commonly asked questions about our platform',
       icon: <HelpCircle className="w-8 h-8" />,
       href: '/resources/faq',
-      color: 'bg-green-100 text-green-600',
       items: ['Getting Started', 'Payments', 'Security', 'Compliance']
     },
     {
       title: 'Legal',
-      description: 'Terms of service, privacy policy, and regulatory compliance information',
+      description: 'Terms of use, privacy policy, and regulatory compliance information',
       icon: <FileText className="w-8 h-8" />,
       href: '/resources/legal',
-      color: 'bg-purple-100 text-purple-600',
-      items: ['Terms of Service', 'Privacy Policy', 'Compliance', 'Security']
+      items: ['Terms of Use', 'Privacy Policy', 'Compliance', 'Security']
     },
     {
       title: 'Blog',
       description: 'Latest news, insights, and updates from the world of stablecoin and crypto payments',
       icon: <Newspaper className="w-8 h-8" />,
       href: '/resources/blog',
-      color: 'bg-orange-100 text-orange-600',
       items: ['Industry News', 'Product Updates', 'Case Studies', 'Tutorials']
     },
     {
@@ -47,7 +45,6 @@ const Resources = () => {
       description: 'Step-by-step guides and tutorials for using our platform effectively',
       icon: <Book className="w-8 h-8" />,
       href: '/resources/user-manual',
-      color: 'bg-indigo-100 text-indigo-600',
       items: ['Setup Guides', 'Integration Help', 'Troubleshooting', 'Best Practices']
     }
   ]
@@ -90,13 +87,23 @@ const Resources = () => {
     { name: 'Status Page', href: 'https://status.ezeebit.com', icon: <Clock className="w-4 h-4" /> }
   ]
 
+  const needle = query.trim().toLowerCase()
+  const matches = (parts: string[]) => !needle || parts.join(' ').toLowerCase().includes(needle)
+  const visibleCategories = resourceCategories.filter((category) =>
+    matches([category.title, category.description, ...category.items])
+  )
+  const visiblePopular = popularResources.filter((resource) =>
+    matches([resource.title, resource.type, resource.description])
+  )
+
   return (
     <>
       <SEO
-        title="Guides and support"
-        description="Guides, FAQ, legal information and the blog for merchants using Ezeebit stablecoin and crypto payments."
+        title="Guides, FAQs, and support for merchants"
+        description="Guides, FAQs, legal information, and the blog for merchants and platforms using Ezeebit for crypto and stablecoin payments."
         canonicalUrl="/resources"
         crumbs={[{ name: 'Guides and support', path: '/resources' }]}
+        pageType="CollectionPage"
       />
       <motion.div
         initial={{ opacity: 0 }}
@@ -106,26 +113,31 @@ const Resources = () => {
     >
       {/* Hero Section */}
       <PageHero
+        kicker="Resources"
         title="Resources"
         accent="and support"
         description="Everything you need to succeed with Ezeebit. From getting started guides to legal documentation, we've got you covered."
       >
-        <HeroSearch placeholder="Search resources, guides, and FAQs..." />
+        <HeroSearch placeholder="Search resources, guides, and FAQs..." value={query} onChange={setQuery} />
       </PageHero>
 
       {/* Resource Categories */}
       <section className="section-padding bg-white">
         <div className="container-custom">
+          <h2 className="sr-only">Browse by topic</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {resourceCategories.map((category, index) => (
+            {needle && visibleCategories.length === 0 && (
+              <p className="col-span-full text-center text-neutral-600">No guides match “{query.trim()}”.</p>
+            )}
+            {visibleCategories.map((category, index) => (
               <motion.div
                 key={category.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="card p-6 hover:scale-105 transition-transform group"
+                className="card p-6 hover:border-neutral-300 group"
               >
-                <div className={`w-16 h-16 ${category.color} rounded-lg flex items-center justify-center mb-4`}>
+                <div className="w-12 h-12 bg-neutral-950 text-primary-400 rounded-xl flex items-center justify-center mb-4 [&_svg]:w-6 [&_svg]:h-6">
                   {category.icon}
                 </div>
                 <h3 className="text-xl font-semibold text-neutral-900 mb-3">
@@ -137,7 +149,7 @@ const Resources = () => {
                 <ul className="space-y-2 mb-6">
                   {category.items.map((item) => (
                     <li key={item} className="text-sm text-neutral-500 flex items-center">
-                      <div className="w-1.5 h-1.5 bg-gray-300 rounded-full mr-2"></div>
+                      <div className="w-1.5 h-1.5 bg-neutral-300 rounded-full mr-2"></div>
                       {item}
                     </li>
                   ))}
@@ -161,18 +173,21 @@ const Resources = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-12"
+            className="section-head"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+            <h2 className="section-title">
               Popular resources
             </h2>
-            <p className="text-xl text-neutral-600 max-w-2xl mx-auto">
+            <p className="section-lead">
               Most accessed guides and articles to help you get the most out of Ezeebit.
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {popularResources.map((resource, index) => (
+            {needle && visiblePopular.length === 0 && (
+              <p className="col-span-full text-center text-neutral-600">No articles match “{query.trim()}”.</p>
+            )}
+            {visiblePopular.map((resource, index) => (
               <motion.div
                 key={resource.title}
                 initial={{ opacity: 0, y: 20 }}
@@ -214,12 +229,12 @@ const Resources = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-12"
+            className="section-head"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+            <h2 className="section-title">
               Quick links
             </h2>
-            <p className="text-xl text-neutral-600 max-w-2xl mx-auto">
+            <p className="section-lead">
               Fast access to the most important tools and support channels.
             </p>
           </motion.div>
@@ -234,9 +249,9 @@ const Resources = () => {
               >
                 <Link
                   to={link.href}
-                  className="card p-6 text-center hover:scale-105 transition-transform group"
+                  className="card p-6 text-center lg:text-left hover:border-neutral-300 group"
                 >
-                  <div className="w-12 h-12 bg-neutral-100 rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:bg-primary-100 group-hover:text-primary-500 transition-colors">
+                  <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center mx-auto lg:mx-0 mb-3 text-primary-400 [&_svg]:w-6 [&_svg]:h-6">
                     {link.icon}
                   </div>
                   <span className="text-sm font-medium text-neutral-900 group-hover:text-primary-500 transition-colors">
@@ -268,13 +283,13 @@ const Resources = () => {
                 href="https://merchant.ezeebit.com/#/signup" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+                className={HERO_PRIMARY}
               >
-                Get Started
+                Get started
                 <ArrowRight className="w-5 h-5 ml-2 inline" />
               </a>
-              <Link to="/contact" className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center">
-                Contact Support
+              <Link to="/contact" className={HERO_SECONDARY}>
+                Contact support
               </Link>
             </div>
           </motion.div>

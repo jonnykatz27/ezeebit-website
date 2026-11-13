@@ -1,32 +1,14 @@
+import { Suspense, useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
-import { useEffect } from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import PageLoader from './components/PageLoader'
 import { hasDarkHero } from './lib/darkHero'
-import Home from './pages/Home'
-import InStore from './pages/InStore'
-import Online from './pages/Online'
-import OTC from './pages/OTC'
-import Payouts from './pages/Payouts'
-import Platforms from './pages/Platforms'
-import Wallets from './pages/Wallets'
-import Pricing from './pages/Pricing'
-import Developers from './pages/Developers'
-import Resources from './pages/Resources'
-import About from './pages/About'
-import FAQ from './pages/FAQ'
-import Legal from './pages/Legal'
-import Blog from './pages/Blog'
-import UserManual from './pages/UserManual'
-import SignUp from './pages/SignUp'
-import Contact from './pages/Contact'
-import BlogPost from './pages/BlogPost'
-import EzeebitResources from './pages/EzeebitResources'
-import WhereToSpend from './pages/WhereToSpend'
-import StoreDetail from './pages/StoreDetail'
-import Careers from './pages/Careers'
-import NotFound from './pages/NotFound'
+import {
+  Home, InStore, Online, OTC, Payouts, Platforms, Wallets, Pricing, Developers,
+  Resources, About, FAQ, Legal, Blog, UserManual, SignUp, Contact, BlogPost,
+  EzeebitResources, WhereToSpend, StoreDetail, Careers, NotFound, Solution, BookCall } from './routePages'
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation()
@@ -44,35 +26,40 @@ function App() {
   return (
     // Near Black behind a dark-hero page, so its fade-in doesn't flash white first
     <div className={`min-h-screen ${hasDarkHero(pathname) ? 'bg-neutral-950' : 'bg-white'}`}>
+      <a href="#main" className="skip-link">Skip to content</a>
       <Header />
       <ScrollToTop />
+      <main id="main">
       <AnimatePresence mode="wait">
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/in-store" element={<InStore />} />
-            <Route path="/online" element={<Online />} />
-            <Route path="/platforms" element={<Platforms />} />
-            <Route path="/payouts" element={<Payouts />} />
-            <Route path="/wallets" element={<Wallets />} />
-            <Route path="/otc" element={<OTC />} />
-            <Route path="/pricing" element={<Pricing />} />
-            <Route path="/developers" element={<Developers />} />
-            <Route path="/resources" element={<Resources />} />
-            <Route path="/resources/about" element={<About />} />
-            <Route path="/resources/faq" element={<FAQ />} />
-            <Route path="/resources/legal" element={<Legal />} />
-            <Route path="/resources/blog" element={<Blog />} />
-            <Route path="/resources/user-manual" element={<UserManual />} />
-            <Route path="/blog/:slug" element={<BlogPost />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/ezeebit-resources" element={<EzeebitResources />} />
-            <Route path="/resources/where-to-spend" element={<WhereToSpend />} />
-            <Route path="/resources/stores/:slug" element={<StoreDetail />} />
-            <Route path="/careers" element={<Careers />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="/" element={<Suspense fallback={<PageLoader />}><Home /></Suspense>} />
+            <Route path="/in-store" element={<Suspense fallback={<PageLoader />}><InStore /></Suspense>} />
+            <Route path="/online" element={<Suspense fallback={<PageLoader />}><Online /></Suspense>} />
+            <Route path="/platforms" element={<Suspense fallback={<PageLoader />}><Platforms /></Suspense>} />
+            <Route path="/payouts" element={<Suspense fallback={<PageLoader />}><Payouts /></Suspense>} />
+            <Route path="/wallets" element={<Suspense fallback={<PageLoader />}><Wallets /></Suspense>} />
+            <Route path="/otc" element={<Suspense fallback={<PageLoader />}><OTC /></Suspense>} />
+            <Route path="/pricing" element={<Suspense fallback={<PageLoader />}><Pricing /></Suspense>} />
+            <Route path="/developers" element={<Suspense fallback={<PageLoader />}><Developers /></Suspense>} />
+            <Route path="/resources" element={<Suspense fallback={<PageLoader />}><Resources /></Suspense>} />
+            <Route path="/resources/about" element={<Suspense fallback={<PageLoader />}><About /></Suspense>} />
+            <Route path="/resources/faq" element={<Suspense fallback={<PageLoader />}><FAQ /></Suspense>} />
+            <Route path="/resources/legal" element={<Suspense fallback={<PageLoader />}><Legal /></Suspense>} />
+            <Route path="/resources/blog" element={<Suspense fallback={<PageLoader />}><Blog /></Suspense>} />
+            <Route path="/resources/user-manual" element={<Suspense fallback={<PageLoader />}><UserManual /></Suspense>} />
+            <Route path="/blog/:slug" element={<Suspense fallback={<PageLoader />}><BlogPost /></Suspense>} />
+            <Route path="/signup" element={<Suspense fallback={<PageLoader />}><SignUp /></Suspense>} />
+            <Route path="/contact" element={<Suspense fallback={<PageLoader />}><Contact /></Suspense>} />
+            <Route path="/book-a-call" element={<Suspense fallback={<PageLoader />}><BookCall /></Suspense>} />
+            <Route path="/ezeebit-resources" element={<Suspense fallback={<PageLoader />}><EzeebitResources /></Suspense>} />
+            <Route path="/resources/where-to-spend" element={<Suspense fallback={<PageLoader />}><WhereToSpend /></Suspense>} />
+            <Route path="/resources/stores/:slug" element={<Suspense fallback={<PageLoader />}><StoreDetail /></Suspense>} />
+            <Route path="/careers" element={<Suspense fallback={<PageLoader />}><Careers /></Suspense>} />
+            <Route path="/solutions/:slug" element={<Suspense fallback={<PageLoader />}><Solution /></Suspense>} />
+            <Route path="*" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />
           </Routes>
       </AnimatePresence>
+      </main>
       <Footer />
     </div>
   )

@@ -10,7 +10,7 @@ import {
   Smartphone, ShoppingCart, CreditCard
 } from 'lucide-react'
 import SEO from '../components/SEO'
-import PageHero, { HeroSearch } from '../components/hero/PageHero'
+import PageHero, { HeroSearch, HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import DarkBackdrop from '../components/DarkBackdrop'
 
 type TabId = 'getting-started' | 'payments' | 'basics' | 'faq' | 'downloads'
@@ -345,7 +345,7 @@ const UserManual = () => {
     <>
       <SEO
         title="Merchant user manual"
-        description="Guides for Ezeebit merchants: Merchant Portal setup, in-store ePOS, ezeebit Pay QR and online checkout."
+        description="Guides for Ezeebit merchants: Merchant Portal setup, the in-store ePOS, Ezeebit Pay QR codes, and online checkout."
         crumbs={[{ name: 'User manual', path: '/resources/user-manual' }]}
         canonicalUrl="/resources/user-manual"
       />
@@ -357,6 +357,7 @@ const UserManual = () => {
       >
         {/* Hero Section */}
         <PageHero
+          kicker="User manual"
           title="The Ezeebit"
           accent="user manual"
           description="Everything you need to set up Ezeebit and accept crypto payments with confidence — no technical background required."
@@ -458,7 +459,7 @@ const UserManual = () => {
                       {portalSteps.map((step, i) => (
                         <div key={i} className="card p-6 flex flex-col">
                           <div className="flex items-center gap-3 mb-3">
-                            <div className="w-11 h-11 bg-primary-100 rounded-lg flex items-center justify-center text-primary-600">
+                            <div className="w-11 h-11 bg-neutral-950 rounded-xl flex items-center justify-center text-primary-400">
                               {step.icon}
                             </div>
                             <span className="badge badge-neutral">Step {i + 1}</span>
@@ -598,7 +599,7 @@ const UserManual = () => {
                   <div className="grid sm:grid-cols-2 gap-5">
                     {basics.map((b, i) => (
                       <div key={i} className="card p-6">
-                        <div className="w-11 h-11 bg-primary-100 rounded-lg flex items-center justify-center text-primary-600 mb-4">
+                        <div className="w-11 h-11 bg-neutral-950 rounded-xl flex items-center justify-center text-primary-400 mb-4">
                           {b.icon}
                         </div>
                         <h3 className="font-semibold text-neutral-900 mb-2">{b.term}</h3>
@@ -650,7 +651,7 @@ const UserManual = () => {
                     {downloads.map((d, i) => (
                       <div key={i} className="card p-6 flex flex-col">
                         <div className="flex items-center gap-4 mb-4">
-                          <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center text-primary-600">
+                          <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center text-primary-400 [&_svg]:w-6 [&_svg]:h-6">
                             {d.icon}
                           </div>
                           <h3 className="text-lg font-semibold text-neutral-900">{d.title}</h3>
@@ -685,14 +686,14 @@ const UserManual = () => {
               <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
                 <Link
                   to="/contact"
-                  className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center flex-1"
+                  className={`${HERO_PRIMARY} flex-1`}
                 >
-                  Contact Support
+                  Contact support
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Link>
                 <Link
                   to="/resources/faq"
-                  className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center flex-1"
+                  className={`${HERO_SECONDARY} flex-1`}
                 >
                   View FAQ
                 </Link>

@@ -149,7 +149,7 @@ const InStoreHeroVisual = () => {
               <motion.div key={`a${step}`} {...SWAP} className="absolute inset-0 px-4 pt-5 flex flex-col items-center">
                 <p className="text-[13px] font-semibold text-neutral-800 mb-3">Enter amount</p>
                 <p className="text-[26px] font-semibold text-neutral-900 tracking-tight mb-1">
-                  <Counter value={sale.amount} format={(v) => money(v, 0)} still={still} /> <span className="text-neutral-400">{sale.fiat}</span>
+                  <Counter value={sale.amount} format={(v) => money(v, 0)} still={still} /> <span className="text-neutral-600">{sale.fiat}</span>
                 </p>
                 <p className="text-[10px] text-neutral-500 bg-white border border-neutral-200 rounded-md px-1.5 py-0.5 mb-4">
                   ≈ {money(crypto, sale.dp)} {sale.asset.toUpperCase()}

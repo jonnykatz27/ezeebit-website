@@ -1,14 +1,6 @@
 import type { ReactNode } from 'react'
-import { motion } from '../../lib/motion'
 import { Search } from 'lucide-react'
 import HeroBackdrop from './HeroBackdrop'
-import { EASE } from './heroKit'
-
-/** Each line of a hero rises in after the one before it. */
-export const HERO_ITEM = {
-  hidden: { opacity: 0, y: 18 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
-}
 
 /** Button sizes shared by every hero, on top of the site's btn-* styles. */
 export const HERO_PRIMARY = 'btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 flex items-center justify-center'
@@ -63,79 +55,95 @@ type PageHeroProps = {
    * glow coming from the top, for the homepage, where the headline leads.
    */
   stacked?: boolean
+  /** Small label above the headline. */
+  kicker?: ReactNode
+  /**
+   * A full-width block under the headline, not capped at the illustration
+   * width.
+   */
+  wideVisual?: ReactNode
+  id?: string
 }
 
 /**
  * The hero at the top of every page, on Near Black: the same backdrop,
- * headline scale, entrance, and spacing everywhere. Pages with an
+ * headline scale, and spacing everywhere. Nothing in it waits on
+ * JavaScript to appear: it is the first thing a visitor sees. Pages with an
  * illustration get text on the left and the visual on the right; the rest
  * are centred. The real product UI in the illustrations reads as white
  * cards against the dark.
  */
-const PageHero = ({ title, accent, description, actions, trust, visual, children, itemProps, bleedVisual, stacked }: PageHeroProps) => {
+const PageHero = ({ title, accent, description, actions, trust, visual, children, itemProps, bleedVisual, stacked, kicker, wideVisual, id }: PageHeroProps) => {
   const split = Boolean(visual) && !stacked
   const align = split ? 'text-center lg:text-left' : 'text-center'
   const justify = split ? 'justify-center lg:justify-start' : 'justify-center'
 
   const text = (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
-      className={`${align} ${split ? 'lg:col-span-6' : stacked ? 'max-w-5xl mx-auto' : 'max-w-3xl mx-auto'}`}
-    >
+    <div className={`${align} ${split ? 'lg:col-span-6' : stacked ? 'max-w-7xl mx-auto' : 'max-w-3xl mx-auto'}`}>
       {/*
         hero-title opts out of the site-wide phone rule that pins every h1 to
-        30px. On a phone the size follows the screen instead: about 38px on a
-        375px phone, where each line of every hero still fits on one line.
+        30px. The phone clamp
+        is a step below the old 10vw size so "Stablecoin payments," stays on
+        one line at 390px.
       */}
+      {kicker && (
+        <p className="hero-kicker text-xs font-semibold uppercase tracking-[0.14em] text-primary-400 mb-4">
+          {kicker}
+        </p>
+      )}
       <h1
         itemProp={itemProps ? 'name' : undefined}
-        className={`hero-title font-display font-bold text-white mb-5 sm:mb-6 !leading-[1.04] tracking-[-0.03em] ${
+        // Balanced, so a line that wraps splits evenly instead of leaving one word behind
+        className={`hero-title font-display font-bold text-white mb-5 sm:mb-6 !leading-[1.04] tracking-[-0.03em] [text-wrap:balance] ${
           split
-            ? 'text-[clamp(2.125rem,10vw,2.5rem)] sm:text-6xl lg:text-[3rem] xl:text-[3.75rem]'
+            ? 'text-[clamp(1.7rem,8.2vw,2.15rem)] sm:text-6xl lg:text-[3rem] xl:text-[3.75rem]'
             : stacked
-              ? 'text-[clamp(2.125rem,10vw,2.5rem)] sm:text-6xl lg:text-7xl xl:text-[5.5rem]'
-              : 'text-[clamp(2.125rem,10vw,2.5rem)] sm:text-[3.25rem] lg:text-[3.75rem]'
+              // Sized so "Stablecoin payments," holds one line on a phone
+              ? 'text-[clamp(1.9rem,9vw,2.6rem)] sm:text-6xl lg:text-7xl xl:text-[5.25rem]'
+              : 'text-[clamp(1.7rem,8.2vw,2.15rem)] sm:text-[3.25rem] lg:text-[3.75rem]'
         }`}
       >
-        <motion.span variants={HERO_ITEM} className="block">{title}</motion.span>
-        {accent && <motion.span variants={HERO_ITEM} className="block text-primary-400">{accent}</motion.span>}
+        <span className="block">{title}</span>
+        {accent && <span className="block text-primary-400">{accent}</span>}
       </h1>
 
       {description && (
-        <motion.p
-          variants={HERO_ITEM}
+        <p
           itemProp={itemProps ? 'description' : undefined}
-          className={`text-lg lg:text-xl text-neutral-300 leading-relaxed mb-8 ${split ? 'max-w-xl mx-auto lg:mx-0' : stacked ? 'max-w-3xl mx-auto' : 'max-w-2xl mx-auto'}`}
+          className={`hero-lead text-lg lg:text-xl text-neutral-300 leading-relaxed mb-8 ${split ? 'max-w-xl mx-auto lg:mx-0' : stacked ? 'max-w-3xl mx-auto' : 'max-w-2xl mx-auto'}`}
         >
           {description}
-        </motion.p>
+        </p>
       )}
 
+      {/*
+        The buttons, any search field, and the trust row paint with the page,
+        as the headline does. Fading them in after hydration left the main
+        call to action invisible until the JavaScript had loaded.
+      */}
       {actions && (
-        <motion.div variants={HERO_ITEM} className={`flex flex-col sm:flex-row gap-3 mb-8 ${justify}`}>
+        <div className={`hero-actions flex flex-col sm:flex-row gap-3 mb-8 ${justify}`}>
           {actions}
-        </motion.div>
+        </div>
       )}
 
-      {children && <motion.div variants={HERO_ITEM}>{children}</motion.div>}
+      {children}
 
       {trust && (
-        <motion.div variants={HERO_ITEM} className={`flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-neutral-400 ${justify}`}>
+        <div className={`flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-neutral-400 ${justify}`}>
           {trust.map((t) => (
             <div key={t.label} className="flex items-center gap-1.5 [&>svg]:w-4 [&>svg]:h-4 [&>svg]:text-primary-400">
               {t.icon}
               {t.label}
             </div>
           ))}
-        </motion.div>
+        </div>
       )}
-    </motion.div>
+    </div>
   )
 
   return (
-    <section className={`relative overflow-hidden pt-40 lg:pt-48 ${split ? 'pb-14 lg:pb-24' : 'pb-12 lg:pb-20'}`}>
+    <section id={id} className={`relative overflow-hidden ${stacked ? 'hero-stacked pt-40 lg:pt-44' : 'pt-40 lg:pt-48'} ${split ? 'pb-14 lg:pb-24' : 'pb-12 lg:pb-20'}`}>
       <HeroBackdrop glow={stacked ? 'top' : 'side'} />
       <div className="container-custom relative z-10">
         {split ? (
@@ -146,6 +154,7 @@ const PageHero = ({ title, accent, description, actions, trust, visual, children
         ) : (
           <>
             {text}
+            {wideVisual && <div className="hero-wide mt-12 lg:mt-16">{wideVisual}</div>}
             {visual && <div className="mt-12 lg:mt-16 mx-auto max-w-[620px]">{visual}</div>}
           </>
         )}

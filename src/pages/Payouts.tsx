@@ -6,7 +6,7 @@ import {
 } from 'lucide-react'
 import SEO from '../components/SEO'
 import FaqBlock from '../components/FaqBlock'
-import FlowDemo from '../components/demo/FlowDemo'
+import { PayoutDemo } from '../components/demo/TourWidgets'
 import { faqPageNode } from '../lib/faqSchema'
 import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import PayoutsHeroVisual from '../components/hero/PayoutsHeroVisual'
@@ -15,7 +15,7 @@ import DarkBackdrop from '../components/DarkBackdrop'
 const payoutFaqs = [
   {
     question: 'What is a stablecoin payout?',
-    answer: 'A payment from your platform to a user in a US-dollar stablecoin, sent to the user\'s own crypto wallet. You create the payout through the API from your fiat balance. The user opens a payout link carrying your brand, chooses the asset and network, and enters their wallet address. Ezeebit screens the address, converts the funds and sends them on-chain.',
+    answer: 'A payment from your platform to a user in stablecoin, sent to the user\'s own crypto wallet. Payouts are available in USDT today, with more stablecoin options coming soon. You create the payout through the API from your fiat balance. The user opens a payout link carrying your brand, chooses the asset and network, and enters their wallet address. Ezeebit screens the address, converts the funds and sends them on-chain.',
   },
   {
     question: 'How fast do payouts arrive?',
@@ -23,7 +23,7 @@ const payoutFaqs = [
   },
   {
     question: 'Do recipients need an Ezeebit account?',
-    answer: 'No. Recipients don\'t need an Ezeebit account or app. They open the payout link in any mobile browser, choose the asset and network, and enter their own wallet address. They do need a crypto wallet that supports the asset and network they choose. The widget carries your brand.',
+    answer: 'No. Recipients don\'t need an Ezeebit account or app. They open the payout link in any mobile browser, choose the network, and enter their own wallet address. They do need a crypto wallet that supports the asset and network they choose. The widget carries your brand.',
   },
 ]
 
@@ -37,7 +37,7 @@ const Payouts = () => {
     {
       icon: <Link2 className="w-6 h-6" />,
       title: "No wallet addresses to collect",
-      description: "You send a link, not a transfer. Your customer chooses their asset and network and enters their own address, so a mistyped address is never your liability."
+      description: "You send a link, not a transfer. Your customer chooses their network and enters their own address, so a mistyped address is never your liability."
     },
     {
       icon: <Globe className="w-6 h-6" />,
@@ -52,7 +52,7 @@ const Payouts = () => {
     {
       icon: <ShieldCheck className="w-6 h-6" />,
       title: "Screened and compliant",
-      description: "Every recipient address is screened before funds move. FSCA-regulated as a CASP, with Travel Rule and FIC obligations handled for you."
+      description: "Every recipient address is screened before funds move. Ezeebit is regulated by the FSCA as a Crypto Asset Service Provider, and handles Travel Rule and FIC obligations for you."
     },
     {
       icon: <Webhook className="w-6 h-6" />,
@@ -70,7 +70,7 @@ const Payouts = () => {
     {
       number: "02",
       title: "Your customer completes it",
-      description: "They open the link, pick the asset and network they want, and enter their wallet address in our widget. You never handle their details."
+      description: "They open the link, pick the network they want, and enter their wallet address in our widget. You never handle their details."
     },
     {
       number: "03",
@@ -112,11 +112,12 @@ const Payouts = () => {
   return (
     <>
       <SEO
-        title="Stablecoin payouts"
-        description="Pay customers from an Ezeebit balance in USDT or other crypto. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+        title="Stablecoin payouts for your customers"
+        description="Pay customers, sellers, and players in USDT from your fiat balance. They claim a link with their own wallet and get paid in minutes. $0.75 or less per payout."
         canonicalUrl="/payouts"
         crumbs={[{ name: 'Payouts', path: '/payouts' }]}
         extraNodes={[faqPageNode('https://ezeebit.com/payouts#faq', payoutFaqs)]}
+        service={{ name: 'Stablecoin payouts', serviceType: 'Stablecoin payouts' }}
       />
       <motion.div
         initial={{ opacity: 0 }}
@@ -126,9 +127,10 @@ const Payouts = () => {
       >
         {/* Hero Section */}
         <PageHero
+          kicker="Payouts"
           title="Pay your customers"
           accent="in stablecoin."
-          description="Send payouts from your fiat balance without collecting a single wallet address. Your customer picks the asset and network, completes the payout themselves, and the funds settle on-chain in minutes. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+          description="Send payouts from your fiat balance without collecting a single wallet address. Your customer picks the network, completes the payout themselves, and the funds settle on-chain in minutes."
           actions={
             <>
             <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
@@ -150,33 +152,33 @@ const Payouts = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="text-center mb-16"
+              className="section-head"
             >
-              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+              <h2 className="section-title">
                 Payouts without the bank rails
               </h2>
-              <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+              <p className="section-lead">
                 Bank transfers are slow, expensive across borders, and closed on weekends.
                 Stablecoin payouts are none of those things.
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="feature-grid feature-grid-3">
               {features.map((feature, index) => (
                 <motion.div
                   key={feature.title}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="card px-5 py-4 text-center hover:scale-[1.03] transition-transform"
+                  className="card feature-card"
                 >
-                  <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center mx-auto mb-2 text-primary-400">
+                  <div className="bg-neutral-950 rounded-xl flex items-center justify-center text-primary-400 [&_svg]:w-5 [&_svg]:h-5 lg:[&_svg]:w-6 lg:[&_svg]:h-6">
                     {feature.icon}
                   </div>
-                  <h3 className="text-lg font-semibold text-neutral-900 mb-1">
+                  <h3 className="feature-title">
                     {feature.title}
                   </h3>
-                  <p className="text-neutral-600 text-sm leading-relaxed">
+                  <p className="feature-text">
                     {feature.description}
                   </p>
                 </motion.div>
@@ -191,17 +193,17 @@ const Payouts = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="text-center mb-16"
+              className="section-head"
             >
-              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+              <h2 className="section-title">
                 How it works
               </h2>
-              <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+              <p className="section-lead">
                 One API call, one link, one signed webhook back.
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="feature-grid md:grid-cols-3">
               {steps.map((step, index) => (
                 <motion.div
                   key={step.number}
@@ -210,14 +212,14 @@ const Payouts = () => {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="relative"
                 >
-                  <div className="card p-8 h-full">
-                    <div className="text-4xl font-display font-bold text-gradient mb-4">
+                  <div className="card step-card h-full">
+                    <div className="font-display font-bold text-gradient">
                       {step.number}
                     </div>
-                    <h3 className="text-xl font-semibold text-neutral-900 mb-3">
+                    <h3 className="feature-title">
                       {step.title}
                     </h3>
-                    <p className="text-neutral-600">
+                    <p className="feature-text">
                       {step.description}
                     </p>
                   </div>
@@ -239,12 +241,7 @@ const Payouts = () => {
                 className="order-2 lg:order-1 w-full max-w-[380px] mx-auto"
               >
                 {/* The widget itself, rather than a picture of it */}
-                <FlowDemo
-                  src="/demos/pay-out.html"
-                  flow="payout"
-                  label="Try it"
-                  title="Interactive demo of an Ezeebit payout"
-                />
+                <PayoutDemo />
               </motion.div>
 
               <motion.div
@@ -285,29 +282,29 @@ const Payouts = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="text-center mb-16"
+              className="section-head"
             >
-              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+              <h2 className="section-title">
                 Built for businesses that owe people money
               </h2>
-              <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+              <p className="section-lead">
                 Wherever payouts are high in volume, time sensitive, or hard to route through a bank.
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="feature-grid md:grid-cols-3">
               {useCases.map((useCase, index) => (
                 <motion.div
                   key={useCase.title}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="card p-8 h-full"
+                  className="card p-4 lg:p-8 h-full text-left"
                 >
-                  <h3 className="text-xl font-semibold text-neutral-900 mb-3">
+                  <h3 className="feature-title">
                     {useCase.title}
                   </h3>
-                  <p className="text-neutral-600">
+                  <p className="feature-text">
                     {useCase.description}
                   </p>
                 </motion.div>
@@ -337,9 +334,9 @@ const Payouts = () => {
                   href="https://merchant.ezeebit.com/#/signup"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+                  className={HERO_PRIMARY}
                 >
-                  Sign Up
+                  Sign up
                   <ArrowRight className="w-5 h-5 ml-2 inline" />
                 </a>
               </div>

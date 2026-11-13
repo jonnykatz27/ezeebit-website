@@ -1,4 +1,3 @@
-import { nextui } from '@nextui-org/react'
 import typography from '@tailwindcss/typography'
 
 /** @type {import('tailwindcss').Config} */
@@ -6,7 +5,6 @@ export default {
   content: [
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
@@ -170,43 +168,5 @@ export default {
   },
   plugins: [
     typography,
-    nextui({
-      themes: {
-        light: {
-          colors: {
-            primary: {
-              50: '#E6F0FC',
-              100: '#D6EAFF',
-              200: '#ADD5FF',
-              300: '#70B8FF',
-              400: '#3D9AED',
-              500: '#0074E4',
-              600: '#00509E',
-              700: '#00458A',
-              800: '#002E5C',
-              900: '#001A36',
-              DEFAULT: '#0074E4',
-              foreground: '#FFFFFF',
-            },
-            secondary: {
-              DEFAULT: '#3D9AED',
-              foreground: '#FFFFFF',
-            },
-            success: {
-              DEFAULT: '#10B981',
-              foreground: '#FFFFFF',
-            },
-            warning: {
-              DEFAULT: '#F59E0B',
-              foreground: '#FFFFFF',
-            },
-            danger: {
-              DEFAULT: '#EF4444',
-              foreground: '#FFFFFF',
-            },
-          },
-        },
-      },
-    }),
   ],
 }

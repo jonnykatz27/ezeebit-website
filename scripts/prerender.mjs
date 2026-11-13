@@ -43,6 +43,7 @@ const staticRoutes = [
   '/resources/where-to-spend',
   '/signup',
   '/contact',
+  '/book-a-call',
   '/ezeebit-resources',
   '/careers',
   '/404',
@@ -76,6 +77,7 @@ const storeSlugs = [
 ]
 
 const blogSlugs = [
+  'restricted-wallets-and-platforms',
   'crypto-deposits-igaming-sunbet',
   'most-comprehensive-crypto-payment-gateway-africa',
   'capital-flow-management-regulations',
@@ -83,8 +85,20 @@ const blogSlugs = [
   'pundi-x-rebrand',
 ]
 
+const solutionSlugs = [
+  'gaming-and-betting',
+  'trading-and-investment',
+  'payment-gateways',
+  'wallets-and-neobanks',
+  'online-stores',
+  'shops-and-hospitality',
+  'marketplaces',
+  'large-trades',
+]
+
 const routes = [
   ...staticRoutes,
+  ...solutionSlugs.map((s) => `/solutions/${s}`),
   ...storeSlugs.map((s) => `/resources/stores/${s}`),
   ...blogSlugs.map((s) => `/blog/${s}`),
 ]
@@ -184,7 +198,7 @@ let failCount = 0
 
 for (const url of routes) {
   try {
-    const { html: appHtml, helmet } = render(url)
+    const { html: appHtml, helmet } = await render(url)
 
     // Start from the client-built template
     let page = template

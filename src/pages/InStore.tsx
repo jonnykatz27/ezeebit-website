@@ -16,7 +16,7 @@ const eposSteps = [
   'They select the coin and network the customer wants to use.',
   'They accept the locked rate and show the QR code.',
   'The customer scans and pays from their wallet.',
-  'The receipt prints, and settlement follows at T+0 (stablecoin) or T+1 (local currency).',
+  'The receipt prints, and settlement follows the same day, in stablecoin or local currency.',
 ]
 
 const staticQrSteps = [
@@ -37,7 +37,7 @@ const inStoreFaqs = [
   },
   {
     question: 'What does in-store crypto acceptance cost?',
-    answer: '1% or lower per transaction, excluding VAT. The Starter plan is R0 a month, Professional is R150 a month, and Enterprise pricing is custom. There are no setup fees for the ePOS or Ezeebit Pay.',
+    answer: '1% or less per payment, excluding VAT. There are no setup fees and no monthly platform fees. The ePOS is optional, at R150 a month per device, and an Ezeebit Pay QR code is free.',
   },
 ]
 
@@ -68,19 +68,20 @@ const InStore = () => {
   const deviceSpecs = [
     { label: "Network Support", value: "WiFi, 4G, SIM Card ports" },
     { label: "Payment Methods", value: "QR Scan" },
-    { label: "Supported Currencies", value: "7+ Cryptocurrencies" },
-    { label: "Settlement", value: "Stablecoin same day, local currency next business day" },
+    { label: "Supported Currencies", value: "9 cryptocurrencies" },
+    { label: "Settlement", value: "Same day, in stablecoin or local currency" },
     { label: "Receipt", value: "Printed receipts" }
   ]
 
   return (
     <>
       <SEO
-        title="In-store ePOS and static QR"
-        description="In-store stablecoin and crypto payments. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+        title="In-store crypto payments: ePOS and QR codes"
+        description="Take crypto and stablecoin payments at the till with the Ezeebit ePOS or a free Ezeebit Pay QR code. The rate is locked at checkout and you settle the same day."
         canonicalUrl="/in-store"
         crumbs={[{ name: 'In-store ePOS', path: '/in-store' }]}
         extraNodes={[faqPageNode('https://ezeebit.com/in-store#faq', inStoreFaqs)]}
+        service={{ name: 'In-store crypto payments', serviceType: 'Crypto point of sale' }}
       />
       <motion.div
       initial={{ opacity: 0 }}
@@ -90,16 +91,17 @@ const InStore = () => {
     >
       {/* Hero Section */}
       <PageHero
+        kicker="In-store payments"
         title="Accept stablecoins"
         accent="at the counter."
-        description="Take stablecoin and crypto payments in your store with an ePOS device or an Ezeebit Pay QR code. Every payment is hedged on the spot and settled in ZAR, KES, NGN or USD. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+        description="Take stablecoin and crypto payments in your store with an ePOS device or an Ezeebit Pay QR code. Every payment is hedged on the spot and settled in ZAR, KES, NGN or USD."
         actions={
           <>
           <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
             Get your ePOS device
             <ArrowRight className="w-5 h-5 ml-2" />
           </a>
-          <Link to="/contact" className={HERO_SECONDARY}>
+          <Link to="/book-a-call" className={HERO_SECONDARY}>
             Book a demo
           </Link>
           </>
@@ -115,6 +117,8 @@ const InStore = () => {
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center mb-16"
           >
+            {/* The logo stands in for the heading on screen; the outline still needs one */}
+            <h2 className="sr-only">The Ezeebit ePOS</h2>
             <div className="flex justify-center mb-4">
               <img
                 src="/epos-logo.png"
@@ -134,22 +138,22 @@ const InStore = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="feature-grid feature-grid-4">
             {features.map((feature, index) => (
               <motion.div
                 key={feature.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="card p-6 text-center hover:scale-105 transition-transform"
+                className="card feature-card"
               >
-                <div className="w-12 h-12 bg-neutral-950 rounded-lg flex items-center justify-center mx-auto mb-4 text-primary-400">
+                <div className="bg-neutral-950 rounded-xl flex items-center justify-center text-primary-400 [&_svg]:w-5 [&_svg]:h-5 lg:[&_svg]:w-6 lg:[&_svg]:h-6">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-semibold text-neutral-900 mb-3">
+                <h3 className="feature-title">
                   {feature.title}
                 </h3>
-                <p className="text-neutral-600">
+                <p className="feature-text">
                   {feature.description}
                 </p>
               </motion.div>
@@ -263,7 +267,7 @@ const InStore = () => {
                   { icon: <CheckCircle className="w-5 h-5" />, text: 'Print or embed codes' },
                   { icon: <CheckCircle className="w-5 h-5" />, text: 'Minimal training' },
                   { icon: <CheckCircle className="w-5 h-5" />, text: 'All wallet compatible' },
-                  { icon: <CheckCircle className="w-5 h-5" />, text: '7+ cryptocurrencies' }
+                  { icon: <CheckCircle className="w-5 h-5" />, text: '9 cryptocurrencies' }
                 ].map((feature, index) => (
                   <div key={index} className="flex items-center">
                     <div className="text-primary-500 mr-3">
@@ -282,7 +286,7 @@ const InStore = () => {
                 className="btn-primary flex md:inline-flex items-center justify-center mx-auto md:mx-0"
               >
                 <span className="inline-flex items-center">
-                  GET STARTED
+                  Get started
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </span>
               </a>
@@ -320,12 +324,12 @@ const InStore = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-16"
+            className="section-head"
           >
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+            <h2 className="section-title">
               How in-store crypto payments work
             </h2>
-            <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+            <p className="section-lead">
               Take payment with an Android ePOS, or with a static QR code.
             </p>
           </motion.div>
@@ -334,25 +338,27 @@ const InStore = () => {
             { title: 'With the ePOS', steps: eposSteps },
             { title: 'With a static QR (Ezeebit Pay)', steps: staticQrSteps },
           ] as const).map((group) => (
-            <div key={group.title} className="mb-16 last:mb-0">
-              <h3 className="text-2xl font-display font-bold text-neutral-900 text-center mb-10">
+            <div key={group.title} className="mb-10 lg:mb-16 last:mb-0">
+              <h3 className="text-xl lg:text-2xl font-display font-bold text-neutral-900 text-center mb-5 lg:mb-10">
                 {group.title}
               </h3>
               {/* One row per flow on large screens, so the ePOS's fifth step doesn't sit alone */}
-              <div className={`grid grid-cols-1 md:grid-cols-2 gap-8 ${group.steps.length === 5 ? 'lg:grid-cols-5' : 'lg:grid-cols-4'}`}>
+              <div className={`grid grid-cols-[minmax(0,1fr)] md:grid-cols-2 gap-3 lg:gap-8 ${group.steps.length === 5 ? 'lg:grid-cols-5' : 'lg:grid-cols-4'}`}>
                 {group.steps.map((step, index) => (
                   <motion.div
                     key={step}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className="text-center"
+                    className="flex items-center gap-4 rounded-2xl border border-neutral-200 bg-white p-4 text-left lg:block lg:border-0 lg:bg-transparent lg:p-0 lg:text-center"
                   >
-                    <div className="w-16 h-16 bg-neutral-950 rounded-full flex items-center justify-center mx-auto mb-4 text-primary-400 text-xl font-semibold">
+                    <div className="w-10 h-10 lg:w-12 lg:h-12 shrink-0 bg-neutral-950 rounded-xl flex items-center justify-center lg:mx-auto lg:mb-4 text-primary-400 text-base lg:text-lg font-semibold">
                       {index + 1}
                     </div>
-                    <div className="text-sm font-semibold text-primary-500 mb-2">STEP {index + 1}</div>
-                    <p className="text-neutral-600">{step}</p>
+                    <div className="min-w-0">
+                      <div className="hidden lg:block text-sm font-semibold text-primary-500 mb-2">STEP {index + 1}</div>
+                      <p className="text-[15px] lg:text-base text-neutral-600">{step}</p>
+                    </div>
                   </motion.div>
                 ))}
               </div>
@@ -376,23 +382,23 @@ const InStore = () => {
               Ready to accept stablecoin and crypto payments?
             </h2>
             <p className="text-xl text-neutral-300 mb-8 max-w-2xl mx-auto">
-              Get started with no setup fees. Ezeebit is authorised and regulated by the FSCA, and has applied for its CASP licence (FSP 53664).
+              Get started with no setup fees. Ezeebit is regulated by the FSCA as a Crypto Asset Service Provider, FSP No. 53664.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="https://merchant.ezeebit.com/#/signup"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-primary-500 text-white hover:bg-primary-600 font-medium px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center"
+                className={HERO_PRIMARY}
               >
-                Start Free Trial
+                Get started free
                 <ArrowRight className="w-5 h-5 ml-2 inline" />
               </a>
               <Link
-                to="/contact"
-                className="border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium px-8 py-4 rounded-lg transition-all duration-200 flex items-center justify-center"
+                to="/book-a-call"
+                className={HERO_SECONDARY}
               >
-                Talk to Sales
+                Talk to sales
               </Link>
             </div>
           </motion.div>

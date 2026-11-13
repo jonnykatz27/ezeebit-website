@@ -112,7 +112,7 @@ const Online = () => {
 
       {/* Platform Integration */}
       <section className="section-padding bg-white">
-        <div className="container-custom px-4 sm:px-6 lg:px-8">
+        <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -121,13 +121,13 @@ const Online = () => {
             <h2 className="section-title">
               Seamless platform integration
             </h2>
-            <p className="text-lg md:text-xl text-neutral-600 max-w-3xl mx-auto px-4">
+            <p className="section-lead">
               Install our plugins on your favorite e-commerce platform in minutes. No coding required.
             </p>
           </motion.div>
 
-          {/* Platform Tabs */}
-          <div className="flex justify-center mb-6 md:mb-8 px-4">
+          {/* Platform Tabs: centred on a phone like the heading above, on its left edge from lg */}
+          <div className="flex w-full justify-center lg:justify-start mb-6 md:mb-8">
             <div className="flex bg-neutral-100 rounded-lg p-1 w-full max-w-md md:max-w-none md:w-auto overflow-x-auto">
               {platforms.map((platform) => (
                 <button
@@ -150,7 +150,7 @@ const Online = () => {
             key={activeTab}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="card p-4 md:p-8 max-w-4xl mx-auto"
+            className="card p-4 md:p-8 max-w-4xl mx-auto lg:mx-0"
           >
             {platforms.map((platform) => (
               activeTab === platform.id && (

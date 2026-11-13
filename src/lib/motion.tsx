@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useLayoutEffect, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useLayoutEffect, useRef, useState, type ForwardedRef } from 'react'
 import { motion as fmMotion } from 'framer-motion'
 
 // useLayoutEffect warns during prerender. The server bundle never paints,
@@ -7,16 +7,17 @@ import { motion as fmMotion } from 'framer-motion'
 const useIsomorphicLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect
 
 /**
- * Pre-rendered HTML has to stay visible for crawlers that never run
- * JavaScript. A real browser runs the inline script in index.html, which
- * adds `js` to <html> before first paint, and the matching CSS hides
- * [data-entrance] so there is no flash of the finished page.
+ * Pre-rendered HTML paints as it arrives, before any JavaScript, so a first
+ * visit shows the whole page at once instead of waiting for the bundle to
+ * download, hydrate, and fade every block in.
  *
  * The first render (server and hydration) uses initial={false}, so the DOM
- * matches and React hydrates cleanly. After hydration, entrance components
- * remount with their real initial value and Framer Motion plays the same
- * fade-in as an ordinary visit, including whileInView. Client-side route
- * changes and menus mount after that, so they animate on their first render.
+ * matches and React hydrates cleanly. Once hydrated, each entrance element
+ * looks at where it is: one already on screen (or scrolled past) stays as it
+ * is, since the reader can see it; one still below the fold remounts with its
+ * real initial value, so Framer Motion fades it in when it scrolls into view,
+ * as on an ordinary visit. Client-side route changes and menus mount after
+ * hydration, so they animate on their first render.
  */
 let appHydrated = false
 
@@ -45,32 +46,53 @@ function keepPainted(props: { initial?: unknown; className?: unknown }): boolean
   return !className.includes('fixed')
 }
 
+/** Hands a node to both the wrapper's own ref and the caller's. */
+function useMergedRef(outer: ForwardedRef<Element>) {
+  const own = useRef<Element | null>(null)
+  const merged = useCallback(
+    (node: Element | null) => {
+      own.current = node
+      if (typeof outer === 'function') outer(node)
+      else if (outer) outer.current = node
+    },
+    [outer],
+  )
+  return [own, merged] as const
+}
+
 function wrap(Component: any) {
-  return forwardRef(function SafeMotion(props: any, ref) {
+  return forwardRef(function SafeMotion(props: any, ref: ForwardedRef<Element>) {
     if (keepPainted(props)) {
       return <Component ref={ref} {...props} initial={false} />
     }
     const entrance = isEntrance(props.initial)
-    const [phase, setPhase] = useState<'ssr' | 'live'>(() =>
+    // 'ssr': rendered as the pre-rendered HTML; 'shown': on screen when the page
+    // hydrated, so it stays put; 'live': animates as on any client render
+    const [phase, setPhase] = useState<'ssr' | 'shown' | 'live'>(() =>
       entrance && !appHydrated ? 'ssr' : 'live'
     )
+    const [own, merged] = useMergedRef(ref)
 
     useIsomorphicLayoutEffect(() => {
       appHydrated = true
-      if (phase === 'ssr') setPhase('live')
+      if (phase !== 'ssr') return
+      const top = own.current?.getBoundingClientRect().top
+      setPhase(top !== undefined && top < window.innerHeight ? 'shown' : 'live')
     }, [phase])
 
-    // A new key after hydration remounts the motion element so Framer Motion
-    // reads `initial` on mount. Changing the prop on an existing instance does not.
     if (!entrance) {
       return <Component ref={ref} {...props} />
     }
 
+    // A new key remounts the motion element so Framer Motion reads `initial`
+    // on mount. Changing the prop on an existing instance does not.
     if (phase === 'live') {
-      return <Component ref={ref} {...props} key="live" />
+      return <Component ref={merged} {...props} key="live" />
     }
 
-    return <Component ref={ref} {...props} key="ssr" initial={false} data-entrance="" />
+    // Same key as the hydrated element, so what the reader can already see
+    // is never remounted, hidden, or moved
+    return <Component ref={merged} {...props} key="ssr" initial={false} />
   })
 }
 

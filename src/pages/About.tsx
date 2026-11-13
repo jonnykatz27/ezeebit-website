@@ -235,7 +235,7 @@ const About = () => {
             </p>
           </motion.div>
 
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-4xl mx-auto lg:mx-0">
             <div className="relative">
               <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-primary-200"></div>
               <div className="space-y-8">
@@ -281,7 +281,7 @@ const About = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-3 gap-6 md:gap-8 max-w-3xl mx-auto">
+          <div className="grid grid-cols-3 gap-6 md:gap-8 max-w-3xl mx-auto lg:mx-0">
             {team.map((member, index) => (
               <motion.div
                 key={member.name}
@@ -327,12 +327,13 @@ const About = () => {
             className="section-head"
           >
             <h2 className="section-title">Backed by world-class investors</h2>
-            <p className="text-lg text-neutral-600 max-w-2xl mx-auto leading-relaxed">
+            <p className="section-lead">
               Supported by leading global funds and industry veterans who share our belief in building the future of payments in Africa and beyond
             </p>
           </motion.div>
 
-          <div className="max-w-5xl mx-auto">
+          {/* Full width, so its dividers run from the heading's edge to the container's; the logos centre within it */}
+          <div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}

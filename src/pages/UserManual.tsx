@@ -353,7 +353,7 @@ const UserManual = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="overflow-hidden -mt-20"
+        className="overflow-clip -mt-20"
       >
         {/* Hero Section */}
         <PageHero
@@ -366,9 +366,10 @@ const UserManual = () => {
         </PageHero>
 
         {/* Sticky Tab Bar */}
-        <section className="bg-white border-b border-neutral-200 sticky top-20 z-40">
+        <section className="bg-white border-b border-neutral-200 sticky top-14 lg:top-[4.5rem] z-40">
           <div className="container-custom">
-            <div className="flex gap-1 overflow-x-auto scrollbar-hide py-3">
+            {/* The same column as the guide below, so the tabs line up with its headings */}
+            <div className="max-w-5xl mx-auto flex gap-1 overflow-x-auto scrollbar-hide py-3">
               {TABS.map((tab) => {
                 const active = !isSearching && tab.id === activeTab
                 return (

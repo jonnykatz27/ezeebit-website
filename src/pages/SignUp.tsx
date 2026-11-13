@@ -14,7 +14,7 @@ const SignUp = () => {
         description="Open an Ezeebit merchant account to accept crypto and stablecoin payments in-store, online, or on your platform. No setup fees."
         canonicalUrl="/signup"
       />
-      <div className="pt-32 pb-24">
+      <div className="pt-[7.5rem] pb-24">
         <div className="container-custom max-w-xl text-center">
           <h1 className="hero-title text-4xl sm:text-5xl font-display font-bold text-neutral-900 mb-4">
             Open a merchant account

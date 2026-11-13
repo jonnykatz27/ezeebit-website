@@ -91,3 +91,9 @@ export function preloadRoute(url: string) {
   if (path.startsWith('/solutions/')) return Solution.preload()
   return (exact[path] ?? NotFound).preload()
 }
+
+/** Every page's chunk, for fetching ahead of a click. A page already loaded resolves at once. */
+export function preloadAllRoutes() {
+  const pages = new Set<RoutePage>([...Object.values(exact), BlogPost, StoreDetail, Solution, NotFound])
+  return Promise.all([...pages].map((page) => page.preload().catch(() => undefined)))
+}

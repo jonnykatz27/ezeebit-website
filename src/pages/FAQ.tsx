@@ -310,7 +310,7 @@ const FAQ = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="overflow-hidden -mt-20"
+      className="overflow-clip -mt-20"
     >
       {/* Hero Section */}
       <PageHero
@@ -324,8 +324,8 @@ const FAQ = () => {
 
       {/* Categories */}
       {/* The same dark pill bar as the homepage's product tour; it scrolls sideways on a phone */}
-      <section className="bg-white border-b border-neutral-200 sticky top-20 z-40">
-        <div className="container-custom px-4 py-3">
+      <section className="bg-white border-b border-neutral-200 sticky top-14 lg:top-[4.5rem] z-40">
+        <div className="container-custom py-3">
           <div className="mx-auto flex w-fit max-w-full gap-1 overflow-x-auto rounded-full bg-neutral-950 p-1 scrollbar-hide [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {categories.map(category => {
               const on = activeCategory === category.id
@@ -352,7 +352,7 @@ const FAQ = () => {
 
       {/* FAQ List */}
       <section className="section-padding bg-white">
-        <div className="container-custom px-4">
+        <div className="container-custom">
           <div className="max-w-3xl mx-auto">
             {/* One list with hairlines between the questions, as on the homepage */}
             <div className="border-t border-neutral-200">

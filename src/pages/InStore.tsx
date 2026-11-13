@@ -165,7 +165,7 @@ const InStore = () => {
       {/* Device Specifications */}
       <section className="section-padding bg-neutral-50">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center lg:ml-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}

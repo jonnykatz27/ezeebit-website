@@ -178,7 +178,7 @@ const Blog = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="overflow-hidden -mt-20"
+        className="overflow-clip -mt-20"
     >
       {/* Hero Section */}
       <PageHero
@@ -191,7 +191,7 @@ const Blog = () => {
       </PageHero>
 
       {/* Categories */}
-      <section className="bg-white border-b border-neutral-200 sticky top-20 z-40">
+      <section className="bg-white border-b border-neutral-200 sticky top-14 lg:top-[4.5rem] z-40">
         <div className="container-custom">
           <div className="flex items-center py-3 md:py-4">
             <div className="flex space-x-2 md:space-x-4 overflow-x-auto">

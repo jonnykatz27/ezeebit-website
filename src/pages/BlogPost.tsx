@@ -1171,13 +1171,14 @@ const BlogPost = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="pt-20"
+        className="pt-14 lg:pt-[4.5rem]"
     >
       <section className="bg-white border-b border-neutral-100">
         <div className="container-custom py-4">
+          {/* The article's column, so the link lines up with the headline under it */}
           <Link
             to="/resources/blog"
-            className="flex items-center text-neutral-600 hover:text-primary-600 transition-colors"
+            className="max-w-4xl mx-auto flex items-center text-neutral-600 hover:text-primary-600 transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Blog

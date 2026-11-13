@@ -166,7 +166,7 @@ export const CaseStudiesSection = ({ title, intro, studies, tone = 'white' }: { 
   <section className={`section-padding ${BG[tone]}`}>
     <div className="container-custom">
       <SectionHeader title={title} intro={intro} />
-      <div className="space-y-8 max-w-6xl mx-auto">
+      <div className="space-y-8">
         {studies.map((study) => (
           <motion.article
             key={study.name}

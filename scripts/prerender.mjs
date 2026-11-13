@@ -15,7 +15,7 @@
 
 import fs from 'node:fs'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const root = path.resolve(__dirname, '..')
@@ -188,7 +188,8 @@ function stripSupersededHead(html) {
 const template = stripSupersededHead(loadTemplate())
 
 // Dynamic import of the SSR bundle built by `vite build --ssr`
-const { render } = await import(toAbs('.ssr/entry-server.js'))
+// As a file:// URL, so the import also works on Windows, where an absolute path starts with a drive letter
+const { render } = await import(pathToFileURL(toAbs('.ssr/entry-server.js')).href)
 
 // ---------------------------------------------------------------------------
 // Pre-render each route

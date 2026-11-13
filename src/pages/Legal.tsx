@@ -749,10 +749,10 @@ const Legal = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="overflow-hidden"
+        className="overflow-clip"
     >
       {/* Hero Section */}
-      <section className="section-padding gradient-bg pt-32 md:pt-28">
+      <section className="section-padding gradient-bg pt-[7.5rem] md:pt-[6.5rem]">
         <div className="container-custom text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -784,9 +784,10 @@ const Legal = () => {
       </section>
 
       {/* Legal Navigation */}
-      <section className="bg-white border-b border-neutral-200 sticky top-20 z-40">
+      <section className="bg-white border-b border-neutral-200 sticky top-14 lg:top-[4.5rem] z-40">
         <div className="container-custom">
-          <div className="flex space-x-8 overflow-x-auto py-4">
+          {/* The same column as the document below, so the tabs line up with its headings */}
+          <div className="max-w-4xl mx-auto flex space-x-8 overflow-x-auto py-4">
             {legalSections.map((section) => (
               <button
                 key={section.id}

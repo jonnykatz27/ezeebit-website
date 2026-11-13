@@ -2,14 +2,14 @@ import { Fragment, useEffect, useRef, useState, type KeyboardEvent, type Pointer
 import { Link } from 'react-router-dom'
 import {
   ArrowRight, Check, ChevronDown, ChevronLeft,
-  ChevronRight, Code, Headphones, LayoutDashboard, Lock, Mail, MessageCircle, MousePointerClick, Phone, Plug, RotateCcw, ShieldCheck,
-  Receipt, ShoppingCart, Star, Store, ThumbsUp, TrendingUp, UserCheck, Wallet, Webhook, type LucideIcon,
+  ChevronRight, Code, LayoutDashboard, Lock, Mail, MessageCircle, MousePointerClick, Phone, Plug, RotateCcw, ShieldCheck,
+  Receipt, ShoppingCart, Star, Store, TrendingUp, UserCheck, Wallet, Webhook, type LucideIcon,
 } from 'lucide-react'
 import { motion } from '../lib/motion'
 import PartnerCarousel from '../components/PartnerCarousel'
 import SEO from '../components/SEO'
-import FlowDemo, { DemoPanel, prefetchDemos } from '../components/demo/FlowDemo'
-import { ChannelDemo, type Channel } from '../components/demo/TourWidgets'
+import { DemoPanel, prefetchDemos } from '../components/demo/FlowDemo'
+import { ChannelDemo, PayoutDemo, type Channel } from '../components/demo/TourWidgets'
 import CustomerAccountsDemo from '../components/demo/CustomerAccountsDemo'
 import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import HomeFlowVisual from '../components/hero/HomeFlowVisual'
@@ -537,7 +537,7 @@ function TourDemo({ id }: { id: string }) {
     case 'platforms':
       return <ChannelDemo channel={id as Channel} />
     case 'pay-out':
-      return <FlowDemo fixed src="/demos/pay-out.html" flow="payout" label="Payout claim" title="Interactive demo of an Ezeebit payout" />
+      return <PayoutDemo fixed />
     case 'accounts':
       return <PortalPanel wide={[820, 660]} phone={[390, 600]} restart>{(c) => <CustomerAccountsDemo compact={c} />}</PortalPanel>
     case 'portal-dashboard':
@@ -877,14 +877,6 @@ function ProductTour() {
             </div>
           ))}
         </div>
-
-        <div className="mt-12 flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-neutral-950 px-6 py-5">
-          <p className="text-neutral-300">Moving a large amount in stablecoin?</p>
-          <Link to="/otc" className="inline-flex items-center gap-1.5 font-semibold text-primary-400 hover:text-white">
-            Talk to our OTC desk
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
       </div>
     </section>
   )
@@ -922,11 +914,6 @@ const Home = () => {
               </Link>
             </>
           }
-          trust={[
-            { icon: <ThumbsUp />, label: 'No setup fees' },
-            { icon: <ShieldCheck />, label: 'No chargebacks' },
-            { icon: <Headphones />, label: '24/7 support' },
-          ]}
           wideVisual={<HomeFlowVisual />}
         />
 

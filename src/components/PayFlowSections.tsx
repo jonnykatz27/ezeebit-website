@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, CheckCircle, type LucideIcon } from 'lucide-react'
 import { motion } from '../lib/motion'
 import FlowDemo from './demo/FlowDemo'
+import { PayoutDemo } from './demo/TourWidgets'
 import type { CaseStudy } from '../lib/caseStudies'
 import SectionHeader, { Eyebrow } from './SectionHeader'
 
@@ -136,12 +137,7 @@ export const PayoutSection = ({ title, intro, steps, tone = 'muted' }: { title: 
           viewport={{ once: true }}
           className="order-2 lg:order-1 w-full max-w-[380px] mx-auto"
         >
-          <FlowDemo
-            src="/demos/pay-out.html"
-            flow="payout"
-            label="Try a payout"
-            title="Interactive demo of an Ezeebit payout a user claims"
-          />
+          <PayoutDemo title="Interactive demo of an Ezeebit payout a user claims" />
         </motion.div>
 
         <motion.div

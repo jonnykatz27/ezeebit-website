@@ -24,11 +24,11 @@ const LBL = 'text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-
 const GO = 'w-full min-h-[48px] rounded-xl bg-neutral-900 px-4 text-sm font-semibold text-white hover:bg-neutral-700'
 
 /** The panel's label: the merchant's screen, then the checkout, with the one showing picked out. Phones show only that one. */
-const Handoff = ({ from, at }: { from: string; at: 'from' | 'checkout' }) => (
+const Handoff = ({ from, to = 'Ezeebit checkout', at }: { from: string; to?: string; at: 'from' | 'checkout' }) => (
   <p className="flex items-center gap-1.5 whitespace-nowrap">
     <span className={at === 'from' ? 'text-neutral-900' : 'hidden sm:inline'}>{from}</span>
     <ChevronRight className="hidden sm:block w-3 h-3 shrink-0" aria-hidden="true" />
-    <span className={at === 'checkout' ? 'text-neutral-900' : 'hidden sm:inline'}>Ezeebit checkout</span>
+    <span className={at === 'checkout' ? 'text-neutral-900' : 'hidden sm:inline'}>{to}</span>
   </p>
 )
 
@@ -50,12 +50,12 @@ const OTHER_METHODS: { icon: LucideIcon; name: string }[] = [
   { icon: Landmark, name: 'Instant EFT' },
 ]
 
-/** The merchant's list of ways to pay, with crypto chosen. */
-const Methods = () => (
+/** The merchant's list of ways to pay, or to be paid, with crypto chosen. */
+const Methods = ({ label = 'Payment method', others = OTHER_METHODS, crypto = 'Crypto' }: { label?: string; others?: { icon: LucideIcon; name: string }[]; crypto?: string }) => (
   <div>
-    <p className={LBL}>Payment method</p>
+    <p className={LBL}>{label}</p>
     <ul className="mt-2 flex flex-col gap-2">
-      {OTHER_METHODS.map(({ icon: Icon, name }) => (
+      {others.map(({ icon: Icon, name }) => (
         <li key={name} className="flex items-center gap-3 rounded-xl border border-neutral-200 px-3 py-2.5 text-sm text-neutral-500">
           <span className="w-4 h-4 rounded-full border border-neutral-300" />
           <Icon className="w-4 h-4" />
@@ -65,7 +65,7 @@ const Methods = () => (
       <li className="flex items-center gap-3 rounded-xl border border-neutral-900 ring-1 ring-neutral-900 px-3 py-2.5 text-sm font-semibold text-neutral-900">
         <span className="w-4 h-4 rounded-full border-[5px] border-neutral-900" />
         <img src="/ezeebit-icon-blue.webp" alt="" width={16} height={16} className="w-4 h-4" />
-        Crypto
+        {crypto}
         <span className="ml-auto text-[11px] font-normal text-neutral-500">by Ezeebit</span>
       </li>
     </ul>
@@ -143,6 +143,77 @@ const Cashier = ({ onPay }: { onPay: (amount: number) => void }) => {
       </div>
       <Methods />
     </MerchantScreen>
+  )
+}
+
+const PAYOUT_AMOUNTS = [500, 1_000, 2_000, 4_000]
+
+/** A platform's own withdrawal screen: the user picks an amount and withdraws in USDT. */
+const Withdraw = ({ onWithdraw }: { onWithdraw: (amount: number) => void }) => {
+  const [amount, setAmount] = useState(4_000)
+  return (
+    <MerchantScreen
+      title="Withdraw"
+      sub="Your platform"
+      action={<button type="button" className={GO} onClick={() => onWithdraw(amount)}>Withdraw {rand(amount)} in USDT</button>}
+    >
+      <div className="flex items-end justify-between">
+        <div>
+          <p className={LBL}>Available to withdraw</p>
+          <p className="text-3xl font-semibold tracking-tight text-neutral-900 tabular-nums">{rand(12_480)}</p>
+        </div>
+        <span className="rounded-full bg-success-50 px-2 py-0.5 text-[11px] font-semibold text-success-700">Verified</span>
+      </div>
+      <div>
+        <p className={LBL}>Amount</p>
+        <div className="mt-2 grid grid-cols-2 gap-2">
+          {PAYOUT_AMOUNTS.map((a) => (
+            <button
+              key={a}
+              type="button"
+              aria-pressed={amount === a}
+              onClick={() => setAmount(a)}
+              className={`min-h-[44px] rounded-xl border text-sm font-semibold tabular-nums ${amount === a ? 'border-neutral-900 ring-1 ring-neutral-900 text-neutral-900' : 'border-neutral-200 text-neutral-600 hover:border-neutral-400'}`}
+            >
+              R{a.toLocaleString('en-US')}
+            </button>
+          ))}
+        </div>
+      </div>
+      <Methods label="Withdraw to" others={[{ icon: Landmark, name: 'Bank account' }]} crypto="USDT wallet" />
+    </MerchantScreen>
+  )
+}
+
+/**
+ * A payout, the way the pay-ins on a platform run: the platform's own
+ * withdrawal screen first, then Ezeebit's payout for the amount chosen.
+ * Restarting, from the panel or the payout's own Done button, goes back to the
+ * platform's screen. Held at a fixed height in the product tour; elsewhere the
+ * platform's screen takes the payout's shape, so the panel keeps its size.
+ */
+export function PayoutDemo({ fixed = false, title = 'Interactive demo of an Ezeebit payout' }: { fixed?: boolean; title?: string }) {
+  const [handoff, setHandoff] = useState<string | null>(null)
+  const back = useCallback(() => setHandoff(null), [])
+
+  if (handoff)
+    return (
+      <FlowDemo
+        fixed={fixed}
+        src={`/demos/pay-out.html?handoff&${handoff}`}
+        flow="payout"
+        label={<Handoff from="Your cashier" to="Ezeebit payout" at="checkout" />}
+        title={title}
+        onRestart={back}
+      />
+    )
+
+  return (
+    <DemoPanel fixed={fixed} label={<Handoff from="Your cashier" to="Ezeebit payout" at="from" />}>
+      <div className={`flex flex-col ${fixed ? 'flex-1 min-h-0' : 'aspect-[640/990]'}`}>
+        <Withdraw onWithdraw={(amount) => setHandoff(`amount=${amount}`)} />
+      </div>
+    </DemoPanel>
   )
 }
 

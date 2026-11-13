@@ -6,7 +6,7 @@ import {
 } from 'lucide-react'
 import SEO from '../components/SEO'
 import FaqBlock from '../components/FaqBlock'
-import FlowDemo from '../components/demo/FlowDemo'
+import { PayoutDemo } from '../components/demo/TourWidgets'
 import { faqPageNode } from '../lib/faqSchema'
 import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import PayoutsHeroVisual from '../components/hero/PayoutsHeroVisual'
@@ -240,12 +240,7 @@ const Payouts = () => {
                 className="order-2 lg:order-1 w-full max-w-[380px] mx-auto"
               >
                 {/* The widget itself, rather than a picture of it */}
-                <FlowDemo
-                  src="/demos/pay-out.html"
-                  flow="payout"
-                  label="Try it"
-                  title="Interactive demo of an Ezeebit payout"
-                />
+                <PayoutDemo />
               </motion.div>
 
               <motion.div

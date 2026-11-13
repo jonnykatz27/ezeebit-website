@@ -14,10 +14,15 @@ import DarkBackdrop from '../components/DarkBackdrop'
 
 const DOCS = 'https://docs.ezeebit.com'
 
+/** A code sample: a fixed-height block that scrolls both ways, so a long sample never stretches the page. */
+const CODE = 'h-[260px] lg:h-[340px] overflow-auto whitespace-pre text-left bg-neutral-900 p-3 rounded text-xs lg:text-[13px] leading-relaxed'
+
 const Developers = () => {
   const [activeTab, setActiveTab] = useState('new-order')
   const [environment, setEnvironment] = useState<'live' | 'uat'>('uat')
   const [copiedCode, setCopiedCode] = useState('')
+  // Which of the request's two samples shows: the raw call, or the JavaScript
+  const [lang, setLang] = useState<'curl' | 'javascript'>('curl')
 
   const baseUrls = {
     live: 'https://api.ezeebit.com/open/api/v1',
@@ -437,7 +442,7 @@ app.post(
   const quickStartSteps = [
     {
       title: "Create an API key",
-      description: "Save the secret key when it is shown — you cannot retrieve it later.",
+      description: "Save the secret key when it is shown. You cannot retrieve it later.",
       icon: <Key className="w-6 h-6" />
     },
     {
@@ -523,7 +528,7 @@ app.post(
         kicker="Developers"
         title="Build on the"
         accent="Ezeebit API."
-        description="Accept crypto, hold and convert balances, and pay your customers out — from one API and one set of credentials."
+        description="Accept crypto, hold and convert balances, and pay your customers out, all from one API and one set of credentials."
         actions={
           <>
           <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
@@ -584,22 +589,25 @@ app.post(
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+          {/* A row each on a phone, the icon beside the step; five across on a wide screen */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5 lg:gap-8">
             {quickStartSteps.map((step, index) => (
               <div
                 key={step.title}
-                className="text-center"
+                className="flex items-start gap-4 text-left lg:block lg:text-center"
               >
-                <div className="w-16 h-16 bg-neutral-950 rounded-full flex items-center justify-center mx-auto mb-4 text-primary-400">
+                <div className="w-11 h-11 lg:w-12 lg:h-12 shrink-0 bg-neutral-950 rounded-xl flex items-center justify-center lg:mx-auto lg:mb-4 text-primary-400 [&_svg]:w-5 [&_svg]:h-5 lg:[&_svg]:w-6 lg:[&_svg]:h-6">
                   {step.icon}
                 </div>
-                <div className="text-sm font-semibold text-primary-500 mb-2">STEP {index + 1}</div>
-                <h3 className="text-lg font-semibold text-neutral-900 mb-3">
-                  {step.title}
-                </h3>
-                <p className="text-neutral-600 text-sm">
-                  {step.description}
-                </p>
+                <div className="min-w-0">
+                  <div className="text-xs font-semibold tracking-[0.14em] text-primary-600 mb-1 lg:mb-2">STEP {index + 1}</div>
+                  <h3 className="text-base lg:text-lg font-semibold text-neutral-900 mb-1 lg:mb-3">
+                    {step.title}
+                  </h3>
+                  <p className="text-neutral-600 text-sm">
+                    {step.description}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
@@ -624,30 +632,30 @@ app.post(
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-[minmax(0,1fr)] md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-8">
             {products.map((product) => (
               <a
                 key={product.title}
                 href={product.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="card p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 will-change-transform group"
+                className="card relative flex items-start gap-3.5 p-4 text-left lg:block lg:p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 will-change-transform group"
               >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center text-primary-400">
-                    {product.icon}
-                  </div>
-                  <span className="text-xs font-medium text-neutral-500 bg-neutral-100 px-2 py-1 rounded">
-                    {product.count}
-                  </span>
+                <div className="w-10 h-10 lg:w-12 lg:h-12 shrink-0 bg-neutral-950 rounded-xl flex items-center justify-center text-primary-400 lg:mb-4 [&_svg]:w-5 [&_svg]:h-5 lg:[&_svg]:w-6 lg:[&_svg]:h-6">
+                  {product.icon}
                 </div>
-                <h3 className="text-xl font-semibold text-neutral-900 mb-3 flex items-center">
-                  {product.title}
-                  <ExternalLink className="w-4 h-4 ml-2 text-neutral-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </h3>
-                <p className="text-neutral-600">
-                  {product.description}
-                </p>
+                <span className="absolute right-4 top-4 lg:right-6 lg:top-6 text-[11px] lg:text-xs font-medium text-neutral-500 bg-neutral-100 px-2 py-1 rounded">
+                  {product.count}
+                </span>
+                <div className="min-w-0">
+                  <h3 className="pr-24 lg:pr-0 text-base lg:text-xl font-semibold text-neutral-900 mb-1 lg:mb-3 flex items-center">
+                    {product.title}
+                    <ExternalLink className="w-4 h-4 ml-2 text-neutral-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </h3>
+                  <p className="text-sm lg:text-base text-neutral-600">
+                    {product.description}
+                  </p>
+                </div>
               </a>
             ))}
 
@@ -669,15 +677,17 @@ app.post(
 
           {/* Endpoint Tabs */}
           <div className="flex justify-center mb-6 lg:mb-8">
-            <div className="flex bg-neutral-100 rounded-lg p-1 overflow-x-auto max-w-full">
+            <div className="flex gap-1 rounded-full bg-neutral-950 p-1 overflow-x-auto max-w-full [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {Object.entries(apiEndpoints).map(([key, endpoint]) => (
                 <button
                   key={key}
+                  type="button"
+                  aria-pressed={activeTab === key}
                   onClick={() => setActiveTab(key)}
-                  className={`px-3 py-2 lg:px-4 lg:py-3 rounded-md font-medium transition-all whitespace-nowrap text-sm lg:text-base ${
+                  className={`min-h-[40px] rounded-full px-3.5 lg:px-5 text-sm font-semibold whitespace-nowrap transition-colors ${
                     activeTab === key
-                      ? 'bg-primary-500 text-white shadow-sm'
-                      : 'text-neutral-600 hover:text-neutral-900'
+                      ? 'bg-primary-500 text-white'
+                      : 'text-neutral-300 hover:text-white'
                   }`}
                 >
                   {endpoint.title}
@@ -707,50 +717,51 @@ app.post(
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8">
-              {/* Request */}
+              {/* Request: one sample at a time, in a block that scrolls instead of growing */}
               <div className="card p-0 overflow-hidden min-w-0 bg-neutral-800">
                 <div className="text-white p-3 lg:p-4 min-w-0 h-full">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center space-x-2">
-                      <Terminal className="w-5 h-5 text-neutral-400" />
-                      <span className="text-neutral-300">
+                  <div className="flex items-center justify-between gap-3 mb-3">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <Terminal className="w-5 h-5 shrink-0 text-neutral-400" />
+                      <span className="text-neutral-300 text-sm">
                         {currentEndpoint.inbound ? 'From Ezeebit' : 'Request'}
                       </span>
+                      <div className="ml-1 flex rounded-full bg-neutral-900 p-0.5">
+                        {([['curl', currentEndpoint.inbound ? 'Raw' : 'cURL'], ['javascript', 'JavaScript']] as const).map(([key, label]) => (
+                          <button
+                            key={key}
+                            type="button"
+                            aria-pressed={lang === key}
+                            onClick={() => setLang(key)}
+                            className={`rounded-full px-2.5 py-1 text-xs font-semibold transition-colors ${lang === key ? 'bg-primary-500 text-white' : 'text-neutral-400 hover:text-white'}`}
+                          >
+                            {label}
+                          </button>
+                        ))}
+                      </div>
                     </div>
                     <button
-                      onClick={() => copyCode(currentEndpoint.curl, 'request')}
-                      className="flex items-center text-neutral-400 hover:text-white transition-colors"
+                      type="button"
+                      onClick={() => copyCode(currentEndpoint[lang], 'request')}
+                      className="flex shrink-0 items-center text-sm text-neutral-400 hover:text-white transition-colors"
                     >
                       <Copy className="w-4 h-4 mr-1" />
                       {copiedCode === 'request' ? 'Copied!' : 'Copy'}
                     </button>
                   </div>
-                  <div className="space-y-3 lg:space-y-4">
-                    <div>
-                      <h4 className="text-sm font-medium text-neutral-300 mb-2">
-                        {currentEndpoint.inbound ? 'Incoming request' : 'cURL'}
-                      </h4>
-                      <pre className="text-xs lg:text-sm overflow-x-auto whitespace-pre-wrap break-all bg-neutral-900 p-2 lg:p-3 rounded">
-                        <code>{currentEndpoint.curl}</code>
-                      </pre>
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-medium text-neutral-300 mb-2">JavaScript</h4>
-                      <pre className="text-xs lg:text-sm overflow-x-auto whitespace-pre-wrap break-all bg-neutral-900 p-2 lg:p-3 rounded">
-                        <code>{currentEndpoint.javascript}</code>
-                      </pre>
-                    </div>
-                  </div>
+                  <pre className={CODE}>
+                    <code>{currentEndpoint[lang]}</code>
+                  </pre>
                 </div>
               </div>
 
               {/* Response */}
               <div className="card p-0 overflow-hidden min-w-0 bg-neutral-800">
                 <div className="text-white p-3 lg:p-4 min-w-0 h-full">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center space-x-2">
+                  <div className="flex items-center justify-between gap-3 mb-3">
+                    <div className="flex items-center gap-2">
                       <CheckCircle className="w-5 h-5 text-success-400" />
-                      <span className="text-neutral-300">
+                      <span className="text-neutral-300 text-sm">
                         {currentEndpoint.inbound ? 'Payload' : 'Response'}
                       </span>
                       <span className="px-2 py-1 bg-success-600 rounded text-xs font-medium">
@@ -758,14 +769,15 @@ app.post(
                       </span>
                     </div>
                     <button
+                      type="button"
                       onClick={() => copyCode(currentEndpoint.response, 'response')}
-                      className="flex items-center text-neutral-400 hover:text-white transition-colors"
+                      className="flex shrink-0 items-center text-sm text-neutral-400 hover:text-white transition-colors"
                     >
                       <Copy className="w-4 h-4 mr-1" />
                       {copiedCode === 'response' ? 'Copied!' : 'Copy'}
                     </button>
                   </div>
-                  <pre className="text-xs lg:text-sm overflow-x-auto whitespace-pre-wrap break-all bg-neutral-900 p-2 lg:p-3 rounded">
+                  <pre className={CODE}>
                     <code>{currentEndpoint.response}</code>
                   </pre>
                 </div>
@@ -818,7 +830,7 @@ app.post(
             </div>
 
             <div
-              className="card p-6"
+              className="card p-4 lg:p-6 text-left w-full"
             >
               <div className="space-y-2">
                 <div className="flex items-center p-3 bg-primary-50 rounded-lg">
@@ -868,36 +880,22 @@ app.post(
             </p>
           </div>
 
-          <div className="grid grid-cols-[repeat(2,minmax(0,1fr))] md:grid-cols-[repeat(4,minmax(0,1fr))] gap-4 auto-rows-fr">
+          {/* One compact panel: two coins to a row on a phone, three from md, each with its networks beside it */}
+          <div className="mx-auto grid max-w-4xl grid-cols-[repeat(2,minmax(0,1fr))] gap-px overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-200 md:grid-cols-[repeat(3,minmax(0,1fr))]">
             {supportedAssets.map((asset) => (
-              <div
-                key={`${asset.asset}-${asset.network}`}
-                className="card p-4 flex flex-col items-center justify-center space-y-1 text-center overflow-hidden"
-              >
-                <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
-                  <img
-                    src={asset.logo}
-                    alt={`${asset.symbol} logo`}
-                    className="w-full h-full object-contain rounded-full"
-                  />
-                </div>
-                <div className="text-center w-full overflow-hidden">
-                  <div className="font-semibold text-neutral-900 text-xs leading-tight">{asset.asset}</div>
-                  {/* Wraps rather than truncates: two cards to a row on a phone leaves no room for "ERC20 | TRC20 | BEP20 | SPL" on one line */}
-                  <div className="text-[11px] sm:text-[10px] text-neutral-500 leading-snug">{asset.network}</div>
-                  <div className="text-[11px] sm:text-[10px] text-neutral-400 leading-snug">{asset.description}</div>
+              <div key={`${asset.asset}-${asset.network}`} className="flex items-center gap-2.5 bg-white px-3 py-2.5 text-left lg:gap-3 lg:px-4 lg:py-3 max-md:[&:last-child:nth-child(odd)]:col-span-2">
+                <img src={asset.logo} alt="" width={28} height={28} className="size-6 lg:size-7 shrink-0 rounded-full object-contain !mx-0" />
+                <div className="min-w-0">
+                  <div className="text-[13px] font-semibold text-neutral-900 leading-tight">
+                    {asset.asset}
+                    <span className="hidden sm:inline font-normal text-neutral-500"> · {asset.name}</span>
+                  </div>
+                  <div className="text-[11px] text-neutral-500 leading-snug">{asset.network.replace(/ \| /g, ' · ')}</div>
                 </div>
               </div>
             ))}
-
-            <div
-              className="card p-4 flex flex-col items-center justify-center space-y-1 text-center overflow-hidden"
-            >
-              <div className="text-center">
-                <div className="font-semibold text-neutral-600 text-xs leading-tight">More coming soon</div>
-              </div>
-            </div>
           </div>
+          <p className="mt-3 text-center text-[13px] text-neutral-500">More coming soon.</p>
         </div>
       </section>
 

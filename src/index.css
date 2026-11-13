@@ -633,15 +633,10 @@
   text-align: left;
 }
 .home-grid-2 { gap: 1.25rem; }
-/* Two to a row on a phone too, with the odd last figure across both, so five figures are not five screens of scrolling */
+/* Two by two on a phone or tablet; four columns from lg */
 .home-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 1rem; }
-.home-stats > :last-child:nth-child(odd) { grid-column: 1 / -1; }
-@media (min-width: 640px) {
-  .home-stats { gap: 2.5rem 2rem; }
-}
 @media (min-width: 1024px) {
-  .home-stats { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 2rem; }
-  .home-stats > :last-child:nth-child(odd) { grid-column: auto; }
+  .home-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem; }
 }
 
 /*

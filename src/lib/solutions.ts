@@ -33,7 +33,12 @@ type Base = {
   faqs: { question: string; answer: string }[]
   /** A live customer, where there is a story we can tell, shown in full. */
   caseStudy?: { title: string; intro: string; study: CaseStudy }
+  /** The heading over the page's closing call to action, in the solution's own words. */
+  cta?: string
 }
+
+/** What sits beside a solution's steps: one of the live demos, or the merchant tree a gateway builds. */
+export type SolutionDemo = 'online' | 'in-store' | 'platforms' | 'payout' | 'accounts' | 'hierarchy'
 
 /**
  * Told the way the Platforms page tells it: what you get, what a deposit
@@ -52,8 +57,23 @@ export type Flows = {
 export type Solution = Base &
   (
     | { flows: Flows; steps?: never; products?: never }
-    /** Told in four steps, beside links to the products behind it. */
-    | { flows?: never; steps: Step[]; products: { name: string; to: string; body: string }[] }
+    /**
+     * Told in four steps, with links to the products behind it. Each page has
+     * its own headings, and shows the demo closest to what it sells beside
+     * the steps; one without a demo sets the steps out across the page.
+     */
+    | {
+        flows?: never
+        steps: Step[]
+        products: { name: string; to: string; body: string }[]
+        /** The heading over what you get. */
+        why: string
+        /** The heading over the steps. */
+        how: string
+        demo?: SolutionDemo
+        /** True where the steps, with their demo, come before what you get. */
+        stepsFirst?: boolean
+      }
   )
 
 const SIGNUP = { label: 'Get started free', to: 'https://merchant.ezeebit.com/#/signup' }
@@ -67,7 +87,7 @@ export const SOLUTIONS: Solution[] = [
     name: 'Gaming and betting',
     group: 'platforms',
     nav: 'Crypto deposits and stablecoin withdrawals',
-    card: 'Players deposit in seconds and withdraw winnings in stablecoin, with no chargebacks on the way in.',
+    card: 'Instant crypto deposits and stablecoin withdrawals.',
     seo: {
       title: 'Crypto deposits for gaming and betting',
       description: 'Let players deposit in crypto and withdraw winnings in stablecoin, with no chargebacks. Ezeebit is live in South Africa, Kenya, and Nigeria.',
@@ -139,7 +159,7 @@ export const SOLUTIONS: Solution[] = [
     name: 'Trading and investment',
     group: 'platforms',
     nav: 'Top-ups and withdrawals in stablecoin',
-    card: 'Traders top up from stablecoins they already hold and withdraw profits the same way, instead of waiting on cards or wires.',
+    card: 'Stablecoin top-ups and withdrawals for traders.',
     seo: {
       title: 'Crypto top-ups and withdrawals for trading platforms',
       description: 'Let traders fund their accounts from stablecoins they already hold and withdraw profits the same way. Ezeebit is live in South Africa, Kenya, and Nigeria.',
@@ -158,6 +178,10 @@ export const SOLUTIONS: Solution[] = [
       { icon: Clock, title: 'Withdrawals at any hour', body: 'Payouts go out 24/7, with no banking cut-offs on weekends or public holidays.' },
       { icon: Wallet, title: 'A USDT wallet for every trader', body: 'Customer accounts give each trader a USDT wallet under your account, with deposit addresses on Tron, Ethereum, BSC, and Solana.' },
     ],
+    why: 'Built for traders who already hold stablecoins',
+    how: 'From top-up to withdrawal',
+    demo: 'platforms',
+    cta: 'Give your traders a faster way in and out',
     steps: [
       { title: 'The trader tops up', body: 'From any wallet on-chain, through WalletConnect, or from Luno, VALR, or Binance.' },
       { title: 'You credit their account', body: 'A signed webhook confirms the deposit, with the reference that ties it to the trader.' },
@@ -180,7 +204,7 @@ export const SOLUTIONS: Solution[] = [
     name: 'Payment gateways',
     group: 'platforms',
     nav: 'Crypto for the merchants on your gateway',
-    card: 'Offer crypto pay-ins and stablecoin payouts to your own merchants, each with its own stores and history.',
+    card: 'Crypto pay-ins and stablecoin payouts for your own merchants.',
     seo: {
       title: 'Crypto pay-ins and payouts for payment gateways',
       description: 'Offer crypto pay-ins and stablecoin payouts to the merchants on your gateway, each a sub-merchant with its own stores and history.',
@@ -199,6 +223,10 @@ export const SOLUTIONS: Solution[] = [
       { icon: Globe, title: 'Every channel', body: 'In store, online checkout, and platform deposits all open the same checkout.' },
       { icon: ShieldCheck, title: 'Compliance handled', body: 'KYC and KYB, AML, address screening, and the Travel Rule are handled by Ezeebit, which is regulated by the FSCA as a Crypto Asset Service Provider.' },
     ],
+    why: 'Crypto as one more rail on your gateway',
+    how: 'From onboarding a merchant to settlement',
+    demo: 'hierarchy',
+    cta: 'Add crypto to your gateway',
     steps: [
       { title: 'Onboard the merchant', body: 'Create them as a sub-merchant through the API.' },
       { title: 'Add their stores', body: 'Each store gets its own checkout and its own history.' },
@@ -221,7 +249,7 @@ export const SOLUTIONS: Solution[] = [
     name: 'Wallets and neobanks',
     group: 'platforms',
     nav: 'Crypto top-ups and cash-outs for your app',
-    card: 'Make crypto a first-class way to top up and to cash out, for the users who keep their money on-chain.',
+    card: 'Crypto top-ups and cash-outs inside your app.',
     seo: {
       title: 'Crypto top-ups and cash-outs for wallets and neobanks',
       description: 'Make crypto a first-class way to top up and to cash out, with a USDT wallet for every user. Ezeebit is live in South Africa, Kenya, and Nigeria.',
@@ -240,6 +268,10 @@ export const SOLUTIONS: Solution[] = [
       { icon: Wallet, title: 'A USDT wallet for every user', body: 'Customer accounts give each user a USDT wallet under your account, with instant, free transfers between your wallet and theirs.' },
       { icon: ShieldCheck, title: 'Screened and compliant', body: 'Addresses are screened before funds move, with the Travel Rule applied.' },
     ],
+    why: 'Crypto as a first-class way in and out',
+    how: "From a user's first top-up to their cash-out",
+    demo: 'accounts',
+    cta: 'Put crypto in your app',
     steps: [
       { title: 'Open a wallet per user', body: 'One API call, with your own customer ID.' },
       { title: 'They top up', body: 'Deposits to their addresses on Tron, Ethereum, BSC, or Solana are credited to them.' },
@@ -262,7 +294,7 @@ export const SOLUTIONS: Solution[] = [
     name: 'Online stores',
     group: 'businesses',
     nav: 'Crypto checkout with a plugin or the API',
-    card: 'Add checkout with a plugin or the API. Customers pay from the wallet or exchange they already use.',
+    card: 'Crypto checkout with a plugin or the API.',
     seo: {
       title: 'Crypto checkout for online stores',
       description: 'Add stablecoin and crypto checkout to Shopify, WooCommerce, or Magento, or build on the API. 1% or less per payment, with no setup fees.',
@@ -281,6 +313,11 @@ export const SOLUTIONS: Solution[] = [
       { icon: Lock, title: 'Exactly what you charged', body: 'The customer sees and accepts the rate before paying, so you receive the full amount.' },
       { icon: Ban, title: 'No chargebacks', body: 'Confirmed crypto payments are final.' },
     ],
+    why: 'What your store gets',
+    how: 'From install to settlement',
+    demo: 'online',
+    stepsFirst: true,
+    cta: 'Add crypto to your checkout',
     steps: [
       { title: 'Add the plugin', body: 'Or call the API from your own checkout.' },
       { title: 'The customer picks crypto', body: 'Checkout opens with the order total carried over.' },
@@ -302,7 +339,7 @@ export const SOLUTIONS: Solution[] = [
     name: 'Shops and hospitality',
     group: 'businesses',
     nav: 'Crypto at the counter, with an ePOS or a QR code',
-    card: 'Staff enter the amount. The customer scans a code with the wallet already on their phone.',
+    card: 'Crypto at the counter, with an ePOS or a QR code.',
     seo: {
       title: 'Crypto payments for shops and hospitality',
       description: 'Take stablecoin and crypto payments at the counter with the Ezeebit ePOS or a free Ezeebit Pay QR code. Settled in ZAR, KES, NGN, or USD.',
@@ -321,6 +358,11 @@ export const SOLUTIONS: Solution[] = [
       { icon: Lock, title: 'Rate locked at the till', body: 'Every payment is hedged on the spot, so you receive exactly what you charged.' },
       { icon: Receipt, title: 'Refunds your way', body: 'Confirmed payments cannot be charged back. Refund under your own returns policy.' },
     ],
+    why: 'What your counter gets',
+    how: 'From the till to your bank',
+    demo: 'in-store',
+    stepsFirst: true,
+    cta: 'Take crypto at your counter',
     steps: [
       { title: 'Enter the amount', body: 'On the ePOS, or show the customer your QR code.' },
       { title: 'The customer scans', body: 'With the wallet or exchange app already on their phone.' },
@@ -342,7 +384,7 @@ export const SOLUTIONS: Solution[] = [
     name: 'Marketplaces',
     group: 'businesses',
     nav: 'Stablecoin payouts to sellers, drivers, and creators',
-    card: 'Settle sellers, drivers and creators on your own schedule, including across borders.',
+    card: 'Stablecoin payouts to sellers, drivers, and creators.',
     seo: {
       title: 'Stablecoin payouts for marketplaces',
       description: 'Pay sellers, drivers, and creators in stablecoin on your own schedule, including across borders, without collecting a single wallet address.',
@@ -361,6 +403,10 @@ export const SOLUTIONS: Solution[] = [
       { icon: Building2, title: 'From your fiat balance', body: 'The amount is reserved when the payout is created, so there is no second provider to pre-fund.' },
       { icon: ShieldCheck, title: 'Screened and confirmed', body: 'The address is screened before funds move, and a signed webhook confirms the final status and transaction hash.' },
     ],
+    why: 'Payouts without the admin',
+    how: 'From payout to reconciliation',
+    demo: 'payout',
+    cta: 'Pay your sellers in stablecoin',
     steps: [
       { title: 'Create the payout', body: 'In your own currency, through the API.' },
       { title: 'Send the link', body: 'The recipient chooses the network and adds their own wallet.' },
@@ -382,7 +428,7 @@ export const SOLUTIONS: Solution[] = [
     name: 'Large trades',
     group: 'businesses',
     nav: 'Firm prices from the OTC desk',
-    card: 'The OTC desk quotes large trades. You get a firm price from a named dealer, locked when you accept it.',
+    card: 'Firm prices on large trades from the OTC desk.',
     seo: {
       title: 'OTC desk for large crypto trades',
       description: 'Buy or sell crypto at scale with a firm price from a named dealer, locked when you accept it, and settle the same day.',
@@ -401,6 +447,9 @@ export const SOLUTIONS: Solution[] = [
       { icon: Zap, title: 'Same-day settlement', body: 'Settle the same day in ZAR, KES, NGN, or USD.' },
       { icon: ShieldCheck, title: 'Regulated', body: 'Ezeebit is regulated by the FSCA as a Crypto Asset Service Provider, FSP No. 53664.' },
     ],
+    why: 'What the desk gives you',
+    how: 'From quote to settlement',
+    cta: 'Ask the desk for a quote',
     steps: [
       { title: 'Ask for a quote', body: 'Tell the desk what you want to buy or sell.' },
       { title: 'Get a firm price', body: 'From your dealer, for the full size.' },

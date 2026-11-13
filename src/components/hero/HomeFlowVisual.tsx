@@ -112,16 +112,16 @@ const Feed = ({ title, tag, children }: { title: string; tag: ReactNode; childre
       <p className={`text-[14px] font-semibold ${TEXT}`}>{title}</p>
       {tag}
     </div>
-    <div className="relative h-[128px] lg:h-0 lg:flex-1 overflow-hidden px-4">{children}</div>
+    <div className="relative h-[112px] lg:h-0 lg:flex-1 overflow-hidden px-4">{children}</div>
   </div>
 )
 
 const ROW = { initial: { opacity: 0, y: -12 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0 }, transition: { duration: 0.7, ease: EASE } }
-const ROW_CLASS = `h-16 lg:h-1/4 flex items-center gap-3 border-b ${LINE} last:border-b-0`
+const ROW_CLASS = `h-14 lg:h-1/4 flex items-center gap-3 border-b ${LINE} last:border-b-0`
 
 /** The caption over each panel, echoing the headline. */
 const Caption = ({ children }: { children: ReactNode }) => (
-  <p className="h-6 mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-primary-400 text-center lg:text-left">{children}</p>
+  <p className="h-5 mb-2 lg:h-6 lg:mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-primary-400 text-center lg:text-left">{children}</p>
 )
 
 /** What a connector carries across: the currency or coin the money moves in. */
@@ -134,7 +134,7 @@ type Token = { src: string; code: string }
  */
 const Connector = ({ fire, still, token }: { fire: number | null; still: boolean; token: Token | null }) => (
   // Centred on the cards, not on the captions above them
-  <div aria-hidden="true" className="relative h-16 lg:h-16 lg:self-center lg:mt-9">
+  <div aria-hidden="true" className="relative h-11 lg:h-16 lg:self-center lg:mt-9">
     <span className="absolute left-1/2 top-1 bottom-3 w-px -translate-x-1/2 bg-white/15 lg:left-1 lg:right-3 lg:top-1/2 lg:bottom-auto lg:w-auto lg:h-px lg:translate-x-0 lg:-translate-y-1/2" />
     <ChevronDown className="absolute left-1/2 bottom-0 -translate-x-1/2 w-4 h-4 text-primary-400 lg:hidden" />
     <ChevronRight className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 text-primary-400 hidden lg:block" />
@@ -153,7 +153,7 @@ const Connector = ({ fire, still, token }: { fire: number | null; still: boolean
           key={`y${fire}`}
           className="absolute left-1/2 -ml-[11px] flex lg:hidden items-center"
           initial={{ top: '0%', opacity: 0 }}
-          animate={{ top: '52%', opacity: [0, 1, 1, 0] }}
+          animate={{ top: '40%', opacity: [0, 1, 1, 0] }}
           transition={{ duration: 1.1, ease: 'easeInOut', times: [0, 0.15, 0.8, 1] }}
         >
           <TokenMark token={token} side />
@@ -274,7 +274,38 @@ const HomeFlowVisual = () => {
 
         <motion.div {...arrive(0.2)}>
           <Caption>Settle your way</Caption>
-          <div className={`${FLOW_CARD} overflow-hidden`}>
+          {/* On a phone, the balance in brief: the total and the two wallets side by side */}
+          <div className={`${FLOW_CARD} overflow-hidden font-ui px-4 py-4 lg:hidden`}>
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-[12px] text-neutral-400">Total wallet balance</p>
+              <span className="rounded-[2px] px-1 text-[10px] font-semibold" style={{ background: 'rgba(52,211,153,0.14)', color: '#6ee7b7' }}>+5.2%</span>
+            </div>
+            <p className={`mt-1 text-[20px] font-bold tabular-nums ${TEXT}`}>
+              <Counter key={balCur.code} value={total} format={balCur.fmt} still={still} />
+            </p>
+            <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-[rgba(207,231,255,0.28)]">
+              <motion.div className="h-full rounded-full bg-[#3d9aed]" initial={false} animate={{ width: `${(fiat / total) * 100}%` }} transition={{ duration: 0.9, ease: EASE }} />
+            </div>
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              <div className="relative flex items-center gap-2 min-w-0">
+                <Glow on={!still && !!landed && !glowUsdt} id={settled} />
+                <img src={balCur.flag} alt="" className="relative size-7 shrink-0 rounded-full object-cover ring-2 ring-[#2898bd]" />
+                <div className="relative min-w-0">
+                  <p className={`text-[14px] font-semibold tabular-nums truncate ${TEXT}`}><Counter key={balCur.code} value={fiat} format={balCur.fmt} still={still} /></p>
+                  <p className={`text-[11px] ${SUBTLE}`}>Fiat · {balCur.code}</p>
+                </div>
+              </div>
+              <div className="relative flex items-center gap-2 min-w-0">
+                <Glow on={!still && glowUsdt} id={settled} />
+                <img src="/usdt-round.svg" alt="" className={`relative size-7 shrink-0 ${COIN}`} />
+                <div className="relative min-w-0">
+                  <p className={`text-[14px] font-semibold tabular-nums truncate ${TEXT}`}><Counter key={balCur.code} value={usdt} format={(v) => `${money(v)} USDT`} still={still} /></p>
+                  <p className={`text-[11px] ${SUBTLE}`}>USDT wallet</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={`${FLOW_CARD} overflow-hidden hidden lg:block`}>
             {/* A new merchant swaps the figures in rather than counting across currencies */}
             <PortalBalanceCard
               total={<Counter key={balCur.code} value={total} format={balCur.fmt} still={still} />}

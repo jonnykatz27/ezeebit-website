@@ -53,8 +53,9 @@ const PartnerCarousel = ({ partners, direction, speed = 30 }: PartnerCarouselPro
 
   const seamlessPartners = [...partners, ...partners, ...partners]
 
-  const ITEM_WIDTH = isMobile ? 121 : 180
-  const GAP = isMobile ? 52 : 76
+  // Closer together on a phone, so three logos show at once instead of two
+  const ITEM_WIDTH = isMobile ? 104 : 180
+  const GAP = isMobile ? 26 : 76
   const TOTAL_ITEM_WIDTH = ITEM_WIDTH + GAP
   const singleSetWidth = partners.length * TOTAL_ITEM_WIDTH
 
@@ -179,13 +180,13 @@ const PartnerCarousel = ({ partners, direction, speed = 30 }: PartnerCarouselPro
       >
         {seamlessPartners.map((partner, index) => {
           const { width, height } = isMobile
-            ? fit(partner.size, 1500, ITEM_WIDTH - 24, 46, partner.boost)
+            ? fit(partner.size, 1500, ITEM_WIDTH - 8, 42, partner.boost)
             : fit(partner.size, 3000, ITEM_WIDTH - 24, 64, partner.boost)
           return (
             <div
               key={`${partner.name}-${index}`}
               className="flex-shrink-0 flex items-center justify-center"
-              style={{ width: `${ITEM_WIDTH}px`, height: isMobile ? '77px' : '96px' }}
+              style={{ width: `${ITEM_WIDTH}px`, height: isMobile ? '60px' : '96px' }}
             >
               <img
                 src={partner.logo}

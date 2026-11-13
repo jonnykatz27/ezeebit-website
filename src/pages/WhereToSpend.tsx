@@ -82,8 +82,8 @@ const WhereToSpend = () => {
         <div className="container-custom px-4">
           {filteredStores.length === 0 ? (
             <div className="text-center py-12">
-              <div className="w-16 h-16 bg-neutral-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Search className="w-8 h-8 text-neutral-400" />
+              <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center mx-auto mb-4 text-primary-400">
+                <Search className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-semibold text-neutral-900 mb-2">No stores found</h3>
               <p className="text-neutral-600 mb-6">

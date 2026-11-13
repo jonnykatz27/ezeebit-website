@@ -15,10 +15,7 @@ const Footer = () => {
       { name: 'Pricing', href: '/pricing' },
       { name: 'API Documentation', href: '/developers' },
     ],
-    Solutions: [
-      { name: 'Platforms', href: '/platforms' },
-      ...SOLUTIONS.map((s) => ({ name: s.name, href: solutionPath(s) })),
-    ],
+    Solutions: SOLUTIONS.map((s) => ({ name: s.name, href: solutionPath(s) })),
     Resources: [
       { name: 'About Us', href: '/resources/about' },
       { name: 'FAQ', href: '/resources/faq' },
@@ -58,7 +55,7 @@ const Footer = () => {
             Secure. Speedy. Ezee.
           </p>
           <p className="text-neutral-400 mb-4 md:mb-5 max-w-md mx-auto text-xs md:text-sm leading-relaxed">
-            Leading cryptocurrency and stablecoin payment solutions for African businesses. Fast, simple, and secure with stablecoin or fiat settlement.
+            Leading cryptocurrency and stablecoin payment solutions for businesses. Fast, simple, and secure with stablecoin or fiat settlement.
           </p>
           <div className="flex justify-center space-x-3">
             <a href="https://x.com/ezeebit?s=21&t=rrRGqEbfDYVjQGYAxoWTRg" target="_blank" rel="noopener noreferrer" aria-label="Ezeebit on X" className="w-8 h-8 rounded-lg bg-neutral-800 hover:bg-neutral-700 flex items-center justify-center text-neutral-400 hover:text-white transition-all duration-200">
@@ -134,16 +131,16 @@ const Footer = () => {
         </div>
 
         {/* The group's companies, with each one's registration and what it operates under */}
-        <div className="mt-6 pt-6 border-t border-neutral-800">
-          <h3 className="mb-4 text-center font-semibold text-xs md:text-sm tracking-wide uppercase text-neutral-300">The Ezeebit group of companies</h3>
-          <ul className="mx-auto grid max-w-5xl gap-4 md:grid-cols-3 md:gap-6">
+        <div className="mt-6 pt-5 border-t border-neutral-800">
+          <h3 className="mb-3 text-center font-semibold text-[10px] md:text-[11px] tracking-[0.14em] uppercase text-neutral-500">The Ezeebit group of companies</h3>
+          <ul className="mx-auto grid max-w-4xl gap-3 md:grid-cols-3 md:gap-5">
             {ENTITIES.map((e) => (
-              <li key={e.country} className="text-center text-xs leading-relaxed text-neutral-400">
-                <p className="flex items-center justify-center gap-2 text-sm font-medium text-neutral-200">
-                  <img src={e.flag} alt="" width={16} height={16} className="w-4 h-4 !mx-0 rounded-full" />
+              <li key={e.country} className="text-center text-[11px] leading-snug text-neutral-500">
+                <p className="flex items-center justify-center gap-1.5 text-xs font-medium text-neutral-300">
+                  <img src={e.flag} alt="" width={12} height={12} className="w-3 h-3 !mx-0 rounded-full" />
                   {e.country}
                 </p>
-                <p className="mt-1">
+                <p className="mt-0.5">
                   {e.entity}
                   {e.reg && <> · <span className="whitespace-nowrap">Reg. {e.reg}</span></>}
                 </p>

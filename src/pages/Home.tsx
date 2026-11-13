@@ -1,20 +1,20 @@
-import { Fragment, useEffect, useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react'
 import { Link } from 'react-router-dom'
 import {
-  ArrowRight, Check, ChevronDown, ChevronLeft,
-  ChevronRight, Code, LayoutDashboard, Lock, Mail, MessageCircle, MousePointerClick, Phone, Plug, RotateCcw, ShieldCheck,
-  Receipt, ShoppingCart, Star, Store, TrendingUp, UserCheck, Wallet, Webhook, type LucideIcon,
+  ArrowLeftRight, ArrowRight, BadgeCheck, Banknote, BarChart3, CandlestickChart, Check, ChevronDown, ChevronLeft,
+  ChevronRight, Clock, Code, Coins, Gamepad2, KeyRound, Landmark, LayoutDashboard, Lock, Mail, MessageCircle, MousePointerClick,
+  Network, Palette, Phone, Plug, Scale, ScrollText, Send, ShieldCheck, Smartphone,
+  Receipt, ShoppingCart, Star, Store, TrendingUp, UserCheck, Users, Wallet, Webhook, Workflow, type LucideIcon,
 } from 'lucide-react'
 import { motion } from '../lib/motion'
 import PartnerCarousel from '../components/PartnerCarousel'
 import SEO from '../components/SEO'
-import { DemoPanel, prefetchDemos } from '../components/demo/FlowDemo'
+import { prefetchDemos } from '../components/demo/FlowDemo'
+import PortalPanel from '../components/demo/PortalPanel'
 import { ChannelDemo, PayoutDemo, type Channel } from '../components/demo/TourWidgets'
 import CustomerAccountsDemo from '../components/demo/CustomerAccountsDemo'
 import PageHero, { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 import HomeFlowVisual from '../components/hero/HomeFlowVisual'
-import { FitToFrame } from '../components/portal/PortalUI'
-import { ENTITIES } from '../lib/entities'
 import Intro from '../components/SectionHeader'
 import { PortalDashboard, PortalIncome, PortalTransactions } from '../components/demo/PortalScreens'
 import DarkBackdrop from '../components/DarkBackdrop'
@@ -39,10 +39,6 @@ const CONTACTS: { icon: LucideIcon; label: string; value: string; href: string; 
   { icon: Phone, label: 'Phone', value: '+27 21 879 5074', href: 'tel:+27218795074', hours: 'Mon to Fri, 8am to 6pm SAST' },
   { icon: MessageCircle, label: 'WhatsApp', value: '+27 79 443 9375', href: 'https://wa.me/27794439375', hours: 'Mon to Fri, 8am to 6pm SAST' },
 ]
-
-
-/** The small grey label over a row or group, as over the entities and the investors. */
-const ROW_LABEL = 'mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500'
 
 /** Logos cropped to their marks, with each file's size, so the carousel can give them equal weight. */
 const PARTNERS_A: { name: string; logo: string; size: [number, number]; boost?: number }[] = [
@@ -96,9 +92,9 @@ const TESTIMONIALS = [
 ]
 
 /** A wallet's logo, a coin, or a flag shown with a fact. Its label is its alt text and tooltip. */
-type Mark = { src: string; label: string; shape?: 'round' | 'square' }
-/** A term and its detail, with any marks behind it in groups set apart from each other. */
-type Fact = [string, string, Mark[][]?]
+type Mark = { src: string; label: string; shape?: 'round' | 'square'; soon?: boolean; /** A bare mark, not a badge: shown whole on a white disc instead of filling it. */ bare?: boolean }
+/** A term and its detail under an icon, with any marks behind it in groups set apart from each other. */
+type Fact = [LucideIcon, string, string, Mark[][]?]
 /** A small card beside the demo, calling out one thing the screen does. */
 type Side = { icon: typeof Lock; caption: string; value: string; sub?: string; ok?: string }
 /** A photo of the hardware beside the demo, with its name and what it does. */
@@ -113,7 +109,8 @@ type Stop = {
   heading: string
   body: string
   facts: Fact[]
-  links: { label: string; to: string }[]
+  /** Where to read more. `short` is the label on a phone, where the links share one line. */
+  links: { label: string; short?: string; to: string }[]
   /** The demos under this tab. More than one makes the tab a menu of them. */
   screens: Screen[]
   /** What the tab's menu lists, for screen readers, where it has one. */
@@ -135,15 +132,15 @@ const CHECKOUT_SIDES: Side[] = [
 
 /** What a customer can pay from: any wallet through WalletConnect, or straight from an exchange. */
 const PAY_WITH: Mark[][] = [[
-  { src: '/walletconnect-pay.svg', label: 'Any wallet, through WalletConnect', shape: 'square' },
   { src: '/marks/valr.webp', label: 'VALR', shape: 'square' },
   { src: '/marks/luno.webp', label: 'Luno', shape: 'square' },
   { src: '/marks/binance.webp', label: 'Binance', shape: 'square' },
+  { src: '/walletconnect-pay.svg', label: 'WalletConnect Pay', shape: 'square' },
 ]]
 
 const COINS: Mark[][] = [[
   { src: '/btc-logo.svg', label: 'Bitcoin (BTC)' },
-  { src: '/marks/eth.webp', label: 'Ether (ETH)' },
+  { src: '/eth-logo.svg', label: 'Ether (ETH)', bare: true },
   { src: '/usdt-round.svg', label: 'Tether (USDT)' },
   { src: '/usdc-logo.svg', label: 'USD Coin (USDC)' },
 ]]
@@ -159,21 +156,37 @@ const SETTLES_IN: Mark[][] = [
   [{ src: '/usdt-round.svg', label: 'Tether (USDT)' }],
 ]
 
+/** What payouts go out in: USDT today, with the stablecoins to come shown faded. */
+const PAYS_OUT_IN: Mark[][] = [
+  [{ src: '/usdt-round.svg', label: 'Tether (USDT)' }],
+  [
+    { src: '/usdc-logo.svg', label: 'USD Coin (USDC), coming soon', soon: true },
+    { src: '/zarp-logo.png', label: 'ZARP, coming soon', soon: true },
+    { src: '/zaru-logo.png', label: 'ZARU, coming soon', soon: true },
+  ],
+]
+
+/** The balances a merchant holds: fiat in each settlement currency, and stablecoin. */
+const HOLDS: Mark[][] = [
+  SETTLES_IN[0],
+  [{ src: '/usdt-round.svg', label: 'Tether (USDT)' }, { src: '/usdc-logo.svg', label: 'USD Coin (USDC), coming soon', soon: true }],
+]
+
 const PAY_INS: Stop = {
   id: 'pay-ins',
   label: 'Pay-ins',
   heading: 'One checkout, wherever your customers pay',
   body: 'On your platform, in your store, or on your website, customers land on the same checkout and pay from the wallet they already use.',
   facts: [
-    ['Pay with', 'Any wallet, plus VALR, Luno and Binance', PAY_WITH],
-    ['Coins', 'BTC, ETH, USDT, USDC and more', COINS],
-    ['Settlement', 'Local currency next business day, or stablecoin same day', SETTLES_IN],
-    ['Setup', 'No setup fees'],
+    [Wallet, 'Pay with', 'Any wallet on-chain, or with VALR, Luno, Binance, and WalletConnect Pay', PAY_WITH],
+    [Coins, 'Coins', 'BTC, ETH, USDT, USDC, and more', COINS],
+    [Landmark, 'Settlement', 'Local currency the next business day, or stablecoin the same day', SETTLES_IN],
+    [BadgeCheck, 'Setup', 'No setup fees, and live in days'],
   ],
   links: [
-    { label: 'Crypto for platforms', to: '/platforms' },
-    { label: 'In-store payments', to: '/in-store' },
-    { label: 'Online checkout', to: '/online' },
+    { label: 'Crypto for platforms', short: 'Platforms', to: '/platforms' },
+    { label: 'In-store payments', short: 'In-store', to: '/in-store' },
+    { label: 'Online checkout', short: 'Online', to: '/online' },
   ],
   sideTitles: ['How they get there', 'Same on every channel'],
   screens: [
@@ -214,13 +227,13 @@ const PAY_INS: Stop = {
 const PAY_OUT: Stop = {
   id: 'pay-out',
   label: 'Payouts',
-  heading: 'A payout link your customer claims in minutes',
-  body: 'Send a link from your fiat balance. Your customer adds their own wallet and the funds land in minutes.',
+  heading: 'Payouts your customers receive in minutes',
+  body: 'A customer asks to withdraw on your platform, or you send them a payout link. They confirm their own wallet, and the stablecoin lands in minutes, funded from your fiat balance.',
   facts: [
-    ['Pay out in', 'USDT, with more stablecoins soon'],
-    ['Speed', 'Minutes, at any hour'],
-    ['Branding', 'Your name and colours'],
-    ['Use it for', 'Winnings, seller payouts and remittance'],
+    [Send, 'Pay out in', 'USDT, with more stablecoins soon', PAYS_OUT_IN],
+    [Clock, 'Speed', 'Minutes, at any hour'],
+    [Palette, 'Branding', 'Your name and colours'],
+    [Banknote, 'Use it for', 'Winnings, seller payouts, and remittance'],
   ],
   links: [{ label: 'Payouts', to: '/payouts' }],
   screens: [
@@ -246,17 +259,17 @@ const ACCOUNTS: Stop = {
   id: 'accounts',
   label: 'Customer accounts',
   short: 'Accounts',
-  heading: 'A USDT wallet for every customer, under your account',
+  heading: 'A stablecoin wallet for every customer, under your account',
   body: 'Open a USDT wallet for each customer with one API call, with USDC coming soon. Their deposits are credited to them rather than to your balance, and you move funds between your wallet and theirs instantly.',
   facts: [
-    ['Deposit networks', 'Ethereum, BSC, Tron, and Solana'],
-    ['Transfers', 'Instant book transfers, with no fee'],
-    ['Withdrawals', 'To whitelisted addresses, with Travel Rule screening'],
-    ['Records', 'A ledger for every account, with the balance after each entry'],
+    [Network, 'Deposit networks', 'Ethereum, BSC, Tron, and Solana'],
+    [ArrowLeftRight, 'Transfers', 'Instant book transfers, with no fee'],
+    [ShieldCheck, 'Withdrawals', 'To whitelisted addresses, with Travel Rule screening'],
+    [ScrollText, 'Records', 'A ledger for every account, with the balance after each entry'],
   ],
   links: [
-    { label: 'Customer accounts API', to: 'https://docs.ezeebit.com/customer-accounts/overview' },
-    { label: 'Crypto for platforms', to: '/platforms' },
+    { label: 'Customer accounts API', short: 'Accounts API', to: 'https://docs.ezeebit.com/customer-accounts/overview' },
+    { label: 'Crypto for platforms', short: 'Platforms', to: '/platforms' },
   ],
   wide: true,
   screens: [{ id: 'accounts', label: 'Customer accounts' }],
@@ -273,10 +286,10 @@ const PORTAL: Stop = {
   heading: 'Your balance, your payments, and your income, in one portal',
   body: 'Pay-ins, payouts, and conversions land on one ledger. Filter your transactions by channel, see what each month brings in, and withdraw to your bank or your own wallet.',
   facts: [
-    ['Wallets', 'Fiat and USDT, with USDC coming soon'],
-    ['Reports', 'Income by channel, store, and day'],
-    ['Access', 'The Merchant Portal or the API'],
-    ['Safeguarding', 'MPC wallets on SOC 2 audited infrastructure, with every key split'],
+    [Wallet, 'Wallets', 'Fiat and USDT, with USDC coming soon', HOLDS],
+    [BarChart3, 'Reports', 'Income by channel, store, and day'],
+    [KeyRound, 'Access', 'The Merchant Portal or the API'],
+    [Lock, 'Safeguarding', 'MPC wallets on SOC 2 audited infrastructure, with every key split'],
   ],
   links: [{ label: 'Wallets', to: '/wallets' }],
   wide: true,
@@ -292,6 +305,7 @@ const MARKETS = [
   { flag: '/za-flag.svg', name: 'South Africa', note: 'Live · settle in ZAR' },
   { flag: '/ke-flag.svg', name: 'Kenya', note: 'Live · settle in KES' },
   { flag: '/ng-flag.svg', name: 'Nigeria', note: 'Live · settle in NGN' },
+  { flag: '/us-flag.svg', name: 'Global', note: 'Settle in USD' },
 ]
 
 const FAQS: { q: string; a: string }[] = [
@@ -353,70 +367,89 @@ function onTabKeys(e: KeyboardEvent, index: number, ids: string[], set: (id: str
   document.getElementById(`${prefix}-${ids[next]}`)?.focus()
 }
 
+/** The site's icon tile: a dark square with the icon in blue, as on the About page. */
+const TILE = 'flex shrink-0 items-center justify-center rounded-xl bg-neutral-950 text-primary-400'
+
 /**
- * The facts as a boxed grid, two to a row; an odd last fact takes the full row.
- * A fact's marks sit under its words, so the words line up across a row even
- * where only one of the pair has marks.
+ * The facts as a boxed strip: a row each on a phone, with the icon beside the
+ * words; two to a row from sm and all four across from lg, with the icon over
+ * them. Every fact has an icon, so the boxes match; a fact's logos, coins, or
+ * flags sit under its words in one line.
  */
 function Facts({ facts }: { facts: Fact[] }) {
   return (
-    <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-200 text-left">
-      {facts.map(([term, detail, marks], i) => (
-        <div key={term} className={`bg-white p-3.5 sm:p-4 ${facts.length % 2 === 1 && i === facts.length - 1 ? 'col-span-2' : ''}`}>
-          <dt className="text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-500 mb-1">{term}</dt>
-          <dd className="text-sm text-neutral-800 leading-relaxed">{detail}</dd>
-          {marks && (
-            <dd className="mt-3 flex flex-wrap items-center gap-2.5">
-              {marks.map((group, g) => (
-                <ul key={g} className={`flex items-center gap-1.5 ${g > 0 ? 'border-l border-neutral-200 pl-2.5' : ''}`}>
-                  {group.map((m) => (
-                    <li key={m.label} className="leading-none">
-                      <img
-                        src={m.src}
-                        alt={m.label}
-                        title={m.label}
-                        width={24}
-                        height={24}
-                        loading="lazy"
-                        className={`size-6 !mx-0 object-cover ring-1 ring-black/5 ${m.shape === 'square' ? 'rounded-[7px]' : 'rounded-full'}`}
-                      />
-                    </li>
-                  ))}
-                </ul>
-              ))}
-            </dd>
-          )}
+    <dl className="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-200 text-left sm:grid-cols-2 lg:grid-cols-4">
+      {facts.map(([Icon, term, detail, marks]) => (
+        <div key={term} className="flex gap-3.5 bg-white p-4 sm:block lg:p-5">
+          <span className={`${TILE} size-9 sm:mb-3`} aria-hidden="true">
+            <Icon className="size-[18px]" />
+          </span>
+          <div className="min-w-0">
+            <dt className="text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-500 mb-1">{term}</dt>
+            <dd className="text-sm text-neutral-800 leading-relaxed">{detail}</dd>
+            {marks && (
+              <dd className="mt-2.5 flex items-center gap-2">
+                {marks.map((group, g) => (
+                  <ul key={g} className={`flex items-center gap-1.5 ${g > 0 ? 'border-l border-neutral-200 pl-2' : ''}`}>
+                    {group.map((m) => (
+                      <li key={m.label} className="leading-none">
+                        <img
+                          src={m.src}
+                          alt={m.label}
+                          title={m.label}
+                          width={22}
+                          height={22}
+                          loading="lazy"
+                          className={`size-[22px] !mx-0 ring-1 ring-black/5 ${m.bare ? 'object-contain bg-white p-[3px]' : 'object-cover'} ${m.shape === 'square' ? 'rounded-md' : 'rounded-full'} ${m.soon ? 'opacity-45 grayscale' : ''}`}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                ))}
+              </dd>
+            )}
+          </div>
         </div>
       ))}
     </dl>
   )
 }
 
-/** The copy under the stage: what the screen is for on the left, the facts on the right. */
+/**
+ * The copy under the stage: what the screen is for, with where to read more
+ * beside it on a wide screen, then the facts in a strip across the full width.
+ */
 function StopCopy({ stop }: { stop: Stop }) {
   return (
-    <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
-      <div className="text-center lg:col-span-7 lg:text-left">
-        <h3 className="text-2xl lg:text-3xl font-display font-bold text-neutral-900 leading-tight mb-3 [text-wrap:balance]">{stop.heading}</h3>
-        <p className="mx-auto max-w-xl text-neutral-600 leading-relaxed lg:mx-0">{stop.body}</p>
-        <div className="mt-6 flex flex-wrap justify-center gap-x-5 gap-y-3 lg:justify-start">
-          {stop.links.map((l) => {
-            const cls = 'inline-flex items-center gap-1.5 font-semibold text-primary-600 hover:text-primary-700'
-            const body = (
-              <>
-                {l.label}
-                <ArrowRight className="w-4 h-4" />
-              </>
-            )
-            return l.to.startsWith('http') ? (
-              <a key={l.to} href={l.to} target="_blank" rel="noopener noreferrer" className={cls}>{body}</a>
-            ) : (
-              <Link key={l.to} to={l.to} className={cls}>{body}</Link>
-            )
-          })}
+    <div>
+      <div className="grid gap-6 text-center lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-12 lg:text-left">
+        <div>
+          <h3 className="text-2xl lg:text-3xl font-display font-bold text-neutral-900 leading-tight mb-3 [text-wrap:balance]">{stop.heading}</h3>
+          <p className="mx-auto max-w-2xl text-neutral-600 leading-relaxed lg:mx-0">{stop.body}</p>
+        </div>
+        <div>
+          <p className="mb-2.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-500 lg:text-right">Check out more</p>
+          {/* One line on a phone, with the shorter labels */}
+          <div className="flex justify-center gap-2 sm:flex-wrap lg:justify-end">
+            {stop.links.map((l) => {
+              const cls = 'inline-flex items-center gap-1 sm:gap-1.5 whitespace-nowrap rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-[13px] sm:px-3.5 sm:py-2 sm:text-sm font-semibold text-neutral-900 hover:border-neutral-400'
+              const body = (
+                <>
+                  <span className="sm:hidden">{l.short ?? l.label}</span>
+                  <span className="hidden sm:inline">{l.label}</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-primary-600" />
+                </>
+              )
+              return l.to.startsWith('http') ? (
+                <a key={l.to} href={l.to} target="_blank" rel="noopener noreferrer" className={cls}>{body}</a>
+              ) : (
+                <Link key={l.to} to={l.to} className={cls}>{body}</Link>
+              )
+            })}
+          </div>
         </div>
       </div>
-      <div className="lg:col-span-5">
+      <div className="mt-7 lg:mt-8">
         <Facts facts={stop.facts} />
       </div>
     </div>
@@ -440,14 +473,25 @@ const SideCard = ({ side }: { side: Side }) => {
   )
 }
 
-/** The figures under the hero, each with what is behind it: what is live today first, and the one marked soon, not live yet, last. */
-const STATS: { n: string; l: string; detail: string; soon?: boolean }[] = [
+/** The figures under the hero, each with what is behind it. Four, all live today, so they sit evenly. */
+const STATS: { n: string; l: string; detail: string }[] = [
   { n: '$25M+', l: 'Moved every year', detail: "Today's run rate" },
   { n: '100+', l: 'Platforms and businesses', detail: 'Today' },
   { n: '9', l: 'Cryptocurrencies accepted', detail: 'BTC, ETH, USDT, USDC, BNB, DAI, PAXG, ZARP and ZARU on 5 networks' },
   { n: '6', l: 'Currencies held and converted', detail: 'ZAR, KES, NGN, USD, USDT and USDC · up to 90 with global rails' },
-  { n: '140', l: 'Payout countries', soon: true, detail: 'Bank, mobile wallet and cash pickup · crypto worldwide today' },
 ]
+
+/** An icon for each solution's card, by its slug. */
+const SOLUTION_ICONS: Record<string, LucideIcon> = {
+  'gaming-and-betting': Gamepad2,
+  'trading-and-investment': CandlestickChart,
+  'payment-gateways': Workflow,
+  'wallets-and-neobanks': Smartphone,
+  'online-stores': ShoppingCart,
+  'shops-and-hospitality': Store,
+  marketplaces: Users,
+  'large-trades': Scale,
+}
 
 /** The pricing section's figures, each with what it covers. */
 const PRICE_SUMMARY = [
@@ -475,59 +519,7 @@ const fade = (on: boolean) => `[grid-area:1/1] transition-opacity duration-300 $
  * fits on a laptop screen under the tabs. A screen taller than the frame
  * scrolls inside it, as it would on a phone.
  */
-const DEMO_FRAME = 'h-[640px]'
-
-/**
- * A page of the Merchant Portal in the tour's frame: laid out as the desktop
- * page where there is room and as the portal's phone layout where there is
- * not, then scaled to fit. Each layout has a fixed design size, so the scale
- * holds still while the page changes. A restart starts it afresh.
- */
-function PortalPanel({ wide, phone, restart = false, children }: {
-  wide: [number, number]
-  phone: [number, number]
-  restart?: boolean
-  children: (compact: boolean) => ReactNode
-}) {
-  const [run, setRun] = useState(0)
-  const box = useRef<HTMLDivElement>(null)
-  const [width, setWidth] = useState(0)
-  useEffect(() => {
-    const el = box.current
-    if (!el) return
-    const ro = new ResizeObserver(() => setWidth(el.clientWidth))
-    ro.observe(el)
-    return () => ro.disconnect()
-  }, [])
-  const compact = width < 600
-  const [design, height] = compact ? phone : wide
-  return (
-    <DemoPanel
-      fixed
-      label="Merchant Portal"
-      action={
-        restart ? (
-          <button
-            type="button"
-            onClick={() => setRun((r) => r + 1)}
-            className="flex items-center gap-1.5 -my-2 py-2 -mr-1.5 pr-1.5 pl-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-primary-500 hover:text-primary-700"
-          >
-            <RotateCcw className="w-3.5 h-3.5" />
-            Restart
-          </button>
-        ) : undefined
-      }
-    >
-      <div ref={box} className="flex-1 min-h-0 overflow-hidden rounded-[20px]">
-        {width > 0 && (
-          <FitToFrame design={design} height={height} background="bg-[#f8f9fb]">
-            <Fragment key={`${run}-${compact}`}>{children(compact)}</Fragment>
-          </FitToFrame>
-        )}
-      </div>
-    </DemoPanel>
-  )
-}
+const DEMO_FRAME = 'h-[540px] lg:h-[580px]'
 
 /** The demo for a screen, in its frame. */
 function TourDemo({ id }: { id: string }) {
@@ -871,7 +863,7 @@ function ProductTour() {
                 )}
               </div>
 
-              <div className="mt-10 lg:mt-14">
+              <div className="mt-8 lg:mt-10">
                 <StopCopy stop={t} />
               </div>
             </div>
@@ -921,13 +913,13 @@ const Home = () => {
           <div className="container-custom">
             <div className="border-t border-white/10 pt-10 lg:pt-14 home-stats">
               {STATS.map((s) => (
-                <div key={s.l} className="border-l border-white/10 pl-5">
-                  <div className="text-4xl xl:text-5xl whitespace-nowrap font-display font-bold tracking-[-0.03em] text-primary-400 leading-none mb-3">{s.n}</div>
-                  <p className="flex flex-wrap items-center gap-2 text-[15px] text-neutral-200">
-                    {s.l}
-                    {s.soon && <span className="rounded-full bg-warning-100 px-2 py-0.5 text-[11px] font-semibold text-warning-700">Soon</span>}
-                  </p>
-                  <p className="mt-1.5 text-[13px] leading-relaxed text-neutral-400">{s.detail}</p>
+                // Two by two on a phone or tablet; four columns from lg
+                <div key={s.l} className="text-center lg:text-left">
+                  <div className="text-[2rem] sm:text-4xl xl:text-5xl whitespace-nowrap font-display font-bold tracking-[-0.03em] text-primary-400 leading-none mb-3">{s.n}</div>
+                  <div>
+                    <p className="text-[15px] text-neutral-200">{s.l}</p>
+                    <p className="mt-1 lg:mt-1.5 text-[13px] leading-relaxed text-neutral-400">{s.detail}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -941,12 +933,10 @@ const Home = () => {
               title={<>Names your customers<br />already trust.</>}
               intro="Merchants that take payments with Ezeebit, and the exchanges, wallets, platforms and stablecoin issuers we work with."
             />
-            {/* Customers and the companies we integrate with are named apart, so neither reads as the other */}
-            <p className={ROW_LABEL}>Merchants</p>
-            <div className="partner-carousel-container mb-8">
+            {/* Merchants on the first row, the companies we integrate with on the second */}
+            <div className="partner-carousel-container mb-4 lg:mb-6">
               <PartnerCarousel partners={PARTNERS_A} direction="left" speed={40} />
             </div>
-            <p className={ROW_LABEL}>Works with</p>
             <div className="partner-carousel-container">
               <PartnerCarousel partners={PARTNERS_B} direction="right" speed={40} />
             </div>
@@ -960,16 +950,22 @@ const Home = () => {
             <Intro
               eyebrow="Solutions"
               title={<>For anyone who accepts,<br />holds, and sends money.</>}
-              intro="Start with the flow you need. Pay-ins, payouts and the balance are the same underneath."
+              intro="Pick the flow you need. Every one runs on the same balance."
             />
             {/* Two to a row on a phone, so several show at once; four across on a wide screen */}
             <div className="grid w-full grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
-              {SOLUTIONS.map((s) => (
-                <Link key={s.slug} to={solutionPath(s)} className="rounded-2xl border border-neutral-200 bg-white p-4 lg:p-5 text-center lg:text-left hover:border-neutral-300 block h-full">
-                  <h3 className="text-[15px] lg:text-lg font-semibold text-neutral-900 leading-snug mb-1.5 lg:mb-2">{s.name}</h3>
-                  <p className="text-[13px] lg:text-sm text-neutral-600 leading-relaxed">{s.card}</p>
-                </Link>
-              ))}
+              {SOLUTIONS.map((s) => {
+                const Icon = SOLUTION_ICONS[s.slug] ?? Wallet
+                return (
+                  <Link key={s.slug} to={solutionPath(s)} className="group block h-full rounded-2xl border border-neutral-200 bg-white p-4 lg:p-5 text-center lg:text-left hover:border-neutral-400">
+                    <span className={`${TILE} size-9 lg:size-10 mb-3 mx-auto lg:mx-0`} aria-hidden="true">
+                      <Icon className="size-[18px] lg:size-5" />
+                    </span>
+                    <h3 className="text-[15px] lg:text-lg font-semibold text-neutral-900 leading-snug mb-1">{s.name}</h3>
+                    <p className="text-[13px] lg:text-sm text-neutral-600 leading-snug lg:leading-relaxed">{s.card}</p>
+                  </Link>
+                )
+              })}
             </div>
           </div>
         </section>
@@ -978,41 +974,67 @@ const Home = () => {
           <div className="container-custom">
             <Intro
               eyebrow="Coverage"
-              title={<>Live where we operate.<br />More of Africa to follow.</>}
+              title={<>Live where we operate.<br />More markets to follow.</>}
               intro={LIVE_MARKETS}
             />
-            <div className="home-grid-3">
+            {/* Two to a row on a phone, four across from lg: the three live markets, and the dollar every one can settle in */}
+            <div className="grid w-full grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
               {MARKETS.map((m) => (
-                <article key={m.name} className="rounded-2xl border border-neutral-200 p-5 flex items-center gap-4">
-                  <img src={m.flag} alt="" width={40} height={40} className="w-10 h-10 rounded-full !mx-0" />
-                  <div>
-                    <h3 className="text-lg font-semibold text-neutral-900">{m.name}</h3>
-                    <p className="text-sm text-primary-600 font-semibold">{m.note}</p>
+                <article key={m.name} className="flex flex-col items-center gap-3 rounded-2xl border border-neutral-200 p-4 text-center lg:flex-row lg:gap-4 lg:p-5 lg:text-left">
+                  <img src={m.flag} alt="" width={40} height={40} className="size-9 lg:size-10 shrink-0 rounded-full object-cover !mx-0" />
+                  <div className="min-w-0">
+                    <h3 className="text-[15px] lg:text-lg font-semibold text-neutral-900 leading-snug">{m.name}</h3>
+                    <p className="text-[13px] lg:text-sm text-primary-600 font-semibold">{m.note}</p>
                   </div>
                 </article>
               ))}
             </div>
-            <p className="mt-6 text-neutral-600 max-w-3xl">
-              Fiat settles the next business day, in your local currency or in USD. Stablecoin settles the same day.
-            </p>
+            <div className="mt-3 grid gap-px overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-200 lg:mt-4 lg:grid-cols-2">
+              <div className="flex items-center gap-4 bg-neutral-50 p-4 lg:p-5">
+                <p className="w-[4.5rem] shrink-0 font-display text-4xl font-bold leading-none tracking-[-0.03em] text-primary-600">140</p>
+                <div>
+                  <p className="flex flex-wrap items-center gap-2 font-semibold text-neutral-900">
+                    Payout countries
+                    <span className="rounded-full bg-warning-100 px-2 py-0.5 text-[11px] font-semibold text-warning-700">Soon</span>
+                  </p>
+                  <p className="mt-0.5 text-sm leading-relaxed text-neutral-600">By bank, mobile wallet, and cash pickup. Crypto payouts reach any wallet worldwide today.</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4 bg-neutral-50 p-4 lg:p-5">
+                <div className="w-[4.5rem] shrink-0"><span className={`${TILE} size-11`} aria-hidden="true"><Clock className="size-5" /></span></div>
+                <div>
+                  <p className="font-semibold text-neutral-900">Settlement</p>
+                  <p className="mt-0.5 text-sm leading-relaxed text-neutral-600">Fiat the next business day, in your local currency or in USD. Stablecoin the same day.</p>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
         {/* The investors, on their own just before what merchants say */}
-        <section id="investors" className="bg-white pb-10 lg:pb-20">
+        <section id="investors" className="bg-white pb-12 lg:pb-20">
           <div className="container-custom">
-            <div className="border-t border-neutral-200 pt-10">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500 mb-5">Backed by</p>
-              <div className="flex flex-wrap items-center gap-x-12 gap-y-6">
+            <div className="grid gap-7 border-t border-neutral-200 pt-10 text-center lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-16 lg:text-left">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-600 mb-3">Our investors</p>
+                <h2 className="text-2xl lg:text-3xl font-display font-bold text-neutral-900 leading-tight tracking-[-0.02em]">Backed by leading investors.</h2>
+                <p className="mx-auto mt-2 max-w-md text-neutral-600 leading-relaxed lg:mx-0">Global funds and industry veterans who share our belief in the future of payments.</p>
+                <Link to="/resources/about" className="hidden lg:inline-flex items-center gap-1.5 mt-4 font-semibold text-primary-600 hover:text-primary-700">
+                  Meet our investors and angels
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+              {/* One row at every width: three equal columns, each logo scaled to fit its own */}
+              <div className="grid grid-cols-3 items-center justify-items-center gap-x-5 lg:gap-x-12">
                 {[
-                  { name: 'Founder Collective', logo: '/founder_collective_logo.png', size: 'h-7 lg:h-8' },
-                  { name: 'Raba Partnership', logo: '/Raba_logo.webp', size: 'h-6 lg:h-7' },
-                  { name: 'Digital Currency Group', logo: '/digital-currency-group-logo-nobg.png', size: 'h-10 lg:h-12' },
+                  { name: 'Founder Collective', logo: '/founder_collective_logo.png', size: 'max-h-7 lg:max-h-9' },
+                  { name: 'Raba Partnership', logo: '/Raba_logo.webp', size: 'max-h-6 lg:max-h-8' },
+                  { name: 'Digital Currency Group', logo: '/digital-currency-group-logo-nobg.png', size: 'max-h-10 lg:max-h-14' },
                 ].map((b) => (
-                  <img key={b.name} src={b.logo} alt={b.name} className={`${b.size} w-auto object-contain !mx-0`} />
+                  <img key={b.name} src={b.logo} alt={b.name} className={`${b.size} w-auto max-w-full object-contain !mx-0`} />
                 ))}
               </div>
-              <Link to="/resources/about" className="inline-flex items-center gap-1.5 mt-5 font-semibold text-primary-600 hover:text-primary-700">
+              <Link to="/resources/about" className="inline-flex items-center justify-center gap-1.5 font-semibold text-primary-600 hover:text-primary-700 lg:hidden">
                 Meet our investors and angels
                 <ArrowRight className="w-4 h-4" />
               </Link>
@@ -1064,54 +1086,28 @@ const Home = () => {
           </div>
         </section>
 
-        <section id="entities" className="section-padding bg-white">
-          <div className="container-custom">
-            <Intro
-              eyebrow="Our entities"
-              title={<>Regulated where<br />we operate.</>}
-              intro="The company behind Ezeebit in each country, and what it operates under."
-            />
-            <div className="grid gap-4 lg:grid-cols-3">
-              {ENTITIES.map((e) => (
-                <article key={e.country} className="flex gap-4 rounded-2xl border border-neutral-200 bg-neutral-50 p-5 lg:p-6">
-                  <img src={e.flag} alt="" width={28} height={28} className="w-7 h-7 mx-0 mt-0.5 shrink-0 rounded-full" />
-                  <div className="min-w-0">
-                    <h3 className="text-lg font-semibold text-neutral-900">{e.country}</h3>
-                    <p className="mt-0.5 mb-3 text-[13px] text-neutral-500">
-                      {e.entity}
-                      {/* Kept whole so a registration number never breaks across lines */}
-                      {e.reg && <> · <span className="whitespace-nowrap">Reg. {e.reg}</span></>}
-                    </p>
-                    <ul className="list-disc space-y-1.5 pl-4 text-sm leading-relaxed text-neutral-600 marker:text-neutral-300 [&_b]:font-semibold [&_b]:text-neutral-900">
-                      {e.points.map((point, i) => <li key={i}>{point}</li>)}
-                    </ul>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="security" className="section-padding bg-neutral-50">
+        <section id="security" className="section-padding bg-white">
           <div className="container-custom">
             <Intro
               eyebrow="Security"
               title={<>Every payment checked,<br />every key split.</>}
               intro="How funds are held, and how every payment is checked before it reaches you."
             />
+            {/* A row each on a phone, the icon beside the words; three across from md */}
             <div className="home-grid-3">
-              <article className="rounded-2xl border border-neutral-200 bg-white p-5 lg:p-6 text-center lg:text-left">
-                <h3 className="text-lg font-semibold text-neutral-900 mb-2">Custody</h3>
-                <p className="text-neutral-600 text-sm leading-relaxed">Ezeebit holds your balances as a Crypto Asset Service Provider regulated by the FSCA. Crypto sits in MPC wallets on SOC 2 audited infrastructure, where every key is split so no single person can move funds.</p>
-              </article>
-              <article className="rounded-2xl border border-neutral-200 bg-white p-5 lg:p-6 text-center lg:text-left">
-                <h3 className="text-lg font-semibold text-neutral-900 mb-2">Screening</h3>
-                <p className="text-neutral-600 text-sm leading-relaxed">Every payer, payee and wallet is checked. Travel Rule data is captured on transfers, and addresses are screened before funds move.</p>
-              </article>
-              <article className="rounded-2xl border border-neutral-200 bg-white p-5 lg:p-6 text-center lg:text-left">
-                <h3 className="text-lg font-semibold text-neutral-900 mb-2">No chargebacks</h3>
-                <p className="text-neutral-600 text-sm leading-relaxed">A confirmed crypto payment is final. The rate is locked and hedged at the point of payment, so the sale stays settled.</p>
-              </article>
+              {([
+                [Lock, 'Custody', 'Balances held by an FSCA-regulated provider, in MPC wallets on SOC 2 audited infrastructure.'],
+                [ShieldCheck, 'Screening', 'Every payer, payee, and wallet is screened before funds move.'],
+                [BadgeCheck, 'No chargebacks', 'A confirmed payment is final, at a rate locked when it is made.'],
+              ] as const).map(([Icon, title, body]) => (
+                <article key={title} className="flex items-start gap-3.5 rounded-2xl border border-neutral-200 bg-neutral-50 p-4 text-left md:block lg:p-6">
+                  <span className={`${TILE} size-10 md:mb-4 lg:size-12`} aria-hidden="true"><Icon className="size-5 lg:size-6" /></span>
+                  <div className="min-w-0">
+                    <h3 className="text-base lg:text-lg font-semibold text-neutral-900 mb-1">{title}</h3>
+                    <p className="text-neutral-600 text-sm leading-relaxed">{body}</p>
+                  </div>
+                </article>
+              ))}
             </div>
             <a href="https://trust.ezeebit.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 mt-6 font-semibold text-primary-600 hover:text-primary-700">
               Trust Centre
@@ -1214,7 +1210,7 @@ const Home = () => {
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-400 mb-3">Talk to us</p>
                 <h3 className="text-2xl font-display font-bold text-white mb-3">Rather talk it through first?</h3>
                 <p className="text-neutral-300 leading-relaxed mb-6">
-                  Bring your use case. We’ll walk through pay-ins, payouts, and which plan fits.
+                  Best for platforms and enterprises with larger volumes or a custom integration. Bring your use case, and we’ll walk through pay-ins, payouts, and which plan fits.
                 </p>
                 <ul className="divide-y divide-white/10 border-y border-white/10 mb-6">
                   {CONTACTS.map(({ icon: Icon, label, value, href, hours }) => (

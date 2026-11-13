@@ -235,10 +235,7 @@ const Header = () => {
       dropdown: [
         {
           group: 'Platforms',
-          items: [
-            { name: 'Platforms', href: '/platforms', description: 'Pay-ins and payouts for any platform' },
-            ...SOLUTIONS.filter((s) => s.group === 'platforms').map((s) => ({ name: s.name, href: solutionPath(s), description: s.nav })),
-          ],
+          items: SOLUTIONS.filter((s) => s.group === 'platforms').map((s) => ({ name: s.name, href: solutionPath(s), description: s.nav })),
         },
         {
           group: 'Businesses',

@@ -10,7 +10,7 @@ import DarkBackdrop from '../components/DarkBackdrop'
 
 const About = () => {
   const stats = [
-    { number: "100,000+", label: "Transactions processed", icon: <TrendingUp className="w-6 h-6" /> },
+    { number: "$25M+", label: "Moved every year", icon: <TrendingUp className="w-6 h-6" /> },
     { number: "100+", label: "Platforms and businesses", icon: <Users className="w-6 h-6" /> },
     { number: "9", label: "Supported cryptocurrencies", icon: <Globe className="w-6 h-6" /> },
     { number: "99.99%", label: "Uptime", icon: <Shield className="w-6 h-6" /> }
@@ -74,7 +74,7 @@ const About = () => {
     {
       year: "2025",
       title: "Seed Funding Closed",
-      description: "Closed our seed funding round of $2.05m to accelerate product development and merchant expansion across Africa."
+      description: "Closed our seed funding round of $2.05m to accelerate product development and merchant expansion across Africa and beyond."
     }
   ]
 
@@ -82,7 +82,7 @@ const About = () => {
     <>
       <SEO
         title="About Ezeebit"
-        description="Ezeebit builds stablecoin and crypto payment infrastructure for merchants across Africa. Based in Cape Town."
+        description="Ezeebit builds stablecoin and crypto payment infrastructure for merchants and platforms in Africa and beyond. Based in Cape Town."
         canonicalUrl="/resources/about"
         crumbs={[{ name: 'About', path: '/resources/about' }]}
       />
@@ -96,8 +96,8 @@ const About = () => {
       <PageHero
         kicker="About us"
         title="Pioneering stablecoin"
-        accent="payments in Africa"
-        description="We're on a mission to make stablecoin payments as simple and secure as traditional ones — money in, money held and money out — so African businesses can move value as easily as information."
+        accent="payments in Africa and beyond"
+        description="We're on a mission to make stablecoin payments as simple and secure as traditional ones: money in, money held, and money out, so businesses in Africa and beyond can move value as easily as information."
         trust={[
           { icon: <Award />, label: 'FSCA regulated' },
           { icon: <Shield />, label: 'Bank-grade security' },
@@ -131,7 +131,7 @@ const About = () => {
       </section>
 
       {/* Mission & Vision */}
-      <section className="section-padding bg-neutral-50 mt-8 lg:mt-0">
+      <section className="section-padding bg-neutral-50">
         <div className="container-custom">
           <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:items-center">
             <motion.div
@@ -155,7 +155,7 @@ const About = () => {
                 Our mission
               </h2>
               <p className="text-base lg:text-lg text-neutral-600">
-                To transform how businesses in Africa move money — by building the trusted stablecoin infrastructure layer beneath it. We give them one place to take payments in, hold a balance in fiat or stablecoin, and pay customers out, with the hedging and compliance handled underneath.
+                To transform how businesses in Africa and beyond move money, by building the trusted stablecoin infrastructure layer beneath it. We give them one place to take payments in, hold a balance in fiat or stablecoin, and pay customers out, with the hedging and compliance handled underneath.
               </p>
             </motion.div>
           </div>
@@ -211,7 +211,7 @@ const About = () => {
                 Access for all
               </h3>
               <p className="feature-text">
-                We're here to democratise stablecoin payments — not just for the privileged few, but for every business and customer across Africa and beyond.
+                We're here to democratise stablecoin payments, not just for the privileged few, but for every business and customer across Africa and beyond.
               </p>
             </motion.div>
           </div>
@@ -230,7 +230,7 @@ const About = () => {
               Our journey
             </h2>
             <p className="text-base lg:text-xl text-neutral-600 max-w-3xl mx-auto">
-              Key milestones in our mission to transform stablecoin and crypto payments in Africa.
+              Key milestones in our mission to transform stablecoin and crypto payments in Africa and beyond.
             </p>
           </motion.div>
 
@@ -276,7 +276,7 @@ const About = () => {
               Our co-founders
             </h2>
             <p className="text-base lg:text-xl text-neutral-600 max-w-3xl mx-auto">
-              Meet the team driving crypto payment innovation across Africa.
+              Meet the team driving crypto payment innovation across Africa and beyond.
             </p>
           </motion.div>
 
@@ -327,7 +327,7 @@ const About = () => {
           >
             <h2 className="section-title">Backed by world-class investors</h2>
             <p className="text-lg text-neutral-600 max-w-2xl mx-auto leading-relaxed">
-              Supported by leading global funds and industry veterans who share our belief in building the future of payments in Africa
+              Supported by leading global funds and industry veterans who share our belief in building the future of payments in Africa and beyond
             </p>
           </motion.div>
 
@@ -518,7 +518,7 @@ const About = () => {
               Join our mission
             </h2>
             <p className="text-base lg:text-xl mb-8 max-w-2xl mx-auto text-neutral-300">
-              Be part of the stablecoin and crypto payment revolution in Africa. Start accepting stablecoin and cryptocurrency payments today.
+              Be part of the stablecoin and crypto payment revolution in Africa and beyond. Start accepting stablecoin and cryptocurrency payments today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a

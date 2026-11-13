@@ -21,7 +21,7 @@ const rand = (v: number) => `R${v.toLocaleString('en-US', { minimumFractionDigit
 const LBL = 'text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-500'
 // The merchant's screens are in neutral colours with a dark button, so the
 // hand-off to the checkout, in Ezeebit's blue, reads as a change of screen
-const GO = 'w-full min-h-[48px] rounded-xl bg-neutral-900 px-4 text-sm font-semibold text-white hover:bg-neutral-700'
+const GO = 'w-full min-h-[44px] rounded-xl bg-neutral-900 px-4 text-sm font-semibold text-white hover:bg-neutral-700'
 
 /** The panel's label: the merchant's screen, then the checkout, with the one showing picked out. Phones show only that one. */
 const Handoff = ({ from, to = 'Ezeebit checkout', at }: { from: string; to?: string; at: 'from' | 'checkout' }) => (
@@ -34,14 +34,14 @@ const Handoff = ({ from, to = 'Ezeebit checkout', at }: { from: string; to?: str
 
 /** One of the merchant's own screens, inside the panel's card. */
 const MerchantScreen = ({ title, sub, children, action }: { title: string; sub: string; children: ReactNode; action?: ReactNode }) => (
-  <div className="flex-1 min-h-0 flex flex-col rounded-[20px] bg-white font-ui overflow-hidden [&_img]:!mx-0">
-    <div className="px-5 pt-4 pb-3 border-b border-neutral-100">
+  <div className="flex-1 min-h-0 flex flex-col rounded-[20px] bg-white font-ui text-left overflow-hidden [&_img]:!mx-0">
+    <div className="px-5 pt-3.5 pb-2.5 border-b border-neutral-100">
       <p className="text-[15px] font-semibold text-neutral-900">{title}</p>
       <p className="text-xs text-neutral-500">{sub}</p>
     </div>
     {/* Spaced to fit the tour's frame whole: these screens never scroll */}
-    <div className="flex-1 min-h-0 overflow-hidden flex flex-col gap-4 px-5 py-4">{children}</div>
-    {action && <div className="px-5 pb-4 pt-3 border-t border-neutral-100">{action}</div>}
+    <div className="flex-1 min-h-0 overflow-hidden flex flex-col gap-3 px-5 py-3">{children}</div>
+    {action && <div className="px-5 pb-3.5 pt-3 border-t border-neutral-100">{action}</div>}
   </div>
 )
 
@@ -54,15 +54,15 @@ const OTHER_METHODS: { icon: LucideIcon; name: string }[] = [
 const Methods = ({ label = 'Payment method', others = OTHER_METHODS, crypto = 'Crypto' }: { label?: string; others?: { icon: LucideIcon; name: string }[]; crypto?: string }) => (
   <div>
     <p className={LBL}>{label}</p>
-    <ul className="mt-2 flex flex-col gap-2">
+    <ul className="mt-1.5 flex flex-col gap-1.5">
       {others.map(({ icon: Icon, name }) => (
-        <li key={name} className="flex items-center gap-3 rounded-xl border border-neutral-200 px-3 py-2.5 text-sm text-neutral-500">
+        <li key={name} className="flex items-center gap-3 rounded-xl border border-neutral-200 px-3 py-2 text-sm text-neutral-500">
           <span className="w-4 h-4 rounded-full border border-neutral-300" />
           <Icon className="w-4 h-4" />
           {name}
         </li>
       ))}
-      <li className="flex items-center gap-3 rounded-xl border border-neutral-900 ring-1 ring-neutral-900 px-3 py-2.5 text-sm font-semibold text-neutral-900">
+      <li className="flex items-center gap-3 rounded-xl border border-neutral-900 ring-1 ring-neutral-900 px-3 py-2 text-sm font-semibold text-neutral-900">
         <span className="w-4 h-4 rounded-full border-[5px] border-neutral-900" />
         <img src="/ezeebit-icon-blue.webp" alt="" width={16} height={16} className="w-4 h-4" />
         {crypto}
@@ -81,14 +81,11 @@ const Store = ({ onPay }: { onPay: (amount: number) => void }) => {
       sub="Your store"
       action={<button type="button" className={GO} onClick={() => onPay(total)}>Pay {rand(total)} with crypto</button>}
     >
-      <div className="flex flex-col divide-y divide-neutral-100 rounded-xl border border-neutral-200 text-sm">
-        <p className="flex gap-3 px-3 py-2.5"><span className="w-14 shrink-0 text-neutral-500">Contact</span>you@example.com</p>
-        <p className="flex gap-3 px-3 py-2.5"><span className="w-14 shrink-0 text-neutral-500">Ship to</span>12 Bree St, Cape Town</p>
-      </div>
+      <p className="flex gap-3 rounded-xl border border-neutral-200 px-3 py-2 text-sm"><span className="w-14 shrink-0 text-neutral-500">Ship to</span>12 Bree St, Cape Town</p>
       <div>
         <p className={LBL}>Order summary</p>
-        <div className="mt-2 flex items-center gap-3 text-sm">
-          <span className="w-11 h-11 shrink-0 rounded-lg bg-neutral-100 flex items-center justify-center">
+        <div className="mt-1.5 flex items-center gap-3 text-sm">
+          <span className="w-10 h-10 shrink-0 rounded-lg bg-neutral-100 flex items-center justify-center">
             <ShoppingBag className="w-5 h-5 text-neutral-400" />
           </span>
           <span className="flex-1 min-w-0">
@@ -97,7 +94,7 @@ const Store = ({ onPay }: { onPay: (amount: number) => void }) => {
           </span>
           <span className="tabular-nums text-neutral-900">{rand(1_100)}</span>
         </div>
-        <div className="mt-3 space-y-1.5 border-t border-neutral-100 pt-3 text-sm">
+        <div className="mt-2 space-y-1 border-t border-neutral-100 pt-2 text-sm">
           <p className="flex justify-between text-neutral-500"><span>Shipping</span><span className="tabular-nums">{rand(150)}</span></p>
           <p className="flex justify-between font-semibold text-neutral-900"><span>Total</span><span className="tabular-nums">{rand(total)}</span></p>
         </div>
@@ -127,14 +124,14 @@ const Cashier = ({ onPay }: { onPay: (amount: number) => void }) => {
       </div>
       <div>
         <p className={LBL}>Amount</p>
-        <div className="mt-2 grid grid-cols-2 gap-2">
+        <div className="mt-1.5 grid grid-cols-2 gap-2">
           {AMOUNTS.map((a) => (
             <button
               key={a}
               type="button"
               aria-pressed={amount === a}
               onClick={() => setAmount(a)}
-              className={`min-h-[44px] rounded-xl border text-sm font-semibold tabular-nums ${amount === a ? 'border-neutral-900 ring-1 ring-neutral-900 text-neutral-900' : 'border-neutral-200 text-neutral-600 hover:border-neutral-400'}`}
+              className={`min-h-[40px] rounded-xl border text-sm font-semibold tabular-nums ${amount === a ? 'border-neutral-900 ring-1 ring-neutral-900 text-neutral-900' : 'border-neutral-200 text-neutral-600 hover:border-neutral-400'}`}
             >
               R{a.toLocaleString('en-US')}
             </button>
@@ -166,14 +163,14 @@ const Withdraw = ({ onWithdraw }: { onWithdraw: (amount: number) => void }) => {
       </div>
       <div>
         <p className={LBL}>Amount</p>
-        <div className="mt-2 grid grid-cols-2 gap-2">
+        <div className="mt-1.5 grid grid-cols-2 gap-2">
           {PAYOUT_AMOUNTS.map((a) => (
             <button
               key={a}
               type="button"
               aria-pressed={amount === a}
               onClick={() => setAmount(a)}
-              className={`min-h-[44px] rounded-xl border text-sm font-semibold tabular-nums ${amount === a ? 'border-neutral-900 ring-1 ring-neutral-900 text-neutral-900' : 'border-neutral-200 text-neutral-600 hover:border-neutral-400'}`}
+              className={`min-h-[40px] rounded-xl border text-sm font-semibold tabular-nums ${amount === a ? 'border-neutral-900 ring-1 ring-neutral-900 text-neutral-900' : 'border-neutral-200 text-neutral-600 hover:border-neutral-400'}`}
             >
               R{a.toLocaleString('en-US')}
             </button>

@@ -210,11 +210,11 @@ const StoreDetail = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="text-center"
               >
-                <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4 text-primary-500">
-                  {index === 0 && <CreditCard className="w-8 h-8" />}
-                  {index === 1 && <QrCode className="w-8 h-8" />}
-                  {index === 2 && <Smartphone className="w-8 h-8" />}
-                  {index === 3 && <CheckCircle className="w-8 h-8" />}
+                <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center mx-auto mb-4 text-primary-400">
+                  {index === 0 && <CreditCard className="w-6 h-6" />}
+                  {index === 1 && <QrCode className="w-6 h-6" />}
+                  {index === 2 && <Smartphone className="w-6 h-6" />}
+                  {index === 3 && <CheckCircle className="w-6 h-6" />}
                 </div>
                 <div className="text-sm font-semibold text-primary-500 mb-2">STEP {index + 1}</div>
                 <p className="text-neutral-700">

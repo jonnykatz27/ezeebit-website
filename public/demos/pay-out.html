@@ -421,10 +421,10 @@ function startProc(){
   steps.forEach(function(s){ s.className = 'step'; });
   function mark(i, cls){ if(steps[i]) steps[i].className = 'step ' + cls; }
   mark(0,'is-done'); mark(1,'now');
-  procTimers.push(setTimeout(function(){ mark(1,'is-done'); mark(2,'now'); }, 2200));
-  procTimers.push(setTimeout(function(){ mark(2,'is-done'); mark(3,'now'); }, 6500));
-  procTimers.push(setTimeout(function(){ mark(3,'is-done'); }, 8200));
-  procTimers.push(setTimeout(function(){ go(6); }, 9400));
+  procTimers.push(setTimeout(function(){ mark(1,'is-done'); mark(2,'now'); }, 1400));
+  procTimers.push(setTimeout(function(){ mark(2,'is-done'); mark(3,'now'); }, 4000));
+  procTimers.push(setTimeout(function(){ mark(3,'is-done'); }, 5200));
+  procTimers.push(setTimeout(function(){ go(6); }, 6000));
 }
 
 function go(n){

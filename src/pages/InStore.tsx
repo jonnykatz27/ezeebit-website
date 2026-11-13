@@ -335,25 +335,27 @@ const InStore = () => {
             { title: 'With the ePOS', steps: eposSteps },
             { title: 'With a static QR (Ezeebit Pay)', steps: staticQrSteps },
           ] as const).map((group) => (
-            <div key={group.title} className="mb-16 last:mb-0">
-              <h3 className="text-2xl font-display font-bold text-neutral-900 text-center mb-10">
+            <div key={group.title} className="mb-10 lg:mb-16 last:mb-0">
+              <h3 className="text-xl lg:text-2xl font-display font-bold text-neutral-900 text-center mb-5 lg:mb-10">
                 {group.title}
               </h3>
               {/* One row per flow on large screens, so the ePOS's fifth step doesn't sit alone */}
-              <div className={`grid grid-cols-1 md:grid-cols-2 gap-8 ${group.steps.length === 5 ? 'lg:grid-cols-5' : 'lg:grid-cols-4'}`}>
+              <div className={`grid grid-cols-[minmax(0,1fr)] md:grid-cols-2 gap-3 lg:gap-8 ${group.steps.length === 5 ? 'lg:grid-cols-5' : 'lg:grid-cols-4'}`}>
                 {group.steps.map((step, index) => (
                   <motion.div
                     key={step}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className="text-center"
+                    className="flex items-center gap-4 rounded-2xl border border-neutral-200 bg-white p-4 text-left lg:block lg:border-0 lg:bg-transparent lg:p-0 lg:text-center"
                   >
-                    <div className="w-16 h-16 bg-neutral-950 rounded-full flex items-center justify-center mx-auto mb-4 text-primary-400 text-xl font-semibold">
+                    <div className="w-10 h-10 lg:w-12 lg:h-12 shrink-0 bg-neutral-950 rounded-xl flex items-center justify-center lg:mx-auto lg:mb-4 text-primary-400 text-base lg:text-lg font-semibold">
                       {index + 1}
                     </div>
-                    <div className="text-sm font-semibold text-primary-500 mb-2">STEP {index + 1}</div>
-                    <p className="text-neutral-600">{step}</p>
+                    <div className="min-w-0">
+                      <div className="hidden lg:block text-sm font-semibold text-primary-500 mb-2">STEP {index + 1}</div>
+                      <p className="text-[15px] lg:text-base text-neutral-600">{step}</p>
+                    </div>
                   </motion.div>
                 ))}
               </div>

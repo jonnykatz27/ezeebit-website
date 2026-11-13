@@ -27,9 +27,6 @@ import { SOLUTIONS, solutionPath } from '../lib/solutions'
  * sections or from the rest of the site.
  */
 
-/** Regulatory status, in the "regulated by the FSCA" wording used for new copy. */
-const REGULATED = 'Ezeebit is regulated by the FSCA as a Crypto Asset Service Provider, FSP No. 53664.'
-
 /** As the contact page lists it: email around the clock, phone and WhatsApp in office hours. */
 const SUPPORT = 'Support 24/7 by email, and by phone or WhatsApp Monday to Friday, 8am to 6pm SAST.'
 
@@ -145,7 +142,7 @@ const COINS: Mark[][] = [[
   { src: '/usdc-logo.svg', label: 'USD Coin (USDC)' },
 ]]
 
-/** The local currencies settled the next business day, then the stablecoin settled the same day. */
+/** The local currencies, then the stablecoin; both settle the same day. */
 const SETTLES_IN: Mark[][] = [
   [
     { src: '/za-flag.svg', label: 'South African rand (ZAR)' },
@@ -180,7 +177,7 @@ const PAY_INS: Stop = {
   facts: [
     [Wallet, 'Pay with', 'Any wallet on-chain, or with VALR, Luno, Binance, and WalletConnect Pay', PAY_WITH],
     [Coins, 'Coins', 'BTC, ETH, USDT, USDC, and more', COINS],
-    [Landmark, 'Settlement', 'Local currency the next business day, or stablecoin the same day', SETTLES_IN],
+    [Landmark, 'Settlement', 'The same day, in local currency or stablecoin', SETTLES_IN],
     [BadgeCheck, 'Setup', 'No setup fees, and live in days'],
   ],
   links: [
@@ -319,7 +316,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: 'How fast are payments processed?',
-    a: 'The rate is locked at checkout and the payment is confirmed on-chain. Settlement is the next business day in local currency, or the same day in stablecoin.',
+    a: 'The rate is locked at checkout and the payment is confirmed on-chain. Settlement is the same day, in local currency or in stablecoin.',
   },
   {
     q: 'Can I choose to be paid in stablecoins instead of local currency?',
@@ -347,11 +344,11 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: 'Is Ezeebit regulated?',
-    a: `Yes. ${REGULATED} The FSCA is South Africa's Financial Sector Conduct Authority.`,
+    a: "Yes, in each country it operates from. In South Africa, Ezee Solutions Group (Pty) Ltd is regulated by the FSCA, the Financial Sector Conduct Authority, as a Crypto Asset Service Provider, FSP No. 53664. In Kenya, Ezee Solutions Group (Kenya) Limited operates under the transitional provisions of the Virtual Asset Service Providers Act, 2025. In Canada, Ezeebit Canada Ltd. is on FINTRAC's money services business registry, MSB No. N300001912.",
   },
   {
     q: 'Which countries does Ezeebit operate in?',
-    a: 'Ezeebit provides stablecoin and crypto payment infrastructure for merchants and platforms across Africa. It is live in South Africa, Kenya and Nigeria, with more African markets to follow.',
+    a: 'Ezeebit provides stablecoin and crypto payment infrastructure for merchants and platforms across Africa. It is live in South Africa, Kenya and Nigeria, with more markets to follow.',
   },
   {
     q: 'Do you provide customer support?',
@@ -478,7 +475,7 @@ const STATS: { n: string; l: string; detail: string }[] = [
   { n: '$25M+', l: 'Moved every year', detail: "Today's run rate" },
   { n: '100+', l: 'Platforms and businesses', detail: 'Today' },
   { n: '9', l: 'Cryptocurrencies accepted', detail: 'BTC, ETH, USDT, USDC, BNB, DAI, PAXG, ZARP and ZARU on 5 networks' },
-  { n: '6', l: 'Currencies held and converted', detail: 'ZAR, KES, NGN, USD, USDT and USDC · up to 90 with global rails' },
+  { n: '5', l: 'Currencies held and converted', detail: 'ZAR, KES, NGN, USD, and USDT, with USDC coming soon · up to 90 with global rails' },
 ]
 
 /** An icon for each solution's card, by its slug. */
@@ -883,7 +880,7 @@ const Home = () => {
       <SEO
         title="Ezeebit | Stablecoin and crypto payments for Africa"
         exactTitle
-        description="Stablecoin and crypto payments across Africa. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+        description="Stablecoin and crypto payments across Africa. Ezeebit is live in South Africa, Kenya and Nigeria, with more markets to follow."
         canonicalUrl="/"
       />
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="overflow-hidden -mt-20">
@@ -894,7 +891,7 @@ const Home = () => {
           // Wraps between the two phrases first, and "pay-ins" never splits at its hyphen
           title={<><span className="inline-block">Stablecoin <span className="whitespace-nowrap">pay-ins</span></span> <span className="inline-block">and payouts,</span></>}
           accent="made Ezee."
-          description="Your customers pay in and cash out in crypto, on your platform, in-store, or online, while you settle in ZAR, KES, NGN, USD, or stablecoin. One balance and one API, with compliance built in."
+          description="Your customers pay in and cash out in crypto, on your platform, in-store, or online, while you settle in ZAR, KES, NGN, USD, or stablecoin. One account and one API, with compliance built in."
           actions={
             <>
               <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
@@ -914,7 +911,7 @@ const Home = () => {
             <div className="border-t border-white/10 pt-10 lg:pt-14 home-stats">
               {STATS.map((s) => (
                 // Two by two on a phone or tablet; four columns from lg
-                <div key={s.l} className="text-center lg:text-left">
+                <div key={s.l} className="text-center">
                   <div className="text-[2rem] sm:text-4xl xl:text-5xl whitespace-nowrap font-display font-bold tracking-[-0.03em] text-primary-400 leading-none mb-3">{s.n}</div>
                   <div>
                     <p className="text-[15px] text-neutral-200">{s.l}</p>
@@ -933,12 +930,12 @@ const Home = () => {
               title={<>Names your customers<br />already trust.</>}
               intro="Merchants that take payments with Ezeebit, and the exchanges, wallets, platforms and stablecoin issuers we work with."
             />
-            {/* Merchants on the first row, the companies we integrate with on the second */}
+            {/* The companies we integrate with on the first row, merchants on the second */}
             <div className="partner-carousel-container mb-4 lg:mb-6">
-              <PartnerCarousel partners={PARTNERS_A} direction="left" speed={40} />
+              <PartnerCarousel partners={PARTNERS_B} direction="left" speed={40} />
             </div>
             <div className="partner-carousel-container">
-              <PartnerCarousel partners={PARTNERS_B} direction="right" speed={40} />
+              <PartnerCarousel partners={PARTNERS_A} direction="right" speed={40} />
             </div>
           </div>
         </section>
@@ -1004,7 +1001,7 @@ const Home = () => {
                 <div className="w-[4.5rem] shrink-0"><span className={`${TILE} size-11`} aria-hidden="true"><Clock className="size-5" /></span></div>
                 <div>
                   <p className="font-semibold text-neutral-900">Settlement</p>
-                  <p className="mt-0.5 text-sm leading-relaxed text-neutral-600">Fiat the next business day, in your local currency or in USD. Stablecoin the same day.</p>
+                  <p className="mt-0.5 text-sm leading-relaxed text-neutral-600">The same day, in your local currency, in USD, or in stablecoin.</p>
                 </div>
               </div>
             </div>

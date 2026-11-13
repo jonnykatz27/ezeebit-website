@@ -113,7 +113,7 @@ const Payouts = () => {
     <>
       <SEO
         title="Stablecoin payouts"
-        description="Pay customers from an Ezeebit balance in USDT, with more stablecoins coming soon. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+        description="Pay customers from an Ezeebit balance in USDT, with more stablecoins coming soon. Ezeebit is live in South Africa, Kenya and Nigeria, with more markets to follow."
         canonicalUrl="/payouts"
         crumbs={[{ name: 'Payouts', path: '/payouts' }]}
         extraNodes={[faqPageNode('https://ezeebit.com/payouts#faq', payoutFaqs)]}

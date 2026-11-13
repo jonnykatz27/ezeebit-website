@@ -65,7 +65,7 @@ const OTC = () => {
     <>
       <SEO
         title="OTC desk for large trades"
-        description="An OTC desk for large crypto trades. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+        description="An OTC desk for large crypto trades. Ezeebit is live in South Africa, Kenya and Nigeria, with more markets to follow."
         canonicalUrl="/otc"
         crumbs={[{ name: 'OTC desk', path: '/otc' }]}
       />

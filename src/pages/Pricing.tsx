@@ -25,7 +25,7 @@ const pricingFaqs = [
   },
   {
     question: 'When do I get paid?',
-    answer: 'In local currency the next business day, or in stablecoin the same day.',
+    answer: 'The same day, in local currency or in stablecoin.',
   },
   {
     question: 'Can I get lower rates?',

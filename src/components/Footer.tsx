@@ -156,9 +156,6 @@ const Footer = () => {
           <p className="text-neutral-300 text-xs md:text-sm">
             &copy; 2026 Ezeebit. All rights reserved.
           </p>
-          <p className="mt-2 text-[10px] md:text-xs text-neutral-300 max-w-2xl mx-auto leading-relaxed">
-            Ezeebit is regulated by the FSCA as a Crypto Asset Service Provider, FSP No. 53664.
-          </p>
         </div>
       </div>
     </footer>

@@ -79,7 +79,7 @@ export type Solution = Base &
 const SIGNUP = { label: 'Get started free', to: 'https://merchant.ezeebit.com/#/signup' }
 const TALK = { label: 'Talk to the team', to: '/book-a-call' }
 
-const SETTLE = 'Settle in ZAR, KES, NGN, or USD the next business day, or in stablecoin the same day.'
+const SETTLE = 'Settle the same day, in ZAR, KES, NGN, or USD, or in stablecoin.'
 
 export const SOLUTIONS: Solution[] = [
   {
@@ -331,7 +331,7 @@ export const SOLUTIONS: Solution[] = [
     faqs: [
       { question: 'Which store platforms have plugins?', answer: 'Shopify, WooCommerce, and Magento. Anything else can use the API.' },
       { question: 'What does it cost?', answer: '1% or less per payment, excluding VAT. There are no setup fees and no monthly platform fees.' },
-      { question: 'When do I get paid?', answer: 'In local currency the next business day, or in stablecoin the same day.' },
+      { question: 'When do I get paid?', answer: 'The same day, in local currency or in stablecoin.' },
     ],
   },
   {

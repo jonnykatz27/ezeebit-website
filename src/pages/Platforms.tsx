@@ -29,7 +29,7 @@ const Platforms = () => {
     {
       icon: SlidersHorizontal,
       title: "Choose your exposure",
-      body: "Settle in stablecoin the same day, or in ZAR, KES, NGN or USD the next business day. How much crypto you hold is up to you."
+      body: "Settle the same day, in stablecoin or in ZAR, KES, NGN or USD. How much crypto you hold is up to you."
     },
     {
       icon: ShieldCheck,
@@ -86,7 +86,7 @@ const Platforms = () => {
     },
     {
       title: "Get settled",
-      body: "T+0 in stablecoin, or T+1 in ZAR, KES, NGN or USD to your bank account."
+      body: "The same day, in stablecoin or in ZAR, KES, NGN or USD to your bank account."
     }
   ]
 
@@ -132,7 +132,7 @@ const Platforms = () => {
     <>
       <SEO
         title="Crypto pay-ins and payouts for platforms"
-        description="Accept crypto deposits and pay users in stablecoin. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+        description="Accept crypto deposits and pay users in stablecoin. Ezeebit is live in South Africa, Kenya and Nigeria, with more markets to follow."
         canonicalUrl="/platforms"
         ogImage="/og-platforms.jpg"
         crumbs={[{ name: 'Platforms', path: '/platforms' }]}

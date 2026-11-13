@@ -22,7 +22,7 @@ const PLANS: Plan[] = [
     unit: 'or less per payment',
     fee: 'Excluding VAT',
     body: 'You receive exactly the amount you charged. Your customer sees and accepts the rate before paying.',
-    points: ['In store, online checkout and platform deposits', 'Local currency next business day, or stablecoin the same day', 'Lower rates at volume on Enterprise'],
+    points: ['In store, online checkout and platform deposits', 'Settled the same day, in local currency or stablecoin', 'Lower rates at volume on Enterprise'],
     cta: { label: 'Start free', href: 'https://merchant.ezeebit.com/#/signup' },
   },
   {

@@ -2,7 +2,7 @@
 
 > Ezeebit is stablecoin and crypto payment infrastructure for merchants across Africa. It lets merchants accept stablecoin and cryptocurrency payments in-store and online. It is not a retail cryptocurrency exchange, and it is not an Australian exchange.
 
-Ezeebit (Ezee Solutions Group (Pty) Ltd) builds the checkout, conversion and settlement layer. A customer pays from a crypto wallet. The merchant can be settled in a stablecoin (USDT or USDC) the same day, on every plan, or in ZAR, KES, NGN or USD the next business day. The company is based in Cape Town, South Africa. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow.
+Ezeebit (Ezee Solutions Group (Pty) Ltd) builds the checkout, conversion and settlement layer. A customer pays from a crypto wallet. The merchant can be settled the same day, on every plan, in a stablecoin (USDT or USDC) or in ZAR, KES, NGN or USD. The company is based in Cape Town, South Africa. Ezeebit is live in South Africa, Kenya and Nigeria, with more markets to follow.
 
 Ezeebit is regulated by South Africa's Financial Sector Conduct Authority (FSCA).
 
@@ -33,8 +33,8 @@ Supported assets include BTC, ETH, USDT, USDC, BNB, DAI and PAXG, on Bitcoin, Et
 
 ## Markets
 
-- Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow.
-- Local-currency settlement is in ZAR, KES or NGN, the next business day. USD is also available. Stablecoin settlement is the same day on every plan.
+- Ezeebit is live in South Africa, Kenya and Nigeria, with more markets to follow.
+- Settlement is the same day on every plan: in local currency (ZAR, KES or NGN), in USD, or in stablecoin.
 
 ## Company
 

@@ -16,7 +16,7 @@ const eposSteps = [
   'They select the coin and network the customer wants to use.',
   'They accept the locked rate and show the QR code.',
   'The customer scans and pays from their wallet.',
-  'The receipt prints, and settlement follows at T+0 (stablecoin) or T+1 (local currency).',
+  'The receipt prints, and settlement follows the same day, in stablecoin or local currency.',
 ]
 
 const staticQrSteps = [
@@ -69,7 +69,7 @@ const InStore = () => {
     { label: "Network Support", value: "WiFi, 4G, SIM Card ports" },
     { label: "Payment Methods", value: "QR Scan" },
     { label: "Supported Currencies", value: "9 cryptocurrencies" },
-    { label: "Settlement", value: "Stablecoin same day, local currency next business day" },
+    { label: "Settlement", value: "Same day, in stablecoin or local currency" },
     { label: "Receipt", value: "Printed receipts" }
   ]
 
@@ -77,7 +77,7 @@ const InStore = () => {
     <>
       <SEO
         title="In-store ePOS and static QR"
-        description="In-store stablecoin and crypto payments. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+        description="In-store stablecoin and crypto payments. Ezeebit is live in South Africa, Kenya and Nigeria, with more markets to follow."
         canonicalUrl="/in-store"
         crumbs={[{ name: 'In-store ePOS', path: '/in-store' }]}
         extraNodes={[faqPageNode('https://ezeebit.com/in-store#faq', inStoreFaqs)]}

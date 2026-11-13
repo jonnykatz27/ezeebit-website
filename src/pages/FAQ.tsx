@@ -35,28 +35,28 @@ const FAQ = () => {
       id: '3',
       category: 'payments',
       question: 'Which cryptocurrencies are supported?',
-      answer: 'Accept Bitcoin (BTC), Ethereum (ETH), USDT, USDC, BNB, DAI, PAXG, and the rand-backed stablecoins ZARP and ZARU, which settle on Ethereum and Solana. All transactions are instantly hedged to stablecoins at checkout to shield you from volatility, then settled in fiat (ZAR, KES, NGN or USD).',
+      answer: 'Accept Bitcoin (BTC), Ethereum (ETH), USDT, USDC, BNB, DAI, PAXG, and the rand-backed stablecoins ZARP and ZARU, which settle on Ethereum and Solana. Every payment is hedged at checkout to shield you from volatility, then settled in fiat (ZAR, KES, NGN or USD) or in stablecoin.',
       popular: true
     },
     {
       id: '4',
       category: 'payments',
       question: 'How fast are payments processed?',
-      answer: 'The rate is locked at checkout and the payment is confirmed on-chain. Settlement is the next business day in local currency, or the same day in stablecoin.',
+      answer: 'The rate is locked at checkout and the payment is confirmed on-chain. Settlement is the same day, in local currency or in stablecoin.',
       popular: true
     },
     {
       id: '5',
       category: 'payments',
       question: 'How does settlement work?',
-      answer: 'The rate is locked at checkout and the payment is hedged on the spot. Local currency settles the next business day. Stablecoin settles the same day.',
+      answer: 'The rate is locked at checkout and the payment is hedged on the spot. Local currency and stablecoin both settle the same day.',
       popular: false
     },
     {
       id: '6',
       category: 'security',
       question: 'Is Ezeebit regulated?',
-      answer: 'Yes. Ezeebit is regulated by the FSCA as a Crypto Asset Service Provider, FSP No. 53664. The FSCA is South Africa\'s Financial Sector Conduct Authority.',
+      answer: 'Yes, in each country it operates from. In South Africa, Ezee Solutions Group (Pty) Ltd is regulated by the FSCA, the Financial Sector Conduct Authority, as a Crypto Asset Service Provider, FSP No. 53664. In Kenya, Ezee Solutions Group (Kenya) Limited operates under the transitional provisions of the Virtual Asset Service Providers Act, 2025. In Canada, Ezeebit Canada Ltd. is on FINTRAC\'s money services business registry, MSB No. N300001912.',
       popular: true
     },
     {
@@ -83,7 +83,7 @@ const FAQ = () => {
     {
       id: '10',
       category: 'technical',
-      question: "The device won't power on—what should I do?",
+      question: "The device won't power on. What should I do?",
       answer: 'If the docked device doesn\'t charge, unplug the cable and insert it directly into the device. A red light in the top-right indicates charging.',
       popular: false
     },
@@ -112,7 +112,7 @@ const FAQ = () => {
       id: '14',
       category: 'technical',
       question: 'Can I integrate with my existing e-commerce platform?',
-      answer: 'We have plugins for Shopify, and soon to be WooCommerce, Magento, and other major platforms. For custom integrations, our API makes it easy to add stablecoin and crypto payments to any website or application.',
+      answer: 'We have plugins for Shopify, WooCommerce, and Magento. For anything else, our API makes it easy to add stablecoin and crypto payments to any website or application.',
       popular: true
     },
     {
@@ -154,21 +154,21 @@ const FAQ = () => {
       id: '21',
       category: 'payments',
       question: 'Are there minimum payout thresholds?',
-      answer: 'No. We settle what you\'re owed without holding funds to arbitrary minimums. Settlement lands in your account the next business day (T+1) in local currency, or the same day in stablecoin.',
+      answer: 'No. We settle what you\'re owed without holding funds to arbitrary minimums. Settlement lands in your account the same day, in local currency or in stablecoin.',
       popular: false
     },
     {
       id: '22',
       category: 'security',
       question: 'Are there chargebacks with crypto payments?',
-      answer: 'No—and that\'s one of the biggest advantages. Crypto payments are irreversible, which means no fraudulent chargebacks, no disputes months after a sale, and no fees for transactions you\'ve already fulfilled.',
+      answer: 'No, and that\'s one of the biggest advantages. Crypto payments are irreversible, which means no fraudulent chargebacks, no disputes months after a sale, and no fees for transactions you\'ve already fulfilled.',
       popular: true
     },
     {
       id: '23',
       category: 'technical',
       question: 'Which wallets can my customers pay from?',
-      answer: 'Over 700 wallets are supported via WalletConnect, plus direct payments from Luno, VALR, and Binance. Whether your customer uses MetaMask, Trust Wallet, or their exchange app, they can pay.',
+      answer: 'Any wallet can pay on-chain, over 700 wallets are supported through WalletConnect, and customers can pay directly from Luno, VALR, and Binance. Whether your customer uses MetaMask, Trust Wallet, or their exchange app, they can pay.',
       popular: true
     },
     {
@@ -182,14 +182,14 @@ const FAQ = () => {
       id: '25',
       category: 'technical',
       question: 'What blockchain networks do you support?',
-      answer: 'We support Bitcoin Mainnet, Ethereum (ERC-20), Tron (TRC-20), BNB Smart Chain (BEP-20), and Solana (SPL)—covering the vast majority of crypto holders worldwide.',
+      answer: 'We support Bitcoin Mainnet, Ethereum (ERC-20), Tron (TRC-20), BNB Smart Chain (BEP-20), and Solana (SPL), covering the vast majority of crypto holders worldwide.',
       popular: true
     },
     {
       id: '26',
       category: 'payments',
       question: 'How do refunds work with crypto payments?',
-      answer: 'Ezeebit does not currently process refunds on behalf of merchants—all refunds are handled directly by the store.\n\nFor customers: If you paid with crypto and need a refund, contact the store directly with your proof or confirmation of payment. The merchant will refund you in ZAR (via cash or bank transfer) or offer store credit, depending on their refund policy.\n\nFor merchants: When a customer requests a refund on a crypto payment, request their proof or confirmation of payment, then simply refund them in ZAR or offer store credit as you normally would. The original crypto payment is still settled to your account as usual. This approach avoids the complexity of crypto-to-crypto refunds, wallet address verification, and blockchain fees—keeping the process simple for everyone.',
+      answer: 'Ezeebit does not currently process refunds on behalf of merchants. All refunds are handled directly by the store.\n\nFor customers: If you paid with crypto and need a refund, contact the store directly with your proof or confirmation of payment. The merchant will refund you in ZAR (via cash or bank transfer) or offer store credit, depending on their refund policy.\n\nFor merchants: When a customer requests a refund on a crypto payment, request their proof or confirmation of payment, then simply refund them in ZAR or offer store credit as you normally would. The original crypto payment is still settled to your account as usual. This approach avoids the complexity of crypto-to-crypto refunds, wallet address verification, and blockchain fees—keeping the process simple for everyone.',
       popular: true
     },
     {
@@ -224,7 +224,7 @@ const FAQ = () => {
       id: '31',
       category: 'about',
       question: 'Which countries does Ezeebit operate in?',
-      answer: 'Ezeebit provides stablecoin and crypto payment infrastructure for merchants and platforms across Africa. It is live in South Africa, Kenya and Nigeria, with more African markets to follow.',
+      answer: 'Ezeebit provides stablecoin and crypto payment infrastructure for merchants and platforms across Africa. It is live in South Africa, Kenya and Nigeria, with more markets to follow, and the group also has a company in Canada.',
       popular: true
     },
     {
@@ -301,7 +301,7 @@ const FAQ = () => {
     <>
       <SEO
         title="FAQ"
-        description="Answers about Ezeebit payments, payouts, wallets, settlement and fees. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+        description="Answers about Ezeebit payments, payouts, wallets, settlement and fees. Ezeebit is live in South Africa, Kenya and Nigeria, with more markets to follow."
         canonicalUrl="/resources/faq"
         crumbs={[{ name: 'FAQ', path: '/resources/faq' }]}
         extraNodes={[faqPageNode('https://ezeebit.com/resources/faq#faq', faqItems)]}
@@ -323,61 +323,62 @@ const FAQ = () => {
       </PageHero>
 
       {/* Categories */}
+      {/* The same dark pill bar as the homepage's product tour; it scrolls sideways on a phone */}
       <section className="bg-white border-b border-neutral-200 sticky top-20 z-40">
-        <div className="container-custom px-4">
-          <div className="flex space-x-2 md:space-x-4 overflow-x-auto py-4 scrollbar-hide">
-            {categories.map(category => (
-              <button
-                key={category.id}
-                onClick={() => setActiveCategory(category.id)}
-                className={`flex items-center space-x-1 md:space-x-2 px-3 md:px-4 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-sm md:text-base ${
-                  activeCategory === category.id
-                    ? 'bg-primary-100 text-primary-700'
-                    : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100'
-                }`}
-              >
-                {category.icon}
-                <span>{category.name}</span>
-                <span className="bg-neutral-100 text-neutral-600 px-2 py-0.5 rounded-full text-xs">
-                  {category.count}
-                </span>
-              </button>
-            ))}
+        <div className="container-custom px-4 py-3">
+          <div className="mx-auto flex w-fit max-w-full gap-1 overflow-x-auto rounded-full bg-neutral-950 p-1 scrollbar-hide [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {categories.map(category => {
+              const on = activeCategory === category.id
+              return (
+                <button
+                  key={category.id}
+                  type="button"
+                  aria-pressed={on}
+                  onClick={() => setActiveCategory(category.id)}
+                  className={`flex min-h-[40px] items-center gap-1.5 rounded-full px-3.5 text-sm font-semibold whitespace-nowrap transition-colors [&_svg]:w-4 [&_svg]:h-4 ${
+                    on ? 'bg-primary-500 text-white' : 'text-neutral-300 hover:text-white'
+                  }`}
+                >
+                  {category.icon}
+                  <span>{category.name}</span>
+                  <span className={`text-xs font-medium ${on ? 'text-white/80' : 'text-neutral-500'}`}>{category.count}</span>
+                </button>
+              )
+            })}
           </div>
         </div>
       </section>
 
 
       {/* FAQ List */}
-      <section className="section-padding bg-neutral-50">
+      <section className="section-padding bg-white">
         <div className="container-custom px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="space-y-1.5 md:space-y-2">
+          <div className="max-w-3xl mx-auto">
+            {/* One list with hairlines between the questions, as on the homepage */}
+            <div className="border-t border-neutral-200">
               {filteredFAQs.map((item, index) => (
                 <motion.div
                   key={item.id}
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.02 }}
-                  className="bg-white rounded-lg shadow-sm border border-neutral-200 overflow-hidden"
-                  style={{ padding: 0 }}
+                  className="border-b border-neutral-200"
                 >
                   <button
+                    type="button"
+                    aria-expanded={openItems.includes(item.id)}
                     onClick={() => toggleItem(item.id)}
-                    className="w-full px-3 md:px-4 py-2 md:py-2.5 text-left flex items-center justify-between hover:bg-neutral-50 transition-colors"
+                    className="w-full py-4 text-left flex items-center justify-between gap-4"
                   >
-                    <div className="flex items-center flex-1 min-w-0">
-                      {item.popular && <Star className="w-3.5 h-3.5 text-warning-500 mr-1.5 flex-shrink-0" />}
-                      <span className="font-medium text-neutral-900 text-sm md:text-base text-left leading-tight">
-                        {highlightText(item.question, searchTerm)}
-                      </span>
-                    </div>
-                    <ChevronDown className={`w-4 h-4 text-neutral-400 flex-shrink-0 ml-2 transition-transform duration-200 ${
+                    <span className="font-medium text-neutral-900 text-left">
+                      {highlightText(item.question, searchTerm)}
+                    </span>
+                    <ChevronDown className={`w-4 h-4 text-neutral-500 flex-shrink-0 transition-transform duration-200 ${
                       openItems.includes(item.id) ? 'rotate-180' : ''
                     }`} />
                   </button>
-                  <div className={openItems.includes(item.id) ? 'px-3 md:px-4 pb-2.5 border-t border-neutral-100' : 'hidden'}>
-                    <p className="text-neutral-600 pt-2.5 text-sm text-left leading-relaxed whitespace-pre-line">
+                  <div className={openItems.includes(item.id) ? 'pb-4' : 'hidden'}>
+                    <p className="text-neutral-600 text-sm text-left leading-relaxed whitespace-pre-line">
                       {highlightText(item.answer, searchTerm)}
                     </p>
                   </div>
@@ -387,7 +388,7 @@ const FAQ = () => {
 
             {filteredFAQs.length === 0 && (
               <div className="text-center py-12">
-                <HelpCircle className="w-16 h-16 text-neutral-300 mx-auto mb-4" />
+                <div className="w-12 h-12 bg-neutral-950 rounded-xl flex items-center justify-center mx-auto mb-4 text-primary-400"><HelpCircle className="w-6 h-6" /></div>
                 <h3 className="text-xl font-semibold text-neutral-900 mb-2">No questions found</h3>
                 <p className="text-neutral-600 mb-6">
                   Try adjusting your search terms or browse different categories.
@@ -408,7 +409,7 @@ const FAQ = () => {
       </section>
 
       {/* Contact Support */}
-      <section className="section-padding bg-white">
+      <section className="section-padding bg-neutral-50">
         <div className="container-custom">
           <div className="section-head">
             <h2 className="section-title">

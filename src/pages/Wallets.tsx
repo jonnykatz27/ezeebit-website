@@ -24,7 +24,7 @@ const Wallets = () => {
     {
       icon: <Landmark className="w-6 h-6" />,
       title: "Withdraw to bank or chain",
-      description: "Send fiat to your bank account or USDT to your own wallet. Fiat settles the next business day, stablecoin settles same day."
+      description: "Send fiat to your bank account or USDT to your own wallet. Fiat and stablecoin both settle the same day."
     },
     {
       icon: <Receipt className="w-6 h-6" />,
@@ -65,7 +65,7 @@ const Wallets = () => {
     <>
       <SEO
         title="Business wallets for fiat and stablecoin"
-        description="Business wallets for fiat and stablecoin. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+        description="Business wallets for fiat and stablecoin. Ezeebit is live in South Africa, Kenya and Nigeria, with more markets to follow."
         canonicalUrl="/wallets"
         crumbs={[{ name: 'Wallets', path: '/wallets' }]}
       />

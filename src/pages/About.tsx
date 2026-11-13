@@ -155,7 +155,7 @@ const About = () => {
                 Our mission
               </h2>
               <p className="text-base lg:text-lg text-neutral-600">
-                To transform how businesses in Africa and beyond move money, by building the trusted stablecoin infrastructure layer beneath it. We give them one place to take payments in, hold a balance in fiat or stablecoin, and pay customers out, with the hedging and compliance handled underneath.
+                To transform how businesses in Africa and beyond move money, by building the trusted crypto and stablecoin infrastructure layer beneath it. We give them one place to take payments in, hold a balance in fiat or stablecoin, and pay customers out, with the hedging and compliance handled underneath.
               </p>
             </motion.div>
           </div>

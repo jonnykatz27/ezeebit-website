@@ -399,7 +399,7 @@ app.post(
       icon: <Zap className="w-6 h-6" />,
       title: "Payment Gateway",
       count: "3 endpoints",
-      description: "Hosted checkout, hedged on arrival, settled to your bank the next business day.",
+      description: "Hosted checkout, hedged on arrival, settled to your bank the same day.",
       href: `${DOCS}/payment-gateway/overview`
     },
     {

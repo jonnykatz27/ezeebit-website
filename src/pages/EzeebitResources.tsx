@@ -1,126 +1,98 @@
-import { motion } from '../lib/motion'
 import { Link } from 'react-router-dom'
-import { BookOpen, UserPlus, MapPin } from 'lucide-react'
+import { ArrowRight, BookOpen, MapPin } from 'lucide-react'
+import { motion } from '../lib/motion'
 import SEO from '../components/SEO'
+import DarkBackdrop from '../components/DarkBackdrop'
+import { HERO_PRIMARY, HERO_SECONDARY } from '../components/hero/PageHero'
 
-const EzeebitResources = () => {
-  return (
-    <>
-      <SEO
-        title="Quick links"
-        description="Jump to the Ezeebit user manual, merchant sign-up, and stores in South Africa that accept crypto payments."
-        crumbs={[{ name: 'Quick links', path: '/ezeebit-resources' }]}
-        canonicalUrl="/ezeebit-resources"
-      />
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="min-h-screen flex flex-col bg-gradient-to-br from-primary-50 via-white to-secondary-50 -mt-20 pt-20"
-    >
-      <div className="flex-1 flex flex-col items-center justify-center px-4 py-6 md:py-8">
-        <motion.div
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-4 md:mb-6"
-        >
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-2 md:mb-4">
-            Welcome to <span className="text-gradient">Ezeebit</span>
+/** The coins a customer can pay in. ETH and PAXG ship as bare marks, so they sit on a white disc. */
+const COINS = [
+  { src: '/btc-logo.svg', name: 'Bitcoin' },
+  { src: '/eth-logo.svg', name: 'Ethereum', bare: true },
+  { src: '/usdt-round.svg', name: 'USDT' },
+  { src: '/usdc-logo.svg', name: 'USDC' },
+  { src: '/bnb-logo.svg', name: 'BNB' },
+  { src: '/paxg-logo.svg', name: 'PAXG' },
+  { src: '/zarp-logo.png', name: 'ZARP' },
+  { src: '/zaru-logo.png', name: 'ZARU' },
+]
+
+/** The exchanges and wallets a customer can pay straight from. */
+const PAY_FROM = [
+  { src: '/marks/valr.webp', name: 'VALR' },
+  { src: '/marks/luno.webp', name: 'Luno' },
+  { src: '/marks/binance.webp', name: 'Binance' },
+  { src: '/walletconnect-pay.svg', name: 'WalletConnect Pay', note: '700+ wallets' },
+]
+
+const EYEBROW = 'text-xs font-semibold uppercase tracking-[0.14em] text-primary-400'
+
+/**
+ * Where an Ezeebit Pay QR code's "learn more" lands: a single dark screen, in
+ * the style of the site's heroes, with what a customer can pay with and the
+ * three places they are most likely to want next.
+ */
+const EzeebitResources = () => (
+  <>
+    <SEO
+      title="Quick links"
+      description="Jump to the Ezeebit user manual, merchant sign-up, and stores in South Africa that accept crypto payments."
+      crumbs={[{ name: 'Quick links', path: '/ezeebit-resources' }]}
+      canonicalUrl="/ezeebit-resources"
+    />
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="overflow-hidden -mt-20">
+      <section className="relative overflow-hidden bg-neutral-950 pt-40 pb-16 lg:pt-48 lg:pb-24">
+        <DarkBackdrop glow="left" />
+        <div className="container-custom relative text-center [&_img]:!mx-0">
+          <p className={`${EYEBROW} mb-4`}>Quick links</p>
+          <h1 className="font-display font-bold text-white !leading-[1.06] tracking-[-0.03em] text-4xl sm:text-5xl lg:text-6xl mb-4">
+            Welcome to <span className="text-primary-400">Ezeebit.</span>
           </h1>
-          <p className="text-sm md:text-base text-neutral-500 max-w-lg mx-auto">
-            Get started with stablecoin and cryptocurrency payments or learn more about our platform
+          <p className="mx-auto max-w-xl text-lg text-neutral-300 leading-relaxed">
+            Scanned our QR code? You are in the right place. Pay with crypto, find stores that accept it, or start accepting it yourself.
           </p>
-        </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mb-6 md:mb-10 text-center"
-        >
-          <p className="text-xs font-semibold text-primary-600 uppercase tracking-[0.14em] mb-4 md:mb-5">Pay With Crypto</p>
-          <div className="flex items-center justify-center gap-2.5 md:gap-5">
-            <img src="/btc-logo.svg" alt="Bitcoin" className="w-8 h-8 md:w-10 md:h-10" />
-            <img src="/eth-logo.svg" alt="Ethereum" className="w-8 h-8 md:w-10 md:h-10" />
-            <img src="/usdt-round.svg" alt="USDT" className="w-8 h-8 md:w-10 md:h-10" />
-            <img src="/usdc-logo.svg" alt="USDC" className="w-8 h-8 md:w-10 md:h-10" />
-            <img src="/bnb-logo.svg" alt="BNB" className="w-8 h-8 md:w-10 md:h-10" />
-            <img src="/paxg-logo.svg" alt="PAXG" className="w-8 h-8 md:w-10 md:h-10" />
-            <img src="/zarp-logo.png" alt="ZARP" className="w-8 h-8 md:w-10 md:h-10 rounded-full" />
-            <img src="/zaru-logo.png" alt="ZARU" className="w-8 h-8 md:w-10 md:h-10 rounded-full" />
+          <div className="mx-auto mt-10 max-w-xl rounded-2xl border border-white/10 bg-white/[0.04] p-5 lg:p-6">
+            <p className={EYEBROW}>Pay with</p>
+            <ul className="mt-4 flex flex-wrap items-center justify-center gap-2 lg:gap-3">
+              {COINS.map((c) => (
+                <li key={c.name}>
+                  <img src={c.src} alt={c.name} title={c.name} width={36} height={36} className={`size-8 lg:size-9 rounded-full ${c.bare ? 'bg-white p-1.5 object-contain' : 'object-cover'}`} />
+                </li>
+              ))}
+            </ul>
+            <p className={`${EYEBROW} mt-6 border-t border-white/10 pt-5`}>Pay from</p>
+            <ul className="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+              {PAY_FROM.map((p) => (
+                <li key={p.name} className="flex flex-col items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-2 py-3">
+                  <img src={p.src} alt="" width={36} height={36} className="size-9 rounded-lg object-cover" />
+                  <span className="text-[13px] font-semibold text-white leading-tight">{p.name}</span>
+                  {p.note && <span className="text-[11px] text-neutral-400 leading-none">{p.note}</span>}
+                </li>
+              ))}
+            </ul>
           </div>
-          <p className="text-xs font-semibold text-primary-600 uppercase tracking-[0.14em] mt-5 md:mt-7 mb-4 md:mb-5">Direct Integrations</p>
-          <div className="grid grid-cols-4 gap-3 md:gap-4 max-w-sm md:max-w-xl mx-auto">
-            <div className="bg-white rounded-xl md:rounded-2xl p-3.5 md:p-5 shadow-sm border border-neutral-100 flex flex-col items-center justify-center hover:shadow-md transition-shadow">
-              <img src="/luno_logo.png" alt="Luno" className="w-9 h-9 md:w-10 md:h-10 rounded-full object-cover mb-1.5 md:mb-2 flex-shrink-0" />
-              <span className="font-semibold text-neutral-900 text-xs md:text-sm">Luno</span>
-            </div>
-            <div className="bg-white rounded-xl md:rounded-2xl p-3.5 md:p-5 shadow-sm border border-neutral-100 flex flex-col items-center justify-center hover:shadow-md transition-shadow">
-              <img src="/valr_logo.png" alt="VALR" className="w-9 h-9 md:w-10 md:h-10 rounded-full object-cover mb-1.5 md:mb-2 flex-shrink-0" />
-              <span className="font-semibold text-neutral-900 text-xs md:text-sm">VALR</span>
-            </div>
-            <div className="bg-white rounded-xl md:rounded-2xl p-3.5 md:p-5 shadow-sm border border-neutral-100 flex flex-col items-center justify-center hover:shadow-md transition-shadow">
-              <img src="/Binance-Logo.svg" alt="Binance" className="w-9 h-9 md:w-10 md:h-10 rounded-full object-cover mb-1.5 md:mb-2 flex-shrink-0" />
-              <span className="font-semibold text-neutral-900 text-xs md:text-sm">Binance</span>
-            </div>
-            <div className="bg-white rounded-xl md:rounded-2xl p-3.5 md:p-5 shadow-sm border border-neutral-100 flex flex-col items-center justify-center hover:shadow-md transition-shadow relative">
-              <div className="absolute -top-1.5 -right-1.5 md:-top-2 md:-right-2 bg-primary-500 text-white text-[8px] md:text-[9px] font-bold px-1.5 md:px-2 py-0.5 rounded-full shadow-md whitespace-nowrap">
-                700+ Wallets
-              </div>
-              <img src="/walletconnect-pay.svg" alt="WalletConnect Pay" className="w-9 h-9 md:w-10 md:h-10 rounded-full object-cover mb-1.5 md:mb-2 flex-shrink-0" />
-              <span className="font-semibold text-neutral-900 text-[10px] md:text-xs leading-tight text-center">WalletConnect Pay</span>
+
+          <div className="mx-auto mt-8 flex max-w-xl flex-col gap-3">
+            <a href="https://merchant.ezeebit.com/#/signup" target="_blank" rel="noopener noreferrer" className={HERO_PRIMARY}>
+              Merchant sign-up
+              <ArrowRight className="w-5 h-5 ml-2" />
+            </a>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <Link to="/resources/where-to-spend" className={`${HERO_SECONDARY} gap-2 whitespace-nowrap !px-4 !text-base`}>
+                <MapPin className="w-5 h-5" />
+                Where to spend crypto
+              </Link>
+              <Link to="/resources/user-manual" className={`${HERO_SECONDARY} gap-2 whitespace-nowrap !px-4 !text-base`}>
+                <BookOpen className="w-5 h-5" />
+                User guide
+              </Link>
             </div>
           </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="w-full max-w-sm md:max-w-md mx-auto space-y-3 md:space-y-4"
-        >
-          <Link
-            to="/resources/user-manual"
-            className="w-full bg-white hover:bg-neutral-50 text-neutral-900 font-semibold py-3 md:py-4 px-5 md:px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center space-x-3 text-base md:text-lg border-2 border-neutral-200 hover:border-primary-300"
-          >
-            <BookOpen className="w-5 h-5 md:w-6 md:h-6" />
-            <span>User Guide</span>
-          </Link>
-
-          <Link
-            to="/resources/where-to-spend"
-            className="w-full bg-white hover:bg-neutral-50 text-neutral-900 font-semibold py-3 md:py-4 px-5 md:px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center space-x-3 text-base md:text-lg border-2 border-neutral-200 hover:border-primary-300"
-          >
-            <MapPin className="w-5 h-5 md:w-6 md:h-6" />
-            <span>Where to Spend Crypto</span>
-          </Link>
-
-          <a
-            href="https://merchant.ezeebit.com/#/signup"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full btn-primary py-3 md:py-4 px-5 md:px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center space-x-3 text-base md:text-lg"
-          >
-            <UserPlus className="w-5 h-5 md:w-6 md:h-6" />
-            <span>Merchant Sign Up</span>
-          </a>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-5 md:mt-8 text-center"
-        >
-          <p className="text-xs md:text-sm text-neutral-500 max-w-md mx-auto">
-            Scanned our QR code? You're in the right place! Explore our crypto payment solutions above.
-          </p>
-        </motion.div>
-      </div>
+        </div>
+      </section>
     </motion.div>
-    </>
-  )
-}
+  </>
+)
 
 export default EzeebitResources

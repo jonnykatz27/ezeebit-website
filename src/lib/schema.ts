@@ -2,7 +2,7 @@ export const SITE_URL = 'https://ezeebit.com'
 
 /** One market statement. Use this wording wherever the live markets are named. */
 export const LIVE_MARKETS =
-  'Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow.'
+  'Ezeebit is live in South Africa, Kenya and Nigeria, with more markets to follow.'
 export const ORG_ID = `${SITE_URL}/#organization`
 export const WEBSITE_ID = `${SITE_URL}/#website`
 
@@ -36,7 +36,7 @@ export const organizationNode = {
   },
   image: `${SITE_URL}/logo-square.png`,
   description:
-    `Ezeebit provides FSCA-regulated stablecoin and cryptocurrency payment infrastructure for merchants across Africa, including in-store ePOS, online checkout, payouts and wallets. ${LIVE_MARKETS} Stablecoin settlement is the same day on every plan. Local-currency settlement, in ZAR, KES, NGN or USD, is the next business day.`,
+    `Ezeebit provides FSCA-regulated stablecoin and cryptocurrency payment infrastructure for merchants across Africa, including in-store ePOS, online checkout, payouts and wallets. ${LIVE_MARKETS} Settlement is the same day on every plan, in stablecoin or in local currency (ZAR, KES, NGN or USD).`,
   foundingDate: '2023',
   address: {
     '@type': 'PostalAddress',

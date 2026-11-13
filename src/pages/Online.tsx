@@ -67,7 +67,7 @@ const Online = () => {
     <>
       <SEO
         title="Online payments for Shopify, WooCommerce and Magento"
-        description="Online stablecoin and crypto checkout. Ezeebit is live in South Africa, Kenya and Nigeria, with more African markets to follow."
+        description="Online stablecoin and crypto checkout. Ezeebit is live in South Africa, Kenya and Nigeria, with more markets to follow."
         canonicalUrl="/online"
         crumbs={[{ name: 'Online payments', path: '/online' }]}
       />
